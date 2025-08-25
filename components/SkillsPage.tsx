@@ -139,9 +139,11 @@ const SkillItem: React.FC<{ skill: Skill; color: string }> = ({ skill, color }) 
 // --- Main Page Component ---
 const SkillsPage: React.FC<SkillsPageProps> = ({ id }) => {
     const { t } = useI18n();
-    const { themeColor } = useTheme();
+    const { themeMode, lightThemeColor, darkThemeColor } = useTheme();
     const pageData = t.skillsPage;
     const categories: SkillCategory[] = (pageData.categories as SkillCategory[]) || [];
+
+    const themeColor = themeMode === 'light' ? lightThemeColor : darkThemeColor;
 
     return (
         <PageLayout id={id}>

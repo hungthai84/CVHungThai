@@ -105,38 +105,37 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                  <div className="project-post-scroll-content no-scrollbar" ref={scrollRef}>
                     <main className="project-post-main">
                         <div className="project-post-content-wrapper">
-                            <div className="project-hero-container">
-                                {post.heroImage && <img src={post.heroImage} alt={post.title} className="project-post-hero-image-bg" />}
-                                <div className="project-hero-container-inner">
-                                    <h1 className="project-post-title on-banner">{post.title}</h1>
-                                    {isAiVoiceOn && (
-                                        <div className="project-post-voice-reader-container">
-                                            <div className="audio-player-widget">
-                                                <button 
-                                                    className={`audio-player-button ${isSpeaking ? 'speaking' : 'idle-glow'}`}
-                                                    onClick={handleTogglePlayback}
-                                                    aria-label={isSpeaking ? t.projectPostPopup.pauseReading : t.projectPostPopup.readAloud}
-                                                >
-                                                    {isSpeaking ? <Icons.PauseIcon /> : <Icons.PlayIcon />}
-                                                </button>
-                                                <div className="audio-player-info">
-                                                    <span className="audio-player-title">
-                                                        {isSpeaking ? t.projectPostPopup.nowPlaying : t.projectPostPopup.listenToArticle}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
                             <div className="project-post-layout-grid">
                                 <div className="project-post-main-content">
                                     <div className="project-article-card">
-                                        <div className="project-post-meta">
-                                            <span>{post.date}</span>
-                                            <div className="project-post-tags">
-                                                {post.tags.map((tag: string) => <span key={tag}>#{tag}</span>)}
+                                        <div className="project-hero-container">
+                                            {post.heroImage && <img src={post.heroImage} alt={post.title} className="project-post-hero-image-bg" />}
+                                            <div className="project-hero-container-inner">
+                                                <h1 className="project-post-title on-banner">{post.title}</h1>
+                                                <div className="project-hero-meta">
+                                                    <span className="project-post-date">{post.date}</span>
+                                                    <div className="project-post-tags">
+                                                        {post.tags.map((tag: string) => <span key={tag}>#{tag}</span>)}
+                                                    </div>
+                                                </div>
+                                                {isAiVoiceOn && (
+                                                    <div className="project-post-voice-reader-container">
+                                                        <div className="audio-player-widget">
+                                                            <button 
+                                                                className={`audio-player-button ${isSpeaking ? 'speaking' : 'idle-glow'}`}
+                                                                onClick={handleTogglePlayback}
+                                                                aria-label={isSpeaking ? t.projectPostPopup.pauseReading : t.projectPostPopup.readAloud}
+                                                            >
+                                                                {isSpeaking ? <Icons.PauseIcon /> : <Icons.PlayIcon />}
+                                                            </button>
+                                                            <div className="audio-player-info">
+                                                                <span className="audio-player-title">
+                                                                    {isSpeaking ? t.projectPostPopup.nowPlaying : t.projectPostPopup.listenToArticle}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                         

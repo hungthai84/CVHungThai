@@ -100,7 +100,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const settingsText = t.settings;
     const {
         themeMode, setThemeMode,
-        themeColor, setThemeColor,
+        lightThemeColor, setLightThemeColor,
+        darkThemeColor, setDarkThemeColor,
         isCursorEffectOn, setCursorEffect,
         isSoundOn, setSoundOn,
         isAiVoiceOn, setAiVoiceOn,
@@ -112,7 +113,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
     // --- Local State for pending changes ---
     const [localThemeMode, setLocalThemeMode] = useState(themeMode);
-    const [localThemeColor, setLocalThemeColor] = useState(themeColor);
+    const [localLightThemeColor, setLocalLightThemeColor] = useState(lightThemeColor);
+    const [localDarkThemeColor, setLocalDarkThemeColor] = useState(darkThemeColor);
     const [localCursorEffect, setLocalCursorEffect] = useState(isCursorEffectOn);
     const [localSound, setLocalSound] = useState(isSoundOn);
     const [localAiVoice, setLocalAiVoice] = useState(isAiVoiceOn);
@@ -121,21 +123,35 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const [activeTab, setActiveTab] = useState<'gradient' | 'video'>('gradient');
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
+    // This is derived state for the UI to use for the color picker
+    const localThemeColor = localThemeMode === 'light' ? localLightThemeColor : localDarkThemeColor;
 
-    // Reset local state if context changes (e.g., settings saved or loaded initially)
+    // This sets the color for the currently selected local mode
+    const setLocalThemeColor = (color: string) => {
+        if (localThemeMode === 'light') {
+            setLocalLightThemeColor(color);
+        } else {
+            setLocalDarkThemeColor(color);
+        }
+    };
+
+
+    // Reset local state if context changes (e.g., settings loaded initially)
     useEffect(() => {
         setLocalThemeMode(themeMode);
-        setLocalThemeColor(themeColor);
+        setLocalLightThemeColor(lightThemeColor);
+        setLocalDarkThemeColor(darkThemeColor);
         setLocalCursorEffect(isCursorEffectOn);
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);
         setLocalVoiceName(selectedAiVoiceName);
         setLocalWallpaper(wallpaper);
-    }, [themeMode, themeColor, isCursorEffectOn, isSoundOn, isAiVoiceOn, selectedAiVoiceName, wallpaper]);
+    }, [themeMode, lightThemeColor, darkThemeColor, isCursorEffectOn, isSoundOn, isAiVoiceOn, selectedAiVoiceName, wallpaper]);
 
     const handleSaveChanges = () => {
         setThemeMode(localThemeMode);
-        setThemeColor(localThemeColor);
+        setLightThemeColor(localLightThemeColor);
+        setDarkThemeColor(localDarkThemeColor);
         setCursorEffect(localCursorEffect);
         setSoundOn(localSound);
         setAiVoiceOn(localAiVoice);
@@ -150,7 +166,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const handleResetChanges = () => {
         // Revert local state to the master context state
         setLocalThemeMode(themeMode);
-        setLocalThemeColor(themeColor);
+        setLocalLightThemeColor(lightThemeColor);
+        setLocalDarkThemeColor(darkThemeColor);
         setLocalCursorEffect(isCursorEffectOn);
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);

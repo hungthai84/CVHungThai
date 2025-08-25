@@ -7,8 +7,10 @@ type WallpaperType = string; // 'gradient' or a video URL
 interface ThemeContextType {
     themeMode: ThemeMode;
     setThemeMode: (mode: ThemeMode) => void;
-    themeColor: ThemeColor; // Represents the *current* accent color
-    setThemeColor: (color: ThemeColor) => void; // Sets accent color for the *current* mode
+    lightThemeColor: ThemeColor;
+    setLightThemeColor: (color: ThemeColor) => void;
+    darkThemeColor: ThemeColor;
+    setDarkThemeColor: (color: ThemeColor) => void;
     isCursorEffectOn: boolean;
     setCursorEffect: (isOn: boolean) => void;
     isSoundOn: boolean;
@@ -55,18 +57,14 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         localStorage.setItem('themeMode', mode);
     };
 
-    const setThemeColor = (color: ThemeColor) => {
-        const root = window.document.documentElement;
-        if (themeMode === 'light') {
-            setLightThemeColorState(color);
-            localStorage.setItem('lightThemeColor', color);
-        } else {
-            setDarkThemeColorState(color);
-            localStorage.setItem('darkThemeColor', color);
-        }
-        // Immediately apply to UI
-        root.style.setProperty('--accent-color', color);
-        root.style.setProperty('--accent-color-rgb', hexToRgb(color));
+    const setLightThemeColor = (color: ThemeColor) => {
+        setLightThemeColorState(color);
+        localStorage.setItem('lightThemeColor', color);
+    };
+
+    const setDarkThemeColor = (color: ThemeColor) => {
+        setDarkThemeColorState(color);
+        localStorage.setItem('darkThemeColor', color);
     };
 
     const setCursorEffect = (isOn: boolean) => {
@@ -219,11 +217,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         }
     }, []);
 
-    const value = {
+    const value: ThemeContextType = {
         themeMode,
         setThemeMode,
-        themeColor: themeMode === 'light' ? lightThemeColor : darkThemeColor,
-        setThemeColor,
+        lightThemeColor,
+        setLightThemeColor,
+        darkThemeColor,
+        setDarkThemeColor,
         isCursorEffectOn,
         setCursorEffect,
         isSoundOn,

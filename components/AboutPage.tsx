@@ -4,6 +4,7 @@ import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';
 
+// The type was mentioned in the previous turn's description
 interface InfoItem {
     label: string;
     value: string;
@@ -11,13 +12,11 @@ interface InfoItem {
     url?: string;
 }
 
-interface AboutPageProps {
-    id?: string;
-}
-
-export const AboutPage: React.FC<AboutPageProps> = ({ id }) => {
+export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t } = useI18n();
     const pageData = t.aboutPage;
+    
+    const infoItems: InfoItem[] = (pageData.infoItems as InfoItem[]) || [];
 
     return (
         <PageLayout id={id}>
@@ -31,48 +30,53 @@ export const AboutPage: React.FC<AboutPageProps> = ({ id }) => {
                     />
                 </div>
                 <div className="about-page-content-wrapper no-scrollbar">
-                    {/* Bio Section */}
-                    <div className="bio-section">
-                        <div className="left-bio-column">
+                    <div className="about-page-grid">
+                        <div className="about-video-card">
                             <div className="bio-video-wrapper">
                                 <iframe
                                     src={pageData.bioVideoUrl}
-                                    title="Giới thiệu bản thân"
+                                    title="Bio Video"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                 ></iframe>
                             </div>
                         </div>
-                        <div className="right-bio-column">
-                            <h3>{pageData.bioTitle}</h3>
-                            {pageData.bioParagraphs.map((p: string, index: number) => {
-                                if (p.startsWith('>')) {
-                                    return <p key={index} className="core-values">{p.substring(1).trim()}</p>;
+                        <div className="about-bio-text-card">
+                            <h3 className="hero-name-text">{pageData.bioTitle}</h3>
+                            {pageData.bioParagraphs.map((p, index) => {
+                                if (p.startsWith('> ')) {
+                                    return <blockquote key={index}><p className="core-values">{p.substring(2)}</p></blockquote>;
                                 }
                                 return <p key={index}>{p}</p>;
                             })}
                         </div>
-                    </div>
-                    {/* Personal Info Section */}
-                    <div className="personal-info-section">
-                        <h3>{pageData.infoTitle}</h3>
-                        <div className="about-info-grid">
-                            {(pageData.infoItems as InfoItem[]).map((item: InfoItem) => {
-                                const Icon = Icons[item.icon] || Icons.UserIcon;
-                                const ValueComponent = item.url 
-                                    ? <a href={item.url} target="_blank" rel="noopener noreferrer" className="value">{item.value}</a>
-                                    : <span className="value">{item.value}</span>;
-                                
-                                return (
-                                    <div key={item.label} className="about-info-item">
-                                        <div className="about-info-item-icon"><Icon /></div>
-                                        <div className="about-info-item-text-wrapper">
-                                            <div className="label">{item.label}</div>
-                                            {ValueComponent}
+                        <div className="about-contact-card">
+                            <h3>{pageData.infoTitle}</h3>
+                            <div className="about-info-grid">
+                                {infoItems.map((item) => {
+                                    const Icon = Icons[item.icon] || Icons.LinkIcon;
+                                    const content = (
+                                        <>
+                                            <div className="about-info-item-icon">
+                                                <Icon />
+                                            </div>
+                                            <div className="about-info-item-text-wrapper">
+                                                <div className="label">{item.label}</div>
+                                                <div className="value">{item.value}</div>
+                                            </div>
+                                        </>
+                                    );
+                                    return item.url ? (
+                                        <a href={item.url} key={item.label} className="about-info-item" target="_blank" rel="noopener noreferrer">
+                                            {content}
+                                        </a>
+                                    ) : (
+                                        <div key={item.label} className="about-info-item">
+                                            {content}
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>

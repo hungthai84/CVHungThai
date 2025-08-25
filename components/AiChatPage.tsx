@@ -31,6 +31,7 @@ interface MediaPrompt {
     icon: keyof typeof Icons;
     embedUrl?: string;
     prompt?: string;
+    action?: string;
 }
 
 const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
@@ -44,6 +45,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const [error, setError] = useState<string | null>(null);
     const [view, setView] = useState<'categories' | 'chat'>('categories');
     const [selectedCategory, setSelectedCategory] = useState<QuestionCategory | null>(null);
+    const [showCategories, setShowCategories] = useState(false);
     const [attachment, setAttachment] = useState<File | null>(null);
     const [attachmentPreview, setAttachmentPreview] = useState<string | null>(null);
 
@@ -89,16 +91,13 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         setError(null);
         setView('categories');
         setSelectedCategory(null);
+        setShowCategories(false);
     };
 
     const handleCategorySelect = (category: QuestionCategory) => {
         setSelectedCategory(category);
     };
     
-    const handleBackToCategories = () => {
-        setSelectedCategory(null);
-    };
-
     const fileToGenerativePart = async (file: File) => {
         const base64EncodedDataPromise = new Promise<string>((resolve) => {
             const reader = new FileReader();
@@ -183,6 +182,15 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     };
     
     const handleMediaPromptClick = (prompt: MediaPrompt) => {
+        if (prompt.action === 'show_categories') {
+            setSelectedCategory(null);
+            return;
+        }
+         if (prompt.action === 'show_question_categories') {
+            setShowCategories(true);
+            return;
+        }
+        
         if (prompt.embedUrl) {
             let responseText = '';
             if (prompt.key === 'sampleInterview') {
@@ -245,7 +253,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     <div key={msg.id} className={`chat-message ${msg.sender === 'user' ? 'user' : 'ai'}`}>
                         <div className={`chat-avatar ${msg.sender} ${isLoading && msg.isStreaming ? 'thinking' : ''}`}>
                             {msg.sender === 'model' ? (
-                                <img src="https://i.postimg.cc/q73XWkGg/Logo-AI.png" alt={pageData.avatarAlt} />
+                                <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
                             ) : (
                                 <Icons.UserIcon className="user-icon-svg" />
                             )}
@@ -268,7 +276,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 {isLoading && messages[messages.length-1]?.sender !== 'model' && (
                     <div className="chat-message ai">
                         <div className="chat-avatar thinking">
-                           <img src="https://i.postimg.cc/q73XWkGg/Logo-AI.png" alt={pageData.avatarAlt} />
+                           <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <div className="typing-indicator"><span></span><span></span><span></span></div>
@@ -281,85 +289,99 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         </>
     );
 
-    const renderSuggestionsView = () => (
-        <div className="ai-suggestions-scroll-container no-scrollbar">
-            <div className="ai-suggestions-view">
-                <div className="chat-message ai ai-welcome-message">
-                    <div className="chat-avatar">
-                        <img src="https://i.postimg.cc/q73XWkGg/Logo-AI.png" alt={pageData.avatarAlt} />
-                    </div>
-                    <div className="message-bubble">
-                        <p>{pageData.welcomeMessage}</p>
-                        {isAiVoiceOn && (
-                            <button 
-                                className="speak-message-btn-inline"
-                                onClick={() => {
-                                    if (isSpeaking) {
-                                        cancel();
-                                    } else {
-                                        speak(pageData.voiceWelcomeMessage, { voiceName: selectedAiVoiceName, lang: language });
-                                    }
-                                }}
-                                title={isSpeaking ? t.aiChatPage.speakerOn : t.aiChatPage.speakerOff}
-                            >
-                                {isSpeaking ? <Icons.PauseIcon size={18} /> : <Icons.SpeakerWaveIcon size={18} />}
-                            </button>
-                        )}
-                    </div>
-                </div>
+    const renderSuggestionsView = () => {
+        const mediaPromptsToDisplay = (pageData.mediaPrompts as MediaPrompt[]).filter(prompt => {
+            if (prompt.key === 'viewTopics') {
+                return showCategories && !!selectedCategory;
+            }
+            if (prompt.key === 'sampleQuestions') {
+                return !showCategories;
+            }
+            return true;
+        });
 
-                {!selectedCategory ? (
-                    <>
-                        <div className="ai-suggestions-grid">
-                            {(pageData.questionCategories as QuestionCategory[]).map(cat => {
-                                const Icon = Icons[cat.icon] || Icons.SparklesIcon;
-                                return (
-                                    <div
-                                        key={cat.title}
-                                        className="ai-category-card"
-                                        style={{ '--category-color': cat.color } as React.CSSProperties}
-                                        onClick={() => handleCategorySelect(cat)}
-                                        role="button"
-                                        tabIndex={0}
-                                        onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') handleCategorySelect(cat); }}
-                                    >
-                                        <Icon className="ai-category-card-icon" />
-                                        <h4 className="ai-category-card-title">{cat.title}</h4>
-                                    </div>
-                                );
-                            })}
+        return (
+            <div className="ai-suggestions-scroll-container no-scrollbar">
+                <div className="ai-suggestions-view">
+                    <div className="chat-message ai ai-welcome-message">
+                        <div className="chat-avatar">
+                            <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
                         </div>
-                    </>
-                ) : (
-                    <div className="selected-category-view">
-                         <button onClick={handleBackToCategories} className="back-to-categories-btn">
-                            <Icons.ChevronLeftIcon size={18} />
-                            {pageData.backToCategories}
-                        </button>
-                        <h3>{selectedCategory.title}</h3>
-                        <div className="suggested-prompts-container">
-                            {selectedCategory.questions.map((q, i) => (
-                                <button key={i} className="suggested-prompt-btn" onClick={() => handleQuestionClick(q)}>
-                                    {q}
+                        <div className="message-bubble">
+                            <p>{pageData.welcomeMessage}</p>
+                            {isAiVoiceOn && (
+                                <button 
+                                    className="speak-message-btn-inline"
+                                    onClick={() => {
+                                        if (isSpeaking) {
+                                            cancel();
+                                        } else {
+                                            speak(pageData.voiceWelcomeMessage, { voiceName: selectedAiVoiceName, lang: language });
+                                        }
+                                    }}
+                                    title={isSpeaking ? t.aiChatPage.speakerOn : t.aiChatPage.speakerOff}
+                                >
+                                    {isSpeaking ? <Icons.PauseIcon size={18} /> : <Icons.SpeakerWaveIcon size={18} />}
                                 </button>
-                            ))}
+                            )}
                         </div>
                     </div>
-                )}
+
+                    {!selectedCategory ? (
+                         showCategories && (
+                            <>
+                                <div className="ai-suggestions-grid">
+                                    {(pageData.questionCategories as QuestionCategory[]).map(cat => {
+                                        const Icon = Icons[cat.icon] || Icons.SparklesIcon;
+                                        return (
+                                            <div
+                                                key={cat.title}
+                                                className="ai-category-card"
+                                                style={{ '--category-color': cat.color } as React.CSSProperties}
+                                                onClick={() => handleCategorySelect(cat)}
+                                                role="button"
+                                                tabIndex={0}
+                                                onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') handleCategorySelect(cat); }}
+                                            >
+                                                <Icon className="ai-category-card-icon" />
+                                                <h4 className="ai-category-card-title">{cat.title}</h4>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </>
+                        )
+                    ) : (
+                        <div className="selected-category-view">
+                            <button onClick={() => setSelectedCategory(null)} className="back-to-categories-btn">
+                                <Icons.ChevronLeftIcon size={18} />
+                                {pageData.backToCategories}
+                            </button>
+                            <h3>{selectedCategory.title}</h3>
+                            <div className="suggested-prompts-container">
+                                {selectedCategory.questions.map((q, i) => (
+                                    <button key={i} className="suggested-prompt-btn" onClick={() => handleQuestionClick(q)}>
+                                        {q}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="ai-media-prompts">
+                    {mediaPromptsToDisplay.map(prompt => {
+                        const Icon = Icons[prompt.icon];
+                        return (
+                            <button key={prompt.key} className="ai-media-prompt-btn" onClick={() => handleMediaPromptClick(prompt)}>
+                                <Icon size={18} />
+                                {prompt.title}
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
-            <div className="ai-media-prompts">
-                {(pageData.mediaPrompts as MediaPrompt[]).map(prompt => {
-                    const Icon = Icons[prompt.icon];
-                    return (
-                        <button key={prompt.key} className="ai-media-prompt-btn" onClick={() => handleMediaPromptClick(prompt)}>
-                            <Icon size={18} />
-                            {prompt.title}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
+        );
+    }
     
     return (
         <PageLayout id={id}>

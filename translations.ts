@@ -1,4 +1,5 @@
 
+
 export const en = {
   languageName: "English",
   languageNameForAI: "English",
@@ -33,12 +34,12 @@ export const en = {
     ],
     badge: "Homepage",
     tooltipTitle: "Welcome to my profile",
-    tooltipText: "This is the homepage, where you can find my cover letter and navigate to other sections of the profile.",
+    tooltipText: "Welcome to my interactive profile. Start here to explore my cover letter, career journey, and notable projects.",
   },
   coverLetterPage: {
     badge: "Cover Letter",
     tooltipTitle: "A few words for you",
-    tooltipText: "A brief letter sharing my work philosophy and the values I pursue in my career.",
+    tooltipText: "A heartfelt letter sharing my work philosophy and the core values I pursue in my career.",
     greeting: "Dear Sir/Madam and Esteemed Company,",
     paragraphs: [
       "“There is a saying I always carry with me: Customer satisfaction comes not from perfection, but from timely empathy.”",
@@ -61,8 +62,8 @@ export const en = {
   aboutPage: {
     bioBadge: "About Me",
     tooltipTitle: "Personal Information",
-    tooltipText: "A deeper look into my background, my values, and how to get in touch.",
-    bioVideoUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1897931346&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
+    tooltipText: "A deeper look into my professional background, core values, and detailed contact information.",
+    bioVideoUrl: "https://scena.link/nmxffobkkmcj",
     bioTitle: "More Than a Manager: A Partner in Customer Success",
     bioParagraphs: [
       "With over two decades dedicated to the art and science of customer service, I've learned that the most effective strategies are born from genuine empathy and a relentless desire to improve. My journey has been one of continuous learning, adapting to new technologies, and, most importantly, understanding the human element behind every interaction.",
@@ -82,7 +83,7 @@ export const en = {
   workExperiencePage: {
     title: "Work Experience",
     tooltipTitle: "Career Journey",
-    tooltipText: "Key milestones and major roles in my career.",
+    tooltipText: "My career journey through key milestones and roles, showcasing my growth and contributions at each company.",
     durationTitle: "Duration",
     positionTitle: "Position",
     managedTitle: "Managed",
@@ -341,7 +342,7 @@ export const en = {
   skillsPage: {
     title: "Skills",
     tooltipTitle: "Professional Competencies",
-    tooltipText: "The skills and technologies I am proficient in.",
+    tooltipText: "A summary of the professional skills and competencies I've honed over 22 years of experience.",
     categories: [
       {
         key: "professional",
@@ -410,7 +411,7 @@ export const en = {
   educationPage: {
     title: "Education",
     tooltipTitle: "Learning & Development Journey",
-    tooltipText: "Degrees, certificates, and professional training courses I have completed.",
+    tooltipText: "My academic background and professional training courses that have shaped and advanced my career.",
     yearPrefix: "Year",
     items: [
       {
@@ -490,7 +491,7 @@ export const en = {
   achievementsPage: {
     badge: "Achievements",
     tooltipTitle: "Competencies & Achievements",
-    tooltipText: "A summary of my competencies and completion rates in core areas.",
+    tooltipText: "A summary of my core competencies and goal completion rates in key professional areas.",
     achievements: [
       { id: "1.1", title: "Building the Customer Service Department", branch: "CS Department Building", rate: 100, category: "📌 1. Strategy & Management", hashtag: "#CS_Strategy", icon: "LightBulbIcon", color: "#F37021" },
       { id: "1.2", title: "Setting Departmental Goals", branch: "CS Department Goals", rate: 80, category: "📌 1. Strategy & Management", hashtag: "#CS_Strategy", icon: "LightBulbIcon", color: "#F37021" },
@@ -513,7 +514,7 @@ export const en = {
   servicesPage: {
     badge: "Services",
     tooltipTitle: "Areas of Expertise",
-    tooltipText: "Fields where I have deep expertise and can bring value to a business.",
+    tooltipText: "Fields where I have deep expertise and can deliver tangible, sustainable value to a business.",
     services: [
         {
             key: "telecom",
@@ -568,7 +569,7 @@ export const en = {
   projectsPage: {
     badge: "Projects",
     tooltipTitle: "Key Projects",
-    tooltipText: "Some important projects I have led or participated in, demonstrating my capabilities and practical experience.",
+    tooltipText: "Explore key projects I've led or participated in, demonstrating my capabilities and hands-on experience.",
     stageLabel: "Stage",
     filters: {
         all: "All",
@@ -582,7 +583,7 @@ export const en = {
       {
           id: "1.1",
           title: "Building the Customer Service Department",
-          description: "Establish structure – organizational chart – operational direction",
+          description: "Establishing structure, organizational charts, and operational direction for the department.",
           group: "Strategy & Management",
           stage: "1",
           hashtags: ["#CS_Strategy", "#Structure"],
@@ -591,7 +592,7 @@ export const en = {
       {
           id: "1.2",
           title: "Setting Departmental Goals",
-          description: "Short & long-term OKRs, KPIs aligned with company strategy",
+          description: "Defining short & long-term OKRs and KPIs aligned with company strategy.",
           group: "Strategy & Management",
           stage: "1",
           hashtags: ["#CS_Strategy", "#OKR"],
@@ -600,7 +601,7 @@ export const en = {
       {
           id: "1.3",
           title: "Enhancing Customer Experience",
-          description: "Establish experience standards, measure sentiment, align the journey",
+          description: "Setting experience standards, measuring customer sentiment, and synchronizing the customer journey.",
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#CXDesign"],
@@ -609,7 +610,7 @@ export const en = {
       {
           id: "1.4",
           title: "CS Project Management",
-          description: "Apply Agile / Kanban, monitor implementation of improvements",
+          description: "Applying Agile/Kanban methodologies to monitor and implement service improvements.",
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#ProjectManagement"],
@@ -618,7 +619,7 @@ export const en = {
       {
           id: "1.5",
           title: "Driving Product Improvement",
-          description: "Provide product feedback from CS data, build an inter-departmental “feedback loop”",
+          description: "Building a cross-departmental 'feedback loop' using CS data to drive product improvements.",
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#VoiceOfCustomer"],
@@ -627,7 +628,7 @@ export const en = {
       {
           id: "2.1",
           title: "Standardizing CS Processes",
-          description: "SOPs from reception to resolution, inter-departmental coordination",
+          description: "Standardizing Standard Operating Procedures (SOPs) from ticket reception to resolution.",
           group: "Operations & Process",
           stage: "1",
           hashtags: ["#CS_Operations", "#SOP"],
@@ -636,7 +637,7 @@ export const en = {
       {
           id: "2.2",
           title: "Optimizing Support Channels",
-          description: "Unify hotline, chat, email, and social media channels",
+          description: "Unifying and optimizing omnichannel support across hotline, chat, email, and social media.",
           group: "Operations & Process",
           stage: "2",
           hashtags: ["#CS_Operations", "#OmniChannel"],
@@ -645,7 +646,7 @@ export const en = {
       {
           id: "2.3",
           title: "Implementing Automation",
-          description: "Apply RPA, auto workflows, reduce repetitive tasks",
+          description: "Applying RPA and automated workflows to reduce repetitive tasks and increase efficiency.",
           group: "Operations & Process",
           stage: "3",
           hashtags: ["#CS_Operations", "#Automation"],
@@ -654,7 +655,7 @@ export const en = {
       {
           id: "2.4",
           title: "Managing Outbound Campaigns",
-          description: "Scripts for proactive calls/emails: care, reactivation, surveys...",
+          description: "Developing scripts for and managing proactive outbound campaigns: care, reactivation, surveys.",
           group: "Operations & Process",
           stage: "3",
           hashtags: ["#CS_Operations", "#OutboundCS"],
@@ -663,7 +664,7 @@ export const en = {
       {
           id: "3.1",
           title: "Building a CRM System",
-          description: "Integrate customer touchpoints – journey data – reporting",
+          description: "Implementing a CRM system to integrate customer touchpoints, journey data, and reporting.",
           group: "Technology & Data",
           stage: "2",
           hashtags: ["#CS_TechData", "#CRM"],
@@ -672,7 +673,7 @@ export const en = {
       {
           id: "3.2",
           title: "Analysis & Reporting",
-          description: "Realtime Dashboard: CSAT, NPS, CES, feedback – KPIs",
+          description: "Building a real-time dashboard to track CSAT, NPS, CES, and operational KPIs.",
           group: "Technology & Data",
           stage: "2",
           hashtags: ["#CS_TechData", "#Insight"],
@@ -681,7 +682,7 @@ export const en = {
       {
           id: "3.3",
           title: "Customer Surveys & Evaluation",
-          description: "Collect post-interaction feedback – create improvement triggers",
+          description: "Establishing a system to collect post-interaction feedback to trigger improvement actions.",
           group: "Technology & Data",
           stage: "3",
           hashtags: ["#CS_TechData", "#Survey"],
@@ -690,7 +691,7 @@ export const en = {
       {
           id: "3.4",
           title: "Building an AI Bot",
-          description: "Deploy a chatbot to quickly answer simple questions",
+          description: "Deploying a chatbot/AI assistant to automate responses to frequently asked questions.",
           group: "Technology & Data",
           stage: "3",
           hashtags: ["#CS_TechData", "#Chatbot"],
@@ -699,7 +700,7 @@ export const en = {
       {
           id: "4.1",
           title: "Developing Online Training",
-          description: "E-learning: onboarding, process updates, quality checks",
+          description: "Developing an e-learning system for new hire onboarding and process update training.",
           group: "Training & Development",
           stage: "3",
           hashtags: ["#CS_Learning", "#CSAcademy"],
@@ -708,7 +709,7 @@ export const en = {
       {
           id: "5.1",
           title: "Establishing a Support Center",
-          description: "Create a Helpcenter, ticketing portal, FAQ knowledge base",
+          description: "Creating a self-service Help Center with a knowledge base and ticketing portal.",
           group: "Support Center & Self-Service",
           stage: "2",
           hashtags: ["#CS_SelfService", "#HelpDesk"],
@@ -719,7 +720,7 @@ export const en = {
   memoriesPage: {
     badge: "Memories",
     tooltipTitle: "Memorable Moments",
-    tooltipText: "A few images capturing moments from my career journey.",
+    tooltipText: "Memorable moments and milestones captured throughout my professional journey.",
     filters: {
       all: "All",
       mobifone: "Mobifone",
@@ -768,12 +769,12 @@ export const en = {
   schedulerPage: {
     badge: "Scheduler",
     tooltipTitle: "Book an Appointment",
-    tooltipText: "Choose a suitable time slot for us to discuss further.",
+    tooltipText: "Choose a suitable time for us to connect and discuss potential collaboration opportunities.",
   },
   aiChatPage: {
     badge: "AI Assistant",
     tooltipTitle: "Chat with AI Assistant",
-    tooltipText: "Ask questions about my experience, skills, or projects. The AI Assistant is trained on data from this profile.",
+    tooltipText: "Interact with an AI assistant trained on this profile's data to get quick answers about my experience and skills.",
     welcomeMessage: "Hello! I am Tri Nhan, Hung Thai's AI assistant. I can help you learn more about him!",
     voiceWelcomeMessage: "Hello! I am Tri Nhan, Hung Thai's AI assistant. I can help you learn more about him!",
     errorMessage: "Sorry, an error occurred. Please try again later.",
@@ -898,6 +899,12 @@ export const en = {
         url: "https://zalo.me/0909097882"
       },
       {
+        key: "sampleQuestions",
+        title: "Sample Questions",
+        icon: "ClipboardDocumentListIcon",
+        action: "show_question_categories"
+      },
+      {
         key: "summarizeExperience",
         title: "Summarize work experience",
         icon: "BriefcaseIcon",
@@ -914,7 +921,7 @@ export const en = {
   settingsPage: {
     badge: "Settings",
     tooltipTitle: "Customize Interface",
-    tooltipText: "Change the interface, effects, and other settings for the best experience.",
+    tooltipText: "Customize the interface, effects, and other settings for the best viewing experience.",
   },
   settings: {
     cursorEffect: "Cursor Effect",
@@ -936,7 +943,7 @@ export const en = {
   projectPostPopup: {
     badge: "Project Details",
     tooltipTitle: "About this project",
-    tooltipText: "Detailed analysis and insights from one of my key projects.",
+    tooltipText: "A detailed analysis, including context and outcomes, from one of my key projects.",
     nowPlaying: "Now Playing",
     listenToArticle: "Listen to Article",
     pauseReading: "Pause Reading",
@@ -1153,12 +1160,12 @@ export const vi = {
     ],
     badge: "Trang chủ",
     tooltipTitle: "Chào mừng đến với hồ sơ của tôi",
-    tooltipText: "Đây là trang chủ, nơi bạn có thể tìm thấy thư ngỏ và điều hướng đến các phần khác của hồ sơ.",
+    tooltipText: "Chào mừng bạn đến với hồ sơ tương tác của tôi. Tại đây, bạn có thể khám phá thư ngỏ và bắt đầu hành trình tìm hiểu về kinh nghiệm và các dự án của tôi.",
   },
   coverLetterPage: {
     badge: "Thư ngỏ",
     tooltipTitle: "Đôi lời gửi đến bạn",
-    tooltipText: "Một lá thư ngắn gọn chia sẻ về triết lý công việc và những giá trị tôi theo đuổi trong sự nghiệp.",
+    tooltipText: "Đôi dòng tâm huyết về triết lý làm việc và những giá trị mà tôi luôn theo đuổi trong sự nghiệp của mình.",
     greeting: "Kính gửi Quý Anh/Chị và Quý Công ty,",
     paragraphs: [
       "“Có một câu nói tôi luôn mang theo bên mình: Sự hài lòng của khách hàng không đến từ sự hoàn hảo, mà đến từ sự đồng cảm kịp thời.”",
@@ -1181,8 +1188,8 @@ export const vi = {
   aboutPage: {
     bioBadge: "Về tôi",
     tooltipTitle: "Thông tin cá nhân",
-    tooltipText: "Một cái nhìn sâu hơn về nền tảng, giá trị và cách liên hệ với tôi.",
-    bioVideoUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1897931346&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
+    tooltipText: "Khám phá sâu hơn về nền tảng chuyên môn, các giá trị cốt lõi và thông tin liên hệ chi tiết của tôi.",
+    bioVideoUrl: "https://scena.link/nmxffobkkmcj",
     bioTitle: "Hơn cả một người quản lý: Một đối tác trong thành công của khách hàng",
     bioParagraphs: [
       "Với hơn hai thập kỷ cống hiến cho nghệ thuật và khoa học của dịch vụ khách hàng, tôi đã học được rằng những chiến lược hiệu quả nhất được sinh ra từ sự đồng cảm chân thành và khát khao cải tiến không ngừng. Hành trình của tôi là một quá trình học hỏi liên tục, thích ứng với công nghệ mới, và quan trọng nhất là thấu hiểu yếu tố con người đằng sau mỗi tương tác.",
@@ -1202,7 +1209,7 @@ export const vi = {
   workExperiencePage: {
     title: "Kinh nghiệm làm việc",
     tooltipTitle: "Hành trình sự nghiệp",
-    tooltipText: "Những cột mốc quan trọng và các vai trò chính trong sự nghiệp của tôi.",
+    tooltipText: "Hành trình sự nghiệp qua các cột mốc và vai trò quan trọng, thể hiện sự phát triển và đóng góp tại mỗi công ty.",
     durationTitle: "Thời gian",
     positionTitle: "Vị trí",
     managedTitle: "Quản lý",
@@ -1461,7 +1468,7 @@ export const vi = {
   skillsPage: {
     title: "Kỹ năng",
     tooltipTitle: "Năng lực chuyên môn",
-    tooltipText: "Các kỹ năng và công nghệ tôi thành thạo.",
+    tooltipText: "Tổng hợp các kỹ năng và năng lực chuyên môn mà tôi đã đúc kết và thành thạo qua 22 năm kinh nghiệm.",
     categories: [
       {
         key: "professional",
@@ -1530,7 +1537,7 @@ export const vi = {
   educationPage: {
     title: "Học vấn",
     tooltipTitle: "Hành trình học tập & phát triển",
-    tooltipText: "Các bằng cấp, chứng chỉ và khóa đào tạo chuyên môn tôi đã hoàn thành.",
+    tooltipText: "Hành trình học vấn và các khóa đào tạo chuyên môn đã giúp tôi định hình và phát triển sự nghiệp.",
     yearPrefix: "Năm",
     items: [
       {
@@ -1610,7 +1617,7 @@ export const vi = {
   achievementsPage: {
     badge: "Thành tựu",
     tooltipTitle: "Năng lực & Thành tựu",
-    tooltipText: "Tổng hợp năng lực và tỷ lệ hoàn thành của tôi trong các lĩnh vực cốt lõi.",
+    tooltipText: "Tổng hợp các năng lực cốt lõi và tỷ lệ hoàn thành mục tiêu trong các lĩnh vực chuyên môn chính.",
     achievements: [
       { id: "1.1", title: "Xây dựng phòng Dịch vụ Khách hàng", branch: "Xây dựng P.CSKH", rate: 100, category: "📌 1. Chiến lược & Quản lý", hashtag: "#CS_Strategy", icon: "LightBulbIcon", color: "#F37021" },
       { id: "1.2", title: "Đặt mục tiêu phòng ban", branch: "Mục tiêu P.CSKH", rate: 80, category: "📌 1. Chiến lược & Quản lý", hashtag: "#CS_Strategy", icon: "LightBulbIcon", color: "#F37021" },
@@ -1633,7 +1640,7 @@ export const vi = {
   servicesPage: {
     badge: "Lĩnh vực",
     tooltipTitle: "Lĩnh vực chuyên môn",
-    tooltipText: "Các lĩnh vực tôi có chuyên môn sâu và có thể mang lại giá trị cho doanh nghiệp.",
+    tooltipText: "Các lĩnh vực chuyên môn sâu mà tôi có thể mang lại giá trị thực tiễn và bền vững cho doanh nghiệp.",
     services: [
         {
             key: "telecom",
@@ -1688,7 +1695,7 @@ export const vi = {
   projectsPage: {
     badge: "Dự án",
     tooltipTitle: "Các dự án tiêu biểu",
-    tooltipText: "Một số dự án quan trọng tôi đã dẫn dắt hoặc tham gia, thể hiện năng lực và kinh nghiệm thực tế của tôi.",
+    tooltipText: "Khám phá các dự án tiêu biểu tôi đã dẫn dắt hoặc tham gia, minh chứng cho năng lực và kinh nghiệm thực chiến.",
     stageLabel: "Giai đoạn",
     filters: {
         all: "Tất cả",
@@ -1702,7 +1709,7 @@ export const vi = {
       {
           id: "1.1",
           title: "Xây dựng Phòng Dịch vụ Khách hàng",
-          description: "Thiết lập cấu trúc – sơ đồ tổ chức – định hướng hoạt động",
+          description: "Thiết lập cấu trúc, sơ đồ tổ chức và định hướng hoạt động cho phòng ban.",
           group: "Chiến lược & Quản lý",
           stage: "1",
           hashtags: ["#CS_ChiếnLược", "#CấuTrúc"],
@@ -1711,7 +1718,7 @@ export const vi = {
       {
           id: "1.2",
           title: "Thiết lập Mục tiêu Phòng ban",
-          description: "OKRs, KPIs ngắn & dài hạn phù hợp với chiến lược công ty",
+          description: "Xây dựng bộ OKRs & KPIs ngắn hạn và dài hạn, đồng bộ với chiến lược công ty.",
           group: "Chiến lược & Quản lý",
           stage: "1",
           hashtags: ["#CS_ChiếnLược", "#OKR"],
@@ -1720,7 +1727,7 @@ export const vi = {
       {
           id: "1.3",
           title: "Nâng cao Trải nghiệm Khách hàng",
-          description: "Thiết lập tiêu chuẩn trải nghiệm, đo lường cảm xúc, đồng bộ hành trình",
+          description: "Thiết lập tiêu chuẩn trải nghiệm, đo lường cảm xúc của khách hàng và đồng bộ hóa hành trình.",
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_ChiếnLược", "#ThiếtKếCX"],
@@ -1729,7 +1736,7 @@ export const vi = {
       {
           id: "1.4",
           title: "Quản lý Dự án CSKH",
-          description: "Áp dụng Agile / Kanban, giám sát việc triển khai các cải tiến",
+          description: "Áp dụng phương pháp Agile/Kanban để giám sát và triển khai các cải tiến dịch vụ.",
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_ChiếnLược", "#QuảnLýDựÁn"],
@@ -1738,7 +1745,7 @@ export const vi = {
       {
           id: "1.5",
           title: "Thúc đẩy Cải tiến Sản phẩm",
-          description: "Cung cấp phản hồi sản phẩm từ dữ liệu CSKH, xây dựng “vòng lặp phản hồi” liên phòng ban",
+          description: "Xây dựng 'vòng lặp phản hồi' liên phòng ban, cung cấp dữ liệu CSKH để cải tiến sản phẩm.",
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_ChiếnLược", "#TiếngNóiKháchHàng"],
@@ -1747,7 +1754,7 @@ export const vi = {
       {
           id: "2.1",
           title: "Chuẩn hóa Quy trình CSKH",
-          description: "SOPs từ tiếp nhận đến giải quyết, phối hợp liên phòng ban",
+          description: "Chuẩn hóa các quy trình vận hành (SOPs) từ khâu tiếp nhận đến giải quyết vấn đề.",
           group: "Vận hành & Quy trình",
           stage: "1",
           hashtags: ["#CS_VậnHành", "#SOP"],
@@ -1756,7 +1763,7 @@ export const vi = {
       {
           id: "2.2",
           title: "Tối ưu hóa Kênh Hỗ trợ",
-          description: "Hợp nhất các kênh hotline, chat, email và mạng xã hội",
+          description: "Hợp nhất và tối ưu hóa các kênh hỗ trợ đa kênh: hotline, chat, email, và mạng xã hội.",
           group: "Vận hành & Quy trình",
           stage: "2",
           hashtags: ["#CS_VậnHành", "#OmniChannel"],
@@ -1765,7 +1772,7 @@ export const vi = {
       {
           id: "2.3",
           title: "Triển khai Tự động hóa",
-          description: "Áp dụng RPA, quy trình tự động, giảm thiểu các tác vụ lặp đi lặp lại",
+          description: "Ứng dụng RPA và các quy trình tự động hóa để giảm thiểu tác vụ lặp lại, tăng hiệu suất.",
           group: "Vận hành & Quy trình",
           stage: "3",
           hashtags: ["#CS_VậnHành", "#TựĐộngHóa"],
@@ -1774,7 +1781,7 @@ export const vi = {
       {
           id: "2.4",
           title: "Quản lý Chiến dịch Outbound",
-          description: "Kịch bản cho các cuộc gọi/email chủ động: chăm sóc, tái kích hoạt, khảo sát...",
+          description: "Xây dựng kịch bản và quản lý các chiến dịch chủ động: chăm sóc, tái kích hoạt, khảo sát...",
           group: "Vận hành & Quy trình",
           stage: "3",
           hashtags: ["#CS_VậnHành", "#CSOutbound"],
@@ -1783,7 +1790,7 @@ export const vi = {
       {
           id: "3.1",
           title: "Xây dựng Hệ thống CRM",
-          description: "Tích hợp các điểm chạm khách hàng – dữ liệu hành trình – báo cáo",
+          description: "Triển khai hệ thống CRM tích hợp các điểm chạm khách hàng, dữ liệu hành trình và báo cáo.",
           group: "Công nghệ & Dữ liệu",
           stage: "2",
           hashtags: ["#CS_CôngNghệ", "#CRM"],
@@ -1792,7 +1799,7 @@ export const vi = {
       {
           id: "3.2",
           title: "Phân tích & Báo cáo",
-          description: "Dashboard thời gian thực: CSAT, NPS, CES, phản hồi – KPIs",
+          description: "Xây dựng Dashboard thời gian thực để theo dõi các chỉ số CSAT, NPS, CES, và KPIs.",
           group: "Công nghệ & Dữ liệu",
           stage: "2",
           hashtags: ["#CS_CôngNghệ", "#Insight"],
@@ -1801,7 +1808,7 @@ export const vi = {
       {
           id: "3.3",
           title: "Khảo sát & Đánh giá Khách hàng",
-          description: "Thu thập phản hồi sau tương tác – tạo các trình kích hoạt cải tiến",
+          description: "Thiết lập hệ thống thu thập phản hồi sau tương tác để tạo ra các cơ hội cải tiến.",
           group: "Công nghệ & Dữ liệu",
           stage: "3",
           hashtags: ["#CS_CôngNghệ", "#KhảoSát"],
@@ -1810,7 +1817,7 @@ export const vi = {
       {
           id: "3.4",
           title: "Xây dựng AI Bot",
-          description: "Triển khai chatbot để trả lời nhanh các câu hỏi đơn giản",
+          description: "Triển khai chatbot và trợ lý AI để tự động hóa việc trả lời các câu hỏi thường gặp.",
           group: "Công nghệ & Dữ liệu",
           stage: "3",
           hashtags: ["#CS_CôngNghệ", "#Chatbot"],
@@ -1819,7 +1826,7 @@ export const vi = {
       {
           id: "4.1",
           title: "Phát triển Đào tạo Trực tuyến",
-          description: "E-learning: hội nhập, cập nhật quy trình, kiểm tra chất lượng",
+          description: "Xây dựng hệ thống đào tạo trực tuyến (E-learning) cho nhân viên mới và cập nhật quy trình.",
           group: "Đào tạo & Phát triển",
           stage: "3",
           hashtags: ["#CS_ĐàoTạo", "#CSAcademy"],
@@ -1828,7 +1835,7 @@ export const vi = {
       {
           id: "5.1",
           title: "Thành lập Trung tâm Hỗ trợ",
-          description: "Tạo Helpcenter, cổng ticket, cơ sở kiến thức FAQ",
+          description: "Phát triển trung tâm trợ giúp (Help Center) với cơ sở kiến thức FAQ và cổng ticket tự phục vụ.",
           group: "Trung tâm Hỗ trợ & Tự phục vụ",
           stage: "2",
           hashtags: ["#CS_TựPhụcVụ", "#HelpDesk"],
@@ -1839,7 +1846,7 @@ export const vi = {
   memoriesPage: {
     badge: "Kỷ niệm",
     tooltipTitle: "Những khoảnh khắc đáng nhớ",
-    tooltipText: "Một vài hình ảnh ghi lại những khoảnh khắc trong hành trình sự nghiệp của tôi.",
+    tooltipText: "Những khoảnh khắc và kỷ niệm đáng nhớ trong suốt chặng đường sự nghiệp của tôi.",
     filters: {
       all: "Tất cả",
       mobifone: "Mobifone",
@@ -1888,12 +1895,12 @@ export const vi = {
   schedulerPage: {
     badge: "Đặt lịch",
     tooltipTitle: "Đặt lịch hẹn",
-    tooltipText: "Chọn một khung giờ phù hợp để chúng ta có thể trao đổi thêm.",
+    tooltipText: "Chọn một khung giờ phù hợp để chúng ta có thể kết nối và trao đổi sâu hơn về các cơ hội hợp tác.",
   },
   aiChatPage: {
     badge: "Trợ lý AI",
     tooltipTitle: "Trò chuyện với Trợ lý AI",
-    tooltipText: "Đặt câu hỏi về kinh nghiệm, kỹ năng hoặc dự án của tôi. Trợ lý AI được huấn luyện dựa trên dữ liệu từ hồ sơ này.",
+    tooltipText: "Tương tác với trợ lý AI được huấn luyện từ dữ liệu hồ sơ này để nhận câu trả lời nhanh về kinh nghiệm, kỹ năng của tôi.",
     welcomeMessage: "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Hùng Thái. Tôi có thể giúp bạn tìm hiểu thêm về anh ấy!",
     voiceWelcomeMessage: "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Hùng Thái. Tôi có thể giúp bạn tìm hiểu thêm về anh ấy!",
     errorMessage: "Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại sau.",
@@ -2018,6 +2025,12 @@ export const vi = {
         url: "https://zalo.me/0909097882"
       },
       {
+        key: "sampleQuestions",
+        title: "Câu hỏi mẫu",
+        icon: "ClipboardDocumentListIcon",
+        action: "show_question_categories"
+      },
+      {
         key: "summarizeExperience",
         title: "Tóm tắt kinh nghiệm làm việc",
         icon: "BriefcaseIcon",
@@ -2034,7 +2047,7 @@ export const vi = {
   settingsPage: {
     badge: "Cài đặt",
     tooltipTitle: "Tùy chỉnh Giao diện",
-    tooltipText: "Thay đổi giao diện, hiệu ứng và các cài đặt khác để có trải nghiệm tốt nhất.",
+    tooltipText: "Tùy chỉnh giao diện, hiệu ứng và các cài đặt khác để có trải nghiệm xem hồ sơ tốt nhất.",
   },
   settings: {
     cursorEffect: "Hiệu ứng con trỏ",
@@ -2056,7 +2069,7 @@ export const vi = {
   projectPostPopup: {
     badge: "Chi tiết dự án",
     tooltipTitle: "Về dự án này",
-    tooltipText: "Phân tích chi tiết và những hiểu biết sâu sắc từ một trong những dự án trọng điểm của tôi.",
+    tooltipText: "Phân tích chi tiết, bối cảnh và kết quả từ một trong những dự án trọng điểm của tôi.",
     nowPlaying: "Đang phát",
     listenToArticle: "Nghe bài viết",
     pauseReading: "Tạm dừng",

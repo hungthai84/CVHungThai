@@ -59,11 +59,7 @@ const AchievementCard: React.FC<{ achievement: Achievement, index: number }> = (
                     <Icon />
                     <h4 title={achievement.title}>{achievement.title}</h4>
                 </div>
-                <div className="achievement-card-description">
-                    <p>{achievement.branch}</p>
-                </div>
                 <div className="achievement-card-tags">
-                    <span>{achievement.category}</span>
                     <span>{achievement.hashtag}</span>
                 </div>
             </div>
@@ -88,9 +84,13 @@ const AchievementsPage: React.FC<AchievementsPageProps> = ({ id }) => {
                     />
                 </div>
                 {achievements.length > 0 ? (
-                    <div className="achievements-page-grid no-scrollbar">
+                    <div className="achievement-category-grid no-scrollbar">
                         {achievements.map((ach, index) => (
-                            <AchievementCard key={ach.id} achievement={ach} index={index} />
+                            <AchievementCard 
+                                key={ach.id} 
+                                achievement={ach} 
+                                index={index} 
+                            />
                         ))}
                     </div>
                 ) : (
