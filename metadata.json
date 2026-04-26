@@ -2,7 +2,8 @@
   "requestFramePermissions": [
     "microphone"
   ],
-  "name": " Hùng Thái  25.08",
+  "name": "Nguyễn Hùng Thái",
   "description": "Hùng Thái  25.08",
-  "prompt": ""
+  "prompt": "",
+  "majorCapabilities": []
 }

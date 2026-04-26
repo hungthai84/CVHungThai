@@ -17,7 +17,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
     onOpenSettings,
     onOpenAiChat,
     onPrintClick,
-    onSchedulerClick
+    onSchedulerClick,
 }) => {
     const { t } = useI18n();
     return (

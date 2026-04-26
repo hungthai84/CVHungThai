@@ -4,19 +4,9 @@ import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';
 
-// The type was mentioned in the previous turn's description
-interface InfoItem {
-    label: string;
-    value: string;
-    icon: keyof typeof Icons;
-    url?: string;
-}
-
 export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t } = useI18n();
     const pageData = t.aboutPage;
-    
-    const infoItems: InfoItem[] = (pageData.infoItems as InfoItem[]) || [];
 
     return (
         <PageLayout id={id}>
@@ -24,63 +14,71 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="about-header">
                     <InfoBadge
                         icon={<Icons.UserIcon />}
-                        text={pageData.bioBadge}
+                        text={pageData.badge}
                         tooltipTitle={pageData.tooltipTitle}
                         tooltipText={pageData.tooltipText}
                     />
                 </div>
+
                 <div className="about-page-content-wrapper no-scrollbar">
                     <div className="about-page-grid">
-                        <div className="about-video-card">
-                            <div className="bio-video-wrapper">
-                                <iframe
-                                    src={pageData.bioVideoUrl}
-                                    title="Bio Video"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
+                        {/* Left Column: Bio and Video */}
+                        <div className="about-bio-text-card no-scrollbar">
+                            <div className="about-bio-and-video-container">
+                                <div className="about-video-card">
+                                   <div className="bio-video-wrapper">
+                                        <iframe
+                                            src="https://scena.link/nmxffobkkmcj"
+                                            title="Giới thiệu bản thân - Nguyễn Hùng Thái"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                </div>
+                                {pageData.paragraphs.map((p, index) => (
+                                    <p key={index} dangerouslySetInnerHTML={{ __html: p }} />
+                                ))}
+                                <div className="core-values" role="complementary">
+                                    {pageData.coreValues}
+                                </div>
+                                <p dangerouslySetInnerHTML={{ __html: pageData.concludingParagraph }} />
                             </div>
                         </div>
-                        <div className="about-bio-text-card">
-                            <h3 className="hero-name-text">{pageData.bioTitle}</h3>
-                            {pageData.bioParagraphs.map((p, index) => {
-                                if (p.startsWith('> ')) {
-                                    return <blockquote key={index}><p className="core-values">{p.substring(2)}</p></blockquote>;
-                                }
-                                return <p key={index}>{p}</p>;
-                            })}
-                        </div>
-                        <div className="about-contact-card">
-                            <h3>{pageData.infoTitle}</h3>
-                            <div className="about-info-grid">
-                                {infoItems.map((item) => {
-                                    const Icon = Icons[item.icon] || Icons.LinkIcon;
-                                    const content = (
-                                        <>
-                                            <div className="about-info-item-icon">
-                                                <Icon />
+
+                        {/* Right Column: Personal Info Card */}
+                        {pageData.infoItems && pageData.infoItems.length > 0 && (
+                            <div className="about-personal-info-card">
+                                <h3 className="personal-info-title">{pageData.personalInfoTitle}</h3>
+                                <div className="personal-info-grid no-scrollbar">
+                                    {pageData.infoItems.map(item => {
+                                        const Icon = Icons[item.icon as keyof typeof Icons] || Icons.UserIcon;
+                                        return (
+                                            <div key={item.key} className="personal-info-item">
+                                                <Icon className="info-item-icon" />
+                                                <div className="info-item-text">
+                                                    <span className="info-item-label">{item.label}</span>
+                                                    <span className="info-item-value">
+                                                        {item.link ? (
+                                                            <a href={item.link} target="_blank" rel="noopener noreferrer">
+                                                                {item.value}
+                                                            </a>
+                                                        ) : (
+                                                            item.value
+                                                        )}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div className="about-info-item-text-wrapper">
-                                                <div className="label">{item.label}</div>
-                                                <div className="value">{item.value}</div>
-                                            </div>
-                                        </>
-                                    );
-                                    return item.url ? (
-                                        <a href={item.url} key={item.label} className="about-info-item" target="_blank" rel="noopener noreferrer">
-                                            {content}
-                                        </a>
-                                    ) : (
-                                        <div key={item.label} className="about-info-item">
-                                            {content}
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>
         </PageLayout>
     );
 };
+
+export default AboutPage;

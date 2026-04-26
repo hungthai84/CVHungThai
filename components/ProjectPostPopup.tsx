@@ -1,10 +1,14 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+
+import React, { useMemo, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { GoogleGenAI } from "@google/genai";
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
 import { useSpeechSynthesis } from './useSpeechSynthesis';
 import { useTheme } from '../contexts/ThemeContext';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
+import LinkEmbedPopup from './LinkEmbedPopup';
 
 interface ProjectPostPageProps {
     id: string; // The full page key, e.g., "project-1.1"
@@ -20,12 +24,30 @@ interface Comment {
 
 const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavigate }) => {
     const { t, language } = useI18n();
-    const post = useMemo(() => (t.projectPosts as any)[projectId], [projectId, t]);
+    const pageData = t.projectPostPopup;
+    const post = useMemo(() => (t.projectPosts as any)[projectId] || (t.projectPosts as any).default, [projectId, t]);
+    
+    const [mindMapUrl, setMindMapUrl] = useState(post.mindMapUrl); // Start with fallback
+    const [isGeneratingMap, setIsGeneratingMap] = useState(false);
+    const [generationError, setGenerationError] = useState<string | null>(null);
+    const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
+
     const { isAiVoiceOn, selectedAiVoiceName } = useTheme();
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
     const scrollRef = useRef<HTMLDivElement>(null);
     const [comments] = React.useState<Comment[]>([]);
     const [newComment] = React.useState({ name: '', email: '', text: '' });
+    const aiRef = useRef<GoogleGenAI | null>(null);
+    
+    const fullArticleText = useMemo(() => {
+        if (!post || !post.content) return '';
+        const textParts = [post.title];
+        if (post.content.paragraphs) {
+            textParts.push(...post.content.paragraphs);
+        }
+        return textParts.join('\n\n');
+    }, [post]);
+
 
     const allProjects = t.projectsPage.projects;
     const relatedPosts = useMemo(() => {
@@ -37,22 +59,69 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             .slice(0, 4); 
     }, [projectId, post, allProjects]);
 
-    const fullTextToRead = useMemo(() => {
-        if (!post) return '';
-        return [post.title, ...post.content.paragraphs].join('. ');
-    }, [post]);
-
     useEffect(() => {
-        // Cancel speech synthesis when component unmounts or projectId changes
-        return () => {
-            cancel(); 
-        };
-    }, [projectId, cancel]);
+        const generateMindMap = async () => {
+            const cacheKey = `mindMap_${projectId}_${language}`;
+            const cachedUrl = sessionStorage.getItem(cacheKey);
+            if (cachedUrl) {
+                setMindMapUrl(cachedUrl);
+                return;
+            }
 
-    // Scroll to top when the project ID changes
+            setIsGeneratingMap(true);
+            setGenerationError(null);
+
+            try {
+                if (!process.env.API_KEY) {
+                    throw new Error("API key is not configured.");
+                }
+                if (!aiRef.current) {
+                     aiRef.current = new GoogleGenAI({ apiKey: process.env.API_KEY });
+                }
+
+                const summary = post.content.paragraphs.join(' ').substring(0, 800);
+                const prompt = `Create a visually appealing and professional mind map in ${language === 'vi' ? 'Vietnamese' : 'English'} summarizing the project: "${post.title}". The central theme should be the project title. Derive the main branches from these key points: "${summary}...". Use a clean, modern aesthetic with relevant icons for clarity. The layout should be balanced and easy to read.`;
+                
+                const response = await aiRef.current.models.generateImages({
+                    model: 'imagen-4.0-generate-001',
+                    prompt: prompt,
+                    config: {
+                      numberOfImages: 1,
+                      outputMimeType: 'image/png',
+                      aspectRatio: '16:9',
+                    },
+                });
+
+                if (response.generatedImages && response.generatedImages.length > 0) {
+                    const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
+                    const imageUrl = `data:image/png;base64,${base64ImageBytes}`;
+                    setMindMapUrl(imageUrl);
+                    sessionStorage.setItem(cacheKey, imageUrl);
+                } else {
+                    throw new Error("No image was generated.");
+                }
+            } catch (error) {
+                console.error("Error generating mind map:", error);
+                setGenerationError("Không thể tạo sơ đồ tư duy lúc này.");
+            } finally {
+                setIsGeneratingMap(false);
+            }
+        };
+
+        if (projectId && post && post.title !== "Thông tin dự án chưa được cập nhật") {
+            generateMindMap();
+        } else {
+            setMindMapUrl(post.mindMapUrl);
+            setIsGeneratingMap(false);
+            setGenerationError(null);
+        }
+
+    }, [projectId, post, language]);
+
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
-    }, [projectId]);
+        cancel();
+    }, [projectId, cancel]);
     
     if (!post) {
         return <PageLayout id={id}><div className="info-card">Loading project...</div></PageLayout>;
@@ -65,11 +134,13 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         }
     };
 
-    const handleTogglePlayback = () => {
+    const handleToggleReadAloud = () => {
+        if (!fullArticleText.trim() || !isAiVoiceOn) return;
+
         if (isSpeaking) {
             cancel();
         } else {
-            speak(fullTextToRead, { voiceName: selectedAiVoiceName, lang: language });
+            speak(fullArticleText, { voiceName: selectedAiVoiceName, lang: language });
         }
     };
     
@@ -89,16 +160,16 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                 <div className="project-post-nav-header">
                     <InfoBadge
                         icon={<Icons.PencilIcon />}
-                        text={t.projectPostPopup.badge}
-                        tooltipTitle={t.projectPostPopup.tooltipTitle}
-                        tooltipText={t.projectPostPopup.tooltipText}
+                        text={pageData.badge}
+                        tooltipTitle={pageData.tooltipTitle}
+                        tooltipText={pageData.tooltipText}
                     />
                     <button
                         onClick={() => onNavigate?.('projects')}
                         className="btn btn-secondary"
                     >
                         <Icons.ChevronLeftIcon size={18} />
-                        <span>{t.projectPostPopup.backToProjects}</span>
+                        <span>{pageData.backToProjects}</span>
                     </button>
                 </div>
 
@@ -121,16 +192,16 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                 {isAiVoiceOn && (
                                                     <div className="project-post-voice-reader-container">
                                                         <div className="audio-player-widget">
-                                                            <button 
+                                                             <button 
                                                                 className={`audio-player-button ${isSpeaking ? 'speaking' : 'idle-glow'}`}
-                                                                onClick={handleTogglePlayback}
-                                                                aria-label={isSpeaking ? t.projectPostPopup.pauseReading : t.projectPostPopup.readAloud}
+                                                                onClick={handleToggleReadAloud}
+                                                                aria-label={isSpeaking ? pageData.pauseReading : pageData.readAloud}
                                                             >
                                                                 {isSpeaking ? <Icons.PauseIcon /> : <Icons.PlayIcon />}
                                                             </button>
                                                             <div className="audio-player-info">
                                                                 <span className="audio-player-title">
-                                                                    {isSpeaking ? t.projectPostPopup.nowPlaying : t.projectPostPopup.listenToArticle}
+                                                                    {isSpeaking ? pageData.nowPlaying : pageData.listenToArticle}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -152,7 +223,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                     <div className="project-post-sidebar">
                                         {relatedPosts.length > 0 && (
                                             <div className="sidebar-widget">
-                                                <h4 className="sidebar-widget-title">{t.projectPostPopup.relatedPosts}</h4>
+                                                <h4 className="sidebar-widget-title">{pageData.relatedPosts}</h4>
                                                 <div className="related-posts-list">
                                                     {relatedPosts.map(related => (
                                                         <div 
@@ -175,45 +246,61 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                         )}
                                         <div className="sidebar-widget">
                                             <h4 className="sidebar-widget-title">Sơ đồ tư duy</h4>
-                                            <img src="https://i.postimg.cc/k47jVzZk/S-t-duy.png" alt="Sơ đồ tư duy" style={{width: '100%', borderRadius: '10px', border: 'var(--color-brand-glass-border)'}}/>
+                                            {isGeneratingMap ? (
+                                                <div className="mind-map-loader">
+                                                    <Icons.CpuIcon className="animate-spin" size={40} />
+                                                    <p>Đang tạo sơ đồ tư duy AI...</p>
+                                                </div>
+                                            ) : generationError ? (
+                                                <div className="mind-map-error">
+                                                    <Icons.XMarkIcon size={40} />
+                                                    <p>{generationError}</p>
+                                                    <img src={post.mindMapUrl} alt="Sơ đồ tư duy (Fallback)" style={{width: '100%', borderRadius: '10px'}}/>
+                                                </div>
+                                            ) : (
+                                                <img src={mindMapUrl} alt="Sơ đồ tư duy" style={{width: '100%', borderRadius: '10px', border: 'var(--color-brand-glass-border)'}}/>
+                                            )}
                                         </div>
+
                                         <div className="sidebar-widget">
                                             <h4 className="sidebar-widget-title">Tài liệu tham khảo</h4>
                                             <ul className="reference-links-list">
-                                                <li><a href="https://www.atlassian.com/agile/kanban" target="_blank" rel="noopener noreferrer">Kanban Methodology Guide</a></li>
-                                                <li><a href="https://www.atlassian.com/agile" target="_blank" rel="noopener noreferrer">Agile Project Management Basics</a></li>
-                                                <li><a href="https://www.zendesk.com/blog/customer-service-best-practices/" target="_blank" rel="noopener noreferrer">Customer Service Best Practices</a></li>
+                                                {(pageData.referenceLinks || []).map((link: {title: string, url: string}) => (
+                                                    <li key={link.title}>
+                                                        <a onClick={(e) => { e.preventDefault(); setEmbeddingUrl(link.url); }}>{link.title}</a>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                     </div>
 
                                     <div className="sidebar-widget comments-widget">
-                                        <h4 className="sidebar-widget-title">{t.projectPostPopup.comments} ({comments.length})</h4>
+                                        <h4 className="sidebar-widget-title">{pageData.comments} ({comments.length})</h4>
                                         
                                         <form className="comment-form">
                                             <div className="comment-form-grid">
                                                 <input 
                                                     type="text" 
                                                     name="name"
-                                                    placeholder={t.projectPostPopup.namePlaceholder} 
+                                                    placeholder={pageData.namePlaceholder} 
                                                     value={newComment.name}
                                                     readOnly
                                                 />
                                                 <input 
                                                     type="email"
                                                     name="email" 
-                                                    placeholder={t.projectPostPopup.emailPlaceholder}
+                                                    placeholder={pageData.emailPlaceholder}
                                                     value={newComment.email}
                                                     readOnly
                                                 />
                                             </div>
                                             <textarea 
                                                 name="text"
-                                                placeholder={t.projectPostPopup.commentPlaceholder}
+                                                placeholder={pageData.commentPlaceholder}
                                                 value={newComment.text}
                                                 readOnly
                                             ></textarea>
-                                            <button type="submit" className="btn btn-primary" disabled>{t.projectPostPopup.submitComment}</button>
+                                            <button type="submit" className="btn btn-primary" disabled>{pageData.submitComment}</button>
                                         </form>
                                         
                                         <div className="comments-list">
@@ -239,6 +326,10 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                     </main>
                 </div>
             </div>
+            {embeddingUrl && document.getElementById('popup-root') && createPortal(
+                <LinkEmbedPopup url={embeddingUrl} onClose={() => setEmbeddingUrl(null)} />,
+                document.getElementById('popup-root')!
+            )}
         </PageLayout>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
@@ -15,6 +15,39 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isTogglingPlay, setIsTogglingPlay] = useState(false);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const videoWrapperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const contentEl = contentRef.current;
+        const videoWrapperEl = videoWrapperRef.current;
+        if (!contentEl || !videoWrapperEl) return;
+
+        let animationFrameId: number | null = null;
+
+        const onScroll = () => {
+            if (animationFrameId === null) {
+                animationFrameId = requestAnimationFrame(() => {
+                    const scrollTop = contentEl.scrollTop;
+                    // Enhanced parallax effect for a more noticeable, yet subtle, depth effect.
+                    if (videoWrapperEl) {
+                        videoWrapperEl.style.transform = `translateY(-${scrollTop * 0.4}px)`;
+                    }
+                    animationFrameId = null;
+                });
+            }
+        };
+
+        contentEl.addEventListener('scroll', onScroll, { passive: true });
+        return () => {
+            if (contentEl) {
+                contentEl.removeEventListener('scroll', onScroll);
+            }
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        };
+    }, []);
 
     const handlePlayPause = useCallback(async () => {
         const video = videoRef.current;
@@ -48,7 +81,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                     />
                 </div>
 
-                <div className="custom-video-player-wrapper">
+                <div className="custom-video-player-wrapper" ref={videoWrapperRef}>
                     <div 
                         className="cover-letter-video-container" 
                         title={isPlaying ? "Tạm dừng video" : "Xem video giới thiệu"}
@@ -81,7 +114,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                     </button>
                 </div>
                 
-                <div className="cover-letter-content no-scrollbar">
+                <div className="cover-letter-content no-scrollbar" ref={contentRef}>
                     <div className="cover-letter-inner-card">
                         <p>{pageData.greeting}</p>
                         {paragraphs.map((p, index) => {

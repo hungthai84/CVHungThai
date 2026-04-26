@@ -72,6 +72,7 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                     playsInline 
                     className="home-hero-card-bg-video"
                     src="https://cdn.scena.ai/project/9626/3831bf105bab4a399b35e79c5a8b4f1d3cfc4fe5ea48812f948fa55c90792dc4.mp4"
+                    poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
                 />
                 <div className="home-hero-card-overlay"></div>
                 <div className="home-hero-card-content-wrapper">

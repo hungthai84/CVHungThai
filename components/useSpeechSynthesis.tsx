@@ -101,32 +101,48 @@ export const useSpeechSynthesis = () => {
             
             let selectedVoice: SpeechSynthesisVoice | undefined;
 
+            // 1. Try to find the specifically requested voice
             if (options.voiceName) {
                 selectedVoice = voices.find(voice => voice.name === options.voiceName);
             }
 
-            // Fallback logic if specific voice isn't found
+            // 2. If no specific voice or specific voice not found, apply smart fallback based on language
             if (!selectedVoice) {
                 if (targetLangCode === 'vi-VN') {
-                    const isEdge = navigator.userAgent.includes("Edg/");
-                    if (isEdge) {
-                        const remyVoice = voices.find(v => v.name === 'Microsoft Rémy Multilingue Online (Natural) - French (France)');
-                        if (remyVoice) selectedVoice = remyVoice;
-                    }
-                    if(!selectedVoice) {
-                        const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN');
-                        selectedVoice = 
-                            vietnameseVoices.find(v => v.name.toLowerCase().includes('nam') || v.name.toLowerCase().includes('male')) ||
-                            vietnameseVoices[0];
+                    const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN');
+                    if (vietnameseVoices.length > 0) {
+                        // Priority 1: A specific, high-quality female voice.
+                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Hoai My Online (Natural) - Vietnamese (Vietnam)');
+        
+                        // Priority 2: Fallback to any other female Vietnamese voice.
+                        if (!preferredVoice) {
+                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nữ') || v.name.toLowerCase().includes('female'));
+                        }
+                        
+                        // Priority 3: Absolute fallback to the first available Vietnamese voice.
+                        selectedVoice = preferredVoice || vietnameseVoices[0];
                     }
                 } else { // en-US
                     const englishVoices = voices.filter(v => v.lang.startsWith('en-US'));
-                    selectedVoice = 
-                        voices.find(v => v.name === 'Microsoft David - English (United States)') || // Prefer David
-                        englishVoices.find(v => v.name.toLowerCase().includes('male')) || // Prefer other male
-                        englishVoices[0]; // Fallback to first US English
+                    const enPriorityList = [
+                        'Microsoft Ryan Online (Natural) - English (United States)',
+                        'Microsoft Jenny Online (Natural) - English (United States)',
+                        'Google US English',
+                        'Microsoft David - English (United States)',
+                    ];
+                    for (const name of enPriorityList) {
+                        const voice = englishVoices.find(v => v.name === name);
+                        if (voice) {
+                            selectedVoice = voice;
+                            break;
+                        }
+                    }
+                    if (!selectedVoice) {
+                        selectedVoice = englishVoices.find(v => v.name.toLowerCase().includes('male')) || englishVoices[0];
+                    }
                 }
             }
+
 
             if (selectedVoice) {
                 utterance.voice = selectedVoice;

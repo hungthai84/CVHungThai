@@ -1,0 +1,45 @@
+import React from 'react';
+import { useI18n } from '../contexts/i18n';
+import type { Project, ViewMode } from './ProjectsPage';
+
+interface ProjectCardProps {
+    project: Project;
+    viewMode: ViewMode;
+    hasPost: boolean;
+    onClick: () => void;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) => {
+    const { t } = useI18n();
+    const pageData = t.projectsPage;
+
+    return (
+        <div
+            className={`project-card-new ${hasPost ? 'has-post' : ''}`}
+            onClick={onClick}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
+            role={hasPost ? "button" : "article"}
+            tabIndex={hasPost ? 0 : -1}
+            aria-label={`Xem chi tiết dự án: ${project.title}`}
+        >
+            <div className="project-card-new-image">
+                <img src={project.imageUrl} alt={project.title} loading="lazy" />
+            </div>
+            <div className="project-card-new-content">
+                <div className="project-card-new-header">
+                    <span className="project-card-new-tag group-tag" title={project.group}>{project.group}</span>
+                    <span className="project-card-new-tag">{pageData.stageLabel} {project.stage}</span>
+                </div>
+                <h4 className="project-card-new-title">
+                    <span className="project-card-new-id">{project.id}</span>. {project.title}
+                </h4>
+                <p className="project-card-new-description">{project.description}</p>
+                <div className="project-card-new-footer">
+                    {project.hashtags.map(tag => <span key={tag} className="project-card-new-hashtag">{tag}</span>)}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ProjectCard;

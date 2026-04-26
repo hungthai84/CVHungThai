@@ -19,8 +19,8 @@ interface ThemeContextType {
     setAiVoiceOn: (isOn: boolean) => void;
     selectedAiVoiceName: string;
     setSelectedAiVoiceName: (name: string) => void;
-    projectFilter: string;
-    setProjectFilter: (filter: string) => void;
+    projectFilter: string[];
+    setProjectFilter: (filter: string[]) => void;
     wallpaper: WallpaperType;
     setWallpaper: (wallpaper: WallpaperType) => void;
 }
@@ -43,11 +43,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [lightThemeColor, setLightThemeColorState] = useState<ThemeColor>('#101733');
     const [darkThemeColor, setDarkThemeColorState] = useState<ThemeColor>('#FFFFFF'); // Dark mode default is now white
     
-    const [isCursorEffectOn, setCursorEffectState] = useState<boolean>(false);
+    const [isCursorEffectOn, setCursorEffectState] = useState<boolean>(true);
     const [isSoundOn, setSoundOnState] = useState<boolean>(true);
     const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
-    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('');
-    const [projectFilter, setProjectFilterState] = useState<string>('all');
+    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
+    const [projectFilter, setProjectFilterState] = useState<string[]>([]);
     const [wallpaper, setWallpaperState] = useState<WallpaperType>('');
     
     // --- Setter Functions that include saving to localStorage ---
@@ -87,9 +87,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         localStorage.setItem('selectedAiVoiceName', name);
     };
 
-    const setProjectFilter = (filter: string) => {
+    const setProjectFilter = (filter: string[]) => {
         setProjectFilterState(filter);
-        localStorage.setItem('projectFilter', filter);
+        localStorage.setItem('projectFilter', JSON.stringify(filter));
     }
 
     const setWallpaper = (wp: WallpaperType) => {
@@ -116,11 +116,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedLightColor) setLightThemeColorState(savedLightColor);
         if (savedDarkColor) setDarkThemeColorState(savedDarkColor);
         
-        setCursorEffectState(savedCursor === null ? false : savedCursor === 'true');
+        setCursorEffectState(savedCursor === null ? true : savedCursor === 'true');
         setSoundOnState(savedSound === null ? true : savedSound === 'true');
         setAiVoiceOnState(savedAiVoice === null ? true : savedAiVoice === 'true');
         if (savedVoiceName) setSelectedAiVoiceNameState(savedVoiceName);
-        if (savedProjectFilter) setProjectFilterState(savedProjectFilter);
+        if (savedProjectFilter) {
+            try {
+                const parsedFilter = JSON.parse(savedProjectFilter);
+                if (Array.isArray(parsedFilter)) {
+                    setProjectFilterState(parsedFilter);
+                }
+            } catch (e) {
+                setProjectFilterState([]);
+            }
+        }
 
         // Migration from old 'video' value to the new URL-based system
         if (savedWallpaper === 'video') {
@@ -152,70 +161,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             root.style.setProperty('--accent-color-rgb', hexToRgb(lightThemeColor));
         }
     }, [themeMode, lightThemeColor, darkThemeColor]);
-
-    // Effect to set the default AI voice based on browser and availability
-    useEffect(() => {
-        // Don't run if a voice has already been saved and loaded
-        if (localStorage.getItem('selectedAiVoiceName')) {
-            return;
-        }
-
-        const setInitialVoice = () => {
-            const voices = window.speechSynthesis.getVoices();
-            if (voices.length === 0) {
-                return; // Voices not loaded yet.
-            }
-
-            let finalVoice: SpeechSynthesisVoice | undefined;
-
-            // --- Prioritize "Nam Minh" or Google's default male Vietnamese voice ---
-            finalVoice = voices.find(v => v.lang === 'vi-VN' && (v.name.includes('Nam Minh') || v.name === 'Google Tiếng Việt'));
-
-            // If preferred voice not found, use existing fallback logic
-            if (!finalVoice) {
-                const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN');
-                const standardVietnameseVoice = 
-                    vietnameseVoices.find(v => v.name.toLowerCase().includes('nam') || v.name.toLowerCase().includes('male')) ||
-                    vietnameseVoices[0]; // Fallback to the first available Vietnamese voice
-
-                const isEdge = navigator.userAgent.includes("Edg/");
-                if (isEdge) {
-                    const remyVoice = voices.find(v => v.name === 'Microsoft Rémy Multilingue Online (Natural) - French (France)');
-                    finalVoice = remyVoice || standardVietnameseVoice; // Fallback to standard if Rémy not found
-                } else {
-                    finalVoice = standardVietnameseVoice;
-                }
-            }
-
-            // --- Fallback to English if no suitable Vietnamese voice is found ---
-            if (!finalVoice) {
-                console.warn("No suitable Vietnamese voice found. Falling back to English voice.");
-                const englishVoices = voices.filter(v => v.lang.startsWith('en-US'));
-                finalVoice = 
-                    voices.find(v => v.name === 'Microsoft David - English (United States)') || // Prefer David
-                    englishVoices.find(v => v.name.toLowerCase().includes('male')) || // Prefer other male
-                    englishVoices[0]; // Fallback to first US English
-            }
-            
-            if (finalVoice) {
-                // This calls the setter which also saves to localStorage
-                setSelectedAiVoiceName(finalVoice.name);
-            } else {
-                console.warn("No suitable voices found. Using browser default.");
-                setSelectedAiVoiceName('');
-            }
-        };
-
-        if (window.speechSynthesis.getVoices().length) {
-            setInitialVoice();
-        } else {
-            window.speechSynthesis.addEventListener('voiceschanged', setInitialVoice, { once: true });
-        }
-        
-        return () => {
-            window.speechSynthesis.removeEventListener('voiceschanged', setInitialVoice);
-        }
-    }, []);
 
     const value: ThemeContextType = {
         themeMode,

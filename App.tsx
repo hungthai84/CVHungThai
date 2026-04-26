@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import Sidebar from './components/Sidebar';
@@ -25,6 +26,11 @@ import PrintableView from './components/PrintableView';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
 import { AboutPage } from './components/AboutPage';
+import WorkVideoPage from './components/WorkVideoPage';
+import InterviewPage from './components/InterviewPage';
+import PasswordPrompt from './components/PasswordPrompt';
+import BlogPage from './components/BlogPage';
+import HoroscopePage from './components/HoroscopePage';
 
 
 const baseNavStructure: {
@@ -48,7 +54,11 @@ const baseNavStructure: {
         component: ProjectsPage,
     },
     { key: 'achievements', tKey: 'achievements', icon: 'TrophyIcon', component: AchievementsPage },
+    { key: 'horoscope', tKey: 'horoscope', icon: 'SparklesIcon', component: HoroscopePage },
     { key: 'memories', tKey: 'memories', icon: 'CameraIcon', component: MemoriesPage },
+    { key: 'blog', tKey: 'blog', icon: 'BookOpenIcon', component: BlogPage },
+    { key: 'interview', tKey: 'interview', icon: 'PresentationIcon', component: InterviewPage },
+    { key: 'workVideo', tKey: 'experience', icon: 'BriefcaseIcon', component: WorkVideoPage, showInMenu: false },
     { key: 'scheduler', tKey: 'scheduler', icon: 'CalendarDaysIcon', component: SchedulerPage, showInMenu: false },
     { key: 'aiChat', tKey: 'aiChat', icon: 'BotIcon', component: AiChatPage, showInMenu: false },
     { key: 'settings', tKey: 'settings', icon: 'SettingsIcon', component: SettingsPage, showInMenu: false },
@@ -72,11 +82,14 @@ const App: React.FC = () => {
     
     const [activeIndex, setActiveIndex] = useState(0);
     const pageContainerRef = useRef<HTMLDivElement>(null);
+    const backgroundRef = useRef<HTMLDivElement>(null);
     const [isSocialsOpen, setIsSocialsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [showPermissionNotice, setShowPermissionNotice] = useState(false);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
+    const [isPasswordPromptVisible, setIsPasswordPromptVisible] = useState(false);
+    const [isSettingsUnlocked, setIsSettingsUnlocked] = useState(false);
 
 
     const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
@@ -85,10 +98,55 @@ const App: React.FC = () => {
         clickSound.current.volume = 0.3;
     }, []);
 
-    const playClickSound = () => {
-        clickSound.current.currentTime = 0;
-        clickSound.current.play().catch(() => {});
-    };
+    // Parallax effect for the main background on scroll
+    useEffect(() => {
+        const container = pageContainerRef.current;
+        const background = backgroundRef.current;
+        if (!container || !background || isMobile) {
+            if (background) background.style.transform = 'translateY(0px)';
+            return;
+        }
+
+        let animationFrameId: number | null = null;
+
+        const handleScroll = () => {
+            const scrollTop = container.scrollTop;
+            // Apply parallax effect: move background at 20% of scroll speed
+            background.style.transform = `translateY(-${scrollTop * 0.2}px)`;
+            animationFrameId = null;
+        };
+
+        const onScroll = () => {
+            if (animationFrameId === null) {
+                animationFrameId = requestAnimationFrame(handleScroll);
+            }
+        };
+
+        // Reset background position when active page changes
+        background.style.transform = 'translateY(0px)';
+
+        container.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', onScroll);
+            }
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        };
+    }, [activeIndex, isMobile]); // Re-run when page changes or on mobile toggle
+
+    const playClickSound = useCallback(() => {
+        if (isSoundOn) {
+            clickSound.current.currentTime = 0;
+            clickSound.current.play().catch(() => {});
+        }
+        // Haptic feedback for a more tactile response on supported devices
+        if (navigator.vibrate) {
+            navigator.vibrate(10); // A short, subtle vibration
+        }
+    }, [isSoundOn]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -141,24 +199,37 @@ const App: React.FC = () => {
         }
     }, [isMobile]);
     
-    const handleSetPage = (key: string) => {
+    const navigateTo = (key: string) => {
         const newIndex = pageKeys.findIndex(pKey => pKey === key);
-        if (newIndex !== -1 && newIndex !== activeIndex) {
-            // Scroll to top before changing page content
-            const scrollTarget = isMobile ? window : pageContainerRef.current;
-            scrollTarget?.scrollTo({ top: 0, behavior: 'auto' });
-            
-            // Use view transitions if available
-            if ((document as any).startViewTransition) {
-                 (document as any).startViewTransition(() => setActiveIndex(newIndex));
+        if (newIndex !== -1) {
+            if (newIndex !== activeIndex) {
+                const scrollTarget = isMobile ? window : pageContainerRef.current;
+                scrollTarget?.scrollTo({ top: 0, behavior: 'auto' });
+                
+                if ((document as any).startViewTransition) {
+                     (document as any).startViewTransition(() => setActiveIndex(newIndex));
+                } else {
+                    setActiveIndex(newIndex);
+                }
             } else {
-                setActiveIndex(newIndex);
+                const scrollTarget = isMobile ? window : pageContainerRef.current;
+                scrollTarget?.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        } else if (newIndex !== -1 && newIndex === activeIndex) {
-            // If clicking the same page, scroll to top
-            const scrollTarget = isMobile ? window : pageContainerRef.current;
-            scrollTarget?.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    };
+
+    const handleSetPage = (key: string) => {
+        if (key === 'settings' && !isSettingsUnlocked) {
+            setIsPasswordPromptVisible(true);
+            return;
+        }
+        navigateTo(key);
+    };
+
+    const handlePasswordSuccess = () => {
+        setIsSettingsUnlocked(true);
+        setIsPasswordPromptVisible(false);
+        navigateTo('settings');
     };
 
     useEffect(() => {
@@ -166,8 +237,8 @@ const App: React.FC = () => {
         if (loader) {
             const timer = setTimeout(() => {
                 loader.classList.add('preloaded');
-                setTimeout(() => loader.remove(), 2000); 
-            }, 2500);
+                setTimeout(() => loader.remove(), 1500); 
+            }, 2000);
 
             return () => clearTimeout(timer);
         }
@@ -175,20 +246,22 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const handleInteraction = (event: MouseEvent) => {
-            if (!isSoundOn) return;
-            
             const target = event.target as HTMLElement;
-            if (target.closest('a, button, [role="button"], .toggle-slider, .timeline-milestone')) {
+            const interactiveSelector = 'a, button, [role="button"], .toggle-slider, .timeline-milestone, .color-dot, .wallpaper-thumbnail, .achievement-card';
+
+            if (target.closest(interactiveSelector)) {
                 playClickSound();
             }
         };
 
         document.addEventListener('mousedown', handleInteraction);
         return () => document.removeEventListener('mousedown', handleInteraction);
-    }, [isSoundOn]);
+    }, [playClickSound]);
+    
+    const activePageKey = pageKeys[activeIndex];
     
     useEffect(() => {
-        const currentKey = pageKeys[activeIndex];
+        const currentKey = activePageKey;
         const prevKey = pageKeys.find(key => document.body.classList.contains(`on-page-${key}`));
         if (prevKey) {
             document.body.classList.remove(`on-page-${prevKey}`);
@@ -203,7 +276,7 @@ const App: React.FC = () => {
             document.body.classList.remove('popup-open');
         }
 
-    }, [activeIndex, isPrintViewOpen, pageKeys]);
+    }, [activeIndex, isPrintViewOpen, pageKeys, activePageKey]);
     
     const activePageItem = allPages[activeIndex] || allPages[0];
     const activePageTitle = t.sidebar.nav[activePageItem?.tKey as keyof typeof t.sidebar.nav] || activePageItem?.tKey || t.sidebar.nav.home;
@@ -221,7 +294,6 @@ const App: React.FC = () => {
     };
     
     const ActivePageComponent = allPages[activeIndex]?.component;
-    const activePageKey = pageKeys[activeIndex];
     const componentProps: any = {
         key: activePageKey,
         id: activePageKey,
@@ -284,7 +356,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}>
+            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}>
                 {isVideo ? (
                     <video 
                         key={wallpaper}
@@ -333,7 +405,7 @@ const App: React.FC = () => {
                 )}
                 
                 <main className={`content is-${activePageKey}`}>
-                    {activePageKey === 'home' && <LanguageSwitcher />}
+                    {!isMobile && activePageKey === 'home' && <LanguageSwitcher />}
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
                         {ActivePageComponent && <ActivePageComponent {...componentProps} />}
                     </div>
@@ -392,6 +464,14 @@ const App: React.FC = () => {
                 document.getElementById('popup-root')!
             )}
 
+            {isPasswordPromptVisible && document.getElementById('popup-root') && createPortal(
+                <PasswordPrompt 
+                    onClose={() => setIsPasswordPromptVisible(false)}
+                    onSuccess={handlePasswordSuccess}
+                />,
+                document.getElementById('popup-root')!
+            )}
+
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(
                 <div className="print-preview-overlay">
                     <header className="print-preview-header">
@@ -405,8 +485,8 @@ const App: React.FC = () => {
                             </button>
                         </div>
                     </header>
-                    <div className="print-preview-content no-scrollbar">
-                        <PrintableView />
+                    <div className="print-preview-content">
+                        <PrintableView activePageKey={activePageKey} />
                     </div>
                 </div>,
                 document.getElementById('popup-root')!

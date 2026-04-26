@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
@@ -23,26 +23,17 @@ interface Job {
     images?: string[];
 }
 
-interface WorkExperiencePageProps {
-    id?: string;
+interface JobAchievementCardProps {
+    achievement: Achievement;
+    color: string;
+    isForPrint?: boolean;
 }
 
-const VideoPopup: React.FC<{ src: string; onClose: () => void }> = ({ src, onClose }) => {
-    const handleContentClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-    };
-
-    return (
-        <div className="video-popup-overlay" onClick={onClose}>
-            <div className="video-popup-content" onClick={handleContentClick}>
-                <button className="video-popup-close-btn" onClick={onClose} aria-label="Đóng video">
-                    <Icons.XMarkIcon />
-                </button>
-                <video src={src} controls autoPlay playsInline />
-            </div>
-        </div>
-    );
-};
+interface WorkExperiencePageProps {
+    id?: string;
+    onNavigate?: (key: string) => void;
+    isForPrint?: boolean;
+}
 
 // This helper function maps keywords in the achievement label to specific icons.
 const getAchievementIcon = (label: string): React.FC<any> => {
@@ -71,11 +62,39 @@ const getAchievementIcon = (label: string): React.FC<any> => {
     return Icons.TrophyIcon; // Default icon
 };
 
-const JobAchievementCard: React.FC<{ achievement: Achievement; color: string }> = ({ achievement, color }) => {
+const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, color, isForPrint = false }) => {
     const Icon = getAchievementIcon(achievement.label);
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isForPrint) return; // Skip observer for print
+
+        const element = cardRef.current;
+        if (!element) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    element.classList.add('is-visible');
+                    observer.unobserve(element);
+                }
+            },
+            { threshold: 0.1 }
+        );
+        observer.observe(element);
+        return () => {
+            if (element) {
+                observer.unobserve(element);
+            }
+        };
+    }, [isForPrint]);
     
     return (
-        <div className="job-achievement-card" style={{ '--achievement-color': color } as React.CSSProperties}>
+        <div 
+            ref={cardRef} 
+            className={`job-achievement-card fade-in-up-on-scroll ${isForPrint ? 'is-visible' : ''}`}
+            style={{ '--achievement-color': color } as React.CSSProperties}
+        >
             <div className="job-achievement-card-header">
                 <div className="job-achievement-card-icon" style={{ backgroundColor: color }}>
                     <Icon />
@@ -83,11 +102,16 @@ const JobAchievementCard: React.FC<{ achievement: Achievement; color: string }> 
                 <span className="job-achievement-card-label">{achievement.label}</span>
                 <span className="job-achievement-card-value">{achievement.value}%</span>
             </div>
-            <div className="job-achievement-card-progress-bg">
-                <div
-                    className="job-achievement-card-progress-fill"
-                    style={{ width: `${achievement.value}%` }}
-                />
+            <div className="progress-bar-container">
+                <div className="progress-bar-bg">
+                    <div
+                        className="progress-bar-fill"
+                        style={{
+                            '--level': `${achievement.value}%`,
+                            backgroundColor: color,
+                        } as React.CSSProperties}
+                    />
+                </div>
             </div>
         </div>
     );
@@ -117,124 +141,126 @@ const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
     );
 };
 
-const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id }) => {
-    const { t } = useI18n();
+const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate, isForPrint = false }) => {
+    const { t, language } = useI18n();
     const pageData = t.workExperiencePage;
     const jobs: Job[] = useMemo(() => [...(pageData.jobs || [])], [pageData.jobs]);
     const [activeJobIndex, setActiveJobIndex] = useState(jobs.length - 1);
     
     const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
     const timelineContainerRef = useRef<HTMLDivElement | null>(null);
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const [isVideoPopupOpen, setVideoPopupOpen] = useState(false);
-
-    const handleVideoClick = useCallback(() => {
-        setVideoPopupOpen(true);
-    }, []);
     
-    useEffect(() => {
-        if (isVideoPopupOpen) {
-            document.body.classList.add('popup-open');
-        } else {
-            document.body.classList.remove('popup-open');
-        }
-        return () => {
-            document.body.classList.remove('popup-open');
-        };
-    }, [isVideoPopupOpen]);
+    const [showVideoPopup, setShowVideoPopup] = useState(false);
+    const videoUrl = "https://cdn.scena.ai/project/9626/a5b5bdf1659991c0c74510ddfc59b9d27a3c7478f17c711b0fc39c5e51cf43d2.mp4";
 
     useEffect(() => {
         milestoneRefs.current = milestoneRefs.current.slice(0, jobs.length);
     }, [jobs]);
 
-    const calculateLines = useCallback(() => {
+    const calculateLines = () => {
         const container = timelineContainerRef.current;
-        if (!container) {
-            return;
-        }
+        if (!container || milestoneRefs.current.length === 0 || isForPrint) return;
 
-        const firstMilestone = milestoneRefs.current[0];
-        const lastMilestone = milestoneRefs.current[jobs.length - 1];
-        const activeMilestone = milestoneRefs.current[activeJobIndex];
+        requestAnimationFrame(() => {
+            const firstMilestone = milestoneRefs.current[0];
+            const lastMilestone = milestoneRefs.current[milestoneRefs.current.length - 1];
+            const activeMilestone = milestoneRefs.current[activeJobIndex];
 
-        if (firstMilestone && lastMilestone && activeMilestone) {
-            const containerRect = container.getBoundingClientRect();
+            if (!firstMilestone || !lastMilestone || !activeMilestone) return;
+
+            const segmentsBar = container.querySelector('#timeline-segments-container') as HTMLElement;
+            const progressBar = container.querySelector('#timeline-progress-bar') as HTMLElement;
+
             const firstRect = firstMilestone.getBoundingClientRect();
             const lastRect = lastMilestone.getBoundingClientRect();
             const activeRect = activeMilestone.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
 
-            // Calculate for the full segment line (grey background)
-            const segmentsLeft = (firstRect.left + firstRect.width / 2) - containerRect.left;
-            const segmentsWidth = (lastRect.left + lastRect.width / 2) - (firstRect.left + firstRect.width / 2);
+            const segmentsLeft = firstRect.left - containerRect.left + firstRect.width / 2;
+            const segmentsWidth = (lastRect.left + lastRect.width / 2) - segmentsLeft;
             
-            // Calculate for the progress line (colored)
-            const progressLeft = (firstRect.left + firstRect.width / 2) - containerRect.left;
-            const progressWidth = (activeRect.left + activeRect.width / 2) - (firstRect.left + firstRect.width / 2);
+            const progressLeft = segmentsLeft;
+            const progressWidth = (activeRect.left + activeRect.width / 2) - segmentsLeft;
             
-            const jobColor = jobs[activeJobIndex]?.color || 'var(--accent-color)';
-            
-            // Set CSS Custom Properties instead of state
             container.style.setProperty('--segments-left', `${segmentsLeft}px`);
             container.style.setProperty('--segments-width', `${segmentsWidth}px`);
             container.style.setProperty('--progress-left', `${progressLeft}px`);
             container.style.setProperty('--progress-width', `${progressWidth}px`);
-            container.style.setProperty('--progress-bg-color', jobColor);
+            container.style.setProperty('--progress-bg-color', jobs[activeJobIndex]?.color || 'var(--accent-color)');
             container.style.setProperty('--timeline-opacity', '1');
+        });
 
-        } else {
-             container.style.setProperty('--timeline-opacity', '0');
-        }
-    }, [activeJobIndex, jobs]);
+    };
 
     useLayoutEffect(() => {
-        const container = timelineContainerRef.current;
-        if (!container) return;
+        if (isForPrint) return;
 
-        let animationFrameId: number | null = null;
+        const timer = setTimeout(calculateLines, 50); // Small delay to ensure render
         
-        const handleResize = () => {
-            // Debounce with requestAnimationFrame to prevent loops
-            if (animationFrameId) {
-                window.cancelAnimationFrame(animationFrameId);
-            }
-            animationFrameId = window.requestAnimationFrame(() => {
-                calculateLines();
-            });
-        };
-        
-        // Initial calculation
-        handleResize();
-
-        const resizeObserver = new ResizeObserver(handleResize);
-        resizeObserver.observe(container);
+        window.addEventListener('resize', calculateLines);
 
         return () => {
-            resizeObserver.disconnect();
-            if (animationFrameId) {
-                window.cancelAnimationFrame(animationFrameId);
-            }
+            clearTimeout(timer);
+            window.removeEventListener('resize', calculateLines);
         };
-    }, [calculateLines]);
+    }, [isForPrint, activeJobIndex]);
 
-    const handleMilestoneClick = (index: number) => {
-        setActiveJobIndex(index);
+    const formatJobDate = (dateString: string) => {
+        if (language === 'vi') {
+            return dateString.replace(/(\d{4})\s*-\s*(\d{4})/, 'Từ năm $1 đến Năm $2');
+        }
+        return dateString;
+    };
+
+    if (isForPrint) {
+        return (
+             <div className="print-page">
+                <div className="info-card is-for-print">
+                    <div className="about-header">
+                        <InfoBadge
+                            icon={<Icons.BriefcaseIcon />}
+                            text={pageData.title}
+                            tooltipTitle={pageData.tooltipTitle}
+                            tooltipText={pageData.tooltipText}
+                        />
+                    </div>
+                    <div className="experience-layout no-scrollbar">
+                        {jobs.map(job => (
+                            <div key={job.key} className="print-job-item">
+                                <div className="job-header">
+                                   <div className="job-header-info">
+                                       <span className="job-date">{formatJobDate(job.date)}</span>
+                                       <h3>{job.title}</h3>
+                                       <h4>{job.company}</h4>
+                                   </div>
+                               </div>
+                               <h5>{pageData.descriptionTitle}</h5>
+                               <ul>
+                                   {job.responsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                               </ul>
+                               {job.achievements.length > 0 && (
+                                   <>
+                                   <h5>{pageData.achievementsTitle}</h5>
+                                   <div className="job-achievements-grid">
+                                       {job.achievements.map((ach, index) => (
+                                           <JobAchievementCard key={index} achievement={ach} color={job.color} isForPrint={true} />
+                                       ))}
+                                   </div>
+                                   </>
+                               )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
     }
 
-    const selectedJob = jobs[activeJobIndex];
-
-    if (!jobs.length || !selectedJob) {
-        return <PageLayout id={id}><div>Loading experience...</div></PageLayout>;
-    }
-    
-    const hasAchievements = selectedJob.achievements && selectedJob.achievements.length > 0;
-    const hasImages = selectedJob.images && selectedJob.images.length > 0;
-    const selectedJobColor = jobs[activeJobIndex]?.color || 'var(--accent-color)';
-
-
+    const activeJob = jobs[activeJobIndex];
     return (
         <PageLayout id={id}>
-            <div className="info-card work-experience-info">
-                <div className="about-header" style={{ width: '100%' }}>
+            <div className={`info-card work-experience-card`}>
+                 <div className="about-header">
                     <InfoBadge
                         icon={<Icons.BriefcaseIcon />}
                         text={pageData.title}
@@ -243,151 +269,149 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id }) => {
                     />
                 </div>
 
-                <div className="custom-video-player-wrapper work-page-video-player">
+                <div className="custom-video-player-wrapper" style={{ transform: 'scale(0.7)', transformOrigin: 'top right' }}>
                     <div 
                         className="cover-letter-video-container" 
-                        title={"Xem video giới thiệu"}
-                        onClick={handleVideoClick}
-                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleVideoClick(); }}
+                        title="Xem video giới thiệu"
+                        onClick={() => setShowVideoPopup(true)}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowVideoPopup(true); }}
                         role="button"
                         tabIndex={0}
                         aria-label="Play introduction video"
                     >
                         <video
-                            ref={videoRef}
-                            src="https://cdn.scena.ai/project/9626/c13427551694c688b832b49a06aea6542f15c0cc81e740941e025a814bf43920.mp4"
+                            src={videoUrl}
                             playsInline
+                            autoPlay
                             muted
+                            loop
                             className="cover-letter-video-element"
-                            poster="https://i.postimg.cc/HsF8trp4/Book-Story.png"
+                            poster="https://i.postimg.cc/0QyHjYN4/Avata-Gif.gif"
                         >
                             Trình duyệt của bạn không hỗ trợ thẻ video.
                         </video>
                     </div>
                     <button 
                         className="custom-play-button" 
-                        onClick={handleVideoClick} 
-                        aria-label={"Phát video"}
+                        onClick={() => setShowVideoPopup(true)} 
+                        aria-label="Play video"
                     >
                         <Icons.PlayIcon style={{ marginLeft: '2px' }}/>
                     </button>
                 </div>
 
-                <div className="timeline-navigation-wrapper no-scrollbar">
-                    <div className="timeline-container" ref={timelineContainerRef}>
-                        <div id="timeline-segments-container"></div>
-                        <div id="timeline-progress-bar"></div>
-                        {jobs.map((job, index) => {
-                            const isHighlighted = index <= activeJobIndex;
-                            const isActive = index === activeJobIndex;
-                            return (
-                                <div 
-                                    key={job.key} 
-                                    ref={el => { milestoneRefs.current[index] = el; }}
-                                    className={`timeline-milestone ${isActive ? 'active' : ''}`} 
-                                    onClick={() => handleMilestoneClick(index)}
-                                    style={{ '--color-brand-orange': selectedJobColor } as React.CSSProperties}
+                <div className="work-experience-info">
+                    <div className="timeline-navigation-wrapper no-scrollbar">
+                        <div className="timeline-container" ref={timelineContainerRef}>
+                             <div id="timeline-segments-container"></div>
+                             <div id="timeline-progress-bar"></div>
+                            {jobs.map((job, index) => (
+                                <div
+                                    key={job.key}
+                                    ref={el => { if(el) milestoneRefs.current[index] = el; }}
+                                    className={`timeline-milestone ${index === activeJobIndex ? 'active' : ''}`}
+                                    onClick={() => setActiveJobIndex(index)}
+                                    style={{ '--item-color': job.color } as React.CSSProperties}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveJobIndex(index); }}
+                                    aria-label={`View details for ${job.company}`}
                                 >
-                                    <span className={`year-text ${isActive ? 'active' : ''}`} style={isHighlighted ? { color: selectedJobColor } : {}}>
-                                        <Icons.CalendarDaysIcon className="year-icon" />
-                                        {job.date.split(' - ')[0]}
-                                    </span>
+                                    <div className="year-text" style={{ color: index === activeJobIndex ? job.color : undefined }}>
+                                        <Icons.CalendarDaysIcon size={16} />
+                                        <span>{job.date.split(' - ')[0]}</span>
+                                    </div>
                                     <div className="timeline-dot-container">
-                                        <div className="timeline-dot" style={{ borderColor: isHighlighted ? selectedJobColor : undefined }}>
-                                            <img src={job.logoUrl} alt={`${job.company} logo`} className="timeline-dot-img" />
+                                        <div className="timeline-dot" style={{ borderColor: index === activeJobIndex ? job.color : undefined }}>
+                                             <img src={job.logoUrl} alt={`${job.company} logo`} className="timeline-dot-img"/>
                                         </div>
                                     </div>
                                 </div>
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
-                
-                <div className="job-card" style={{
-                        borderColor: selectedJob.color,
-                        boxShadow: `0 0 15px ${selectedJob.color}50, 0 0 30px ${selectedJob.color}30`,
-                    }}>
-                    <div className="job-card-scrollable-content no-scrollbar">
-                        <div style={{ paddingBottom: '1.5rem', borderBottom: '1px solid var(--card-border)', marginBottom: '1.5rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem', gap: '1.5rem' }}>
-                                <img src={selectedJob.logoUrl} alt={`${selectedJob.company} Logo`} style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'contain', background: 'white', padding: '5px' }} />
-                                <div>
-                                    <h2 style={{ margin: '0', fontSize: '1.8rem', color: selectedJob.color }}>{selectedJob.company}</h2>
-                                </div>
-                            </div>
-                            
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                                <div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                                        <Icons.CalendarDaysIcon style={{width: '24px', height: '24px'}} />
-                                        <span>{pageData.durationTitle}</span>
-                                    </div>
-                                    <p style={{ margin: 0 }}>{selectedJob.date}</p>
-                                </div>
-                                <div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                                        <Icons.BriefcaseIcon style={{width: '24px', height: '24px'}} />
-                                        <span>{pageData.positionTitle}</span>
-                                    </div>
-                                    <p style={{ margin: 0 }}>{selectedJob.title}</p>
-                                </div>
-                                <div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                                        <Icons.UsersIcon style={{width: '24px', height: '24px'}} />
-                                        <span>{pageData.managedTitle}</span>
-                                    </div>
-                                    <p style={{ margin: 0 }}>{selectedJob.teamSize}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="job-card-details-grid">
-                            <div>
-                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                                    <Icons.DocumentTextIcon />
-                                    <span>{pageData.descriptionTitle}</span>
-                                </h4>
-                                <ul style={{ paddingLeft: '1.25rem', margin: 0, listStyle: 'disc' }}>
-                                    {selectedJob.responsibilities.map((item, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{item}</li>)}
-                                </ul>
-                            </div>
-                            {hasAchievements && (
-                                <div>
-                                    <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                                        <Icons.TrophyIcon />
-                                        <span>{pageData.achievementsTitle}</span>
-                                    </h4>
-                                    <div className="achievements-grid">
-                                        {selectedJob.achievements.map((ach, index) => (
-                                            <JobAchievementCard key={index} achievement={ach} color={selectedJob.color} />
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                    {activeJob && (
+                        <div className="job-card" key={activeJob.key}>
+                           <div className="job-card-scrollable-content no-scrollbar">
+                                <div className="job-card-details-grid">
+                                    <div>
+                                        <div className="job-header-info">
+                                            <span className="job-date">{formatJobDate(activeJob.date)}</span>
+                                            
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                                                <div style={{ 
+                                                    width: '32px', 
+                                                    height: '32px', 
+                                                    borderRadius: '50%', 
+                                                    backgroundColor: 'white', 
+                                                    padding: '2px', 
+                                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    flexShrink: 0,
+                                                    border: `1px solid ${activeJob.color}`
+                                                }}>
+                                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+                                                </div>
+                                                <h4 style={{ margin: 0, color: activeJob.color }}>{activeJob.company}</h4>
+                                            </div>
 
-                         {hasImages && (
-                            <div className="job-image-slider-wrapper">
-                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                                    <Icons.PhotoIcon />
-                                    <span>{pageData.relatedImagesTitle}</span>
-                                </h4>
-                                <JobImageSlider images={selectedJob.images!} />
-                            </div>
-                        )}
-                    </div>
+                                            <h3 style={{ marginTop: '0.25rem', marginBottom: '0.5rem', lineHeight: 1.3, fontSize: '1rem' }}>{activeJob.title}</h3>
+
+                                            <div className="job-team-size" style={{marginTop: '0.5rem'}}>
+                                               <span>{pageData.managedTitle}: </span>
+                                               <strong>{activeJob.teamSize}</strong>
+                                           </div>
+                                        </div>
+                                        <h5 style={{marginTop: '1.5rem'}}>{pageData.descriptionTitle}</h5>
+                                        <ul>
+                                           {activeJob.responsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        {activeJob.achievements.length > 0 && (
+                                           <>
+                                           <h5>{pageData.achievementsTitle}</h5>
+                                           <div className="achievements-grid">
+                                               {activeJob.achievements.map((ach, index) => (
+                                                   <JobAchievementCard key={index} achievement={ach} color={activeJob.color} />
+                                               ))}
+                                           </div>
+                                           </>
+                                       )}
+                                        
+                                    </div>
+                                </div>
+                               
+                               {activeJob.images && activeJob.images.length > 0 && (
+                                   <div className="job-image-slider-wrapper">
+                                       <h5>{pageData.relatedImagesTitle}</h5>
+                                       <JobImageSlider images={activeJob.images} />
+                                   </div>
+                               )}
+                           </div>
+                        </div>
+                    )}
                 </div>
             </div>
-
-            {isVideoPopupOpen && document.getElementById('popup-root') && createPortal(
-                <VideoPopup
-                    src="https://cdn.scena.ai/project/9626/c13427551694c688b832b49a06aea6542f15c0cc81e740941e025a814bf43920.mp4"
-                    onClose={() => setVideoPopupOpen(false)}
-                />,
+            {showVideoPopup && document.getElementById('popup-root') && createPortal(
+                <div className="video-popup-overlay" onClick={() => setShowVideoPopup(false)}>
+                    <div className="video-popup-content" onClick={e => e.stopPropagation()}>
+                        <button className="video-popup-close-btn" onClick={() => setShowVideoPopup(false)} aria-label="Close video">
+                            <Icons.XMarkIcon />
+                        </button>
+                        <video 
+                            src={videoUrl}
+                            controls 
+                            autoPlay 
+                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        />
+                    </div>
+                </div>,
                 document.getElementById('popup-root')!
             )}
         </PageLayout>
     );
 };
-
 export default WorkExperiencePage;
