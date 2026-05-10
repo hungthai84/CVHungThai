@@ -295,7 +295,6 @@ const App: React.FC = () => {
     
     const ActivePageComponent = allPages[activeIndex]?.component;
     const componentProps: any = {
-        key: activePageKey,
         id: activePageKey,
         onNavigate: handleSetPage,
     };
@@ -407,7 +406,7 @@ const App: React.FC = () => {
                 <main className={`content is-${activePageKey}`}>
                     {!isMobile && activePageKey === 'home' && <LanguageSwitcher />}
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
-                        {ActivePageComponent && <ActivePageComponent {...componentProps} />}
+                        {ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />}
                     </div>
                 </main>
 

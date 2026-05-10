@@ -56,9 +56,8 @@ const CursorEffect: React.FC = () => {
                 innerCursor.style.left = `${x}px`;
                 innerCursor.style.top = `${y}px`;
                 
-                const { x: lastX, y: lastY } = outerPos.current;
-                const newX = lastX + (x - lastX) * 0.2;
-                const newY = lastY + (y - lastY) * 0.2;
+                const newX = x;
+                const newY = y;
                 
                 outerPos.current = { x: newX, y: newY };
 
