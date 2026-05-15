@@ -25,17 +25,6 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         {/* Left Column: Bio and Video */}
                         <div className="about-bio-text-card no-scrollbar">
                             <div className="about-bio-and-video-container">
-                                <div className="about-video-card">
-                                   <div className="bio-video-wrapper">
-                                        <iframe
-                                            src="https://scena.link/nmxffobkkmcj"
-                                            title="Giới thiệu bản thân - Nguyễn Hùng Thái"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            referrerPolicy="strict-origin-when-cross-origin"
-                                            allowFullScreen
-                                        ></iframe>
-                                    </div>
-                                </div>
                                 {pageData.paragraphs.map((p, index) => (
                                     <p key={index} dangerouslySetInnerHTML={{ __html: p }} />
                                 ))}

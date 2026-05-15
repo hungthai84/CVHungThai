@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
@@ -157,30 +157,28 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
         milestoneRefs.current = milestoneRefs.current.slice(0, jobs.length);
     }, [jobs]);
 
-    const calculateLines = () => {
+    const calculateLines = useCallback(() => {
         const container = timelineContainerRef.current;
         if (!container || milestoneRefs.current.length === 0 || isForPrint) return;
 
         requestAnimationFrame(() => {
-            const firstMilestone = milestoneRefs.current[0];
-            const lastMilestone = milestoneRefs.current[milestoneRefs.current.length - 1];
-            const activeMilestone = milestoneRefs.current[activeJobIndex];
+            const milestones = milestoneRefs.current.filter(Boolean) as HTMLDivElement[];
+            if (milestones.length === 0) return;
 
-            if (!firstMilestone || !lastMilestone || !activeMilestone) return;
+            const firstMilestone = milestones[0];
+            const lastMilestone = milestones[milestones.length - 1];
+            const activeMilestone = milestones[activeJobIndex] || firstMilestone;
 
-            const segmentsBar = container.querySelector('#timeline-segments-container') as HTMLElement;
-            const progressBar = container.querySelector('#timeline-progress-bar') as HTMLElement;
+            // Use offsetLeft/OffsetWidth for more reliable relative positioning
+            const firstCenter = firstMilestone.offsetLeft + firstMilestone.offsetWidth / 2;
+            const lastCenter = lastMilestone.offsetLeft + lastMilestone.offsetWidth / 2;
+            const activeCenter = activeMilestone.offsetLeft + activeMilestone.offsetWidth / 2;
 
-            const firstRect = firstMilestone.getBoundingClientRect();
-            const lastRect = lastMilestone.getBoundingClientRect();
-            const activeRect = activeMilestone.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-
-            const segmentsLeft = firstRect.left - containerRect.left + firstRect.width / 2;
-            const segmentsWidth = (lastRect.left + lastRect.width / 2) - segmentsLeft;
+            const segmentsLeft = firstCenter;
+            const segmentsWidth = lastCenter - firstCenter;
             
-            const progressLeft = segmentsLeft;
-            const progressWidth = (activeRect.left + activeRect.width / 2) - segmentsLeft;
+            const progressLeft = firstCenter;
+            const progressWidth = activeCenter - firstCenter;
             
             container.style.setProperty('--segments-left', `${segmentsLeft}px`);
             container.style.setProperty('--segments-width', `${segmentsWidth}px`);
@@ -189,21 +187,31 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
             container.style.setProperty('--progress-bg-color', jobs[activeJobIndex]?.color || 'var(--accent-color)');
             container.style.setProperty('--timeline-opacity', '1');
         });
-
-    };
+    }, [activeJobIndex, isForPrint, jobs]);
 
     useLayoutEffect(() => {
         if (isForPrint) return;
 
-        const timer = setTimeout(calculateLines, 50); // Small delay to ensure render
-        
-        window.addEventListener('resize', calculateLines);
+        const container = timelineContainerRef.current;
+        if (!container) return;
+
+        // Use ResizeObserver for more robust tracking of layout changes
+        const observer = new ResizeObserver(() => {
+            calculateLines();
+        });
+
+        observer.observe(container);
+        milestoneRefs.current.forEach(m => {
+            if (m) observer.observe(m);
+        });
+
+        // Initial calculation
+        calculateLines();
 
         return () => {
-            clearTimeout(timer);
-            window.removeEventListener('resize', calculateLines);
+            observer.disconnect();
         };
-    }, [isForPrint, activeJobIndex]);
+    }, [isForPrint, calculateLines]);
 
     const formatJobDate = (dateString: string) => {
         if (language === 'vi') {

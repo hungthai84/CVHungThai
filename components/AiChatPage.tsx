@@ -100,12 +100,12 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
 
     useEffect(() => {
         try {
-            if (!process.env.API_KEY) {
-                console.error("API_KEY environment variable not set.");
+            if (!process.env.GEMINI_API_KEY) {
+                console.error("GEMINI_API_KEY environment variable not set.");
                 setError("API key is not configured.");
                 return;
             }
-            aiRef.current = new GoogleGenAI({ apiKey: process.env.API_KEY });
+            aiRef.current = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
         } catch (e) {
             console.error("Error initializing GoogleGenAI:", e);
             setError("Failed to initialize AI service.");
@@ -214,7 +214,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 }
     
                 const responseStream = await aiRef.current.models.generateContentStream({
-                    model: 'gemini-2.5-flash',
+                    model: 'gemini-flash-latest',
                     contents,
                     config: { systemInstruction },
                 });

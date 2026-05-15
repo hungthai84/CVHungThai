@@ -2005,30 +2005,33 @@
         --progress-bg-color: var(--accent-color);
         --timeline-opacity: 0;
     }
-    #timeline-segments-container {
-        position: absolute;
-        top: calc(50% + 19.5px);
-        height: 2px;
-        border-radius: 1px;
-        transform: translateY(-50%);
-        background-color: var(--color-brand-progress-bg);
-        z-index: 0;
-        left: var(--segments-left);
-        width: var(--segments-width);
-        opacity: var(--timeline-opacity);
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), left 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
-    }
+    #timeline-segments-container,
     #timeline-progress-bar {
         position: absolute;
         top: calc(50% + 19.5px);
         height: 2px;
-        transform: translateY(-50%);
-        z-index: 1;
         border-radius: 1px;
+        transform: translateY(-50%);
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), left 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+        opacity: var(--timeline-opacity);
+    }
+    @media print {
+        #timeline-segments-container,
+        #timeline-progress-bar {
+            display: none !important;
+        }
+    }
+    #timeline-segments-container {
+        background-color: var(--color-brand-progress-bg);
+        z-index: 0;
+        left: var(--segments-left);
+        width: var(--segments-width);
+    }
+    #timeline-progress-bar {
+        z-index: 1;
         left: var(--progress-left);
         width: var(--progress-width);
         background-color: var(--progress-bg-color);
-        opacity: var(--timeline-opacity);
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), left 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease, opacity 0.3s;
     }
     .timeline-milestone {

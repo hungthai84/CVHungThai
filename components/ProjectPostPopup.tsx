@@ -72,29 +72,37 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             setGenerationError(null);
 
             try {
-                if (!process.env.API_KEY) {
+                if (!process.env.GEMINI_API_KEY) {
                     throw new Error("API key is not configured.");
                 }
                 if (!aiRef.current) {
-                     aiRef.current = new GoogleGenAI({ apiKey: process.env.API_KEY });
+                     aiRef.current = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
                 }
 
                 const summary = post.content.paragraphs.join(' ').substring(0, 800);
                 const prompt = `Create a visually appealing and professional mind map in ${language === 'vi' ? 'Vietnamese' : 'English'} summarizing the project: "${post.title}". The central theme should be the project title. Derive the main branches from these key points: "${summary}...". Use a clean, modern aesthetic with relevant icons for clarity. The layout should be balanced and easy to read.`;
                 
-                const response = await aiRef.current.models.generateImages({
-                    model: 'imagen-4.0-generate-001',
-                    prompt: prompt,
+                const response: any = await aiRef.current.models.generateContent({
+                    model: 'gemini-2.5-flash-image',
+                    contents: { parts: [{ text: prompt }] },
                     config: {
-                      numberOfImages: 1,
-                      outputMimeType: 'image/png',
-                      aspectRatio: '16:9',
+                      imageConfig: {
+                        aspectRatio: '16:9',
+                      },
                     },
                 });
 
-                if (response.generatedImages && response.generatedImages.length > 0) {
-                    const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
-                    const imageUrl = `data:image/png;base64,${base64ImageBytes}`;
+                let imageUrl = '';
+                if (response.candidates?.[0]?.content?.parts) {
+                    for (const part of response.candidates[0].content.parts) {
+                        if (part.inlineData) {
+                            imageUrl = `data:image/png;base64,${part.inlineData.data}`;
+                            break;
+                        }
+                    }
+                }
+
+                if (imageUrl) {
                     setMindMapUrl(imageUrl);
                     sessionStorage.setItem(cacheKey, imageUrl);
                 } else {
@@ -102,7 +110,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                 }
             } catch (error) {
                 console.error("Error generating mind map:", error);
-                setGenerationError("Không thể tạo sơ đồ tư duy lúc này.");
+                setGenerationError(pageData.mindMapError);
             } finally {
                 setIsGeneratingMap(false);
             }
@@ -245,20 +253,20 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                             </div>
                                         )}
                                         <div className="sidebar-widget">
-                                            <h4 className="sidebar-widget-title">Sơ đồ tư duy</h4>
+                                            <h4 className="sidebar-widget-title">{pageData.sidebarWidgetTitle}</h4>
                                             {isGeneratingMap ? (
                                                 <div className="mind-map-loader">
                                                     <Icons.CpuIcon className="animate-spin" size={40} />
-                                                    <p>Đang tạo sơ đồ tư duy AI...</p>
+                                                    <p>{pageData.generatingMindMap}</p>
                                                 </div>
                                             ) : generationError ? (
                                                 <div className="mind-map-error">
                                                     <Icons.XMarkIcon size={40} />
                                                     <p>{generationError}</p>
-                                                    <img src={post.mindMapUrl} alt="Sơ đồ tư duy (Fallback)" style={{width: '100%', borderRadius: '10px'}}/>
+                                                    <img src={post.mindMapUrl} alt={`${pageData.sidebarWidgetTitle} (Fallback)`} style={{width: '100%', borderRadius: '10px'}}/>
                                                 </div>
                                             ) : (
-                                                <img src={mindMapUrl} alt="Sơ đồ tư duy" style={{width: '100%', borderRadius: '10px', border: 'var(--color-brand-glass-border)'}}/>
+                                                <img src={mindMapUrl} alt={pageData.sidebarWidgetTitle} style={{width: '100%', borderRadius: '10px', border: 'var(--color-brand-glass-border)'}}/>
                                             )}
                                         </div>
 

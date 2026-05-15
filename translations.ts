@@ -46,9 +46,9 @@ export const vi = {
     paragraphs: [
       "“Có một câu nói tôi luôn mang theo bên mình: Sự hài lòng của khách hàng không đến từ sự hoàn hảo, mà đến từ sự đồng cảm kịp thời.”",
       "Tôi là Nguyễn Hùng Thái, hiện đang là một người làm nghề Dịch vụ Khách hàng – một người đồng hành thầm lặng trong mọi khoảnh khắc doanh nghiệp chạm đến trái tim người dùng.",
-      "Tôi bắt đầu sự nghiệp Chăm sóc Khách hàng (CSKH) từ năm 2002 – khi những tổng đài viên còn ghi nhận ticket bằng Excel và hai từ \"dịch vụ\" chỉ đơn giản là... nghe - ghi nhận - phản hồi.",
+      "Tôi bắt đầu sự nghiệp Chăm Sóc Khách Hàng (CSKH) từ năm 2002 – khi những tổng đài viên còn ghi nhận ticket bằng Excel và hai từ \"dịch vụ\" chỉ đơn giản là... nghe - ghi nhận - phản hồi.",
       "20 năm sau, tôi đã đi qua nhiều môi trường – từ viễn thông, thương mại điện tử, bảo hiểm, tài chính, game, đến công nghệ – mỗi nơi dạy tôi một góc nhìn mới về điều gì thực sự làm nên một trải nghiệm đáng nhớ.",
-      "Từ Mobifone đến Shopee, từ Garena đến Momo, Prudential, ví Finviet, và bây giờ – tôi không chỉ chăm sóc khách hàng; tôi xây dựng hệ thống để tất cả mọi người trong đội ngũ có thể chăm sóc khách hàng tốt hơn cả tôi.",
+      "Từ Mobifone đến Shopee, từ Garena đến Momo, Prudential, ví Finviet, và bây giờ – tôi không chỉ Chăm Sóc Khách Hàng; tôi xây dựng hệ thống để tất cả mọi người trong đội ngũ có thể Chăm Sóc Khách Hàng tốt hơn cả tôi.",
       "Điều khiến tôi yêu công việc này không chỉ là những lời cảm ơn, mà còn là những bài học từ những khách hàng không hài lòng.",
       "Tôi luôn tâm niệm:\n👉 Một quy trình tốt chỉ là điểm khởi đầu.\n👉 Một đội ngũ tận tâm mới là sức mạnh thật sự.\n👉 Và công nghệ – nếu được áp dụng đúng lúc, đúng chỗ – có thể nhân rộng niềm tin, chứ không chỉ tự động hóa.",
       "Vì vậy, tôi dành rất nhiều thời gian xây dựng hệ thống CRM, dashboard dữ liệu, chatbot AI... nhưng quan trọng hơn, là đào tạo đội ngũ biết lắng nghe kỹ – thấu hiểu sâu – xử lý tinh.",
@@ -67,8 +67,8 @@ export const vi = {
     tooltipText: "Đôi nét về bản thân, triết lý công việc và những giá trị cốt lõi tôi theo đuổi.",
     title: "Về tôi",
     paragraphs: [
-      "Một chuyên gia dịch vụ khách hàng với hơn <strong>22 năm kinh nghiệm thực chiến</strong>. Với tôi, chăm sóc khách hàng không chỉ là phục vụ, mà là <strong>sự đồng hành</strong>. Mỗi cuộc trò chuyện, mỗi khoảnh khắc, dù là nhỏ nhất, đều là một cơ hội quý giá: để lắng nghe, để thấu hiểu, và để tạo ra những trải nghiệm vượt trên cả sự mong đợi.",
-      "Tôi tin rằng sự hài lòng không đến từ sự hoàn hảo tuyệt đối, mà đến từ <strong>sự tận tâm kịp thời và đồng cảm chân thành</strong>. Trong suốt sự nghiệp, tôi đã trực tiếp thiết kế và tối ưu hóa hàng chục quy trình, hệ thống chăm sóc khách hàng, luôn đặt trên nền tảng ba giá trị cốt lõi:"
+      "Một chuyên gia dịch vụ khách hàng with hơn <strong>22 năm kinh nghiệm thực chiến</strong>. Với tôi, Chăm Sóc Khách Hàng không chỉ là phục vụ, mà là <strong>sự đồng hành</strong>. Mỗi cuộc trò chuyện, mỗi khoảnh khắc, dù là nhỏ nhất, đều là một cơ hội quý giá: để lắng nghe, để thấu hiểu, và để tạo ra những trải nghiệm vượt trên cả sự mong đợi.",
+      "Tôi tin rằng sự hài lòng không đến từ sự hoàn hảo tuyệt đối, mà đến từ <strong>sự tận tâm kịp thời và đồng cảm chân thành</strong>. Trong suốt sự nghiệp, tôi đã trực tiếp thiết kế và tối ưu hóa hàng chục quy trình, hệ thống Chăm Sóc Khách Hàng, luôn đặt trên nền tảng ba giá trị cốt lõi:"
     ],
     coreValues: "Hiệu quả – Nhân văn – Bền vững",
     concludingParagraph: "Tôi luôn nỗ lực để mang lại sản phẩm, dịch vụ chất lượng cao với chi phí hợp lý. Và trên hết, để mỗi khách hàng cảm nhận được một điều đơn giản mà cốt lõi: <strong>Họ luôn được lắng nghe.</strong>",
@@ -175,10 +175,10 @@ export const vi = {
                  "Theo dõi, cập nhật và phân tích hoạt động dịch vụ khách hàng của đối thủ.",
                  "Lên kế hoạch thăm hỏi khách hàng VIP, đại lý và khách hàng thân thiết.",
                  "Chủ động lên kế hoạch tặng quà cho khách hàng vào các dịp lễ, sự kiện đặc biệt và kỷ niệm.",
-                 "Theo dõi kế hoạch chăm sóc khách hàng, kiểm tra chất lượng sản phẩm và hoạt động bảo trì.",
+                 "Theo dõi kế hoạch Chăm Sóc Khách Hàng, kiểm tra chất lượng sản phẩm và hoạt động bảo trì.",
                  "Tổ chức và đo lường mức độ hài lòng của khách hàng.",
-                 "Tất cả các hoạt động chăm sóc khách hàng được yêu cầu phải được thiết lập thành quy trình và cải tiến liên tục.",
-                 "Xây dựng kế hoạch ngân sách chăm sóc khách hàng hàng năm.",
+                 "Tất cả các hoạt động Chăm Sóc Khách Hàng được yêu cầu phải được thiết lập thành quy trình và cải tiến liên tục.",
+                 "Xây dựng kế hoạch ngân sách Chăm Sóc Khách Hàng hàng năm.",
                  "Thực hiện các công việc do Ban Giám đốc giao."
             ],
             achievements: [
@@ -268,7 +268,7 @@ export const vi = {
                 "Quản lý phòng CS cho ví điện tử MoMo trên tất cả các kênh.",
                 "Xây dựng hệ thống CRM - Quan hệ khách hàng.",
                 "Xây dựng và cải tiến quy trình, phối hợp với bộ phận pháp lý.",
-                "Đào tạo và nâng cao kỹ năng chăm sóc khách hàng của nhân viên.",
+                "Đào tạo và nâng cao kỹ năng Chăm Sóc Khách Hàng của nhân viên.",
                 "Chịu trách nhiệm về tất cả các KPI của phòng ban.",
                 "Đánh giá và nâng cấp trải nghiệm khách hàng.",
                 "Hỗ trợ đối tác và tham gia các dự án kết nối với Ví điện tử.",
@@ -305,7 +305,7 @@ export const vi = {
                 "Quản lý và giám sát đội ngũ dịch vụ khách hàng.",
                 "Theo dõi, phân bổ và điều phối các cuộc gọi đến.",
                 "Đánh giá và huấn luyện nhân viên.",
-                "Lập kế hoạch và sắp xếp ca làm việc chăm sóc khách hàng.",
+                "Lập kế hoạch và sắp xếp ca làm việc Chăm Sóc Khách Hàng.",
                 "Xử lý các vướng mắc của nhân viên.",
                 "Giải quyết khiếu nại của khách hàng và quản lý việc trả hàng.",
                 "Quản lý các yêu cầu của khách hàng từ tất cả các kênh.",
@@ -649,7 +649,7 @@ export const vi = {
         {
             key: "telecom",
             title: "Viễn thông & Dịch vụ di động",
-            description: "Hơn 10 năm kinh nghiệm trong ngành viễn thông, từ mạng di động đến dịch vụ gọi quốc tế, tạo nền tảng vững chắc về vận hành và chăm sóc khách hàng quy mô lớn.",
+            description: "Hơn 10 năm kinh nghiệm trong ngành viễn thông, từ mạng di động đến dịch vụ gọi quốc tế, tạo nền tảng vững chắc về vận hành và Chăm Sóc Khách Hàng quy mô lớn.",
             icon: "PhoneIcon",
             color: "#0078D4",
             logos: ["https://i.ibb.co/qYBWg57r/Mobifone.png", "https://i.ibb.co/2Y3tNsnd/Call-V247.png", "https://i.ibb.co/DDYsQ20B/LBC.png"]
@@ -657,7 +657,7 @@ export const vi = {
         {
             key: "ecommerce",
             title: "TMĐT & Thanh toán điện tử",
-            description: "Tham gia giai đoạn phát triển bùng nổ của thương mại điện tử và ví điện tử tại Việt Nam, xây dựng quy trình xử lý khiếu nại, gian lận và chăm sóc người dùng trên các nền t đầu.",
+            description: "Tham gia giai đoạn phát triển bùng nổ của thương mại điện tử và ví điện tử tại Việt Nam, xây dựng quy trình xử lý khiếu nại, gian lận và chăm sóc người dùng trên các nền tảng hàng đầu.",
             icon: "CubeIcon",
             color: "#F37021",
             logos: ["https://i.ibb.co/jXJXLvT/Momo.png", "https://i.ibb.co/mVfX9RkG/Finviet.png", "https://i.ibb.co/Y7hGPLJw/Airpay.png", "https://i.ibb.co/MkBNb2mh/Shopee.png"]
@@ -939,7 +939,7 @@ export const vi = {
                 "Anh hãy mô tả một chiến lược CSKH thành công mà anh từng triển khai (bối cảnh – giải pháp – kết quả)?",
                 "Theo anh, CSKH đóng vai trò gì trong toàn bộ vòng đời khách hàng?",
                 "Nếu được xây lại hệ thống CSKH từ đầu, anh sẽ bắt đầu từ đâu: con người, quy trình, công nghệ, hay dữ liệu?",
-                "Theo anh, yếu tố quan trọng nhất khi xây dựng phòng chăm sóc khách hàng là gì?",
+                "Theo anh, yếu tố quan trọng nhất khi xây dựng phòng Chăm Sóc Khách Hàng là gì?",
                 "Những chỉ số thành công nào (NPS, CSAT, retention…) anh đặc biệt quan tâm trong các chiến lược của mình?",
                 "Anh hình dung thế nào về một “hệ sinh thái CSKH lý tưởng” trong 3–5 năm tới?"
             ]
@@ -951,7 +951,7 @@ export const vi = {
             action: "show_questions",
             questions: [
                 "Anh từng quản lý đội ngũ bao nhiêu nhân sự, với những cấp độ nào?",
-                "Phong cách lãnh đạo của anh trong vai trò trưởng phòng chăm sóc khách hàng là gì?",
+                "Phong cách lãnh đạo của anh trong vai trò trưởng phòng Chăm Sóc Khách Hàng là gì?",
                 "Khi xây dựng đội nhóm, anh thường ưu tiên điều gì trước: kỹ năng, thái độ hay văn hóa dịch vụ?",
                 "Anh xử lý ra sao khi nhân viên CSKH bị khách hàng phàn nàn?",
                 "Anh có kinh nghiệm thiết kế lộ trình thăng tiến hoặc khung năng lực cho phòng CSKH không?",
@@ -965,7 +965,7 @@ export const vi = {
             action: "show_questions",
             questions: [
                 "Anh có thể chia sẻ một tình huống khủng hoảng dịch vụ mà anh từng xử lý theo mô hình STAR (Situation – Task – Action – Result)?",
-                "Tình huống áp lực nhất anh từng xử lý trong chăm sóc khách hàng là gì?",
+                "Tình huống áp lực nhất anh từng xử lý trong Chăm Sóc Khách Hàng là gì?",
                 "Khi gặp khách hàng VIP tức giận và yêu cầu gặp cấp cao, anh thường giải quyết ra sao?",
                 "Trong trường hợp hệ thống lỗi diện rộng, anh sẽ truyền thông và giữ uy tín thế nào với khách hàng?",
                 "Nếu có mâu thuẫn gay gắt giữa CSKH và khách hàng, đâu là nguyên tắc “đỏ” anh luôn tuân thủ?",
@@ -979,7 +979,7 @@ export const vi = {
             action: "show_questions",
             questions: [
                 "Anh từng triển khai hoặc cải tiến hệ thống CRM/helpdesk nào (Zoho, Zendesk, Salesforce, Freshdesk…)?",
-                "Quan điểm của anh về ứng dụng chuyển đổi số trong chăm sóc khách hàng?",
+                "Quan điểm của anh về ứng dụng chuyển đổi số trong Chăm Sóc Khách Hàng?",
                 "Với một hệ thống CSKH, theo anh đâu là “mảnh ghép công nghệ” quan trọng nhất?",
                 "Anh thường sử dụng các KPIs nào để đánh giá hiệu quả dịch vụ (FCR, NPS, CSAT, CES, SLA, AHT…)?",
                 "Khi mở rộng quy mô, làm sao để hệ thống CSKH vẫn cá nhân hóa và ổn định?",
@@ -1075,7 +1075,7 @@ export const vi = {
     "1.1": {
       title: "Xây dựng Phòng Dịch vụ Khách hàng từ con số 0",
       date: "Giai đoạn 1",
-      tags: ["CS_Strategy", "Structure", "Leadership"],
+      tags: ["Chiến lược CS", "Cấu trúc", "Lãnh đạo"],
       heroImage: "https://i.postimg.cc/sDXNxb9V/1-X-y-d-ng-P-CSKH.jpg",
       mindMapUrl: "https://i.postimg.cc/J0vJ0V3D/mindmap-1-1.png",
       content: {
@@ -1094,7 +1094,7 @@ export const vi = {
     "1.2": {
         "title": "Kiến trúc Hiệu suất: Thiết lập OKR & KPI cho Phòng Chăm Sóc Khách Hàng",
         "date": "Giai đoạn 1",
-        "tags": ["CS_Strategy", "OKR", "KPIs"],
+        "tags": ["Chiến lược CS", "OKR", "KPI"],
         "heroImage": "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
         mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
         "content": {
@@ -1112,14 +1112,14 @@ export const vi = {
     "1.3": {
         "title": "Nghệ thuật Chạm đến Cảm xúc: Nâng cao Trải nghiệm Khách hàng (CX)",
         "date": "Giai đoạn 3",
-        "tags": ["CS_Strategy", "#CXDesign", "#CustomerJourney"],
+        "tags": ["Chiến lược CS", "Thiết kế CX", "Hành trình khách hàng"],
         "heroImage": "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
         mindMapUrl: "https://i.postimg.cc/1X6f4pYd/mindmap-1-3.png",
         "content": {
             "paragraphs": [
-                "Dịch vụ khách hàng xuất sắc chỉ là một phần của một bức tranh lớn hơn: Trải nghiệm Khách hàng (CX). Dự án này tập trung vào việc vượt ra ngoài các tương tác đơn lẻ để thiết kế một hành trình khách hàng (Customer Journey) đồng bộ, liền mạch và giàu cảm xúc.",
+                "Dịch vụ khách hàng xuất sắc chỉ là một phần của một bức tranh lớn hơn: Trải Nghiệm Khách Hàng (CX). Dự án này tập trung vào việc vượt ra ngoài các tương tác đơn lẻ để thiết kế một Hành Trình Khách Hàng (Customer Journey) đồng bộ, liền mạch và giàu cảm xúc.",
                 "Trọng tâm của dự án là chuyển đổi tư duy từ 'giải quyết vấn đề' sang 'tạo ra những khoảnh khắc đáng nhớ'. Các bước chính bao gồm:",
-                "1. **Vẽ bản đồ Hành trình Khách hàng:** Tôi đã làm việc với các phòng ban liên quan (Sản phẩm, Marketing, Kinh doanh) để xác định tất cả các điểm chạm (touchpoints) mà khách hàng tương tác với công ty, từ lúc họ biết đến sản phẩm cho đến khi trở thành khách hàng trung thành.",
+                "1. **Vẽ bản đồ Hành Trình Khách Hàng:** Tôi đã làm việc với các phòng ban liên quan (Sản phẩm, Marketing, Kinh doanh) để xác định tất cả các điểm chạm (touchpoints) mà khách hàng tương tác với công ty, từ lúc họ biết đến sản phẩm cho đến khi trở thành khách hàng trung thành.",
                 "2. **Đo lường Cảm xúc và Nỗ lực:** Tại mỗi điểm chạm quan trọng, chúng tôi triển khai các hệ thống đo lường như CSAT (Mức độ hài lòng), NPS (Mức độ sẵn sàng giới thiệu) và CES (Chỉ số nỗ lực của khách hàng). Dữ liệu này không chỉ cho biết khách hàng 'làm gì', mà còn cho biết họ 'cảm thấy thế nào'.",
                 "3. **Thiết lập Tiêu chuẩn Trải nghiệm (Experience Standards):** Dựa trên dữ liệu thu thập được, chúng tôi đã xây dựng một bộ tiêu chuẩn trải nghiệm áp dụng cho toàn công ty. Ví dụ: 'Mọi thắc mắc qua email phải được phản hồi trong vòng 2 giờ' hoặc 'Mọi khách hàng VIP đều nhận được một cuộc gọi chăm sóc cá nhân sau khi sử dụng dịch vụ'.",
                 "4. **Đồng bộ hóa các điểm chạm:** Một trong những thách thức lớn nhất là đảm bảo sự nhất quán. Chúng tôi đã xây dựng các quy trình phối hợp liên phòng ban để khách hàng cảm nhận được một trải nghiệm liền mạch, dù họ tương tác qua ứng dụng, website, tổng đài hay mạng xã hội.",
@@ -1131,7 +1131,7 @@ export const vi = {
     "1.4": {
         "title": "Dẫn dắt sự thay đổi: Quản lý Dự án Chăm Sóc Khách Hàng với Agile/Kanban",
         "date": "Giai đoạn 3",
-        "tags": ["CS_Strategy", "#ProjectManagement", "#Agile"],
+        "tags": ["Chiến lược CS", "Quản lý Dự án", "Agile"],
         "heroImage": "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
         mindMapUrl: "https://i.postimg.cc/wMPb9kM7/mindmap-1-4.png",
         "content": {
@@ -1150,7 +1150,7 @@ export const vi = {
     "1.5": {
         "title": "Tiếng nói Khách hàng: Cầu nối giữa Dịch vụ và Sản phẩm",
         "date": "Giai đoạn 3",
-        "tags": ["CS_Strategy", "#VoiceOfCustomer", "#ProductImprovement"],
+        "tags": ["Chiến lược CS", "Tiếng nói Khách hàng", "Cải tiến sản phẩm"],
         "heroImage": "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
         mindMapUrl: "https://i.postimg.cc/T3jY4YgT/mindmap-1-5.png",
         "content": {
@@ -1169,7 +1169,7 @@ export const vi = {
     "2.1": {
         "title": "Nền tảng Vững chắc: Chuẩn hóa Quy trình Vận hành (SOP)",
         "date": "Giai đoạn 1",
-        "tags": ["#CS_Operations", "#SOP", "#Process"],
+        "tags": ["Vận hành CS", "Quy trình chuẩn", "Quy trình"],
         "heroImage": "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
         mindMapUrl: "https://i.postimg.cc/pT3w9B2v/mindmap-2-1.png",
         "content": {
@@ -1188,7 +1188,7 @@ export const vi = {
     "2.2": {
         "title": "Trải nghiệm Liền mạch: Tối ưu hóa Hỗ trợ Đa kênh (Omni-channel)",
         "date": "Giai đoạn 2",
-        "tags": ["#CS_Operations", "#OmniChannel", "#UnifiedSupport"],
+        "tags": ["Vận hành CS", "Đa kênh", "Hỗ trợ hợp nhất"],
         "heroImage": "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
         mindMapUrl: "https://i.postimg.cc/gJ0zQZ2c/mindmap-2-2.png",
         "content": {
@@ -1207,7 +1207,7 @@ export const vi = {
     "2.3": {
         "title": "Giải phóng Sức người: Triển khai Tự động hóa Quy trình (RPA)",
         "date": "Giai đoạn 3",
-        "tags": ["#CS_Operations", "#Automation", "#RPA"],
+        "tags": ["Vận hành CS", "Tự động hóa", "RPA"],
         "heroImage": "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
         mindMapUrl: "https://i.postimg.cc/Jz3x0GfF/mindmap-2-3.png",
         "content": {
@@ -1225,14 +1225,14 @@ export const vi = {
     "2.4": {
         "title": "Chủ động Kết nối: Quản lý các Chiến dịch Outbound",
         "date": "Giai đoạn 3",
-        "tags": ["#CS_Operations", "#OutboundCS", "#ProactiveCare"],
+        "tags": ["Vận hành CS", "CS Chủ Động", "Chăm Sóc Chủ Động"],
         "heroImage": "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
         mindMapUrl: "https://i.postimg.cc/j5G5wL4p/mindmap-2-4.png",
         "content": {
             "paragraphs": [
                 "Dịch vụ khách hàng không chỉ là chờ đợi khách hàng liên hệ. Một chiến lược Chăm Sóc Khách Hàng toàn diện còn bao gồm các hoạt động chủ động tiếp cận (outbound) để nâng cao trải nghiệm, thu thập phản hồi và xây dựng mối quan hệ. Dự án này tập trung vào việc xây dựng và quản lý các chiến dịch outbound một cách chuyên nghiệp và hiệu quả.",
                 "Mục tiêu là chuyển đổi các cuộc gọi/tin nhắn outbound từ việc 'làm phiền' thành 'chăm sóc', mang lại giá trị thực sự cho khách hàng và thông tin quý giá cho công ty. Các loại chiến dịch chính chúng tôi đã triển khai:",
-                "1. **Chiến dịch Chăm sóc Sau bán hàng:** Chủ động gọi điện hoặc gửi tin nhắn cho khách hàng sau khi họ mua hàng hoặc sử dụng dịch vụ để hỏi thăm về trải nghiệm, hướng dẫn sử dụng và giải đáp các thắc mắc ban đầu. Điều này giúp giảm tỷ lệ khiếu nại sau này và tạo ấn tượng tốt đẹp.",
+                "1. **Chiến dịch Chăm Sóc Sau Bán Hàng:** Chủ động gọi điện hoặc gửi tin nhắn cho khách hàng sau khi họ mua hàng hoặc sử dụng dịch vụ để hỏi thăm về trải nghiệm, hướng dẫn sử dụng và giải đáp các thắc mắc ban đầu. Điều này giúp giảm tỷ lệ khiếu nại sau này và tạo ấn tượng tốt đẹp.",
                 "2. **Chiến dịch Khảo sát Sự hài lòng (CSAT/NPS):** Thay vì chỉ gửi email khảo sát hàng loạt, chúng tôi đã thực hiện các cuộc gọi cá nhân đến một nhóm khách hàng được lựa chọn để lắng nghe sâu hơn những chia sẻ của họ. Những cuộc trò chuyện này thường mang lại những insight mà khảo sát trực tuyến không thể có được.",
                 "3. **Chiến dịch Tái kích hoạt Khách hàng (Re-activation):** Xác định những khách hàng đã lâu không sử dụng dịch vụ và thực hiện các cuộc gọi để tìm hiểu lý do, thông báo về các tính năng mới hoặc cung cấp các ưu đãi đặc biệt để khuyến khích họ quay trở lại.",
                 "Để các chiến dịch này thành công, việc xây dựng kịch bản và đào tạo kỹ lưỡng cho nhân viên là yếu tố then chốt. Kịch bản được thiết kế để cuộc gọi diễn ra tự nhiên như một cuộc trò chuyện, không phải là một bài bán hàng. Nhân viên được huấn luyện kỹ năng lắng nghe và đồng cảm để tạo ra một kết nối chân thành.",
@@ -1244,7 +1244,7 @@ export const vi = {
     "3.1": {
         "title": "Bộ não của Dịch vụ: Xây dựng Hệ thống Quản lý Quan hệ Khách hàng (CRM)",
         "date": "Giai đoạn 2",
-        "tags": ["#CS_TechData", "#CRM", "#CustomerData"],
+        "tags": ["Công nghệ & Dữ liệu", "CRM", "Dữ liệu khách hàng"],
         "heroImage": "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
         mindMapUrl: "https://i.postimg.cc/y8g8Z7T9/mindmap-3-1.png",
         "content": {
@@ -1254,7 +1254,7 @@ export const vi = {
                 "1. **Phân tích Nhu cầu và Lựa chọn Nền tảng:** Tôi đã làm việc chặt chẽ với các bên liên quan (Chăm Sóc Khách Hàng, Kinh doanh, Marketing) để xác định các yêu cầu nghiệp vụ cốt lõi. Dựa trên đó, chúng tôi đã đánh giá và lựa chọn nền tảng CRM phù hợp nhất, có thể là một giải pháp có sẵn (như Salesforce, Zendesk) hoặc xây dựng nội bộ (in-house).",
                 "2. **Thiết kế và Tùy chỉnh (Customization):** Hệ thống được tùy chỉnh để phù hợp với các quy trình độc nhất của công ty. Điều này bao gồm việc thiết kế các trường dữ liệu (custom fields), cấu hình các luồng xử lý ticket (ticket workflows), và thiết lập các quy tắc tự động hóa.",
                 "3. **Tích hợp Hệ thống (Integration):** Đây là bước quan trọng để tạo ra cái nhìn 360 độ. Hệ thống CRM được tích hợp với các hệ thống khác như tổng đài (để tự động ghi âm cuộc gọi), website/app (để đồng bộ dữ liệu người dùng), và các kênh giao tiếp như email, mạng xã hội.",
-                "4. **Di chuyển Dữ liệu và Đào tạo Người dùng:** Dữ liệu khách hàng từ các hệ thống cũ (hoạn từ Excel) được làm sạch và di chuyển sang CRM mới. Song song đó, tôi đã xây dựng tài liệu và tổ chức các buổi đào tạo chuyên sâu để đảm bảo toàn bộ đội ngũ có thể sử dụng thành thạo hệ thống mới.",
+                "4. **Di chuyển Dữ liệu và Đào tạo Người dùng:** Dữ liệu khách hàng từ các hệ thống cũ (hoặc từ Excel) được làm sạch và di chuyển sang CRM mới. Song song đó, tôi đã xây dựng tài liệu và tổ chức các buổi đào tạo chuyên sâu để đảm bảo toàn bộ đội ngũ có thể sử dụng thành thạo hệ thống mới.",
                 "Việc triển khai thành công hệ thống CRM đã cách mạng hóa cách chúng tôi phục vụ khách hàng. Nó giúp tăng hiệu suất làm việc, cá nhân hóa các tương tác, và cung cấp dữ liệu nền tảng cho tất cả các hoạt động phân tích và báo cáo sau này."
             ],
             "list": []
@@ -1263,7 +1263,7 @@ export const vi = {
     "3.2": {
         "title": "Từ Dữ liệu đến Quyết định: Phân tích và Báo cáo Chăm Sóc Khách Hàng",
         "date": "Giai đoạn 2",
-        "tags": ["#CS_TechData", "#Insight", "#Dashboard"],
+        "tags": ["Công nghệ & Dữ liệu", "Phân tích sâu", "Báo cáo nội bộ"],
         "heroImage": "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
         mindMapUrl: "https://i.postimg.cc/L5n5Nn5q/mindmap-3-2.png",
         "content": {
@@ -1282,7 +1282,7 @@ export const vi = {
     "3.3": {
         "title": "Lắng nghe để Cải tiến: Khảo sát và Đánh giá Khách hàng",
         "date": "Giai đoạn 3",
-        "tags": ["#CS_TechData", "#Survey", "#Feedback"],
+        "tags": ["Công nghệ & Dữ liệu", "Khảo sát", "Phản hồi"],
         "heroImage": "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
         mindMapUrl: "https://i.postimg.cc/Y0zVbY4v/mindmap-3-3.png",
         "content": {
@@ -1300,7 +1300,7 @@ export const vi = {
     "3.4": {
         "title": "Người trợ lý không ngủ: Xây dựng Trợ lý ảo AI (AI Bot)",
         "date": "Giai đoạn 3",
-        "tags": ["#CS_TechData", "#Chatbot", "#AI"],
+        "tags": ["Công nghệ & Dữ liệu", "Chatbot", "Trí tuệ nhân tạo"],
         "heroImage": "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
         mindMapUrl: "https://i.postimg.cc/FKWp2L5M/mindmap-3-4.png",
         "content": {
@@ -1319,7 +1319,7 @@ export const vi = {
     "4.1": {
         "title": "Học viện Dịch vụ: Phát triển Hệ thống Đào tạo Trực tuyến (E-learning)",
         "date": "Giai đoạn 3",
-        "tags": ["#CS_Learning", "#CSAcademy", "#Training"],
+        "tags": ["Đào tạo CS", "Học viện CS", "Kỹ năng"],
         "heroImage": "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
         mindMapUrl: "https://i.postimg.cc/7PMjN2D5/mindmap-4-1.png",
         "content": {
@@ -1338,7 +1338,7 @@ export const vi = {
     "5.1": {
         "title": "Trao quyền cho Khách hàng: Thành lập Trung tâm Trợ giúp Tự phục vụ",
         "date": "Giai đoạn 2",
-        "tags": ["#CS_SelfService", "#HelpDesk", "#KnowledgeBase"],
+        "tags": ["Tự phục vụ", "Hỗ trợ", "Cơ sở kiến thức"],
         "heroImage": "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
         mindMapUrl: "https://i.postimg.cc/L8P9t8Gk/mindmap-5-1.png",
         "content": {
@@ -1372,6 +1372,9 @@ export const vi = {
     emailPlaceholder: "Email của bạn",
     commentPlaceholder: "Viết bình luận của bạn...",
     submitComment: "Gửi bình luận",
+    generatingMindMap: "Đang tạo Sơ Đồ Tư Duy...",
+    mindMapError: "Không thể tạo Sơ Đồ Tư Duy lúc này.",
+    sidebarWidgetTitle: "Sơ Đồ Tư Duy",
     referenceLinks: [
       { title: "Tìm hiểu về phương pháp Agile", url: "https://www.atlassian.com/vi/agile" },
       { title: "Tổng quan về hệ thống CRM", url: "https://www.salesforce.com/vn/crm/what-is-crm/" },
@@ -2845,6 +2848,9 @@ export const en = {
     emailPlaceholder: "Your Email",
     commentPlaceholder: "Write your comment...",
     submitComment: "Submit Comment",
+    generatingMindMap: "Generating mind map...",
+    mindMapError: "Could not generate mind map at this time.",
+    sidebarWidgetTitle: "Mind Map",
     referenceLinks: [
         { title: "Learn about Agile methodology", url: "https://www.atlassian.com/agile" },
         { title: "Overview of CRM systems", url: "https://www.salesforce.com/crm/what-is-crm/" },
