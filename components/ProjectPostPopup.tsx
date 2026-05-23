@@ -27,9 +27,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const pageData = t.projectPostPopup;
     const post = useMemo(() => (t.projectPosts as any)[projectId] || (t.projectPosts as any).default, [projectId, t]);
     
-    const [mindMapUrl, setMindMapUrl] = useState(post.mindMapUrl); // Start with fallback
-    const [isGeneratingMap, setIsGeneratingMap] = useState(false);
-    const [generationError, setGenerationError] = useState<string | null>(null);
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
 
     const { isAiVoiceOn, selectedAiVoiceName } = useTheme();
@@ -48,7 +45,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         return textParts.join('\n\n');
     }, [post]);
 
-
     const allProjects = t.projectsPage.projects;
     const relatedPosts = useMemo(() => {
         if (!post) return [];
@@ -58,73 +54,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             .filter(p => p.group === currentProject.group && p.id !== projectId)
             .slice(0, 4); 
     }, [projectId, post, allProjects]);
-
-    useEffect(() => {
-        const generateMindMap = async () => {
-            const cacheKey = `mindMap_${projectId}_${language}`;
-            const cachedUrl = sessionStorage.getItem(cacheKey);
-            if (cachedUrl) {
-                setMindMapUrl(cachedUrl);
-                return;
-            }
-
-            setIsGeneratingMap(true);
-            setGenerationError(null);
-
-            try {
-                if (!process.env.GEMINI_API_KEY) {
-                    throw new Error("API key is not configured.");
-                }
-                if (!aiRef.current) {
-                     aiRef.current = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-                }
-
-                const summary = post.content.paragraphs.join(' ').substring(0, 800);
-                const prompt = `Create a visually appealing and professional mind map in ${language === 'vi' ? 'Vietnamese' : 'English'} summarizing the project: "${post.title}". The central theme should be the project title. Derive the main branches from these key points: "${summary}...". Use a clean, modern aesthetic with relevant icons for clarity. The layout should be balanced and easy to read.`;
-                
-                const response: any = await aiRef.current.models.generateContent({
-                    model: 'gemini-2.5-flash-image',
-                    contents: { parts: [{ text: prompt }] },
-                    config: {
-                      imageConfig: {
-                        aspectRatio: '16:9',
-                      },
-                    },
-                });
-
-                let imageUrl = '';
-                if (response.candidates?.[0]?.content?.parts) {
-                    for (const part of response.candidates[0].content.parts) {
-                        if (part.inlineData) {
-                            imageUrl = `data:image/png;base64,${part.inlineData.data}`;
-                            break;
-                        }
-                    }
-                }
-
-                if (imageUrl) {
-                    setMindMapUrl(imageUrl);
-                    sessionStorage.setItem(cacheKey, imageUrl);
-                } else {
-                    throw new Error("No image was generated.");
-                }
-            } catch (error) {
-                console.error("Error generating mind map:", error);
-                setGenerationError(pageData.mindMapError);
-            } finally {
-                setIsGeneratingMap(false);
-            }
-        };
-
-        if (projectId && post && post.title !== "Thông tin dự án chưa được cập nhật") {
-            generateMindMap();
-        } else {
-            setMindMapUrl(post.mindMapUrl);
-            setIsGeneratingMap(false);
-            setGenerationError(null);
-        }
-
-    }, [projectId, post, language]);
 
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
@@ -253,25 +182,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                             </div>
                                         )}
                                         <div className="sidebar-widget">
-                                            <h4 className="sidebar-widget-title">{pageData.sidebarWidgetTitle}</h4>
-                                            {isGeneratingMap ? (
-                                                <div className="mind-map-loader">
-                                                    <Icons.CpuIcon className="animate-spin" size={40} />
-                                                    <p>{pageData.generatingMindMap}</p>
-                                                </div>
-                                            ) : generationError ? (
-                                                <div className="mind-map-error">
-                                                    <Icons.XMarkIcon size={40} />
-                                                    <p>{generationError}</p>
-                                                    <img src={post.mindMapUrl} alt={`${pageData.sidebarWidgetTitle} (Fallback)`} style={{width: '100%', borderRadius: '10px'}}/>
-                                                </div>
-                                            ) : (
-                                                <img src={mindMapUrl} alt={pageData.sidebarWidgetTitle} style={{width: '100%', borderRadius: '10px', border: 'var(--color-brand-glass-border)'}}/>
-                                            )}
-                                        </div>
-
-                                        <div className="sidebar-widget">
-                                            <h4 className="sidebar-widget-title">Tài liệu tham khảo</h4>
+                                            <h4 className="sidebar-widget-title">{pageData.referenceLinksTitle}</h4>
                                             <ul className="reference-links-list">
                                                 {(pageData.referenceLinks || []).map((link: {title: string, url: string}) => (
                                                     <li key={link.title}>

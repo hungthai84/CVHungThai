@@ -11,8 +11,8 @@ interface ThemeContextType {
     setLightThemeColor: (color: ThemeColor) => void;
     darkThemeColor: ThemeColor;
     setDarkThemeColor: (color: ThemeColor) => void;
-    isCursorEffectOn: boolean;
-    setCursorEffect: (isOn: boolean) => void;
+    // isCursorEffectOn: boolean;
+    // setCursorEffect: (isOn: boolean) => void;
     isSoundOn: boolean;
     setSoundOn: (isOn: boolean) => void;
     isAiVoiceOn: boolean;
@@ -43,7 +43,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [lightThemeColor, setLightThemeColorState] = useState<ThemeColor>('#101733');
     const [darkThemeColor, setDarkThemeColorState] = useState<ThemeColor>('#FFFFFF'); // Dark mode default is now white
     
-    const [isCursorEffectOn, setCursorEffectState] = useState<boolean>(true);
+    
     const [isSoundOn, setSoundOnState] = useState<boolean>(true);
     const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
     const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
@@ -67,10 +67,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         localStorage.setItem('darkThemeColor', color);
     };
 
-    const setCursorEffect = (isOn: boolean) => {
-        setCursorEffectState(isOn);
-        localStorage.setItem('isCursorEffectOn', String(isOn));
-    };
+    
 
     const setSoundOn = (isOn: boolean) => {
         setSoundOnState(isOn);
@@ -103,7 +100,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         const savedLightColor = localStorage.getItem('lightThemeColor');
         const savedDarkColor = localStorage.getItem('darkThemeColor');
         let savedWallpaper = localStorage.getItem('wallpaper');
-        const savedCursor = localStorage.getItem('isCursorEffectOn');
+        
         const savedSound = localStorage.getItem('isSoundOn');
         const savedAiVoice = localStorage.getItem('isAiVoiceOn');
         const savedVoiceName = localStorage.getItem('selectedAiVoiceName');
@@ -116,7 +113,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedLightColor) setLightThemeColorState(savedLightColor);
         if (savedDarkColor) setDarkThemeColorState(savedDarkColor);
         
-        setCursorEffectState(savedCursor === null ? true : savedCursor === 'true');
+        // setCursorEffectState(savedCursor === null ? true : savedCursor === 'true');
         setSoundOnState(savedSound === null ? true : savedSound === 'true');
         setAiVoiceOnState(savedAiVoice === null ? true : savedAiVoice === 'true');
         if (savedVoiceName) setSelectedAiVoiceNameState(savedVoiceName);
@@ -169,8 +166,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setLightThemeColor,
         darkThemeColor,
         setDarkThemeColor,
-        isCursorEffectOn,
-        setCursorEffect,
+        // isCursorEffectOn,
+        // setCursorEffect,
         isSoundOn,
         setSoundOn,
         isAiVoiceOn,

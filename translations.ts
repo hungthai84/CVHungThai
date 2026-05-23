@@ -6,7 +6,7 @@ export const vi = {
     nav: {
       home: "Trang chủ",
       coverLetter: "Thư ngỏ",
-      about: "Về tôi",
+      about: "Giới thiệu",
       experience: "Kinh nghiệm",
       skills: "Kỹ năng",
       education: "Học vấn",
@@ -62,12 +62,12 @@ export const vi = {
     signatureImage: "https://i.postimg.cc/VNfdSvPT/Ch-k.png",
   },
   aboutPage: {
-    badge: "Về tôi",
+    badge: "Giới thiệu",
     tooltipTitle: "Giới thiệu bản thân",
     tooltipText: "Đôi nét về bản thân, triết lý công việc và những giá trị cốt lõi tôi theo đuổi.",
-    title: "Về tôi",
+    title: "Giới thiệu",
     paragraphs: [
-      "Một chuyên gia dịch vụ khách hàng with hơn <strong>22 năm kinh nghiệm thực chiến</strong>. Với tôi, Chăm Sóc Khách Hàng không chỉ là phục vụ, mà là <strong>sự đồng hành</strong>. Mỗi cuộc trò chuyện, mỗi khoảnh khắc, dù là nhỏ nhất, đều là một cơ hội quý giá: để lắng nghe, để thấu hiểu, và để tạo ra những trải nghiệm vượt trên cả sự mong đợi.",
+      "Một chuyên gia dịch vụ khách hàng với hơn <strong>22 năm kinh nghiệm thực chiến</strong>. Với tôi, Chăm Sóc Khách Hàng không chỉ là phục vụ, mà là <strong>sự đồng hành</strong>. Mỗi cuộc trò chuyện, mỗi khoảnh khắc, dù là nhỏ nhất, đều là một cơ hội quý giá: để lắng nghe, để thấu hiểu, và để tạo ra những trải nghiệm vượt trên cả sự mong đợi.",
       "Tôi tin rằng sự hài lòng không đến từ sự hoàn hảo tuyệt đối, mà đến từ <strong>sự tận tâm kịp thời và đồng cảm chân thành</strong>. Trong suốt sự nghiệp, tôi đã trực tiếp thiết kế và tối ưu hóa hàng chục quy trình, hệ thống Chăm Sóc Khách Hàng, luôn đặt trên nền tảng ba giá trị cốt lõi:"
     ],
     coreValues: "Hiệu quả – Nhân văn – Bền vững",
@@ -83,6 +83,7 @@ export const vi = {
         { key: "email", label: "Email", value: "hungthai84@gmail.com", link: "mailto:hungthai84@gmail.com", icon: "MailIcon" },
         { key: "phone", label: "Điện thoại", value: "+84 0909097882", link: "tel:+84909097882", icon: "PhoneIcon" },
         { key: "zalo", label: "Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "ChatBubbleLeftRightIcon" },
+        { key: "scena", label: "Scena AI", value: "scena.link/nmxffobkkmcj", link: "https://scena.link/nmxffobkkmcj", icon: "LinkIcon" },
         { key: "website", label: "Website", value: "nguyenhungthai.powerservice.one", link: "https://www.nguyenhungthai.powerservice.one", icon: "LinkIcon" },
     ]
   },
@@ -845,6 +846,15 @@ export const vi = {
           hashtags: ["#CS_SelfService", "#HelpDesk"],
           imageUrl: "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
       },
+      {
+          id: "6.1",
+          title: "Khách hàng là trung tâm",
+          description: "Xây dựng văn hóa lấy khách hàng làm trọng tâm trong mọi hoạt động của doanh nghiệp.",
+          group: "Khách hàng là trung tâm",
+          stage: "3",
+          hashtags: ["#CustomerCentric", "#Culture"],
+          imageUrl: "https://i.postimg.cc/0cec9/6-1-customer-centric.jpg",
+      },
     ]
   },
   memoriesPage: {
@@ -1037,7 +1047,7 @@ export const vi = {
     resetButton: "Đặt lại",
     saveButton: "Lưu thay đổi",
     featuresTitle: "Tính năng & Hiệu ứng",
-    cursorEffect: "Hiệu ứng con trỏ",
+
     soundEffects: "Hiệu ứng âm thanh",
     aiVoice: "Giọng nói AI",
     aiVoiceSelect: "Chọn giọng nói",
@@ -1353,6 +1363,25 @@ export const vi = {
             ],
             "list": []
         }
+    },
+    "6.1": {
+        "title": "Trái tim của Doanh nghiệp: Chiến lược Lấy Khách hàng làm Trung tâm",
+        "date": "Giai đoạn 3",
+        "tags": ["Chiến lược CS", "Văn hóa doanh nghiệp", "Khách hàng là trung tâm"],
+        "heroImage": "https://i.postimg.cc/0cec9/6-1-customer-centric.jpg",
+        mindMapUrl: "https://i.postimg.cc/m2f6N9L8/mindmap-6-1.png",
+        "content": {
+            "paragraphs": [
+                "Lấy khách hàng làm trung tâm (Customer-Centricity) không phải là một khẩu hiệu, mà là một chiến lược kinh doanh toàn diện, nơi mọi quyết định đều bắt đầu và kết thúc với khách hàng. Dự án này tập trung vào việc lan tỏa và thực thi triết lý này trên toàn doanh nghiệp.",
+                "Mục tiêu là biến Chăm Sóc Khách Hàng từ một phòng ban chức năng thành một tư duy xuyên suốt, giúp doanh nghiệp xây dựng lợi thế cạnh tranh bền vững dựa trên sự thấu cảm và lòng trung thành của khách hàng. Các trụ cột chính:",
+                "1. **Xác định Tầm nhìn và Giá trị Cốt lõi:** Chúng tôi đã cùng ban lãnh đạo định nghĩa lại tầm nhìn của công ty, đặt khách hàng vào vị trí ưu tiên cao nhất. Các giá trị cốt lõi về sự tận tâm, lắng nghe và giải quyết vấn đề được cụ thể hóa thành những hành vi cụ thể.",
+                "2. **Phá vỡ 'Ống chân không' giữa các Phòng ban:** Một trong những rào cản lớn nhất của Customer-Centricity là sự ngắt kết nối giữa các bộ phận. Tôi đã chủ động tạo ra các dự án liên phòng ban, nơi Sales, Marketing, Sản phẩm và Chăm Sóc Khách Hàng cùng ngồi lại để giải quyết một điểm đau (pain point) của khách hàng.",
+                "3. **Lấy Dữ liệu Khách hàng làm Cơ sở Quyết định:** Thay vì phán đoán, chúng tôi sử dụng dữ liệu từ CRM, khảo sát NPS và các báo cáo phân tích để chứng minh giá trị của các cải tiến dịch vụ. Mọi đề xuất thay đổi sản phẩm đều phải đi kèm với dữ liệu về tác động đến trải nghiệm khách hàng.",
+                "4. **Trao quyền và Công nhận Nhân viên:** Chúng tôi xây dựng cơ chế để nhân viên tuyến đầu – những người trực tiếp tiếp xúc với khách hàng – có quyền đưa ra các quyết định linh hoạt để làm hài lòng khách hàng ngay lập tức. Những câu chuyện về sự tận tâm 'vượt mong đợi' được chia sẻ rộng rãi để truyền cảm hứng.",
+                "Chiến lược này đã giúp thay đổi diện mạo của doanh nghiệp. Khách hàng cảm thấy được trân trọng hơn, tỷ lệ giữ chân khách hàng tăng lên, và quan trọng nhất, mỗi nhân viên đều hiểu rằng công việc của họ dù ở bộ phận nào cũng đều góp phần vào nụ cười của khách hàng."
+            ],
+            "list": []
+        }
     }
   },
   projectPostPopup: {
@@ -1372,9 +1401,10 @@ export const vi = {
     emailPlaceholder: "Email của bạn",
     commentPlaceholder: "Viết bình luận của bạn...",
     submitComment: "Gửi bình luận",
-    generatingMindMap: "Đang tạo Sơ Đồ Tư Duy...",
-    mindMapError: "Không thể tạo Sơ Đồ Tư Duy lúc này.",
-    sidebarWidgetTitle: "Sơ Đồ Tư Duy",
+    generatingMindMap: "Đang tạo sơ đồ tư duy...",
+    mindMapError: "Không thể tạo sơ đồ tư duy lúc này.",
+    sidebarWidgetTitle: "Sơ đồ tư duy",
+    referenceLinksTitle: "Tài liệu tham khảo",
     referenceLinks: [
       { title: "Tìm hiểu về phương pháp Agile", url: "https://www.atlassian.com/vi/agile" },
       { title: "Tổng quan về hệ thống CRM", url: "https://www.salesforce.com/vn/crm/what-is-crm/" },
@@ -1467,6 +1497,7 @@ export const en = {
         { key: "email", label: "Email", value: "hungthai84@gmail.com", link: "mailto:hungthai84@gmail.com", icon: "MailIcon" },
         { key: "phone", label: "Phone", value: "+84 0909097882", link: "tel:+84909097882", icon: "PhoneIcon" },
         { key: "zalo", label: "Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "ChatBubbleLeftRightIcon" },
+        { key: "scena", label: "Scena AI", value: "scena.link/nmxffobkkmcj", link: "https://scena.link/nmxffobkkmcj", icon: "LinkIcon" },
         { key: "website", label: "Website", value: "nguyenhungthai.powerservice.one", link: "https://www.nguyenhungthai.powerservice.one", icon: "LinkIcon" },
     ]
   },
@@ -2421,7 +2452,7 @@ export const en = {
     resetButton: "Reset",
     saveButton: "Save Changes",
     featuresTitle: "Features & Effects",
-    cursorEffect: "Cursor Effect",
+
     soundEffects: "Sound Effects",
     aiVoice: "AI Voice",
     aiVoiceSelect: "Select voice",
@@ -2851,6 +2882,7 @@ export const en = {
     generatingMindMap: "Generating mind map...",
     mindMapError: "Could not generate mind map at this time.",
     sidebarWidgetTitle: "Mind Map",
+    referenceLinksTitle: "Reference Links",
     referenceLinks: [
         { title: "Learn about Agile methodology", url: "https://www.atlassian.com/agile" },
         { title: "Overview of CRM systems", url: "https://www.salesforce.com/crm/what-is-crm/" },

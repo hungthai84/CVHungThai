@@ -21,7 +21,8 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
     
         setIsTogglingPlay(true);
         try {
-            if (video.paused) {
+            if (video.paused || video.muted) {
+                video.muted = false;
                 await video.play();
             } else {
                 video.pause();
@@ -61,6 +62,8 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                             ref={videoRef}
                             src="https://cdn.scena.ai/project/9626/b40b848d5a2ad108760073e8c64bd80f963850ab7e79c19af228c82a83f6419d.mp3"
                             playsInline
+                            autoPlay
+                            muted
                             loop
                             onPlay={() => setIsPlaying(true)}
                             onPause={() => setIsPlaying(false)}

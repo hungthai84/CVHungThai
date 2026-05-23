@@ -165,7 +165,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         themeMode, setThemeMode,
         lightThemeColor, setLightThemeColor,
         darkThemeColor, setDarkThemeColor,
-        isCursorEffectOn, setCursorEffect,
+        // isCursorEffectOn, setCursorEffect,
         isSoundOn, setSoundOn,
         isAiVoiceOn, setAiVoiceOn,
         selectedAiVoiceName, setSelectedAiVoiceName,
@@ -181,7 +181,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const [localThemeMode, setLocalThemeMode] = useState(themeMode);
     const [localLightThemeColor, setLocalLightThemeColor] = useState(lightThemeColor);
     const [localDarkThemeColor, setLocalDarkThemeColor] = useState(darkThemeColor);
-    const [localCursorEffect, setLocalCursorEffect] = useState(isCursorEffectOn);
+    // const [localCursorEffect, setLocalCursorEffect] = useState(isCursorEffectOn);
     const [localSound, setLocalSound] = useState(isSoundOn);
     const [localAiVoice, setLocalAiVoice] = useState(isAiVoiceOn);
     const [localVoiceName, setLocalVoiceName] = useState(selectedAiVoiceName);
@@ -221,18 +221,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setLocalThemeMode(themeMode);
         setLocalLightThemeColor(lightThemeColor);
         setLocalDarkThemeColor(darkThemeColor);
-        setLocalCursorEffect(isCursorEffectOn);
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);
         setLocalVoiceName(selectedAiVoiceName);
         setLocalWallpaper(wallpaper);
-    }, [themeMode, lightThemeColor, darkThemeColor, isCursorEffectOn, isSoundOn, isAiVoiceOn, selectedAiVoiceName, wallpaper]);
+    }, [themeMode, lightThemeColor, darkThemeColor, isSoundOn, isAiVoiceOn, selectedAiVoiceName, wallpaper]);
 
     const handleSaveChanges = () => {
         setThemeMode(localThemeMode);
         setLightThemeColor(localLightThemeColor);
         setDarkThemeColor(localDarkThemeColor);
-        setCursorEffect(localCursorEffect);
+        // setCursorEffect(localCursorEffect);
         setSoundOn(localSound);
         setAiVoiceOn(localAiVoice);
         setSelectedAiVoiceName(localVoiceName);
@@ -248,7 +247,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setLocalThemeMode(themeMode);
         setLocalLightThemeColor(lightThemeColor);
         setLocalDarkThemeColor(darkThemeColor);
-        setLocalCursorEffect(isCursorEffectOn);
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);
         setLocalVoiceName(selectedAiVoiceName);
@@ -533,17 +531,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                         <div className="settings-left-column">
                              <div className="settings-card">
                                 <h4 className="settings-card-title">{settingsText.featuresTitle}</h4>
-                                <div className="setting-item switch">
-                                    <label>{settingsText.cursorEffect}</label>
-                                    <div
-                                        role="switch"
-                                        aria-checked={localCursorEffect}
-                                        className={`toggle-switch ${localCursorEffect ? 'is-on' : ''}`}
-                                        onClick={() => setLocalCursorEffect(!localCursorEffect)}
-                                    >
-                                        <div className="toggle-slider"></div>
-                                    </div>
-                                </div>
+
 
                                 <div className="setting-item switch">
                                     <label>{settingsText.soundEffects}</label>

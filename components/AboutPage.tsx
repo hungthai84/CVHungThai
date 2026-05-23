@@ -25,6 +25,13 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         {/* Left Column: Bio and Video */}
                         <div className="about-bio-text-card no-scrollbar">
                             <div className="about-bio-and-video-container">
+                                <div className="about-video-section" style={{ marginBottom: '2rem', borderRadius: '15px', overflow: 'hidden', width: '100%', position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                                    <iframe 
+                                        src="https://scena.link/nmxffobkkmcj" 
+                                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                                        allow="camera; microphone; fullscreen; display-capture; autoplay" 
+                                    />
+                                </div>
                                 {pageData.paragraphs.map((p, index) => (
                                     <p key={index} dangerouslySetInnerHTML={{ __html: p }} />
                                 ))}

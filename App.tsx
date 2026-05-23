@@ -7,7 +7,6 @@ import SkillsPage from './components/SkillsPage';
 import CoverLetter from './components/CoverLetter';
 import MemoriesPage from './components/MemoriesPage';
 import { ProjectsPage } from './components/ProjectsPage';
-import CursorEffect from './components/CursorEffect';
 import MainContent from './components/MainContent';
 import AiChatPage from './components/AiChatPage';
 import * as Icons from './components/Icons';
@@ -307,18 +306,50 @@ const App: React.FC = () => {
     const isLastMainPage = isOnMainPage && currentMainPageIndex === mainPageKeys.length - 1;
     const canGoPrev = isOnMainPage && currentMainPageIndex > 0;
     
-    const handleNextPage = () => {
+    const handleNextPage = useCallback(() => {
         if (!isLastMainPage && isOnMainPage) {
             handleSetPage(mainPageKeys[currentMainPageIndex + 1]);
         }
-    };
+    }, [isLastMainPage, isOnMainPage, mainPageKeys, currentMainPageIndex]);
 
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         if (canGoPrev) {
             handleSetPage(mainPageKeys[currentMainPageIndex - 1]);
         }
-    };
+    }, [canGoPrev, mainPageKeys, currentMainPageIndex]);
     
+    // Swipe up on mobile to go to next page
+    useEffect(() => {
+        if (!isMobile || !isOnMainPage) return;
+        
+        let touchStartY = 0;
+        let atBottom = false;
+
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartY = e.touches[0].clientY;
+            const scrollableHeight = document.documentElement.scrollHeight;
+            const scrolledHeight = window.innerHeight + window.scrollY;
+            atBottom = scrolledHeight >= scrollableHeight - 20;
+        };
+
+        const handleTouchEnd = (e: TouchEvent) => {
+            if (!atBottom || isLastMainPage) return;
+            const touchEndY = e.changedTouches[0].clientY;
+            // Must swipe up at least 50px 
+            if (touchStartY - touchEndY > 50) {
+                handleNextPage();
+            }
+        };
+
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+        return () => {
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, [isMobile, isOnMainPage, isLastMainPage, handleNextPage]);
+
     const handleGoToTop = () => {
         handleSetPage(mainPageKeys[0]);
     };
@@ -377,7 +408,6 @@ const App: React.FC = () => {
                     ></div>
                 )}
             </div>
-            <CursorEffect />
             
             <div className="site-wrapper">
                  {isMobile ? (
