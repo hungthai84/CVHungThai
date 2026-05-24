@@ -9,6 +9,26 @@ import { useTheme } from '../contexts/ThemeContext';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
 import LinkEmbedPopup from './LinkEmbedPopup';
+import Lightbox from './Lightbox';
+
+const PROJECT_IMAGES: Record<string, string> = {
+    "1.1": "https://i.postimg.cc/Y9ywtYwY/1-1-Xay-dung-Phong-Dich-vu-Khach-hang.png",
+    "1.2": "https://i.postimg.cc/gjXbjjYH/1-2-Thiet-lap-muc-tieu-phong-ban.png",
+    "1.3": "https://i.postimg.cc/mkzWkkbN/1-3-Nang-cao-trai-nghiem-khach-hang.png",
+    "1.4": "https://i.postimg.cc/vTgwTTQ7/1-4-Quan-ly-du-an-CSKH.png",
+    "1.5": "https://i.postimg.cc/G2pHMFQk/1-5-Thuc-day-cai-tien-san-pham.png",
+    "2.1": "https://i.postimg.cc/Rh6xhhMw/2-1-Chuan-hoa-quy-trinh-CSKH.png",
+    "2.2": "https://i.postimg.cc/qRZdpyd3/2-2-Toi-uu-hoa-kenh-ho-tro.png",
+    "2.3": "https://i.postimg.cc/gJBPG8PR/2-3-Trien-khai-tu-dong-hoa.png",
+    "2.4": "https://i.postimg.cc/gjXbjjY8/2-4-Quan-ly-chien-dich-Outbound.png",
+    "3.1": "https://i.postimg.cc/VvrPvvYt/3-1-Xay-dung-he-thong-CRM.png",
+    "3.2": "https://i.postimg.cc/D0J3002X/3-2-Phan-tich-Bao-cao.png",
+    "3.3": "https://i.postimg.cc/fytQyyw0/3-3-Khao-sat-Danh-gia-khach-hang.png",
+    "3.4": "https://i.postimg.cc/gjXbjjYX/3-4-Xay-dung-AI-Bot.png",
+    "4.1": "https://i.postimg.cc/bJFjqkjH/4-1-Phat-trien-dao-tao-truc-tuyen.png",
+    "5.1": "https://i.postimg.cc/631NBnNV/5-1-Thanh-lap-trung-tam-ho-tro.png",
+    "6.1": "https://i.postimg.cc/FRnQh3QS/6-1-Khach-hang-la-trung-tam.png",
+};
 
 interface ProjectPostPageProps {
     id: string; // The full page key, e.g., "project-1.1"
@@ -32,6 +52,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const { isAiVoiceOn, selectedAiVoiceName } = useTheme();
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [comments] = React.useState<Comment[]>([]);
     const [newComment] = React.useState({ name: '', email: '', text: '' });
     const aiRef = useRef<GoogleGenAI | null>(null);
@@ -154,6 +175,21 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     {post.content.list.map((item: string, index: number) => <li key={index}>{item}</li>)}
                                                 </ul>
                                             )}
+                                            {PROJECT_IMAGES[projectId] && (
+                                                <div className="project-detail-image-wrapper mt-6 pt-6 border-t border-dashed border-gray-200 dark:border-gray-700 flex flex-col items-center">
+                                                    <img
+                                                        src={PROJECT_IMAGES[projectId]}
+                                                        alt={post.title}
+                                                        className="case-study-image cursor-pointer hover:scale-[1.01] transition-all duration-300 object-contain max-h-[600px]"
+                                                        referrerPolicy="no-referrer"
+                                                        onClick={() => setIsLightboxOpen(true)}
+                                                    />
+                                                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 italic flex items-center gap-1.5 justify-center">
+                                                        <Icons.SparklesIcon size={12} />
+                                                        <span>Thống kê quy trình / Hệ thống thực tiễn của dự án (Click để phóng to)</span>
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 
@@ -248,6 +284,15 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             {embeddingUrl && document.getElementById('popup-root') && createPortal(
                 <LinkEmbedPopup url={embeddingUrl} onClose={() => setEmbeddingUrl(null)} />,
                 document.getElementById('popup-root')!
+            )}
+            {isLightboxOpen && PROJECT_IMAGES[projectId] && (
+                <Lightbox
+                    images={[{ src: PROJECT_IMAGES[projectId], alt: post.title }]}
+                    currentIndex={0}
+                    onClose={() => setIsLightboxOpen(false)}
+                    onNext={() => {}}
+                    onPrev={() => {}}
+                />
             )}
         </PageLayout>
     );

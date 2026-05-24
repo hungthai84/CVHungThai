@@ -853,7 +853,7 @@ export const vi = {
           group: "Khách hàng là trung tâm",
           stage: "3",
           hashtags: ["#CustomerCentric", "#Culture"],
-          imageUrl: "https://i.postimg.cc/0cec9/6-1-customer-centric.jpg",
+          imageUrl: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
       },
     ]
   },
@@ -1368,8 +1368,8 @@ export const vi = {
         "title": "Trái tim của Doanh nghiệp: Chiến lược Lấy Khách hàng làm Trung tâm",
         "date": "Giai đoạn 3",
         "tags": ["Chiến lược CS", "Văn hóa doanh nghiệp", "Khách hàng là trung tâm"],
-        "heroImage": "https://i.postimg.cc/0cec9/6-1-customer-centric.jpg",
-        mindMapUrl: "https://i.postimg.cc/m2f6N9L8/mindmap-6-1.png",
+        "heroImage": "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
+        mindMapUrl: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
         "content": {
             "paragraphs": [
                 "Lấy khách hàng làm trung tâm (Customer-Centricity) không phải là một khẩu hiệu, mà là một chiến lược kinh doanh toàn diện, nơi mọi quyết định đều bắt đầu và kết thúc với khách hàng. Dự án này tập trung vào việc lan tỏa và thực thi triết lý này trên toàn doanh nghiệp.",
