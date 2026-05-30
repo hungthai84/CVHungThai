@@ -6,6 +6,8 @@ import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';
 import Lightbox from './Lightbox';
 
+import OptimizedImage from './OptimizedImage';
+
 interface MemoryImage {
   src: string;
   alt: string;
@@ -84,7 +86,7 @@ const MemoriesPage: React.FC<MemoriesPageProps> = ({ id }) => {
                             <div className="memories-grid">
                                 {filteredImages.map((image, index) => (
                                     <button key={image.src} className="memories-grid-item" onClick={() => handleOpenLightbox(index)}>
-                                        <img src={image.src} alt={image.alt} loading="lazy" />
+                                        <OptimizedImage src={image.src} alt={image.alt} optWidth={800} optQuality={70} />
                                     </button>
                                 ))}
                             </div>

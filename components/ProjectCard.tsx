@@ -1,6 +1,7 @@
 import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import type { Project, ViewMode } from './ProjectsPage';
+import OptimizedImage from './OptimizedImage';
 
 interface ProjectCardProps {
     project: Project;
@@ -23,7 +24,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
             aria-label={`Xem chi tiết dự án: ${project.title}`}
         >
             <div className="project-card-new-image">
-                <img src={project.imageUrl} alt={project.title} loading="lazy" />
+                <OptimizedImage src={project.imageUrl} alt={project.title} optWidth={600} optQuality={70} hoverScale />
             </div>
             <div className="project-card-new-content">
                 <div className="project-card-new-header">
