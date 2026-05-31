@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion } from 'motion/react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
@@ -130,17 +131,39 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
 
                 <div className="projects-grid-wrapper no-scrollbar">
                     {filteredProjects.length > 0 ? (
-                        <div className={`projects-grid view-${viewMode}`}>
+                        <motion.div 
+                            className={`projects-grid view-${viewMode}`}
+                            variants={{
+                                hidden: { opacity: 0 },
+                                show: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.1
+                                    }
+                                }
+                            }}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.1 }}
+                        >
                             {filteredProjects.map((project) => (
-                                <ProjectCard
+                                <motion.div
                                     key={project.id}
-                                    project={project}
-                                    viewMode={viewMode}
-                                    hasPost={!!(t.projectPosts as any)[project.id]}
-                                    onClick={() => handleCardClick(project.id)}
-                                />
+                                    layout
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        show: { opacity: 1, y: 0 }
+                                    }}
+                                >
+                                    <ProjectCard
+                                        project={project}
+                                        viewMode={viewMode}
+                                        hasPost={!!(t.projectPosts as any)[project.id]}
+                                        onClick={() => handleCardClick(project.id)}
+                                    />
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     ) : (
                         <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--color-brand-text-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                             <Icons.CubeIcon size={48} style={{ marginBottom: '1rem', opacity: 0.5 }}/>
