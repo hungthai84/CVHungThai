@@ -111,15 +111,25 @@ export const useSpeechSynthesis = () => {
                 if (targetLangCode === 'vi-VN') {
                     const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN');
                     if (vietnameseVoices.length > 0) {
-                        // Priority 1: A specific, high-quality female voice.
-                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Hoai My Online (Natural) - Vietnamese (Vietnam)');
+                        // Priority 1: Specifically requested professional male voice (ideal for business reports)
+                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
         
-                        // Priority 2: Fallback to any other female Vietnamese voice.
+                        // Priority 2: Fallback to high-quality female voice
+                        if (!preferredVoice) {
+                            preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Hoai My Online (Natural) - Vietnamese (Vietnam)');
+                        }
+
+                        // Priority 3: Fallback to any male Vietnamese voice.
+                        if (!preferredVoice) {
+                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam') || v.name.toLowerCase().includes('male'));
+                        }
+                        
+                        // Priority 4: Fallback to any female Vietnamese voice.
                         if (!preferredVoice) {
                             preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nữ') || v.name.toLowerCase().includes('female'));
                         }
                         
-                        // Priority 3: Absolute fallback to the first available Vietnamese voice.
+                        // Priority 5: Absolute fallback to the first available Vietnamese voice.
                         selectedVoice = preferredVoice || vietnameseVoices[0];
                     }
                 } else { // en-US

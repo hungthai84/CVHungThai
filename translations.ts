@@ -718,7 +718,7 @@ export const vi = {
           group: "Chiến lược & Quản lý",
           stage: "1",
           hashtags: ["#CS_Strategy", "#Structure"],
-          imageUrl: "https://i.postimg.cc/sDXNxb9V/1-X-y-d-ng-P-CSKH.jpg",
+          imageUrl: "https://i.ibb.co/27LMqKRp/1-X-y-d-ng-P-CSKH.jpg",
       },
       {
           id: "1.2",
@@ -727,7 +727,7 @@ export const vi = {
           group: "Chiến lược & Quản lý",
           stage: "1",
           hashtags: ["#CS_Strategy", "#OKR"],
-          imageUrl: "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
+          imageUrl: "https://i.ibb.co/21XyXfT6/2-M-c-ti-u-P-CSKH.jpg",
       },
       {
           id: "1.3",
@@ -736,7 +736,7 @@ export const vi = {
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_Strategy", "#CXDesign"],
-          imageUrl: "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
+          imageUrl: "https://i.ibb.co/KcpYkcTL/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
       },
       {
           id: "1.4",
@@ -745,7 +745,7 @@ export const vi = {
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_Strategy", "#ProjectManagement"],
-          imageUrl: "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
+          imageUrl: "https://i.ibb.co/chW1w3nj/12-Qu-n-l-d-n.jpg",
       },
       {
           id: "1.5",
@@ -754,7 +754,7 @@ export const vi = {
           group: "Chiến lược & Quản lý",
           stage: "3",
           hashtags: ["#CS_Strategy", "#VoiceOfCustomer"],
-          imageUrl: "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
+          imageUrl: "https://i.ibb.co/HTz2rHfP/15-C-i-thi-n-s-n-ph-m.jpg",
       },
       {
           id: "2.1",
@@ -763,7 +763,7 @@ export const vi = {
           group: "Vận hành & Quy trình",
           stage: "1",
           hashtags: ["#CS_Operations", "#SOP"],
-          imageUrl: "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
+          imageUrl: "https://i.ibb.co/nMtyTgz6/3-X-y-d-ng-quy-tr-nh.jpg",
       },
       {
           id: "2.2",
@@ -772,7 +772,7 @@ export const vi = {
           group: "Vận hành & Quy trình",
           stage: "2",
           hashtags: ["#CS_Operations", "#OmniChannel"],
-          imageUrl: "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
+          imageUrl: "https://i.ibb.co/9JFsqMH/4-T-i-u-k-nh-h-tr.jpg",
       },
       {
           id: "2.3",
@@ -781,7 +781,7 @@ export const vi = {
           group: "Vận hành & Quy trình",
           stage: "3",
           hashtags: ["#CS_Operations", "#Automation"],
-          imageUrl: "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
+          imageUrl: "https://i.ibb.co/Kj4wyPk9/9-T-ng-ho.png",
       },
       {
           id: "2.4",
@@ -790,7 +790,7 @@ export const vi = {
           group: "Vận hành & Quy trình",
           stage: "3",
           hashtags: ["#CS_Operations", "#OutboundCS"],
-          imageUrl: "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
+          imageUrl: "https://i.ibb.co/cSnzVz2r/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
       },
       {
           id: "3.1",
@@ -799,7 +799,7 @@ export const vi = {
           group: "Công nghệ & Dữ liệu",
           stage: "2",
           hashtags: ["#CS_TechData", "#CRM"],
-          imageUrl: "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
+          imageUrl: "https://i.ibb.co/YB90fPzR/5-X-y-d-ng-h-th-ng-CRM.jpg",
       },
       {
           id: "3.2",
@@ -808,7 +808,7 @@ export const vi = {
           group: "Công nghệ & Dữ liệu",
           stage: "2",
           hashtags: ["#CS_TechData", "#Insight"],
-          imageUrl: "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
+          imageUrl: "https://i.ibb.co/k2QGdScd/7-Ph-n-t-ch-b-o-c-o.jpg",
       },
       {
           id: "3.3",
@@ -817,7 +817,7 @@ export const vi = {
           group: "Công nghệ & Dữ liệu",
           stage: "3",
           hashtags: ["#CS_TechData", "#Survey"],
-          imageUrl: "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
+          imageUrl: "https://i.ibb.co/wN7yQmFd/13-Kh-o-s-t-nh-gi.jpg",
       },
       {
           id: "3.4",
@@ -826,7 +826,7 @@ export const vi = {
           group: "Công nghệ & Dữ liệu",
           stage: "3",
           hashtags: ["#CS_TechData", "#Chatbot"],
-          imageUrl: "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
+          imageUrl: "https://i.ibb.co/0RYycqf9/8-X-y-d-ng-Al-Bot.jpg",
       },
       {
           id: "4.1",
@@ -835,7 +835,7 @@ export const vi = {
           group: "Đào tạo & Phát triển",
           stage: "3",
           hashtags: ["#CS_Learning", "#CSAcademy"],
-          imageUrl: "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
+          imageUrl: "https://i.ibb.co/G46b9wwH/10-o-t-o-online.jpg",
       },
       {
           id: "5.1",
@@ -844,7 +844,7 @@ export const vi = {
           group: "Trung tâm hỗ trợ & Tự phục vụ",
           stage: "2",
           hashtags: ["#CS_SelfService", "#HelpDesk"],
-          imageUrl: "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
+          imageUrl: "https://i.ibb.co/LDH1HFWb/11-Trung-t-m-h-tr.png",
       },
       {
           id: "6.1",
@@ -2132,7 +2132,7 @@ export const en = {
           group: "Strategy & Management",
           stage: "1",
           hashtags: ["#CS_Strategy", "#Structure"],
-          imageUrl: "https://i.postimg.cc/sDXNxb9V/1-X-y-d-ng-P-CSKH.jpg",
+          imageUrl: "https://i.ibb.co/27LMqKRp/1-X-y-d-ng-P-CSKH.jpg",
       },
       {
           id: "1.2",
@@ -2141,7 +2141,7 @@ export const en = {
           group: "Strategy & Management",
           stage: "1",
           hashtags: ["#CS_Strategy", "#OKR"],
-          imageUrl: "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
+          imageUrl: "https://i.ibb.co/21XyXfT6/2-M-c-ti-u-P-CSKH.jpg",
       },
       {
           id: "1.3",
@@ -2150,7 +2150,7 @@ export const en = {
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#CXDesign"],
-          imageUrl: "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
+          imageUrl: "https://i.ibb.co/KcpYkcTL/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
       },
       {
           id: "1.4",
@@ -2159,7 +2159,7 @@ export const en = {
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#ProjectManagement"],
-          imageUrl: "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
+          imageUrl: "https://i.ibb.co/chW1w3nj/12-Qu-n-l-d-n.jpg",
       },
       {
           id: "1.5",
@@ -2168,7 +2168,7 @@ export const en = {
           group: "Strategy & Management",
           stage: "3",
           hashtags: ["#CS_Strategy", "#VoiceOfCustomer"],
-          imageUrl: "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
+          imageUrl: "https://i.ibb.co/HTz2rHfP/15-C-i-thi-n-s-n-ph-m.jpg",
       },
       {
           id: "2.1",
@@ -2177,7 +2177,7 @@ export const en = {
           group: "Operations & Processes",
           stage: "1",
           hashtags: ["#CS_Operations", "#SOP"],
-          imageUrl: "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
+          imageUrl: "https://i.ibb.co/nMtyTgz6/3-X-y-d-ng-quy-tr-nh.jpg",
       },
       {
           id: "2.2",
@@ -2186,7 +2186,7 @@ export const en = {
           group: "Operations & Processes",
           stage: "2",
           hashtags: ["#CS_Operations", "#OmniChannel"],
-          imageUrl: "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
+          imageUrl: "https://i.ibb.co/9JFsqMH/4-T-i-u-k-nh-h-tr.jpg",
       },
       {
           id: "2.3",
@@ -2195,7 +2195,7 @@ export const en = {
           group: "Operations & Processes",
           stage: "3",
           hashtags: ["#CS_Operations", "#Automation"],
-          imageUrl: "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
+          imageUrl: "https://i.ibb.co/Kj4wyPk9/9-T-ng-ho.png",
       },
       {
           id: "2.4",
@@ -2204,7 +2204,7 @@ export const en = {
           group: "Operations & Processes",
           stage: "3",
           hashtags: ["#CS_Operations", "#OutboundCS"],
-          imageUrl: "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
+          imageUrl: "https://i.ibb.co/cSnzVz2r/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
       },
       {
           id: "3.1",
@@ -2213,7 +2213,7 @@ export const en = {
           group: "Technology & Data",
           stage: "2",
           hashtags: ["#CS_TechData", "#CRM"],
-          imageUrl: "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
+          imageUrl: "https://i.ibb.co/YB90fPzR/5-X-y-d-ng-h-th-ng-CRM.jpg",
       },
       {
           id: "3.2",
@@ -2222,7 +2222,7 @@ export const en = {
           group: "Technology & Data",
           stage: "2",
           hashtags: ["#CS_TechData", "#Insight"],
-          imageUrl: "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
+          imageUrl: "https://i.ibb.co/k2QGdScd/7-Ph-n-t-ch-b-o-c-o.jpg",
       },
       {
           id: "3.3",
@@ -2231,7 +2231,7 @@ export const en = {
           group: "Technology & Data",
           stage: "3",
           hashtags: ["#CS_TechData", "#Survey"],
-          imageUrl: "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
+          imageUrl: "https://i.ibb.co/wN7yQmFd/13-Kh-o-s-t-nh-gi.jpg",
       },
       {
           id: "3.4",
@@ -2240,7 +2240,7 @@ export const en = {
           group: "Technology & Data",
           stage: "3",
           hashtags: ["#CS_TechData", "#Chatbot"],
-          imageUrl: "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
+          imageUrl: "https://i.ibb.co/0RYycqf9/8-X-y-d-ng-Al-Bot.jpg",
       },
       {
           id: "4.1",
@@ -2249,7 +2249,7 @@ export const en = {
           group: "Training & Development",
           stage: "3",
           hashtags: ["#CS_Learning", "#CSAcademy"],
-          imageUrl: "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
+          imageUrl: "https://i.ibb.co/G46b9wwH/10-o-t-o-online.jpg",
       },
       {
           id: "5.1",
