@@ -1767,6 +1767,18 @@
     .projects-grid.view-grid {
       grid-template-columns: repeat(4, 1fr);
     }
+    .projects-grid.view-grid > * {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .projects-grid.view-grid .project-card-new {
+      height: 100%;
+      flex-grow: 1;
+    }
+    .projects-grid > * {
+      min-width: 0;
+    }
     /* List View: Single column, horizontal cards */
     .projects-grid.view-list {
       grid-template-columns: 1fr;
@@ -1844,6 +1856,7 @@
       align-items: center;
       margin-bottom: 0.75rem;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
     .project-card-new-tag {
       background-color: var(--color-brand-active-menu-bg);
@@ -1858,20 +1871,22 @@
     .project-card-new-tag.group-tag {
       overflow: hidden;
       text-overflow: ellipsis;
+      flex-shrink: 1;
+      max-width: 65%;
     }
     .project-card-new-content {
-      padding: 1.25rem;
+      padding: 1rem 1.25rem;
       background-color: transparent;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
     }
     .project-card-new-title {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       margin: 0 0 0.5rem;
       color: var(--color-brand-text-primary);
-      line-height: 1.3;
+      line-height: 1.4;
     }
     .project-card-new-id {
       color: var(--color-brand-text-secondary);
@@ -1881,7 +1896,8 @@
       font-size: 0.9rem;
       color: var(--color-brand-text-secondary);
       margin: 0 0 1rem;
-      height: calc(0.9rem * 1.7 * 3);
+      line-height: 1.5;
+      height: calc(0.9rem * 1.5 * 3);
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -3938,7 +3954,7 @@
 
 
     /* Responsive overrides */
-    @media (max-width: 1200px) {
+    @media (max-width: 1300px) {
         .projects-grid.view-grid {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -3947,6 +3963,9 @@
         }
     }
     @media (max-width: 991px) {
+      .projects-grid.view-grid {
+          grid-template-columns: repeat(2, 1fr);
+      }
       .settings-grid {
         grid-template-columns: 1fr;
       }
@@ -4267,9 +4286,9 @@
     .print-preview-overlay {
       position: fixed;
       inset: 0;
-      background-color: rgba(var(--card-bg-rgb), 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(var(--sidebar-bg-rgb), 0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       z-index: 2000;
       display: flex;
       flex-direction: column;
@@ -4282,22 +4301,24 @@
     .print-preview-header {
       width: 100%;
       max-width: calc(21cm + 2rem);
-      background: linear-gradient(to right, #2c3e50, #1c2833);
-      border-bottom: 4px solid #e74c3c;
-      color: white;
+      background: rgba(var(--sidebar-bg-rgb), 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: var(--color-brand-glass-border);
+      color: var(--color-brand-text-primary);
       padding: 0.75rem 1.5rem;
-      border-radius: 10px 10px 0 0;
+      border-radius: 15px 15px 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: var(--card-box-shadow);
       box-sizing: border-box;
       flex-shrink: 0;
       margin-bottom: 0;
     }
 
     .print-preview-title {
-      color: white;
+      color: var(--color-brand-text-primary);
       font-size: 1.25rem;
       font-weight: 600;
       margin: 0;
@@ -4322,7 +4343,7 @@
 
     #printable-content {
         font-family: 'Inter', sans-serif;
-        color: #333;
+        color: #222;
     }
     #printable-content .print-page {
         background: white;
@@ -4337,45 +4358,324 @@
         display: flex;
         flex-direction: column;
     }
-    /* New Print Styles for CV Layout */
-    .p-container { font-size: 9.5pt; line-height: 1.5; color: #333; }
-    .p-header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 1rem; margin-bottom: 1rem; }
-    .p-header h1 { font-size: 24pt; margin: 0; color: #111; font-weight: 700; }
-    .p-header h2 { font-size: 14pt; margin: 0.25rem 0 0.5rem; color: #555; font-weight: 500; }
-    .p-contact-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; font-size: 9pt; }
-    .p-contact-item { display: flex; align-items: center; gap: 0.3rem; color: #444; }
+    /* Mẫu Thiết Kế Premium CV PDF (Từ ảnh đính kèm) */
+    .p-container { font-size: 9.5pt; line-height: 1.55; color: #333; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    
+    /* Layout Header */
+    .p-header-new-grid {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        align-items: start;
+        min-height: 5.6cm;
+        margin-bottom: 0.6cm;
+    }
+    .p-header-decor-sidebar {
+        position: absolute;
+        top: -1.5cm;
+        left: -1.5cm;
+        width: 5.4cm;
+        height: 8.2cm;
+        background-color: #f1f2f4;
+        z-index: 1;
+        overflow: hidden;
+    }
+    .p-header-main-content {
+        position: relative;
+        z-index: 5;
+        margin-left: 4.4cm;
+        width: calc(100% - 4.4cm);
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+    .p-header-name-section {
+        flex: 1;
+        padding-right: 0.5cm;
+    }
+    .p-name-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        margin-top: 0.4cm;
+    }
+    .p-yellow-slash {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #f1b512;
+        line-height: 1;
+    }
+    .p-first-name {
+        font-size: 2.2rem;
+        font-weight: 300;
+        color: #111;
+        letter-spacing: -0.01em;
+    }
+    .p-last-name {
+        font-size: 2.8rem;
+        font-weight: 850;
+        color: #111;
+        line-height: 1.0;
+        margin: 0.1rem 0 0.8rem 0;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+    }
+    .p-job-title-block {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 0.5rem;
+    }
+    .p-job-title-bar {
+        width: 2px;
+        height: 1.1rem;
+        background-color: #333;
+    }
+    .p-job-title-text {
+        font-size: 9pt;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #333;
+    }
+    .p-header-contact-section {
+        width: 6.8cm;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        color: #444;
+        margin-top: 0.5cm;
+    }
+    .p-contact-row-new {
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: baseline;
+    }
+    .p-contact-label-new {
+        font-weight: 700;
+        color: #111;
+        width: 0.7rem;
+        margin-right: 0.4rem;
+    }
+    .p-contact-value-new {
+        color: #555;
+        font-weight: 500;
+    }
 
-    .p-section { margin-bottom: 1.25rem; }
-    .p-section:last-child { margin-bottom: 0; }
-    .p-section-title { font-size: 12pt; font-weight: 700; color: #101733; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; margin-bottom: 0.75rem; }
-    
-    .p-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
-    .p-skill-list { list-style: none; padding: 0; margin: 0; }
-    .p-skill-list li { margin-bottom: 0.2rem; }
-    
-    .p-experience-item { margin-bottom: 1rem; page-break-inside: avoid; }
-    .p-experience-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.1rem; }
-    .p-experience-header h3 { font-size: 11pt; margin: 0; font-weight: 600; color: #222; }
-    .p-experience-header span { font-size: 9pt; color: #666; font-weight: 500; }
-    .p-experience-item em { color: #555; font-size: 10pt; font-style: normal; display: block; margin-bottom: 0.2rem; }
-    .p-experience-item ul { font-size: 9pt; padding-left: 1.25rem; margin-top: 0.4rem; list-style-type: disc; }
-    .p-experience-item li { margin-bottom: 0.25rem; }
+    /* Summary Paragraph */
+    .p-summary-paragraph-new {
+        font-size: 9.5pt;
+        line-height: 1.55;
+        color: #444;
+        text-align: justify;
+        margin-bottom: 0.8cm;
+        font-weight: 400;
+    }
 
-    .p-education-item { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
-    .p-education-item strong { font-weight: 600; }
-    .p-education-item em { font-style: normal; font-size: 9pt; color: #555; }
-    
-    .p-project-item { margin-bottom: 0.75rem; page-break-inside: avoid; }
-    .p-project-item strong { font-size: 10pt; font-weight: 600; }
-    .p-project-item p { font-size: 9pt; margin: 0.1rem 0 0; color: #555; line-height: 1.4;}
-    
-    .p-achievement-item { display: flex; justify-content: space-between; padding: 0.3rem 0; border-bottom: 1px solid #f0f0f0; }
-    .p-achievement-item:last-child { border: none; }
-    .p-achievement-item span { flex-grow: 1; }
-    .p-achievement-item strong { flex-shrink: 0; margin-left: 1rem; }
-    
-    .p-cover-letter p { margin-bottom: 0.7rem; text-align: justify; }
-    .p-signature { text-align: right; margin-top: 1.5rem; }
+    /* Main Grid Layout */
+    .p-main-grid-new {
+        display: grid;
+        grid-template-columns: 32% 64%;
+        gap: 4%;
+        flex: 1;
+    }
+
+    /* Headings & Section Formatting */
+    .p-section-heading-new {
+        font-size: 11pt;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #111;
+        margin-top: 0;
+        margin-bottom: 0.8rem;
+    }
+    .p-skills-subheading-new {
+        font-size: 8.5pt;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        color: #666;
+        text-transform: uppercase;
+        margin: 0.6rem 0 0.4rem 0;
+    }
+    .p-skills-ul-new {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.0rem 0;
+    }
+    .p-skills-ul-new li {
+        position: relative;
+        padding-left: 0.75rem;
+        font-size: 9pt;
+        line-height: 1.45;
+        margin-bottom: 0.25rem;
+        color: #444;
+    }
+    .p-skills-ul-new li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #444;
+    }
+
+    /* Education Section */
+    .p-edu-item-new {
+        margin-bottom: 0.75rem;
+    }
+    .p-edu-degree-new {
+        font-size: 9pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #222;
+        margin-bottom: 0.1rem;
+    }
+    .p-edu-institution-new {
+        font-size: 9pt;
+        color: #555;
+    }
+    .p-edu-year-new {
+        font-size: 8.5pt;
+        color: #888;
+    }
+
+    /* Timeline and Work Experience */
+    .p-timeline-container-new {
+        position: relative;
+        border-left: 1px solid #c0c0c0;
+        padding-left: 1.25rem;
+        margin-left: 0.15rem;
+    }
+    .p-timeline-dot-new {
+        position: absolute;
+        left: -3.5px;
+        top: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #000;
+    }
+    .p-exp-item-new {
+        position: relative;
+        margin-bottom: 1.25rem;
+    }
+    .p-exp-title-new {
+        font-size: 10.5pt;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 0.1rem 0;
+    }
+    .p-exp-meta-new {
+        font-size: 9pt;
+        font-style: italic;
+        color: #666;
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .p-exp-summary-new {
+        font-size: 9pt;
+        line-height: 1.45;
+        color: #444;
+        margin: 0 0 0.35rem 0;
+        text-align: justify;
+    }
+    .p-exp-bullets-new {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    .p-exp-bullets-new li {
+        position: relative;
+        padding-left: 0.75rem;
+        font-size: 9pt;
+        line-height: 1.45;
+        margin-bottom: 0.25rem;
+        color: #444;
+        text-align: justify;
+    }
+    .p-exp-bullets-new li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #555;
+    }
+
+    /* Footer Row metrics & References */
+    .p-footer-row-new {
+        display: grid;
+        grid-template-columns: 28% 24% 24% 24%;
+        gap: 2.6%;
+        margin-top: 0.6cm;
+        border-top: 1.5px solid #222;
+        padding-top: 0.4cm;
+    }
+    .p-footer-heading-new {
+        font-size: 9.5pt;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #111;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+    .p-foot-ref-item {
+        margin-bottom: 0.4rem;
+        line-height: 1.35;
+    }
+    .p-foot-ref-name {
+        font-weight: 700;
+        font-size: 8.5pt;
+        color: #111;
+        text-transform: uppercase;
+        display: block;
+    }
+    .p-foot-ref-title {
+        font-size: 8pt;
+        color: #555;
+        display: block;
+    }
+    .p-foot-ref-contact {
+        font-size: 8pt;
+        color: #777;
+        display: block;
+    }
+    .p-foot-metric-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+    .p-foot-metric-name {
+        font-size: 8pt;
+        color: #444;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 65%;
+    }
+    .p-foot-metric-dots {
+        display: flex;
+        gap: 3px;
+    }
+    .p-foot-metric-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .p-foot-metric-dot.filled {
+        background-color: #222;
+    }
+    .p-foot-metric-dot.empty {
+        background-color: #ddd;
+    }
+
+    /* Cover Letter specific styles */
+    .p-cover-letter p { margin-bottom: 0.8rem; text-align: justify; font-size: 9.5pt; line-height: 1.55; }
+    .p-signature { text-align: right; margin-top: 1.2cm; }
     .p-signature img { width: 90px; }
 
 
