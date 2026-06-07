@@ -150,6 +150,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                                 <motion.div
                                     key={project.id}
                                     layout
+                                    style={{ display: 'flex', flexDirection: 'column', height: '100%', minWidth: 0 }}
                                     variants={{
                                         hidden: { opacity: 0, y: 20 },
                                         show: { opacity: 1, y: 0 }

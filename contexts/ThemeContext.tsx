@@ -48,7 +48,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
     const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
     const [projectFilter, setProjectFilterState] = useState<string[]>([]);
-    const [wallpaper, setWallpaperState] = useState<WallpaperType>('');
+    const [wallpaper, setWallpaperState] = useState<WallpaperType>('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
     
     // --- Setter Functions that include saving to localStorage ---
 
@@ -136,11 +136,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedWallpaper) {
             setWallpaperState(savedWallpaper);
         } else {
-            if (currentMode === 'dark') {
-                setWallpaperState('dark-dotted-pattern');
-            } else {
-                setWallpaperState('dotted-pattern');
-            }
+            setWallpaperState('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
         }
 
     }, []);

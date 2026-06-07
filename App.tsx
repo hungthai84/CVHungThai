@@ -19,7 +19,6 @@ import AchievementsPage from './components/AchievementsPage';
 import SettingsPage from './components/SettingsPanel';
 import WorkExperiencePage from './components/WorkExperiencePage';
 import MobileHeader from './components/MobileHeader';
-import PermissionNotice from './components/PermissionNotice';
 import SchedulerPage from './components/SchedulerPage';
 import PrintableView from './components/PrintableView';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -55,8 +54,8 @@ const baseNavStructure: {
     { key: 'achievements', tKey: 'achievements', icon: 'TrophyIcon', component: AchievementsPage },
     { key: 'horoscope', tKey: 'horoscope', icon: 'SparklesIcon', component: HoroscopePage },
     { key: 'memories', tKey: 'memories', icon: 'CameraIcon', component: MemoriesPage },
-    { key: 'blog', tKey: 'blog', icon: 'BookOpenIcon', component: BlogPage },
     { key: 'interview', tKey: 'interview', icon: 'PresentationIcon', component: InterviewPage },
+    { key: 'blog', tKey: 'blog', icon: 'BookOpenIcon', component: BlogPage },
     { key: 'workVideo', tKey: 'experience', icon: 'BriefcaseIcon', component: WorkVideoPage, showInMenu: false },
     { key: 'scheduler', tKey: 'scheduler', icon: 'CalendarDaysIcon', component: SchedulerPage, showInMenu: false },
     { key: 'aiChat', tKey: 'aiChat', icon: 'BotIcon', component: AiChatPage, showInMenu: false },
@@ -85,10 +84,7 @@ const App: React.FC = () => {
     const [isSocialsOpen, setIsSocialsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-    const [showPermissionNotice, setShowPermissionNotice] = useState(false);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
-    const [isPasswordPromptVisible, setIsPasswordPromptVisible] = useState(false);
-    const [isSettingsUnlocked, setIsSettingsUnlocked] = useState(false);
 
 
     const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
@@ -155,27 +151,6 @@ const App: React.FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const checkPermissions = async () => {
-            if (!navigator.permissions) return;
-            try {
-                // Query for both microphone and geolocation permissions
-                const microPromise = navigator.permissions.query({ name: 'microphone' as PermissionName });
-                const geoPromise = navigator.permissions.query({ name: 'geolocation' as PermissionName });
-                
-                const [microStatus, geoStatus] = await Promise.all([microPromise, geoPromise]);
-
-                // Show the notice if either permission is in the 'prompt' state
-                if (microStatus.state === 'prompt' || geoStatus.state === 'prompt') {
-                    setShowPermissionNotice(true);
-                }
-            } catch (error) {
-                console.warn("Could not query permissions:", error);
-            }
-        };
-        checkPermissions();
-    }, []);
-    
     const socialLinks = [
         { title: "Cá nhân", icon: 'UserIcon', url: "https://www.nguyenhungthai.powerservice.one/" },
         { title: "P.Dịch Vụ Khách Hàng", icon: 'LifebuoyIcon', url: "https://www.servicedesk.powerservice.one/" },
@@ -201,34 +176,37 @@ const App: React.FC = () => {
     const navigateTo = (key: string) => {
         const newIndex = pageKeys.findIndex(pKey => pKey === key);
         if (newIndex !== -1) {
-            if (newIndex !== activeIndex) {
-                const scrollTarget = isMobile ? window : pageContainerRef.current;
-                scrollTarget?.scrollTo({ top: 0, behavior: 'auto' });
-                
-                if ((document as any).startViewTransition) {
-                     (document as any).startViewTransition(() => setActiveIndex(newIndex));
-                } else {
+            if (isMobile) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
                     setActiveIndex(newIndex);
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                    if ((document as any).startViewTransition) {
+                        (document as any).startViewTransition(() => setActiveIndex(newIndex));
+                    } else {
+                        setActiveIndex(newIndex);
+                    }
                 }
             } else {
-                const scrollTarget = isMobile ? window : pageContainerRef.current;
-                scrollTarget?.scrollTo({ top: 0, behavior: 'smooth' });
+                if (newIndex !== activeIndex) {
+                    pageContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+                    
+                    if ((document as any).startViewTransition) {
+                        (document as any).startViewTransition(() => setActiveIndex(newIndex));
+                    } else {
+                        setActiveIndex(newIndex);
+                    }
+                } else {
+                    pageContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         }
     };
 
     const handleSetPage = (key: string) => {
-        if (key === 'settings' && !isSettingsUnlocked) {
-            setIsPasswordPromptVisible(true);
-            return;
-        }
         navigateTo(key);
-    };
-
-    const handlePasswordSuccess = () => {
-        setIsSettingsUnlocked(true);
-        setIsPasswordPromptVisible(false);
-        navigateTo('settings');
     };
 
     useEffect(() => {
@@ -350,6 +328,34 @@ const App: React.FC = () => {
         };
     }, [isMobile, isOnMainPage, isLastMainPage, handleNextPage]);
 
+    // Track scrolling on mobile to update active index
+    useEffect(() => {
+        if (!isMobile || !isOnMainPage) return;
+
+        const observers = mainPageKeys.map((key, index) => {
+            const element = document.getElementById(key);
+            if (!element) return null;
+
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        const newActiveIndex = pageKeys.indexOf(key);
+                        if (newActiveIndex !== -1 && newActiveIndex !== activeIndex) {
+                            setActiveIndex(newActiveIndex);
+                        }
+                    }
+                },
+                { threshold: 0.3, rootMargin: '-80px 0px -20% 0px' }
+            );
+            observer.observe(element);
+            return observer;
+        });
+
+        return () => {
+            observers.forEach(obs => obs?.disconnect());
+        };
+    }, [isMobile, isOnMainPage, mainPageKeys, activeIndex, pageKeys]);
+
     const handleGoToTop = () => {
         handleSetPage(mainPageKeys[0]);
     };
@@ -433,10 +439,17 @@ const App: React.FC = () => {
                     <Sidebar {...sidebarProps} />
                 )}
                 
-                <main className={`content is-${activePageKey}`}>
+                <main className={`content is-${isMobile && isOnMainPage ? 'mobile-all-pages' : activePageKey}`}>
                     {!isMobile && activePageKey === 'home' && <LanguageSwitcher />}
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
-                        {ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />}
+                        {isMobile && isOnMainPage ? (
+                            mainPages.map((page) => {
+                                const PageComp = page.component;
+                                return <PageComp key={page.key} id={page.key} onNavigate={handleSetPage} />;
+                            })
+                        ) : (
+                            ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />
+                        )}
                     </div>
                 </main>
 
@@ -486,19 +499,6 @@ const App: React.FC = () => {
                 <div className="mobile-page-nav">
                     <PageNavButtons />
                 </div>
-            )}
-            
-            {showPermissionNotice && document.getElementById('popup-root') && createPortal(
-                <PermissionNotice onAcknowledge={() => setShowPermissionNotice(false)} />,
-                document.getElementById('popup-root')!
-            )}
-
-            {isPasswordPromptVisible && document.getElementById('popup-root') && createPortal(
-                <PasswordPrompt 
-                    onClose={() => setIsPasswordPromptVisible(false)}
-                    onSuccess={handlePasswordSuccess}
-                />,
-                document.getElementById('popup-root')!
             )}
 
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(

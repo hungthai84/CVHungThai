@@ -1,7 +1,5 @@
 {
-  "requestFramePermissions": [
-    "microphone"
-  ],
+  "requestFramePermissions": [],
   "name": "Nguyễn Hùng Thái 27.04",
   "description": "Hùng Thái  25.08",
   "prompt": "",

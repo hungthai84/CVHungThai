@@ -580,35 +580,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                     </div>
                                 )}
                             </div>
-                            <div className="settings-card">
-                                <h4 className="settings-card-title">{settingsText.dataManagementTitle}</h4>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                     <button className="btn btn-secondary" onClick={handleImportClick}>
-                                        <Icons.UploadIcon size={18} /> {settingsText.importButton}
-                                    </button>
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        onChange={handleFileChange}
-                                        accept=".csv"
-                                        style={{ display: 'none' }}
-                                    />
-                                    <button className="btn btn-secondary" onClick={handleExportData}>
-                                        <Icons.DownloadIcon size={18} /> {settingsText.exportButton}
-                                    </button>
-                                </div>
-                                <div className="setting-item" style={{marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: 'var(--color-brand-glass-border)'}}>
-                                    <label style={{marginBottom: '0.75rem', display: 'block'}}>{settingsText.exportAppTitle}</label>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                        <button className="btn btn-secondary" onClick={() => handleExportApp('html')}>
-                                            <Icons.CodeIcon size={18} /> {settingsText.exportAsHTML}
-                                        </button>
-                                        <button className="btn btn-secondary" onClick={() => handleExportApp('txt')}>
-                                            <Icons.DocumentTextIcon size={18} /> {settingsText.exportAsTXT}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div className="settings-right-column">
                              <div className="settings-card">

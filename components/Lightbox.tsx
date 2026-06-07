@@ -48,7 +48,7 @@ const Lightbox: React.FC<LightboxProps> = ({ images, currentIndex, onClose, onNe
         )}
         
         <div className="lightbox-image-container">
-            <img src={currentImage.src} alt={currentImage.alt} />
+            <img src={currentImage.src} alt={currentImage.alt} referrerPolicy="no-referrer" />
         </div>
         
         {images.length > 1 && (

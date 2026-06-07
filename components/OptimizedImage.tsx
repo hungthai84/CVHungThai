@@ -26,18 +26,26 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     ...props 
 }) => {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [hasError, setHasError] = useState(false);
     
     const optimizedSrc = getOptimizedUrl(src, optWidth, optQuality);
 
     return (
         <img
-            src={optimizedSrc}
+            src={hasError ? src : optimizedSrc}
             alt={alt}
             loading="lazy"
             decoding="async"
+            referrerPolicy="no-referrer"
             onLoad={(e) => {
                 setIsLoaded(true);
                 if (props.onLoad) props.onLoad(e);
+            }}
+            onError={() => {
+                if (!hasError) {
+                    setHasError(true);
+                    setIsLoaded(true);
+                }
             }}
             className={`${className} ${isLoaded ? 'loaded' : 'loading'}`}
             style={{

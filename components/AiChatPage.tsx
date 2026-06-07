@@ -214,7 +214,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 }
     
                 const responseStream = await aiRef.current.models.generateContentStream({
-                    model: 'gemini-2.5-flash-preview-tts',
+                    model: 'gemini-flash-latest',
                     contents,
                     config: { systemInstruction },
                 });

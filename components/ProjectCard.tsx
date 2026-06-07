@@ -35,6 +35,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
                     <span className="project-card-new-id">{project.id}</span>. {project.title}
                 </h4>
                 <p className="project-card-new-description">{project.description}</p>
+                {hasPost && (
+                    <div className="project-card-action">
+                        <span className="view-details-btn">
+                            {(t as any).detailsButton || "Xem chi tiết"} 
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '4px' }}>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </div>
+                )}
                 <div className="project-card-new-footer">
                     {project.hashtags.map(tag => <span key={tag} className="project-card-new-hashtag">{tag}</span>)}
                 </div>

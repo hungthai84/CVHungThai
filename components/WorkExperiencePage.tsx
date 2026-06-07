@@ -265,6 +265,21 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
     }
 
     const activeJob = jobs[activeJobIndex];
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 767 : false);
+    const [showDetailPopup, setShowDetailPopup] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 767);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleMilestoneClick = (index: number) => {
+        setActiveJobIndex(index);
+        if (isMobile) {
+            setShowDetailPopup(true);
+        }
+    };
     return (
         <PageLayout id={id}>
             <div className={`info-card work-experience-card`}>
@@ -318,7 +333,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                                     key={job.key}
                                     ref={el => { if(el) milestoneRefs.current[index] = el; }}
                                     className={`timeline-milestone ${index === activeJobIndex ? 'active' : ''}`}
-                                    onClick={() => setActiveJobIndex(index)}
+                                    onClick={() => handleMilestoneClick(index)}
                                     style={{ '--item-color': job.color } as React.CSSProperties}
                                     role="button"
                                     tabIndex={0}
@@ -338,7 +353,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                             ))}
                         </div>
                     </div>
-                    {activeJob && (
+                    {activeJob && !isMobile && (
                         <div className="job-card" key={activeJob.key}>
                            <div className="job-card-scrollable-content no-scrollbar">
                                 <div className="job-card-details-grid">
@@ -403,6 +418,69 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                     )}
                 </div>
             </div>
+            {showDetailPopup && activeJob && document.getElementById('popup-root') && createPortal(
+                <div className="video-popup-overlay" onClick={() => setShowDetailPopup(false)}>
+                    <div className="video-popup-content experience-popup-content no-scrollbar" onClick={e => e.stopPropagation()} style={{ padding: '1.5rem', overflowY: 'auto' }}>
+                        <button className="video-popup-close-btn" onClick={() => setShowDetailPopup(false)} aria-label="Close details">
+                            <Icons.XMarkIcon />
+                        </button>
+                        
+                        <div className="job-header-info">
+                            <span className="job-date">{formatJobDate(activeJob.date)}</span>
+                            
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                                <div style={{ 
+                                    width: '32px', 
+                                    height: '32px', 
+                                    borderRadius: '50%', 
+                                    backgroundColor: 'white', 
+                                    padding: '2px', 
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    flexShrink: 0,
+                                    border: `1px solid ${activeJob.color}`
+                                }}>
+                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+                                </div>
+                                <h4 style={{ margin: 0, color: activeJob.color }}>{activeJob.company}</h4>
+                            </div>
+
+                            <h3 style={{ marginTop: '0.25rem', marginBottom: '0.5rem', lineHeight: 1.3, fontSize: '1.1rem' }}>{activeJob.title}</h3>
+
+                            <div className="job-team-size" style={{marginTop: '0.5rem'}}>
+                                <span>{pageData.managedTitle}: </span>
+                                <strong>{activeJob.teamSize}</strong>
+                            </div>
+                        </div>
+
+                        <h5 style={{marginTop: '1.5rem', borderTop: '1px solid var(--color-brand-glass-border)', paddingTop: '1rem'}}>{pageData.descriptionTitle}</h5>
+                        <ul className="popup-responsibilities">
+                            {activeJob.responsibilities.map((item, index) => <li key={index} style={{ marginBottom: '0.5rem', fontSize: '0.95rem' }}>{item}</li>)}
+                        </ul>
+
+                        {activeJob.achievements.length > 0 && (
+                            <div style={{ marginTop: '1.5rem' }}>
+                                <h5 style={{ marginBottom: '1rem' }}>{pageData.achievementsTitle}</h5>
+                                <div className="achievements-grid" style={{ gridTemplateColumns: '1fr' }}>
+                                    {activeJob.achievements.map((ach, index) => (
+                                        <JobAchievementCard key={index} achievement={ach} color={activeJob.color} />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeJob.images && activeJob.images.length > 0 && (
+                            <div className="job-image-slider-wrapper" style={{ marginTop: '1.5rem' }}>
+                                <h5>{pageData.relatedImagesTitle}</h5>
+                                <JobImageSlider images={activeJob.images} />
+                            </div>
+                        )}
+                    </div>
+                </div>,
+                document.getElementById('popup-root')!
+            )}
             {showVideoPopup && document.getElementById('popup-root') && createPortal(
                 <div className="video-popup-overlay" onClick={() => setShowVideoPopup(false)}>
                     <div className="video-popup-content" onClick={e => e.stopPropagation()}>
