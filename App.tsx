@@ -503,17 +503,14 @@ const App: React.FC = () => {
 
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(
                 <div className="print-preview-overlay">
-                    <header className="print-preview-header">
-                        <h3 className="print-preview-title">Xem trước bản in</h3>
-                        <div className="print-preview-controls">
-                            <button onClick={handlePrint} className="header-icon-button" title="Tải file PDF">
-                                <Icons.DownloadIcon />
-                            </button>
-                            <button onClick={() => setIsPrintViewOpen(false)} className="header-icon-button" title="Đóng">
-                                <Icons.XMarkIcon />
-                            </button>
-                        </div>
-                    </header>
+                    <div className="print-preview-floating-controls">
+                        <button onClick={handlePrint} className="header-icon-button" title="Tải file PDF">
+                            <Icons.DownloadIcon />
+                        </button>
+                        <button onClick={() => setIsPrintViewOpen(false)} className="header-icon-button" title="Đóng">
+                            <Icons.XMarkIcon />
+                        </button>
+                    </div>
                     <div className="print-preview-content">
                         <PrintableView activePageKey={activePageKey} />
                     </div>

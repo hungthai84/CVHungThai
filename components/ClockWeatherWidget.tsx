@@ -2,44 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
 const CustomWeatherIcon = () => (
-    <div className="weather-icon-wrapper">
-        <motion.div 
-            className="weather-sun"
-            animate={{ 
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0]
-            }}
-            transition={{ 
-                duration: 6, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-            }}
-        ></motion.div>
-        <motion.div 
-            className="weather-cloud-small"
-            animate={{ 
-                x: [0, 5, 0],
-                y: [0, -3, 0]
-            }}
-            transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut",
-                delay: 0.5
-            }}
-        ></motion.div>
-        <motion.div 
-            className="weather-cloud-large"
-            animate={{ 
-                x: [0, -5, 0],
-                y: [0, 3, 0]
-            }}
-            transition={{ 
-                duration: 5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-            }}
-        ></motion.div>
+    <div className="weather-icon-wrapper-animated" aria-label="Animated weather illustration">
+        <svg viewBox="0 0 100 100" className="weather-animated-svg">
+            <defs>
+                <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ffb700" />
+                    <stop offset="100%" stopColor="#ff5500" />
+                </linearGradient>
+                <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#ffffff" />
+                    <stop offset="100%" stopColor="#cfdfeb" />
+                </linearGradient>
+                <filter id="weatherGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+            </defs>
+            
+            {/* Sun rays & center (rotating) */}
+            <g className="weather-sun-group">
+                <circle cx="45" cy="40" r="16" fill="url(#sunGradient)" filter="url(#weatherGlow)" />
+                <g className="weather-sun-rays">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <line
+                            key={i}
+                            x1="45"
+                            y1="14"
+                            x2="45"
+                            y2="6"
+                            stroke="#ff9e00"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                            transform={`rotate(${i * 45} 45 40)`}
+                            className="weather-ray"
+                        />
+                    ))}
+                </g>
+            </g>
+
+            {/* Raindrops (staggered falling) */}
+            <g className="weather-rain-group">
+                <line x1="38" y1="65" x2="34" y2="73" stroke="#00d2ff" strokeWidth="2.5" strokeLinecap="round" className="weather-rain-drop drop-1" />
+                <line x1="48" y1="68" x2="44" y2="76" stroke="#00d2ff" strokeWidth="2.5" strokeLinecap="round" className="weather-rain-drop drop-2" />
+                <line x1="58" y1="65" x2="54" y2="73" stroke="#00d2ff" strokeWidth="2.5" strokeLinecap="round" className="weather-rain-drop drop-3" />
+            </g>
+
+            {/* Cloud (floating) */}
+            <path
+                d="M32 62 C26 62 21 57 21 51 C21 45 26 40 32 40 C34 34 39 30 46 30 C53 30 58 35 59 41 C64 41 68 45 68 50 C68 56 63 61 57 61 Z"
+                fill="url(#cloudGradient)"
+                className="weather-cloud-animated"
+                filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.18))"
+            />
+        </svg>
     </div>
 );
 

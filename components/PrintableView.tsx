@@ -1,185 +1,252 @@
 import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
-import { AboutPage } from './AboutPage';
-import WorkExperiencePage from './WorkExperiencePage';
 
 interface PrintableViewProps {
     activePageKey?: string;
 }
 
-const PrintableView: React.FC<PrintableViewProps> = ({ activePageKey }) => {
+const PrintableView: React.FC<PrintableViewProps> = () => {
     const { t } = useI18n();
 
-    // Specific page printing for 'About Me'
-    if (activePageKey === 'about') {
-        return (
-            <div id="printable-content">
-                <div className="print-page">
-                    {/* Render the normal AboutPage; CSS will handle the styling */}
-                    <AboutPage />
-                </div>
-            </div>
-        );
-    }
-    
-    // Specific page printing for 'Work Experience'
-    if (activePageKey === 'experience') {
-        return (
-            <div id="printable-content">
-                {/* WorkExperiencePage has special rendering logic for print */}
-                <WorkExperiencePage isForPrint={true} />
-            </div>
-        );
-    }
-
-    // --- Data Extraction for the default multi-page resume ---
-    const contactInfo = t.aboutPage.infoItems.filter(item => 
-        ['phone', 'email', 'website', 'tempResidence'].includes(item.key)
-    );
+    // Ensure we retrieve consistent strings regardless of active page
+    const contactInfo = t.aboutPage.infoItems;
     const professionalSkills = t.skillsPage.categories.find(c => c.key === 'professional')?.skills || [];
     const softSkills = t.skillsPage.categories.find(c => c.key === 'soft')?.skills || [];
-    const jobs = t.workExperiencePage.jobs.filter(job => job.key !== 'jobsearch');
+    const allJobs = t.workExperiencePage.jobs.filter(job => job.key !== 'jobsearch');
     const projects = t.projectsPage.projects;
     const education = t.educationPage.items;
     const achievements = t.achievementsPage.achievements;
     const services = t.servicesPage.services;
 
-    // --- Default CV Generation (for all other pages) ---
+    // Contact mapping helpers
+    const phone = contactInfo.find(info => info.key === 'phone')?.value || '+84 0909097882';
+    const email = contactInfo.find(info => info.key === 'email')?.value || 'hungthai84@gmail.com';
+    const website = contactInfo.find(info => info.key === 'website')?.value || 'nguyenhungthai.powerservice.one';
+    const residence = contactInfo.find(info => info.key === 'tempResidence')?.value || 'Q7, Hồ Chí Minh';
+    const zalo = contactInfo.find(info => info.key === 'zalo')?.value || '0909097882';
+
     return (
-        <div id="printable-content">
+        <div id="printable-content" className="cv-mode">
 
-            {/* Page 1: Profile Summary, Skills & Domains */}
+            {/* PAGE 1: Profile Summary, Contact Side Panel, Skills, and Recent Top-Tier Careers */}
             <div className="print-page">
-                <div className="p-container">
-                    <header className="p-header">
-                        <h1>{t.sidebar.name}</h1>
-                        <h2>{t.sidebar.jobTitle}</h2>
-                        <div className="p-contact-info">
-                            {contactInfo.map(item => {
-                                const Icon = item.key === 'phone' ? Icons.PhoneIcon : 
-                                             item.key === 'email' ? Icons.MailIcon : 
-                                             item.key === 'website' ? Icons.GlobeAltIcon : 
-                                             Icons.MapPinIcon;
-                                return (
-                                    <div key={item.key} className="p-contact-item">
-                                        <Icon style={{width: '13px', height: '13px'}}/>
-                                        <span>{item.value}</span>
-                                    </div>
-                                );
-                            })}
+                <header className="p-header" style={{ borderBottom: '2px solid rgba(var(--text-color-rgb), 0.15)', paddingBottom: '0.8rem', marginBottom: '1.2rem', textAlign: 'left' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <div>
+                            <h1 style={{ fontSize: '22pt', fontWeight: 800, color: '#101733', margin: 0, textTransform: 'uppercase', letterSpacing: '-0.5px' }}>
+                                {t.sidebar.name}
+                            </h1>
+                            <h2 style={{ fontSize: '13pt', fontWeight: 600, color: '#f97316', margin: '0.2rem 0 0 0', textTransform: 'uppercase' }}>
+                                {t.sidebar.jobTitle}
+                            </h2>
                         </div>
-                    </header>
-
-                    <section className="p-section">
-                        <h3 className="p-section-title">{t.aboutPage.badge}</h3>
-                        <p dangerouslySetInnerHTML={{ __html: t.aboutPage.paragraphs[0] }} />
-                        <p dangerouslySetInnerHTML={{ __html: t.aboutPage.paragraphs[1] }} />
-                    </section>
-
-                    <section className="p-section">
-                        <h3 className="p-section-title">{t.skillsPage.title}</h3>
-                        <div className="p-grid-2">
-                            <div>
-                                <h4 style={{fontSize: '10pt', margin: '0 0 0.5rem 0'}}>{t.skillsPage.categories[0].title}</h4>
-                                <ul className="p-skill-list">
-                                    {professionalSkills.map(s => <li key={s.name}>{s.name}</li>)}
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 style={{fontSize: '10pt', margin: '0 0 0.5rem 0'}}>{t.skillsPage.categories[1].title}</h4>
-                                <ul className="p-skill-list">
-                                    {softSkills.map(s => <li key={s.name}>{s.name}</li>)}
-                                </ul>
-                            </div>
+                        {/* Compact Contact block right side */}
+                        <div style={{ textAlign: 'right', fontSize: '8.5pt', lineHeight: 1.4, color: '#4b5563' }}>
+                            <div><strong>ĐT:</strong> {phone} | <strong>Zalo:</strong> {zalo}</div>
+                            <div><strong>Email:</strong> {email}</div>
+                            <div><strong>Địa chỉ:</strong> {residence}</div>
+                            <div><strong>Web:</strong> {website}</div>
                         </div>
-                    </section>
-                    
-                     <section className="p-section">
-                        <h3 className="p-section-title">{t.servicesPage.badge}</h3>
-                        <ul className="p-skill-list">
-                            {services.map(s => <li key={s.key}><strong>{s.title}:</strong> {s.description}</li>)}
-                        </ul>
-                    </section>
-                </div>
-            </div>
+                    </div>
+                </header>
 
-            {/* Page 2 & onwards: Work Experience (will auto-break) */}
-            <div className="print-page">
-                <div className="p-container">
-                    <h3 className="p-section-title" style={{ marginTop: 0 }}>{t.workExperiencePage.title}</h3>
-                    {jobs.map(job => (
-                        <div key={job.key} className="p-experience-item">
-                            <div className="p-experience-header">
-                                <h3>{job.company}</h3>
-                                <span>{job.date}</span>
-                            </div>
-                            <em>{job.title}</em>
-                            <ul>
-                                {job.responsibilities.slice(0, 4).map((r, i) => <li key={i}>{r}</li>)}
-                                {job.responsibilities.length > 4 && <li>... và các trách nhiệm khác.</li>}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            
-            {/* Page 3: Projects */}
-             <div className="print-page">
-                 <div className="p-container">
-                    <section className="p-section" style={{height: '100%'}}>
-                        <h3 className="p-section-title">{t.projectsPage.badge}</h3>
-                        <div className="p-grid-2">
-                            {projects.map(p => (
-                                <div key={p.id} className="p-project-item">
-                                    <strong>{p.id}. {p.title}</strong>
-                                    <p>{p.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                </div>
-            </div>
-
-            {/* Page 4: Education & Achievements */}
-            <div className="print-page">
-                <div className="p-container">
-                    <div className="p-grid-2" style={{height: '100%'}}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.9fr 1.1fr', gap: '1.5rem', height: '100%' }}>
+                    {/* Main Main columns: Summary and top recent jobs */}
+                    <div>
                         <section className="p-section">
-                            <h3 className="p-section-title">{t.educationPage.title}</h3>
-                             {education.slice(0, 8).map(e => (
-                                <div key={e.title} className="p-education-item">
-                                    <div>
-                                        <strong>{e.title}</strong><br/>
-                                        <em>{e.institution}</em>
-                                    </div>
-                                    <span>{e.year}</span>
-                                </div>
-                             ))}
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.aboutPage.badge}
+                            </h3>
+                            <p style={{ margin: '0 0 0.4rem 0', fontSize: '8.5pt', textAlign: 'justify', lineHeight: '1.4' }} dangerouslySetInnerHTML={{ __html: t.aboutPage.paragraphs[0] }} />
+                            <p style={{ margin: 0, fontSize: '8.5pt', textAlign: 'justify', lineHeight: '1.4' }} dangerouslySetInnerHTML={{ __html: t.aboutPage.paragraphs[1] }} />
                         </section>
+
                         <section className="p-section">
-                            <h3 className="p-section-title">{t.achievementsPage.badge}</h3>
-                             {achievements.map(a => (
-                                <div key={a.id} className="p-achievement-item">
-                                    <span>{a.title}</span>
-                                    <strong style={{color: a.color}}>{a.rate}%</strong>
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.6rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.workExperiencePage.title} (Giai đoạn gần đây)
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                                {allJobs.slice(0, 4).map(job => (
+                                    <div key={job.key} className="p-experience-item" style={{ marginBottom: 0 }}>
+                                        <div className="p-experience-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                                            <h4 style={{ fontSize: '9.5pt', fontWeight: 700, margin: 0, color: '#101733' }}>{job.company}</h4>
+                                            <span style={{ fontSize: '8pt', color: '#6b7280', fontWeight: 600 }}>{job.date}</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8.5pt', color: '#4b5563', fontStyle: 'italic', margin: '0.1rem 0' }}>
+                                            <span>{job.title}</span>
+                                            {job.teamSize && <span>Quy mô: {job.teamSize}</span>}
+                                        </div>
+                                        <ul style={{ margin: '0.2rem 0 0 0', paddingLeft: '1.1rem', fontSize: '8pt', color: '#374151', listStyleType: 'square' }}>
+                                            {job.responsibilities.slice(0, 4).map((res, idx) => (
+                                                <li key={idx} style={{ marginBottom: '0.15rem' }}>{res}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* Sidebar section */}
+                    <div style={{ borderLeft: '1px solid #e5e7eb', paddingLeft: '1.2rem' }}>
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                THÔNG TIN CÁ NHÂN
+                            </h3>
+                            <table style={{ width: '100%', fontSize: '8.5pt', borderCollapse: 'collapse', color: '#374151', lineHeight: '1.6' }}>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>Sinh nhật:</td>
+                                        <td style={{ textAlign: 'right' }}>22/06/1984</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>Giới tính:</td>
+                                        <td style={{ textAlign: 'right' }}>Nam giới</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>Tình trạng:</td>
+                                        <td style={{ textAlign: 'right' }}>Độc thân</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>Cư trú:</td>
+                                        <td style={{ textAlign: 'right' }}>Hồ Chí Minh</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.skillsPage.title}
+                            </h3>
+                            <div style={{ marginBottom: '0.6rem' }}>
+                                <h4 style={{ fontSize: '8pt', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#4b5563' }}>KỸ NĂNG CHUYÊN MÔN</h4>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                                    {professionalSkills.map(skill => (
+                                        <span key={skill.name} style={{ backgroundColor: '#f3f4f6', color: '#1f2937', padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '7.5pt', border: '1px solid #e5e7eb', fontWeight: 500 }}>
+                                            {skill.name}
+                                        </span>
+                                    ))}
                                 </div>
-                             ))}
+                            </div>
+                            <div>
+                                <h4 style={{ fontSize: '8pt', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#4b5563' }}>KỸ NĂNG MỀM</h4>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                                    {softSkills.map(skill => (
+                                        <span key={skill.name} style={{ backgroundColor: '#fff7ed', color: '#c2410c', padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '7.5pt', border: '1px solid #ffedd5', fontWeight: 500 }}>
+                                            {skill.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.educationPage.title}
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                {education.slice(0, 3).map((edu, index) => (
+                                    <div key={index} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
+                                        <strong style={{ display: 'block', color: '#101733' }}>{edu.title}</strong>
+                                        <span style={{ color: '#4b5563' }}>{edu.institution}</span>
+                                        <span style={{ color: '#9ca3af', display: 'block', fontSize: '7.5pt' }}>Năm tốt nghiệp: {edu.year}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </section>
                     </div>
                 </div>
             </div>
 
-            {/* Page 5: Cover Letter */}
+            {/* PAGE 2: Advanced Experience History, Projects, Services, KPI Indicators, and Cover Seal */}
             <div className="print-page">
-                <div className="p-container p-cover-letter">
-                    <h3 className="p-section-title">{t.coverLetterPage.badge}</h3>
-                    <p>{t.coverLetterPage.greeting}</p>
-                    {t.coverLetterPage.paragraphs.map((p, i) => <p key={i} dangerouslySetInnerHTML={{__html: p.replace(/\n/g, '<br/>')}}/>)}
-                     <div className="p-signature">
-                        <p>{t.coverLetterPage.closing}</p>
-                        {t.coverLetterPage.signatureImage && <img src={t.coverLetterPage.signatureImage} alt="Signature" />}
-                        <p>{t.coverLetterPage.signature}</p>
+                <header className="p-header" style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: '0.4rem', marginBottom: '1.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <span style={{ fontSize: '9pt', fontWeight: 800, color: '#101733', textTransform: 'uppercase' }}>{t.sidebar.name}</span>
+                    <span style={{ fontSize: '8pt', color: '#9ca3af' }}>Hồ sơ ứng tuyển chuyên nghiệp (Trang 2)</span>
+                </header>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1.9fr 1.1fr', gap: '1.5rem', height: '100%' }}>
+                    <div>
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.6rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                LỊCH SỬ KINH NGHIỆM ĐỒNG HÀNH
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                                {allJobs.slice(4).map(job => (
+                                    <div key={job.key} className="p-experience-item" style={{ marginBottom: 0 }}>
+                                        <div className="p-experience-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                                            <h4 style={{ fontSize: '9.5pt', fontWeight: 700, margin: 0, color: '#101733' }}>{job.company}</h4>
+                                            <span style={{ fontSize: '8pt', color: '#6b7280', fontWeight: 600 }}>{job.date}</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8.5pt', color: '#4b5563', fontStyle: 'italic', margin: '0.1rem 0' }}>
+                                            <span>{job.title}</span>
+                                        </div>
+                                        <ul style={{ margin: '0.2rem 0 0 0', paddingLeft: '1.1rem', fontSize: '8pt', color: '#374151', listStyleType: 'square' }}>
+                                            {job.responsibilities.slice(0, 3).map((res, idx) => (
+                                                <li key={idx} style={{ marginBottom: '0.1rem' }}>{res}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.projectsPage.badge} (Dự án tiêu biểu)
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                {projects.slice(0, 3).map(proj => (
+                                    <div key={proj.id} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
+                                        <strong style={{ color: '#101733' }}>{proj.title}</strong>
+                                        <p style={{ margin: '0.1rem 0 0 0', color: '#4b5563' }}>{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+
+                    <div style={{ borderLeft: '1px solid #e5e7eb', paddingLeft: '1.2rem' }}>
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.achievementsPage.badge} (KPI & CHỈ SỐ)
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                                {achievements.slice(0, 5).map(ach => (
+                                    <div key={ach.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '8pt', padding: '0.25rem 0', borderBottom: '1px dashed #e5e7eb' }}>
+                                        <span style={{ color: '#4b5563' }}>{ach.title}</span>
+                                        <strong style={{ color: ach.color || '#f97316', fontWeight: 700 }}>{ach.rate}%</strong>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.servicesPage.badge}
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                {services.slice(0, 3).map(srv => (
+                                    <div key={srv.key} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
+                                        <strong style={{ color: '#101733', display: 'block' }}>{srv.title}</strong>
+                                        <span style={{ color: '#6b7280', fontSize: '7.5pt' }}>{srv.description}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                TRIẾT LÝ HÀNH ĐỘNG
+                            </h3>
+                            <div style={{ backgroundColor: '#f9fafb', borderLeft: '3px solid #f97316', padding: '0.5rem', borderRadius: '0 4px 4px 0' }}>
+                                <blockquote style={{ margin: 0, fontSize: '7.5pt', fontStyle: 'italic', color: '#4b5563', lineHeight: 1.4 }}>
+                                    "{t.aboutPage.concludingParagraph.replace(/<strong>/g, '').replace(/<\/strong>/g, '')}"
+                                </blockquote>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>

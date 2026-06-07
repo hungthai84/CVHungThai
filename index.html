@@ -514,11 +514,13 @@
     }
     .main-menu li a.active {
         color: var(--color-brand-orange);
-        background-color: var(--color-brand-active-menu-bg);
+        background-color: transparent;
     }
-    .main-menu li a:hover svg,
-    .main-menu li a.active svg {
+    .main-menu li a:hover svg {
         color: var(--color-brand-orange);
+    }
+    .main-menu li a.active svg {
+        animation: neonColorCycle 6s linear infinite;
     }
 
     .main-menu li a svg {
@@ -811,6 +813,38 @@
     .header-icon-button:active, .header-icon-button.active {
         background-color: var(--color-brand-active-menu-bg);
         transform: scale(0.98);
+    }
+    .header-icon-button.active svg {
+        animation: neonColorCycle 6s linear infinite;
+    }
+    .header-icon-button:hover svg {
+        opacity: 0.95;
+    }
+    @keyframes neonColorCycle {
+      0% {
+        color: #ff007f;
+        filter: drop-shadow(0 0 3px #ff007f) drop-shadow(0 0 8px rgba(255, 0, 127, 0.6));
+      }
+      20% {
+        color: #00f0ff;
+        filter: drop-shadow(0 0 3px #00f0ff) drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+      }
+      40% {
+        color: #39ff14;
+        filter: drop-shadow(0 0 3px #39ff14) drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+      }
+      60% {
+        color: #ffb700;
+        filter: drop-shadow(0 0 3px #ffb700) drop-shadow(0 0 8px rgba(255, 183, 0, 0.6));
+      }
+      80% {
+        color: #bc13fe;
+        filter: drop-shadow(0 0 3px #bc13fe) drop-shadow(0 0 8px rgba(188, 19, 254, 0.6));
+      }
+      100% {
+        color: #ff007f;
+        filter: drop-shadow(0 0 3px #ff007f) drop-shadow(0 0 8px rgba(255, 0, 127, 0.6));
+      }
     }
     .header-icon-button.control-printer,
     .header-icon-button.control-printer:hover,
@@ -3858,43 +3892,78 @@
       font-size: 0.65rem;
       color: var(--color-brand-text-secondary);
     }
-    .weather-icon-wrapper {
-      margin: 0.25rem 0;
-      width: 40px;
-      height: 40px;
+    .weather-icon-wrapper-animated {
+      margin: 0.1rem 0;
+      width: 55px;
+      height: 55px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .weather-sun {
-      width: 20px;
-      height: 20px;
-      background-color: #fcc419;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 2px;
-      right: 3px;
-      box-shadow: 0 0 8px #fcc419;
-      z-index: 1;
+    .weather-animated-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
     }
-    .weather-cloud-large {
-      position: absolute;
-      width: 23px;
-      height: 15px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      top: 15px;
-      left: 0px;
-      z-index: 2;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    
+    /* Sun rotation */
+    .weather-sun-rays {
+      transform-origin: 45px 40px;
+      animation: weatherSunRotate 24s linear infinite;
     }
-    .weather-cloud-small {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: #f8f9fa;
-      border-radius: 50%;
-      top: 7px;
-      left: 10px;
-      z-index: 3;
+    @keyframes weatherSunRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Sun pulses */
+    .weather-sun-group circle {
+      animation: weatherSunPulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes weatherSunPulse {
+      0% { r: 15px; filter: drop-shadow(0 0 2px #ff9e00); }
+      100% { r: 17px; filter: drop-shadow(0 0 8px #ff6000); }
+    }
+
+    /* Puffy cloud floating */
+    .weather-cloud-animated {
+      animation: weatherCloudFloat 5s ease-in-out infinite alternate;
+    }
+    @keyframes weatherCloudFloat {
+      0% { transform: translateY(0px) translateX(0px); }
+      100% { transform: translateY(-3px) translateX(1px); }
+    }
+
+    /* Falling Rain animation */
+    .weather-rain-drop {
+      stroke-dasharray: 8 10;
+      animation: weatherRainFall 1.8s linear infinite;
+    }
+    .weather-rain-drop.drop-1 {
+      animation-delay: 0s;
+    }
+    .weather-rain-drop.drop-2 {
+      animation-delay: 0.6s;
+    }
+    .weather-rain-drop.drop-3 {
+      animation-delay: 1.2s;
+    }
+    @keyframes weatherRainFall {
+      0% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        stroke-dashoffset: -18;
+        opacity: 0;
+      }
     }
 
     /* --- Achievements Page --- */
@@ -4456,52 +4525,52 @@
     .print-preview-overlay {
       position: fixed;
       inset: 0;
-      background-color: rgba(var(--card-bg-rgb), 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(var(--card-bg-rgb), 0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       z-index: 2000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 1rem;
+      padding: 2rem 1rem;
       box-sizing: border-box;
     }
 
-    .print-preview-header {
-      width: 100%;
-      max-width: calc(21cm + 2rem);
-      background: linear-gradient(to right, #2c3e50, #1c2833);
-      border-bottom: 4px solid #e74c3c;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px 10px 0 0;
+    .print-preview-floating-controls {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      box-sizing: border-box;
-      flex-shrink: 0;
-      margin-bottom: 0;
+      gap: 0.75rem;
+      background-color: var(--color-brand-active-menu-bg);
+      border: 1px solid rgba(var(--text-color-rgb), 0.15);
+      border-radius: 9999px;
+      padding: 0.5rem;
+      box-shadow: var(--card-box-shadow);
+      z-index: 2100;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .print-preview-floating-controls .header-icon-button {
+      background-color: var(--color-card-bg);
+      color: var(--color-text-primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s ease-in-out;
     }
 
-    .print-preview-title {
+    .print-preview-floating-controls .header-icon-button:hover {
+      background-color: var(--color-brand-orange);
       color: white;
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .print-preview-controls {
-      display: flex;
-      gap: 1rem;
+      transform: translateY(-2px) scale(1.05);
     }
 
     .print-preview-content {
       width: 100%;
-      height: calc(100% - 60px); /* Full height minus header */
+      height: 100%; /* Full height now that top header bar is removed */
       overflow: auto;
-      border-radius: 0 0 15px 15px;
+      border-radius: 15px;
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
@@ -4584,7 +4653,7 @@
       body > *:not(#popup-root) { display: none !important; }
       #popup-root > *:not(.print-preview-overlay) { display: none !important; }
       .print-preview-overlay { position: static !important; background: none !important; backdrop-filter: none !important; padding: 0 !important; display: block !important; }
-      .print-preview-header, .print-preview-content { display: none !important; }
+      .print-preview-floating-controls, .print-preview-content { display: none !important; }
       
       body #printable-content { display: block !important; }
       
