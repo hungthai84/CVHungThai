@@ -46,6 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 <a
                                     href={`#${item.key}`}
                                     className={isActive ? 'active' : ''}
+                                    data-key={item.key}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         handleNavClick(item.key);

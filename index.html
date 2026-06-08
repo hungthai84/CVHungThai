@@ -513,14 +513,64 @@
         text-decoration: none !important;
     }
     .main-menu li a.active {
-        color: var(--color-brand-orange);
         background-color: transparent;
     }
     .main-menu li a:hover svg {
         color: var(--color-brand-orange);
     }
-    .main-menu li a.active svg {
-        animation: neonColorCycle 6s linear infinite;
+    
+    /* Configured custom fixed colors for each menu item when active */
+    .main-menu li a.active[data-key="home"],
+    .main-menu li a.active[data-key="home"] svg {
+        color: #22c55e;
+    }
+    .main-menu li a.active[data-key="coverLetter"],
+    .main-menu li a.active[data-key="coverLetter"] svg {
+        color: #06b6d4;
+    }
+    .main-menu li a.active[data-key="about"],
+    .main-menu li a.active[data-key="about"] svg {
+        color: #f59e0b;
+    }
+    .main-menu li a.active[data-key="experience"],
+    .main-menu li a.active[data-key="experience"] svg {
+        color: #ef4444;
+    }
+    .main-menu li a.active[data-key="education"],
+    .main-menu li a.active[data-key="education"] svg {
+        color: #8b5cf6;
+    }
+    .main-menu li a.active[data-key="services"],
+    .main-menu li a.active[data-key="services"] svg {
+        color: #14b8a6;
+    }
+    .main-menu li a.active[data-key="skills"],
+    .main-menu li a.active[data-key="skills"] svg {
+        color: #f97316;
+    }
+    .main-menu li a.active[data-key="projects"],
+    .main-menu li a.active[data-key="projects"] svg {
+        color: #ec4899;
+    }
+    .main-menu li a.active[data-key="achievements"],
+    .main-menu li a.active[data-key="achievements"] svg {
+        color: #eab308;
+    }
+    .main-menu li a.active[data-key="horoscope"],
+    .main-menu li a.active[data-key="horoscope"] svg {
+        color: #d946ef;
+    }
+    .main-menu li a.active[data-key="memories"],
+    .main-menu li a.active[data-key="memories"] svg {
+        color: #f43f5e;
+    }
+    .main-menu li a.active[data-key="interview"],
+    .main-menu li a.active[data-key="interview"] svg {
+        color: #3b82f6;
+    }
+    .main-menu li a.active[data-key="blog"],
+    .main-menu li a.active[data-key="blog"] svg {
+        color: #a855f7;
     }
 
     .main-menu li a svg {
@@ -815,36 +865,10 @@
         transform: scale(0.98);
     }
     .header-icon-button.active svg {
-        animation: neonColorCycle 6s linear infinite;
+        color: inherit;
     }
     .header-icon-button:hover svg {
         opacity: 0.95;
-    }
-    @keyframes neonColorCycle {
-      0% {
-        color: #ff007f;
-        filter: drop-shadow(0 0 3px #ff007f) drop-shadow(0 0 8px rgba(255, 0, 127, 0.6));
-      }
-      20% {
-        color: #00f0ff;
-        filter: drop-shadow(0 0 3px #00f0ff) drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
-      }
-      40% {
-        color: #39ff14;
-        filter: drop-shadow(0 0 3px #39ff14) drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
-      }
-      60% {
-        color: #ffb700;
-        filter: drop-shadow(0 0 3px #ffb700) drop-shadow(0 0 8px rgba(255, 183, 0, 0.6));
-      }
-      80% {
-        color: #bc13fe;
-        filter: drop-shadow(0 0 3px #bc13fe) drop-shadow(0 0 8px rgba(188, 19, 254, 0.6));
-      }
-      100% {
-        color: #ff007f;
-        filter: drop-shadow(0 0 3px #ff007f) drop-shadow(0 0 8px rgba(255, 0, 127, 0.6));
-      }
     }
     .header-icon-button.control-printer,
     .header-icon-button.control-printer:hover,
