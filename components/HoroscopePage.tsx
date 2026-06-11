@@ -38,6 +38,68 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
+            <style>{`
+                .horoscope-grid-banner {
+                    background: rgba(var(--accent-color-rgb), 0.1);
+                    border: var(--color-brand-glass-border);
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 2rem;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1.5rem;
+                }
+                .horoscope-traits-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 1.5rem;
+                }
+                .horoscope-compat-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 1rem;
+                }
+                .horoscope-roles-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1rem;
+                }
+                @media (max-width: 600px) {
+                    .horoscope-grid-banner {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                        padding: 1rem;
+                        text-align: center;
+                    }
+                    .horoscope-traits-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                    }
+                    .horoscope-compat-grid {
+                        grid-template-columns: 1fr;
+                        gap: 0.75rem;
+                    }
+                    .horoscope-roles-grid {
+                        grid-template-columns: 1fr;
+                        gap: 0.5rem;
+                    }
+                    .horoscope-roles-grid > div {
+                        padding: 0.75rem 1rem !important;
+                        font-size: 0.9rem !important;
+                    }
+                    .horoscope-grid-banner > div {
+                        background: var(--sidebar-bg);
+                        padding: 0.75rem;
+                        border-radius: 8px;
+                    }
+                    .horoscope-grid-banner h4 {
+                        font-size: 0.8rem !important;
+                    }
+                    .horoscope-banner-text {
+                        font-size: 1.1rem !important;
+                    }
+                }
+            `}</style>
             <div className="info-card">
                 <div className="about-header">
                     <InfoBadge
@@ -86,19 +148,10 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="horoscope-content no-scrollbar" style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
                     
                     {/* Basic Info Banner */}
-                    <div className="horoscope-banner" style={{
-                        background: 'rgba(var(--accent-color-rgb), 0.1)',
-                        border: 'var(--color-brand-glass-border)',
-                        borderRadius: '15px',
-                        padding: '1.5rem',
-                        marginBottom: '2rem',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '1.5rem'
-                    }}>
+                    <div className="horoscope-grid-banner">
                         <div>
                             <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Họ Tên</h4>
-                            <p style={{ margin: 0, fontWeight: 700, fontSize: '1.2rem', color: 'var(--accent-color)' }}>{info.name}</p>
+                            <p className="horoscope-banner-text" style={{ margin: 0, fontWeight: 700, fontSize: '1.2rem', color: 'var(--accent-color)' }}>{info.name}</p>
                         </div>
                         <div>
                             <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Ngày Sinh</h4>
@@ -133,7 +186,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     {/* II. Traits */}
                     <section style={{ marginBottom: '2.5rem' }}>
                         <h3 style={{ borderLeft: '4px solid var(--accent-color)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>{sections.traits.title}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        <div className="horoscope-traits-grid">
                             <div style={{ padding: '1.5rem', background: 'rgba(39, 174, 96, 0.05)', borderRadius: '15px', border: '1px solid rgba(39, 174, 96, 0.2)' }}>
                                 <h4 style={{ margin: '0 0 1rem 0', color: '#27ae60', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Icons.CheckIcon size={20} /> {sections.traits.strengthsTitle}
@@ -174,7 +227,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                                         <h4 style={{ margin: 0, color: group.color, fontSize: '1.1rem' }}>{group.title}</h4>
                                         <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-brand-text-secondary)' }}>{group.subtitle}</p>
                                     </div>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+                                    <div className="horoscope-compat-grid">
                                         {group.items.map((item, j) => (
                                             <div key={j} style={{ 
                                                 padding: '1rem', 
@@ -202,7 +255,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     {/* IV. Ideal Roles */}
                     <section style={{ marginBottom: '2.5rem' }}>
                         <h3 style={{ borderLeft: '4px solid var(--accent-color)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>{sections.roles.title}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                        <div className="horoscope-roles-grid">
                             {sections.roles.items.map((role, i) => (
                                 <div key={i} style={{ 
                                     padding: '0.75rem 1rem', 

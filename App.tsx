@@ -1,12 +1,10 @@
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import Sidebar from './components/Sidebar';
 import SkillsPage from './components/SkillsPage';
 import CoverLetter from './components/CoverLetter';
-import MemoriesPage from './components/MemoriesPage';
-import { ProjectsPage } from './components/ProjectsPage';
 import MainContent from './components/MainContent';
 import AiChatPage from './components/AiChatPage';
 import * as Icons from './components/Icons';
@@ -27,8 +25,18 @@ import { AboutPage } from './components/AboutPage';
 import WorkVideoPage from './components/WorkVideoPage';
 import InterviewPage from './components/InterviewPage';
 import PasswordPrompt from './components/PasswordPrompt';
-import BlogPage from './components/BlogPage';
 import HoroscopePage from './components/HoroscopePage';
+
+// Lazy load heavy components
+const ProjectsPage = lazy(() => import('./components/ProjectsPage').then(module => ({ default: module.ProjectsPage })));
+const MemoriesPage = lazy(() => import('./components/MemoriesPage'));
+const BlogPage = lazy(() => import('./components/BlogPage'));
+
+const LoadingFallback: React.FC = () => (
+    <div className="flex justify-center items-center h-full w-full">
+        <div className="w-8 h-8 rounded-full border-2 border-t-2 border-[var(--accent-color)] border-t-transparent animate-spin"></div>
+    </div>
+);
 
 
 const baseNavStructure: {
@@ -65,18 +73,23 @@ const baseNavStructure: {
 const App: React.FC = () => {
     const { t, language } = useI18n();
     const { isSoundOn, wallpaper, themeMode, setThemeMode } = useTheme();
-    const projectPostPages = t.projectsPage.projects.map(p => ({
-        key: `project-${p.id}`,
-        tKey: p.title,
-        icon: 'DocumentTextIcon' as keyof typeof Icons,
-        component: ProjectPostPopup,
-        showInMenu: false,
-    }));
-    
-    const allPages = [...baseNavStructure, ...projectPostPages];
-    const pageKeys = allPages.map(p => p.key);
-    const mainPages = baseNavStructure.filter(p => p.showInMenu !== false);
-    const mainPageKeys = mainPages.map(p => p.key);
+
+    const { projectPostPages, allPages, pageKeys, mainPages, mainPageKeys } = React.useMemo(() => {
+        const projectPostPages = t.projectsPage.projects.map(p => ({
+            key: `project-${p.id}`,
+            tKey: p.title,
+            icon: 'DocumentTextIcon' as keyof typeof Icons,
+            component: ProjectPostPopup,
+            showInMenu: false,
+        }));
+        
+        const allPages = [...baseNavStructure, ...projectPostPages];
+        const pageKeys = allPages.map(p => p.key);
+        const mainPages = baseNavStructure.filter(p => p.showInMenu !== false);
+        const mainPageKeys = mainPages.map(p => p.key);
+
+        return { projectPostPages, allPages, pageKeys, mainPages, mainPageKeys };
+    }, [t.projectsPage.projects]);
     
     const [activeIndex, setActiveIndex] = useState(0);
     const pageContainerRef = useRef<HTMLDivElement>(null);
@@ -154,7 +167,7 @@ const App: React.FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const socialLinks = [
+    const socialLinks = React.useMemo(() => [
         { title: "Cá nhân", icon: 'UserIcon', url: "https://www.nguyenhungthai.powerservice.one/" },
         { title: "P.Dịch Vụ Khách Hàng", icon: 'LifebuoyIcon', url: "https://www.servicedesk.powerservice.one/" },
         { title: "Hỗ trợ nội bộ", icon: 'WrenchScrewdriverIcon', url: "https://www.supportcenter.powerservice.one/" },
@@ -165,7 +178,7 @@ const App: React.FC = () => {
         { title: "Facebook", icon: 'FacebookIcon', url: "https://facebook.com/hungthai.1984" },
         { title: "Website", icon: 'GlobeAltIcon', url: "https://www.nguyenhungthai.powerservice.one/" },
         { title: "Blogspot", icon: 'BookOpenIcon', url: "https://chiasetrithucconhan.blogspot.com/" }
-    ];
+    ], []);
 
     // Ensure the view starts at the top on initial load
     useEffect(() => {
@@ -176,7 +189,7 @@ const App: React.FC = () => {
         }
     }, [isMobile]);
     
-    const navigateTo = (key: string) => {
+    const navigateTo = useCallback((key: string) => {
         const newIndex = pageKeys.findIndex(pKey => pKey === key);
         if (newIndex !== -1) {
             if (isMobile) {
@@ -206,11 +219,11 @@ const App: React.FC = () => {
                 }
             }
         }
-    };
+    }, [isMobile, pageKeys, activeIndex]);
 
-    const handleSetPage = (key: string) => {
+    const handleSetPage = useCallback((key: string) => {
         navigateTo(key);
-    };
+    }, [navigateTo]);
 
     useEffect(() => {
         const loader = document.getElementById('line-loader');
@@ -262,28 +275,31 @@ const App: React.FC = () => {
     const activePageTitle = t.sidebar.nav[activePageItem?.tKey as keyof typeof t.sidebar.nav] || activePageItem?.tKey || t.sidebar.nav.home;
 
 
-    const handleSetPageAndCloseMenu = (key: string) => {
+    const handleSetPageAndCloseMenu = useCallback((key: string) => {
         handleSetPage(key);
         setIsMobileMenuOpen(false);
-    };
+    }, [handleSetPage]);
 
-    const sidebarProps = {
+    const sidebarProps = React.useMemo(() => ({
         navStructure: baseNavStructure,
         activeItemKey: pageKeys[activeIndex],
         setActiveItemKey: isMobile ? handleSetPageAndCloseMenu : handleSetPage,
         isMobile,
         isSidebarHidden,
         setIsSidebarHidden,
-    };
+    }), [activeIndex, isMobile, handleSetPageAndCloseMenu, handleSetPage, isSidebarHidden, pageKeys]);
     
     const ActivePageComponent = allPages[activeIndex]?.component;
-    const componentProps: any = {
-        id: activePageKey,
-        onNavigate: handleSetPage,
-    };
-    if (activePageKey && activePageKey.startsWith('project-')) {
-        componentProps.projectId = activePageKey.replace('project-', '');
-    }
+    const componentProps = React.useMemo(() => {
+        const props: any = {
+            id: activePageKey,
+            onNavigate: handleSetPage,
+        };
+        if (activePageKey && activePageKey.startsWith('project-')) {
+            props.projectId = activePageKey.replace('project-', '');
+        }
+        return props;
+    }, [activePageKey, handleSetPage]);
 
     const currentMainPageIndex = mainPageKeys.indexOf(activePageKey);
     const isOnMainPage = currentMainPageIndex !== -1;
@@ -338,7 +354,7 @@ const App: React.FC = () => {
     useEffect(() => {
         if (!isMobile || !isOnMainPage) return;
 
-        const observers = mainPageKeys.map((key, index) => {
+        const observers = mainPageKeys.map((key) => {
             const element = document.getElementById(key);
             if (!element) return null;
 
@@ -346,8 +362,8 @@ const App: React.FC = () => {
                 ([entry]) => {
                     if (entry.isIntersecting) {
                         const newActiveIndex = pageKeys.indexOf(key);
-                        if (newActiveIndex !== -1 && newActiveIndex !== activeIndex) {
-                            setActiveIndex(newActiveIndex);
+                        if (newActiveIndex !== -1) {
+                            setActiveIndex(prev => prev !== newActiveIndex ? newActiveIndex : prev);
                         }
                     }
                 },
@@ -360,7 +376,7 @@ const App: React.FC = () => {
         return () => {
             observers.forEach(obs => obs?.disconnect());
         };
-    }, [isMobile, isOnMainPage, mainPageKeys, activeIndex, pageKeys]);
+    }, [isMobile, isOnMainPage, mainPageKeys, pageKeys]);
 
     const handleGoToTop = () => {
         handleSetPage(mainPageKeys[0]);
@@ -475,14 +491,16 @@ const App: React.FC = () => {
                         </div>
                     )}
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
-                        {isMobile && isOnMainPage ? (
-                            mainPages.map((page) => {
-                                const PageComp = page.component;
-                                return <PageComp key={page.key} id={page.key} onNavigate={handleSetPage} />;
-                            })
-                        ) : (
-                            ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />
-                        )}
+                        <Suspense fallback={<LoadingFallback />}>
+                            {isMobile && isOnMainPage ? (
+                                mainPages.map((page) => {
+                                    const PageComp = page.component;
+                                    return <PageComp key={page.key} id={page.key} onNavigate={handleSetPage} />;
+                                })
+                            ) : (
+                                ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />
+                            )}
+                        </Suspense>
                     </div>
                 </main>
 

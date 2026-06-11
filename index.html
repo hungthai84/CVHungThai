@@ -418,6 +418,18 @@
         box-shadow: 0 12px 40px rgba(0,0,0,0.15),
                     0 0 35px rgba(255, 255, 255, 0.7);
     }
+
+    @media (max-width: 767px) {
+        /* Optimize performance on mobile by disabling heavy blurring */
+        .site-wrapper, .info-card, .submenu, .badge-tooltip {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            background-color: var(--body-bg) !important;
+        }
+        .site-wrapper {
+            background-color: var(--sidebar-bg) !important; /* Slightly different for wrapper */
+        }
+    }
     
     /* --- Sidebar / Header --- */
     aside.left-sidebar {

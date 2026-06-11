@@ -118,6 +118,8 @@ const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, co
 };
 
 
+import OptimizedImage from './OptimizedImage';
+
 const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
     if (!images || images.length === 0) {
         return null;
@@ -132,7 +134,7 @@ const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
                 {doubledImages.map((src, index) => (
                     <div className="job-image-slider-slide" key={index}>
                         <div className="job-image-slide">
-                           <img src={src} alt={`Work sample ${index + 1}`} loading="lazy" />
+                           <OptimizedImage src={src} alt={`Work sample ${index + 1}`} loading="lazy" />
                         </div>
                     </div>
                 ))}

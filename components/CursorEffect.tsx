@@ -53,16 +53,13 @@ const CursorEffect: React.FC = () => {
                 if (!innerCursor || !outerCursor) return;
                 
                 const { x, y } = mousePos.current;
-                innerCursor.style.left = `${x}px`;
-                innerCursor.style.top = `${y}px`;
                 
-                const newX = x;
-                const newY = y;
-                
-                outerPos.current = { x: newX, y: newY };
-
-                outerCursor.style.left = `${newX}px`;
-                outerCursor.style.top = `${newY}px`;
+                // Only update DOM if position changed
+                if (outerPos.current.x !== x || outerPos.current.y !== y) {
+                    innerCursor.style.transform = `translate(${x}px, ${y}px)`;
+                    outerCursor.style.transform = `translate(${x}px, ${y}px)`;
+                    outerPos.current = { x, y };
+                }
             } finally {
                 animationFrameId.current = requestAnimationFrame(loop);
             }
