@@ -1,7 +1,6 @@
 
 import React, { useMemo, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { GoogleGenAI } from "@google/genai";
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
 import { useSpeechSynthesis } from './useSpeechSynthesis';
@@ -10,6 +9,8 @@ import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
 import LinkEmbedPopup from './LinkEmbedPopup';
 import Lightbox from './Lightbox';
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 
 const PROJECT_IMAGES: Record<string, string> = {
     "1.1": "https://i.postimg.cc/Y9ywtYwY/1-1-Xay-dung-Phong-Dich-vu-Khach-hang.png",
@@ -48,14 +49,21 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const post = useMemo(() => (t.projectPosts as any)[projectId] || (t.projectPosts as any).default, [projectId, t]);
     
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
+    const [scrollProgress, setScrollProgress] = useState(0);
 
-    const { isAiVoiceOn, selectedAiVoiceName } = useTheme();
+    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
+
     const scrollRef = useRef<HTMLDivElement>(null);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-    const [comments] = React.useState<Comment[]>([]);
-    const [newComment] = React.useState({ name: '', email: '', text: '' });
-    const aiRef = useRef<GoogleGenAI | null>(null);
+    const [comments, setComments] = useState<Comment[]>([]);
+    const [newComment, setNewComment] = useState(() => {
+        const savedName = localStorage.getItem('comment_author_name') || '';
+        const savedEmail = localStorage.getItem('comment_author_email') || '';
+        return { name: savedName, email: savedEmail, text: '' };
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
     
     const fullArticleText = useMemo(() => {
         if (!post || !post.content) return '';
@@ -82,6 +90,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
         cancel();
+        setScrollProgress(0);
     }, [projectId, cancel]);
 
     if (!post) {
@@ -95,6 +104,98 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         }
     };
 
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const scrollHeight = target.scrollHeight - target.clientHeight;
+        if (scrollHeight > 0) {
+            setScrollProgress((target.scrollTop / scrollHeight) * 100);
+        } else {
+            setScrollProgress(0);
+        }
+    };
+
+    // Subscribing to feedback comments for the specific project post
+    useEffect(() => {
+        const commentsRef = collection(db, 'comments');
+        const q = query(
+            commentsRef,
+            where('projectId', '==', projectId)
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedComments: any[] = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                fetchedComments.push({
+                    id: doc.id,
+                    author: data.author || 'Anonymous',
+                    email: data.email || '',
+                    text: data.text || '',
+                    createdAt: data.createdAt ? (data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt)) : new Date()
+                });
+            });
+
+            // Standardize sorting on clientside in memory - is resilient to complex indexing requirements
+            fetchedComments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+            const formattedComments: Comment[] = fetchedComments.map(c => {
+                const dateStr = c.createdAt.toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                return {
+                    author: c.author,
+                    date: dateStr,
+                    text: c.text
+                };
+            });
+
+            setComments(formattedComments);
+        }, (error) => {
+            handleFirestoreError(error, OperationType.LIST, 'comments');
+        });
+
+        return () => unsubscribe();
+    }, [projectId, language]);
+
+    // Submission handler with transactional validations and local persistence
+    const handleSubmitComment = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newComment.name.trim() || !newComment.email.trim() || !newComment.text.trim()) {
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubmitError(null);
+
+        try {
+            const commentsRef = collection(db, 'comments');
+            await addDoc(commentsRef, {
+                projectId,
+                author: newComment.name.trim(),
+                email: newComment.email.trim(),
+                text: newComment.text.trim(),
+                createdAt: serverTimestamp()
+            });
+
+            // Save user profile state inside local storage
+            localStorage.setItem('comment_author_name', newComment.name.trim());
+            localStorage.setItem('comment_author_email', newComment.email.trim());
+
+            // Clear text input while persisting user details
+            setNewComment(prev => ({ ...prev, text: '' }));
+        } catch (error) {
+            console.error('Error adding comment: ', error);
+            setSubmitError(language === 'vi' ? 'Lỗi gửi bình luận. Vui lòng thử lại sau.' : 'Failed to submit comment. Please try again.');
+            handleFirestoreError(error, OperationType.CREATE, 'comments');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const handleToggleReadAloud = () => {
         if (!fullArticleText.trim() || !isAiVoiceOn) return;
 
@@ -102,7 +203,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             cancel();
         } else {
             // Using the professional male voice as priority if available
-            speak(fullArticleText, { voiceName: selectedAiVoiceName, lang: language });
+            speak(fullArticleText, { voiceName: selectedAiVoiceName, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
         }
     };
 
@@ -135,7 +236,13 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                     </button>
                 </div>
 
-                 <div className="project-post-scroll-content no-scrollbar" ref={scrollRef}>
+                 <div className="project-post-scroll-content no-scrollbar" ref={scrollRef} onScroll={handleScroll}>
+                     <div className="project-post-progress-container" aria-hidden="true">
+                         <div 
+                             className="project-post-progress-bar" 
+                             style={{ width: `${scrollProgress}%` }}
+                         />
+                     </div>
                     <main className="project-post-main">
                         <div className="project-post-content-wrapper">
                             <div className="project-post-layout-grid">
@@ -242,30 +349,51 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                     <div className="sidebar-widget comments-widget">
                                             <h4 className="sidebar-widget-title">{pageData.comments} ({comments.length})</h4>
                                             
-                                            <form className="comment-form">
+                                            <form className="comment-form" onSubmit={handleSubmitComment}>
                                                 <div className="comment-form-grid">
                                                     <input 
                                                         type="text" 
                                                         name="name"
                                                         placeholder={pageData.namePlaceholder} 
                                                         value={newComment.name}
-                                                        readOnly
+                                                        onChange={(e) => setNewComment(prev => ({ ...prev, name: e.target.value }))}
+                                                        required
+                                                        disabled={isSubmitting}
                                                     />
                                                     <input 
                                                         type="email"
                                                         name="email" 
                                                         placeholder={pageData.emailPlaceholder}
                                                         value={newComment.email}
-                                                        readOnly
+                                                        onChange={(e) => setNewComment(prev => ({ ...prev, email: e.target.value }))}
+                                                        required
+                                                        disabled={isSubmitting}
                                                     />
                                                 </div>
                                                 <textarea 
                                                     name="text"
                                                     placeholder={pageData.commentPlaceholder}
                                                     value={newComment.text}
-                                                    readOnly
+                                                    onChange={(e) => setNewComment(prev => ({ ...prev, text: e.target.value }))}
+                                                    required
+                                                    disabled={isSubmitting}
                                                 ></textarea>
-                                                <button type="submit" className="btn btn-primary" disabled>{pageData.submitComment}</button>
+                                                {submitError && (
+                                                    <div className="text-red-500 text-xs mb-3 font-medium">
+                                                        {submitError}
+                                                    </div>
+                                                )}
+                                                <button 
+                                                    type="submit" 
+                                                    className="btn btn-primary flex justify-center items-center gap-2" 
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? (
+                                                        <span>{language === 'vi' ? 'Đang gửi...' : 'Sending...'}</span>
+                                                    ) : (
+                                                        <span>{pageData.submitComment}</span>
+                                                    )}
+                                                </button>
                                             </form>
                                             
                                             <div className="comments-list">

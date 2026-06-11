@@ -63,8 +63,8 @@ const baseNavStructure: {
 ];
 
 const App: React.FC = () => {
-    const { t } = useI18n();
-    const { isSoundOn, wallpaper } = useTheme();
+    const { t, language } = useI18n();
+    const { isSoundOn, wallpaper, themeMode, setThemeMode } = useTheme();
     const projectPostPages = t.projectsPage.projects.map(p => ({
         key: `project-${p.id}`,
         tKey: p.title,
@@ -85,6 +85,9 @@ const App: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
+    const [isSidebarHidden, setIsSidebarHidden] = useState(() => {
+        return localStorage.getItem('isSidebarHidden') === 'true';
+    });
 
 
     const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
@@ -268,6 +271,9 @@ const App: React.FC = () => {
         navStructure: baseNavStructure,
         activeItemKey: pageKeys[activeIndex],
         setActiveItemKey: isMobile ? handleSetPageAndCloseMenu : handleSetPage,
+        isMobile,
+        isSidebarHidden,
+        setIsSidebarHidden,
     };
     
     const ActivePageComponent = allPages[activeIndex]?.component;
@@ -415,7 +421,20 @@ const App: React.FC = () => {
                 )}
             </div>
             
-            <div className="site-wrapper">
+            <div className={`site-wrapper ${!isMobile && isSidebarHidden ? 'sidebar-hidden-desktop' : ''}`}>
+                {!isMobile && isSidebarHidden && (
+                    <button 
+                        onClick={() => {
+                            setIsSidebarHidden(false);
+                            localStorage.setItem('isSidebarHidden', 'false');
+                        }}
+                        className="sidebar-floating-toggle-btn"
+                        title={language === 'vi' ? 'Hiện sidebar' : 'Show sidebar'}
+                        aria-label="Show sidebar"
+                    >
+                        <Icons.ChevronRightIcon size={16} />
+                    </button>
+                )}
                  {isMobile ? (
                     <>
                         <MobileHeader
@@ -440,7 +459,21 @@ const App: React.FC = () => {
                 )}
                 
                 <main className={`content is-${isMobile && isOnMainPage ? 'mobile-all-pages' : activePageKey}`}>
-                    {!isMobile && activePageKey === 'home' && <LanguageSwitcher />}
+                    {!isMobile && activePageKey === 'home' && (
+                        <div className="top-right-actions">
+                            <button
+                                onClick={() => {
+                                    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+                                }}
+                                className="top-theme-toggle-btn"
+                                title={themeMode === 'light' ? (language === 'vi' ? 'Chuyển sang chế độ tối' : 'Switch to dark mode') : (language === 'vi' ? 'Chuyển sang chế độ sáng' : 'Switch to light mode')}
+                                aria-label="Toggle theme"
+                            >
+                                {themeMode === 'light' ? <Icons.MoonIcon size={18} /> : <Icons.SunIcon size={18} />}
+                            </button>
+                            <LanguageSwitcher />
+                        </div>
+                    )}
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
                         {isMobile && isOnMainPage ? (
                             mainPages.map((page) => {

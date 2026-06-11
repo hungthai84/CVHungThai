@@ -19,6 +19,10 @@ interface ThemeContextType {
     setAiVoiceOn: (isOn: boolean) => void;
     selectedAiVoiceName: string;
     setSelectedAiVoiceName: (name: string) => void;
+    aiVoicePitch: number;
+    setAiVoicePitch: (pitch: number) => void;
+    aiVoiceRate: number;
+    setAiVoiceRate: (rate: number) => void;
     projectFilter: string[];
     setProjectFilter: (filter: string[]) => void;
     wallpaper: WallpaperType;
@@ -46,7 +50,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     
     const [isSoundOn, setSoundOnState] = useState<boolean>(true);
     const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
-    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
+    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Google tiếng Việt');
+    const [aiVoicePitch, setAiVoicePitchState] = useState<number>(1);
+    const [aiVoiceRate, setAiVoiceRateState] = useState<number>(0.95);
     const [projectFilter, setProjectFilterState] = useState<string[]>([]);
     const [wallpaper, setWallpaperState] = useState<WallpaperType>('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
     
@@ -84,6 +90,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         localStorage.setItem('selectedAiVoiceName', name);
     };
 
+    const setAiVoicePitch = (pitch: number) => {
+        setAiVoicePitchState(pitch);
+        localStorage.setItem('aiVoicePitch', String(pitch));
+    };
+
+    const setAiVoiceRate = (rate: number) => {
+        setAiVoiceRateState(rate);
+        localStorage.setItem('aiVoiceRate', String(rate));
+    };
+
     const setProjectFilter = (filter: string[]) => {
         setProjectFilterState(filter);
         localStorage.setItem('projectFilter', JSON.stringify(filter));
@@ -104,6 +120,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         const savedSound = localStorage.getItem('isSoundOn');
         const savedAiVoice = localStorage.getItem('isAiVoiceOn');
         const savedVoiceName = localStorage.getItem('selectedAiVoiceName');
+        const savedVoicePitch = localStorage.getItem('aiVoicePitch');
+        const savedVoiceRate = localStorage.getItem('aiVoiceRate');
         const savedProjectFilter = localStorage.getItem('projectFilter');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -117,6 +135,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setSoundOnState(savedSound === null ? true : savedSound === 'true');
         setAiVoiceOnState(savedAiVoice === null ? true : savedAiVoice === 'true');
         if (savedVoiceName) setSelectedAiVoiceNameState(savedVoiceName);
+        if (savedVoicePitch) setAiVoicePitchState(parseFloat(savedVoicePitch));
+        if (savedVoiceRate) setAiVoiceRateState(parseFloat(savedVoiceRate));
         if (savedProjectFilter) {
             try {
                 const parsedFilter = JSON.parse(savedProjectFilter);
@@ -170,6 +190,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setAiVoiceOn,
         selectedAiVoiceName,
         setSelectedAiVoiceName,
+        aiVoicePitch,
+        setAiVoicePitch,
+        aiVoiceRate,
+        setAiVoiceRate,
         projectFilter,
         setProjectFilter,
         wallpaper,

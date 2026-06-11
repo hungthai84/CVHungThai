@@ -2,6 +2,9 @@ import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import type { Project, ViewMode } from './ProjectsPage';
 import OptimizedImage from './OptimizedImage';
+import { useSpeechSynthesis } from './useSpeechSynthesis';
+import { useTheme } from '../contexts/ThemeContext';
+import * as Icons from './Icons';
 
 interface ProjectCardProps {
     project: Project;
@@ -11,8 +14,24 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) => {
-    const { t } = useI18n();
+    const { t, language } = useI18n();
     const pageData = t.projectsPage;
+    const { speak, cancel, isSpeaking } = useSpeechSynthesis();
+    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
+
+    const handleReadAloud = (e: React.MouseEvent) => {
+        e.stopPropagation(); // prevent clicking the card
+        if (isSpeaking) {
+            cancel();
+        } else {
+            speak(project.description, { 
+                voiceName: selectedAiVoiceName, 
+                lang: language,
+                pitch: aiVoicePitch,
+                rate: aiVoiceRate
+            });
+        }
+    };
 
     return (
         <div
@@ -26,15 +45,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
             <div className="project-card-new-image">
                 <OptimizedImage src={project.imageUrl} alt={project.title} optWidth={600} optQuality={70} hoverScale />
             </div>
-            <div className="project-card-new-content">
-                <div className="project-card-new-header">
-                    <span className="project-card-new-tag group-tag" title={project.group}>{project.group}</span>
-                    <span className="project-card-new-tag">{pageData.stageLabel} {project.stage}</span>
+            <div className="project-card-new-content relative">
+                <div className="project-card-new-header flex justify-between items-start">
+                    <div className="flex gap-2 flex-wrap">
+                        <span className="project-card-new-tag group-tag" title={project.group}>{project.group}</span>
+                        <span className="project-card-new-tag">{pageData.stageLabel} {project.stage}</span>
+                    </div>
                 </div>
-                <h4 className="project-card-new-title">
-                    <span className="project-card-new-id">{project.id}</span>. {project.title}
-                </h4>
-                <p className="project-card-new-description">{project.description}</p>
+                <div className="flex justify-between items-start mt-2">
+                    <h4 className="project-card-new-title mb-0 pr-8">
+                        <span className="project-card-new-id">{project.id}</span>. {project.title}
+                    </h4>
+                    {isAiVoiceOn && (
+                        <button
+                            onClick={handleReadAloud}
+                            className={`p-2 rounded-full absolute right-5 top-12 transition-colors ${isSpeaking ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-primary'}`}
+                            aria-label="Read description"
+                        >
+                            {isSpeaking ? <Icons.PauseIcon size={16} /> : <Icons.PlayIcon size={16} />}
+                        </button>
+                    )}
+                </div>
+                <p className="project-card-new-description mt-3">{project.description}</p>
                 {hasPost && (
                     <div className="project-card-action">
                         <span className="view-details-btn">

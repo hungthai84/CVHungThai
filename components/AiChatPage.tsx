@@ -31,10 +31,10 @@ interface MediaPrompt {
 const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
     const pageData = t.aiChatPage;
-    const { isAiVoiceOn, selectedAiVoiceName, setAiVoiceOn } = useTheme();
+    const { isAiVoiceOn, selectedAiVoiceName, setAiVoiceOn, aiVoicePitch, aiVoiceRate } = useTheme();
     
-    const userVoiceName = 'Microsoft Hoài My Online (Natural) - Vietnamese (Vietnam)';
-    const defaultAiVoiceName = 'Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)';
+    const userVoiceName = language === 'vi' ? 'Google tiếng Việt' : 'Google US English';
+    const defaultAiVoiceName = language === 'vi' ? 'Google tiếng Việt' : 'Google US English';
     const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
     const [messages, setMessages] = useState<Message[]>([]);
@@ -190,7 +190,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 };
                 setMessages(prev => [...prev, modelMessage]);
                 if (isAiVoiceOn) {
-                    speak(hardcodedAnswer, { voiceName: aiVoiceToUse, lang: language });
+                    speak(hardcodedAnswer, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                 }
             };
             executeAfterSpeakingUserMessage(speakModelMessage);
@@ -239,7 +239,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 ));
     
                 if (isAiVoiceOn) {
-                    speak(currentText, { voiceName: aiVoiceToUse, lang: language });
+                    speak(currentText, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                 }
     
             } catch (err) {
@@ -279,7 +279,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
             setMessages(prev => [...prev, responseMessage]);
             setView('chat');
             if (isAiVoiceOn) {
-                speak(responseText, { voiceName: aiVoiceToUse, lang: language });
+                speak(responseText, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
             }
         } else if (prompt.prompt) {
             handleSend(prompt.prompt);
@@ -343,7 +343,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                                     if (isSpeaking) {
                                         cancel();
                                     } else {
-                                        speak(msg.text, { voiceName: voiceToUse, lang: language });
+                                        speak(msg.text, { voiceName: voiceToUse, lang: language, pitch: voiceToUse === aiVoiceToUse ? aiVoicePitch : undefined, rate: voiceToUse === aiVoiceToUse ? aiVoiceRate : undefined });
                                     }
                                 }}
                                 title={isSpeaking ? "Dừng" : "Nghe"}
@@ -402,7 +402,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                                         if (isSpeaking) {
                                             cancel();
                                         } else {
-                                            speak(personalizedWelcomeMessage, { voiceName: aiVoiceToUse, lang: language });
+                                            speak(personalizedWelcomeMessage, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                                         }
                                     }}
                                     title={isSpeaking ? t.aiChatPage.speakerOn : t.aiChatPage.speakerOff}

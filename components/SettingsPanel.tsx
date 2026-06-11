@@ -169,10 +169,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         isSoundOn, setSoundOn,
         isAiVoiceOn, setAiVoiceOn,
         selectedAiVoiceName, setSelectedAiVoiceName,
+        aiVoicePitch, setAiVoicePitch,
+        aiVoiceRate, setAiVoiceRate,
         wallpaper, setWallpaper,
     } = useTheme();
 
-    const { voices } = useSpeechSynthesis();
+    const { voices, speak, cancel, isSpeaking } = useSpeechSynthesis();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
 
@@ -185,6 +187,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const [localSound, setLocalSound] = useState(isSoundOn);
     const [localAiVoice, setLocalAiVoice] = useState(isAiVoiceOn);
     const [localVoiceName, setLocalVoiceName] = useState(selectedAiVoiceName);
+    const [localVoicePitch, setLocalVoicePitch] = useState(aiVoicePitch);
+    const [localVoiceRate, setLocalVoiceRate] = useState(aiVoiceRate);
     const [localWallpaper, setLocalWallpaper] = useState(wallpaper);
     const [activeTab, setActiveTab] = useState<'gradient' | 'video'>('gradient');
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -224,8 +228,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);
         setLocalVoiceName(selectedAiVoiceName);
+        setLocalVoicePitch(aiVoicePitch);
+        setLocalVoiceRate(aiVoiceRate);
         setLocalWallpaper(wallpaper);
-    }, [themeMode, lightThemeColor, darkThemeColor, isSoundOn, isAiVoiceOn, selectedAiVoiceName, wallpaper]);
+    }, [themeMode, lightThemeColor, darkThemeColor, isSoundOn, isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate, wallpaper]);
 
     const handleSaveChanges = () => {
         setThemeMode(localThemeMode);
@@ -235,6 +241,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setSoundOn(localSound);
         setAiVoiceOn(localAiVoice);
         setSelectedAiVoiceName(localVoiceName);
+        setAiVoicePitch(localVoicePitch);
+        setAiVoiceRate(localVoiceRate);
         setWallpaper(localWallpaper);
         setShowSaveSuccess(true);
         setTimeout(() => {
@@ -250,19 +258,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setLocalSound(isSoundOn);
         setLocalAiVoice(isAiVoiceOn);
         setLocalVoiceName(selectedAiVoiceName);
+        setLocalVoicePitch(aiVoicePitch);
+        setLocalVoiceRate(aiVoiceRate);
         setLocalWallpaper(wallpaper);
     };
 
 
     const availableVoices = useMemo(() => {
         if (!voices.length) return [];
-        const relevantVoices = voices.filter(v => v.lang.startsWith(language));
-        const remyVoice = voices.find(v => v.name === 'Microsoft Rémy Multilingue Online (Natural) - French (France)');
-        const finalVoices = [...relevantVoices];
-        if (remyVoice && !relevantVoices.some(v => v.name === remyVoice.name)) {
-            finalVoices.unshift(remyVoice);
-        }
-        return finalVoices;
+        return voices.filter(v => v.lang.startsWith(language));
     }, [voices, language]);
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
@@ -558,26 +562,74 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                 </div>
 
                                 {localAiVoice && availableVoices.length > 0 && (
-                                    <div className="setting-item">
-                                        <label htmlFor="ai-voice-select">{settingsText.aiVoiceSelect}</label>
-                                        <div className="custom-select-wrapper">
-                                            <select 
-                                                id="ai-voice-select"
-                                                value={localVoiceName}
-                                                onChange={(e) => setLocalVoiceName(e.target.value)}
-                                                className="custom-select"
-                                            >
-                                                {availableVoices.map(voice => (
-                                                    <option key={voice.name} value={voice.name}>
-                                                        {voice.name} ({voice.lang})
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <div className="select-arrow">
-                                                <Icons.ChevronDownIcon size={18} />
+                                    <>
+                                        <div className="setting-item">
+                                            <div className="flex items-center justify-between w-full">
+                                                <label htmlFor="ai-voice-select">{settingsText.aiVoiceSelect}</label>
+                                                <button
+                                                    onClick={() => {
+                                                        if (isSpeaking) {
+                                                            cancel();
+                                                        } else {
+                                                            const isVi = localVoiceName.includes('Vietnamese') || localVoiceName.includes('tiếng Việt') || localVoiceName.includes('vi-VN');
+                                                            const text = isVi ? "Xin chào, đây là giọng nói thử nghiệm." : "Hello, this is a test voice.";
+                                                            speak(text, { voiceName: localVoiceName, lang: isVi ? 'vi' : 'en', pitch: localVoicePitch, rate: localVoiceRate });
+                                                        }
+                                                    }}
+                                                    className="bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-primary p-1 rounded transition-colors text-xs flex items-center gap-1"
+                                                >
+                                                    {isSpeaking ? <Icons.PauseIcon size={14} /> : <Icons.PlayIcon size={14} />} Preview
+                                                </button>
+                                            </div>
+                                            <div className="custom-select-wrapper">
+                                                <select 
+                                                    id="ai-voice-select"
+                                                    value={localVoiceName}
+                                                    onChange={(e) => setLocalVoiceName(e.target.value)}
+                                                    className="custom-select"
+                                                >
+                                                    {availableVoices.map(voice => (
+                                                        <option key={voice.name} value={voice.name}>
+                                                            {voice.name} ({voice.lang})
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                <div className="select-arrow">
+                                                    <Icons.ChevronDownIcon size={18} />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div className="setting-item flex-col items-start gap-2">
+                                            <label htmlFor="ai-voice-pitch" className="w-full flex justify-between">
+                                                Pitch ({localVoicePitch.toFixed(1)})
+                                            </label>
+                                            <input
+                                                id="ai-voice-pitch"
+                                                type="range"
+                                                min="0.5"
+                                                max="2"
+                                                step="0.1"
+                                                value={localVoicePitch}
+                                                onChange={(e) => setLocalVoicePitch(parseFloat(e.target.value))}
+                                                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                                            />
+                                        </div>
+                                        <div className="setting-item flex-col items-start gap-2">
+                                            <label htmlFor="ai-voice-rate" className="w-full flex justify-between">
+                                                Rate ({localVoiceRate.toFixed(2)})
+                                            </label>
+                                            <input
+                                                id="ai-voice-rate"
+                                                type="range"
+                                                min="0.5"
+                                                max="1.5"
+                                                step="0.05"
+                                                value={localVoiceRate}
+                                                onChange={(e) => setLocalVoiceRate(parseFloat(e.target.value))}
+                                                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                                            />
+                                        </div>
+                                    </>
                                 )}
                             </div>
                         </div>

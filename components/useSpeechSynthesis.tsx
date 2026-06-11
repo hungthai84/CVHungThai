@@ -1,5 +1,21 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+function splitTextForGtts(text: string, maxLength = 200): string[] {
+    const words = text.split(' ');
+    const chunks: string[] = [];
+    let currentChunk = '';
+    for (const word of words) {
+        if ((currentChunk + ' ' + word).length <= maxLength) {
+            currentChunk += (currentChunk ? ' ' : '') + word;
+        } else {
+            if (currentChunk) chunks.push(currentChunk);
+            currentChunk = word;
+        }
+    }
+    if (currentChunk) chunks.push(currentChunk);
+    return chunks;
+}
+
 // --- Module-level state to handle browser's auto-play restrictions ---
 
 // This flag ensures the event listeners are attached only once per application lifecycle.
@@ -38,6 +54,12 @@ if (typeof window !== 'undefined' && !interactionListenerAttached) {
     interactionListenerAttached = true;
 }
 
+const gTTSVoices: SpeechSynthesisVoice[] = [
+    { name: 'Google Translate TTS (gTTS)', lang: 'vi-VN', default: false, localService: false, voiceURI: 'gtts-vi' } as any,
+    { name: 'Google Translate TTS (gTTS)', lang: 'en-US', default: false, localService: false, voiceURI: 'gtts-en' } as any,
+];
+
+let globalGttsAudioQueue: HTMLAudioElement[] = [];
 
 export const useSpeechSynthesis = () => {
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -45,13 +67,22 @@ export const useSpeechSynthesis = () => {
     const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
     const keepAliveIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+    useEffect(() => {
+        const handleGlobalStop = () => setIsSpeaking(false);
+        window.addEventListener('speech-synthesis-stopped', handleGlobalStop);
+        return () => window.removeEventListener('speech-synthesis-stopped', handleGlobalStop);
+    }, []);
+
     // Effect to populate voices and handle cleanup
     useEffect(() => {
         const loadVoices = () => {
             const availableVoices = window.speechSynthesis.getVoices();
-            if (availableVoices.length > 0) {
-                setVoices(availableVoices);
-            }
+            
+            // Collect all available voices but put Google voices first if they exist
+            const googleVoices = availableVoices.filter(v => v.name.includes('Google'));
+            const otherVoices = availableVoices.filter(v => !v.name.includes('Google'));
+            
+            setVoices([...gTTSVoices, ...googleVoices, ...otherVoices]);
         };
 
         // Load voices initially and on change
@@ -71,27 +102,100 @@ export const useSpeechSynthesis = () => {
     }, []);
 
     const cancel = useCallback(() => {
+        setIsSpeaking(false);
         if (window.speechSynthesis) {
-            setIsSpeaking(false);
-            if (keepAliveIntervalRef.current) {
-                clearInterval(keepAliveIntervalRef.current);
-                keepAliveIntervalRef.current = null;
-            }
             window.speechSynthesis.cancel();
+        }
+        if (globalGttsAudioQueue.length > 0) {
+            globalGttsAudioQueue.forEach(a => a.pause());
+            globalGttsAudioQueue = [];
+        }
+        window.dispatchEvent(new Event('speech-synthesis-stopped'));
+        if (keepAliveIntervalRef.current) {
+            clearInterval(keepAliveIntervalRef.current);
+            keepAliveIntervalRef.current = null;
         }
     }, []);
     
-    const speak = useCallback((text: string, options: { voiceName?: string; lang?: 'vi' | 'en'; onEnd?: () => void } = {}) => {
+    const speak = useCallback((text: string, options: { voiceName?: string; lang?: 'vi' | 'en'; pitch?: number; rate?: number; onEnd?: () => void } = {}) => {
         
-        const doSpeak = () => {
-            if (!window.speechSynthesis || !text.trim()) {
-                console.warn('Speech Synthesis not supported or text is empty.');
+        const doSpeak = async () => {
+            if (!text.trim()) {
                 options.onEnd?.();
                 return;
             }
 
             // Cancel any ongoing speech to ensure clean state
             cancel();
+
+            const isGttsVoice = options.voiceName && options.voiceName.includes('gTTS');
+
+            if (isGttsVoice) {
+                try {
+                    setIsSpeaking(true);
+                    const targetLangCode = options.lang === 'en' ? 'en' : 'vi';
+                    const chunks = splitTextForGtts(text, 200);
+                    const isSlow = options.rate !== undefined && options.rate < 0.8;
+                    const urls = chunks.map(chunk => ({
+                        url: `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${targetLangCode}&client=tw-ob&ttsspeed=${isSlow ? 0.24 : 1}`
+                    }));
+                    
+                    if (urls.length > 0) {
+                        let currentIndex = 0;
+
+                        const playNext = () => {
+                            if (currentIndex >= urls.length) {
+                                setIsSpeaking(false);
+                                window.dispatchEvent(new Event('speech-synthesis-stopped'));
+                                options.onEnd?.();
+                                return;
+                            }
+
+                            const audio = new Audio(urls[currentIndex].url);
+                            if (options.rate !== undefined) audio.playbackRate = options.rate;
+                            if (options.pitch !== undefined && (audio as any).mozPreservesPitch !== undefined) {
+                                (audio as any).preservesPitch = options.pitch === 1;
+                            }
+
+                            globalGttsAudioQueue.push(audio);
+
+                            audio.onended = () => {
+                                globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
+                                currentIndex++;
+                                playNext();
+                            };
+                            audio.onerror = () => {
+                                globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
+                                currentIndex++;
+                                playNext(); // Skip error and try next
+                            };
+                            
+                            audio.play().catch(err => {
+                                console.error('gTTS Audio Play Error:', err);
+                                setIsSpeaking(false);
+                                window.dispatchEvent(new Event('speech-synthesis-stopped'));
+                                options.onEnd?.();
+                            });
+                        };
+
+                        playNext();
+                    } else {
+                        setIsSpeaking(false);
+                        options.onEnd?.();
+                    }
+                } catch (err) {
+                    console.error('gTTS Error:', err);
+                    setIsSpeaking(false);
+                    options.onEnd?.();
+                }
+                return;
+            }
+
+            if (!window.speechSynthesis) {
+                console.warn('Speech Synthesis not supported.');
+                options.onEnd?.();
+                return;
+            }
 
             const utterance = new SpeechSynthesisUtterance(text);
             utteranceRef.current = utterance;
@@ -109,36 +213,22 @@ export const useSpeechSynthesis = () => {
             // 2. If no specific voice or specific voice not found, apply smart fallback based on language
             if (!selectedVoice) {
                 if (targetLangCode === 'vi-VN') {
-                    const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN');
+                    const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
-                        // Priority 1: Specifically requested professional male voice (ideal for business reports)
-                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Nam Minh Online (Natural) - Vietnamese (Vietnam)');
-        
-                        // Priority 2: Fallback to high-quality female voice
+                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
                         if (!preferredVoice) {
-                            preferredVoice = vietnameseVoices.find(v => v.name === 'Microsoft Hoai My Online (Natural) - Vietnamese (Vietnam)');
-                        }
-
-                        // Priority 3: Fallback to any male Vietnamese voice.
-                        if (!preferredVoice) {
-                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam') || v.name.toLowerCase().includes('male'));
+                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('vietnam') || v.name.toLowerCase().includes('tiếng việt'));
                         }
                         
-                        // Priority 4: Fallback to any female Vietnamese voice.
-                        if (!preferredVoice) {
-                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nữ') || v.name.toLowerCase().includes('female'));
-                        }
-                        
-                        // Priority 5: Absolute fallback to the first available Vietnamese voice.
+                        // Absolute fallback
                         selectedVoice = preferredVoice || vietnameseVoices[0];
                     }
                 } else { // en-US
-                    const englishVoices = voices.filter(v => v.lang.startsWith('en-US'));
+                    const englishVoices = voices.filter(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-'));
                     const enPriorityList = [
-                        'Microsoft Ryan Online (Natural) - English (United States)',
-                        'Microsoft Jenny Online (Natural) - English (United States)',
                         'Google US English',
-                        'Microsoft David - English (United States)',
+                        'Google UK English Male',
+                        'Google UK English Female',
                     ];
                     for (const name of enPriorityList) {
                         const voice = englishVoices.find(v => v.name === name);
@@ -148,7 +238,7 @@ export const useSpeechSynthesis = () => {
                         }
                     }
                     if (!selectedVoice) {
-                        selectedVoice = englishVoices.find(v => v.name.toLowerCase().includes('male')) || englishVoices[0];
+                        selectedVoice = englishVoices[0];
                     }
                 }
             }
@@ -165,6 +255,7 @@ export const useSpeechSynthesis = () => {
 
             const cleanup = () => {
                 setIsSpeaking(false);
+                window.dispatchEvent(new Event('speech-synthesis-stopped'));
                 if (keepAliveIntervalRef.current) {
                     clearInterval(keepAliveIntervalRef.current);
                     keepAliveIntervalRef.current = null;
@@ -173,6 +264,9 @@ export const useSpeechSynthesis = () => {
                     options.onEnd();
                 }
             };
+
+            if (options.pitch !== undefined) utterance.pitch = options.pitch;
+            if (options.rate !== undefined) utterance.rate = options.rate;
 
             utterance.onstart = () => {
                 setIsSpeaking(true);

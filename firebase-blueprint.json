@@ -13,12 +13,39 @@
         }
       },
       "required": ["createdAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Project comment feedback",
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "timestamp"
+        }
+      },
+      "required": ["projectId", "author", "email", "text", "createdAt"]
     }
   },
   "firestore": {
     "users/{userId}": {
       "schema": "User",
       "description": "User profiles"
+    },
+    "comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Feedback comments on projects"
     }
   }
 }

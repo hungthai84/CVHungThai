@@ -14,11 +14,22 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // Validation helper
+    // Validation helper for User
     function isValidUser(data) {
       return data.keys().hasAll(['createdAt']) &&
              data.keys().size() <= 2 &&
              (data.keys().hasAny(['email']) ? data.email is string && data.email.size() <= 100 : true) &&
+             data.createdAt == request.time;
+    }
+
+    // Validation helper for Comment (Denial of Wallet guards on sizes)
+    function isValidComment(data) {
+      return data.keys().hasAll(['projectId', 'author', 'email', 'text', 'createdAt']) &&
+             data.keys().size() == 5 &&
+             data.projectId is string && data.projectId.size() <= 64 &&
+             data.author is string && data.author.size() <= 100 &&
+             data.email is string && data.email.size() <= 120 &&
+             data.text is string && data.text.size() <= 2000 &&
              data.createdAt == request.time;
     }
 
@@ -27,6 +38,12 @@ service cloud.firestore {
       allow create: if isOwner(userId) && isValidUser(request.resource.data);
       allow update: if false; // Immutable for now
       allow delete: if false;
+    }
+
+    match /comments/{commentId} {
+      allow read, list: if true;
+      allow create: if isValidComment(request.resource.data);
+      allow update, delete: if false; // Feedback comments are immutable after submission
     }
   }
 }
