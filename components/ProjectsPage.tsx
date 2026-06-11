@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'motion/react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
@@ -131,30 +130,11 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
 
                 <div className="projects-grid-wrapper no-scrollbar">
                     {filteredProjects.length > 0 ? (
-                        <motion.div 
-                            className={`projects-grid view-${viewMode}`}
-                            variants={{
-                                hidden: { opacity: 0 },
-                                show: {
-                                    opacity: 1,
-                                    transition: {
-                                        staggerChildren: 0.1
-                                    }
-                                }
-                            }}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.1 }}
-                        >
+                        <div className={`projects-grid view-${viewMode}`}>
                             {filteredProjects.map((project) => (
-                                <motion.div
+                                <div
                                     key={project.id}
-                                    layout
                                     style={{ display: 'flex', flexDirection: 'column', height: '100%', minWidth: 0 }}
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        show: { opacity: 1, y: 0 }
-                                    }}
                                 >
                                     <ProjectCard
                                         project={project}
@@ -162,9 +142,9 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                                         hasPost={!!(t.projectPosts as any)[project.id]}
                                         onClick={() => handleCardClick(project.id)}
                                     />
-                                </motion.div>
+                                </div>
                             ))}
-                        </motion.div>
+                        </div>
                     ) : (
                         <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--color-brand-text-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                             <Icons.CubeIcon size={48} style={{ marginBottom: '1rem', opacity: 0.5 }}/>

@@ -19,6 +19,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
     const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
 
+    const achievement = React.useMemo(() => {
+        const achs = t.achievementsPage?.achievements;
+        if (!Array.isArray(achs)) return null;
+        return achs.find((a: any) => a.id === project.id || a.title === project.title);
+    }, [project.id, project.title, t]);
+
     const handleReadAloud = (e: React.MouseEvent) => {
         e.stopPropagation(); // prevent clicking the card
         if (isSpeaking) {
@@ -50,6 +56,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
                     <div className="flex gap-2 flex-wrap">
                         <span className="project-card-new-tag group-tag" title={project.group}>{project.group}</span>
                         <span className="project-card-new-tag">{pageData.stageLabel} {project.stage}</span>
+                        {achievement && (
+                            <span 
+                                className="project-card-new-tag font-semibold flex items-center gap-1 border"
+                                style={{ 
+                                    color: achievement.color, 
+                                    borderColor: achievement.color, 
+                                    backgroundColor: `${achievement.color}15`
+                                }}
+                            >
+                                <Icons.TrophyIcon size={11} style={{ color: achievement.color }} />
+                                <span>{achievement.rate}%</span>
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="flex justify-between items-start mt-2">

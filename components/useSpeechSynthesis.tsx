@@ -117,7 +117,7 @@ export const useSpeechSynthesis = () => {
         }
     }, []);
     
-    const speak = useCallback((text: string, options: { voiceName?: string; lang?: 'vi' | 'en'; pitch?: number; rate?: number; onEnd?: () => void } = {}) => {
+    const speak = useCallback((text: string, options: { voiceName?: string; lang?: 'vi' | 'en' | string; pitch?: number; rate?: number; onEnd?: () => void } = {}) => {
         
         const doSpeak = async () => {
             if (!text.trim()) {
@@ -200,7 +200,14 @@ export const useSpeechSynthesis = () => {
             const utterance = new SpeechSynthesisUtterance(text);
             utteranceRef.current = utterance;
 
-            const targetLangCode = options.lang === 'en' ? 'en-US' : 'vi-VN';
+            let targetLangCode = 'vi-VN';
+            if (options.lang === 'en') {
+                targetLangCode = 'en-US';
+            } else if (options.lang === 'vi') {
+                targetLangCode = 'vi-VN';
+            } else if (options.lang) {
+                targetLangCode = options.lang;
+            }
             utterance.lang = targetLangCode;
             
             let selectedVoice: SpeechSynthesisVoice | undefined;

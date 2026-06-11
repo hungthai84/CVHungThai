@@ -48,6 +48,12 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const pageData = t.projectPostPopup;
     const post = useMemo(() => (t.projectPosts as any)[projectId] || (t.projectPosts as any).default, [projectId, t]);
     
+    const achievement = useMemo(() => {
+        const achList = t.achievementsPage?.achievements;
+        if (!Array.isArray(achList)) return null;
+        return achList.find((a: any) => a.id === projectId || a.title === post?.title);
+    }, [projectId, post, t]);
+    
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
     const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -285,10 +291,47 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                         </div>
                                         
                                         <div className="project-post-body">
-                                            {post.content.paragraphs.map((p: string, index: number) => <p key={index}>{p}</p>)}
+                                            {achievement && (
+                                                <div className="project-post-achievement-card-wrapper mb-6 animate-fadeIn" style={{ width: '50%', minWidth: '280px', maxWidth: '100%' }}>
+                                                    <div className="text-xs uppercase tracking-wider font-semibold opacity-60 mb-2.5 flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                                                        <Icons.TrophyIcon size={14} className="text-amber-500" />
+                                                        <span>{language === 'vi' ? 'Chỉ số hiệu quả đạt được:' : 'Key Achievement / KPI Rating:'}</span>
+                                                    </div>
+                                                    <div 
+                                                        className="achievement-card" 
+                                                        style={{ '--item-color': achievement.color, cursor: 'default', margin: 0, width: '100%', breakInside: 'avoid' } as React.CSSProperties}
+                                                    >
+                                                        <div className="achievement-card-main-content">
+                                                             <div className="achievement-card-title-group">
+                                                                 {(() => {
+                                                                     const IconComp = Icons[achievement.icon as keyof typeof Icons] || Icons.TrophyIcon;
+                                                                     return <IconComp />;
+                                                                 })()}
+                                                                 <h4 className="font-semibold text-lg" style={{ color: achievement.color, fontSize: '1.1rem', margin: 0 }} title={achievement.title}>
+                                                                     {achievement.id}. {achievement.title}
+                                                                 </h4>
+                                                             </div>
+                                                             <div className="achievement-card-tags">
+                                                                 <button style={{ cursor: 'default' }} onClick={(e) => e.stopPropagation()}>{achievement.hashtag}</button>
+                                                             </div>
+                                                        </div>
+                                                        <div className="achievement-card-rate transition-transform duration-300 hover:scale-105" style={{ color: achievement.color }}>
+                                                             {achievement.rate}
+                                                             <span className="achievement-card-percent-sign" style={{ color: achievement.color }}>%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {post.content.paragraphs.map((p: string, index: number) => {
+                                                const formattedText = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                                                return <p key={index} dangerouslySetInnerHTML={{ __html: formattedText }} />;
+                                            })}
                                             {post.content.list && (
                                                 <ul>
-                                                    {post.content.list.map((item: string, index: number) => <li key={index}>{item}</li>)}
+                                                    {post.content.list.map((item: string, index: number) => {
+                                                         const formattedText = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                                                         return <li key={index} dangerouslySetInnerHTML={{ __html: formattedText }} />;
+                                                    })}
                                                 </ul>
                                             )}
                                             {PROJECT_IMAGES[projectId] && (

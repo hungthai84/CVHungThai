@@ -3,34 +3,34 @@ import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 
 import ReactDOM from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import Sidebar from './components/Sidebar';
-import SkillsPage from './components/SkillsPage';
-import CoverLetter from './components/CoverLetter';
 import MainContent from './components/MainContent';
-import AiChatPage from './components/AiChatPage';
 import * as Icons from './components/Icons';
 import { useTheme } from './contexts/ThemeContext';
 import { useI18n } from './contexts/i18n';
-import EducationPage from './components/EducationPage';
-import ServicesPage from './components/ServicesPage';
-import ProjectPostPopup from './components/ProjectPostPopup';
-import AchievementsPage from './components/AchievementsPage';
-import SettingsPage from './components/SettingsPanel';
-import WorkExperiencePage from './components/WorkExperiencePage';
 import MobileHeader from './components/MobileHeader';
-import SchedulerPage from './components/SchedulerPage';
-import PrintableView from './components/PrintableView';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
-import { AboutPage } from './components/AboutPage';
-import WorkVideoPage from './components/WorkVideoPage';
-import InterviewPage from './components/InterviewPage';
 import PasswordPrompt from './components/PasswordPrompt';
-import HoroscopePage from './components/HoroscopePage';
+
+// Lazy load page components to minimize initial bundle size and optimize website load speeds
+const SkillsPage = lazy(() => import('./components/SkillsPage'));
+const CoverLetter = lazy(() => import('./components/CoverLetter'));
+const AiChatPage = lazy(() => import('./components/AiChatPage'));
+const EducationPage = lazy(() => import('./components/EducationPage'));
+const ServicesPage = lazy(() => import('./components/ServicesPage'));
+const ProjectPostPopup = lazy(() => import('./components/ProjectPostPopup'));
+const SettingsPage = lazy(() => import('./components/SettingsPanel'));
+const WorkExperiencePage = lazy(() => import('./components/WorkExperiencePage'));
+const SchedulerPage = lazy(() => import('./components/SchedulerPage'));
+const PrintableView = lazy(() => import('./components/PrintableView'));
+const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
+const WorkVideoPage = lazy(() => import('./components/WorkVideoPage'));
+const InterviewPage = lazy(() => import('./components/InterviewPage'));
+const HoroscopePage = lazy(() => import('./components/HoroscopePage'));
 
 // Lazy load heavy components
 const ProjectsPage = lazy(() => import('./components/ProjectsPage').then(module => ({ default: module.ProjectsPage })));
 const MemoriesPage = lazy(() => import('./components/MemoriesPage'));
-const BlogPage = lazy(() => import('./components/BlogPage'));
 
 const LoadingFallback: React.FC = () => (
     <div className="flex justify-center items-center h-full w-full">
@@ -59,11 +59,9 @@ const baseNavStructure: {
         icon: 'CubeIcon', 
         component: ProjectsPage,
     },
-    { key: 'achievements', tKey: 'achievements', icon: 'TrophyIcon', component: AchievementsPage },
     { key: 'horoscope', tKey: 'horoscope', icon: 'SparklesIcon', component: HoroscopePage },
     { key: 'memories', tKey: 'memories', icon: 'CameraIcon', component: MemoriesPage },
     { key: 'interview', tKey: 'interview', icon: 'PresentationIcon', component: InterviewPage },
-    { key: 'blog', tKey: 'blog', icon: 'BookOpenIcon', component: BlogPage },
     { key: 'workVideo', tKey: 'experience', icon: 'BriefcaseIcon', component: WorkVideoPage, showInMenu: false },
     { key: 'scheduler', tKey: 'scheduler', icon: 'CalendarDaysIcon', component: SchedulerPage, showInMenu: false },
     { key: 'aiChat', tKey: 'aiChat', icon: 'BotIcon', component: AiChatPage, showInMenu: false },
@@ -103,53 +101,22 @@ const App: React.FC = () => {
     });
 
 
-    const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
+    const clickSound = useRef<HTMLAudioElement | null>(null);
     
+    // Parallax effect removed to prevent scroll lag and CPU usage on every render frame
     useEffect(() => {
-        clickSound.current.volume = 0.3;
-    }, []);
-
-    // Parallax effect for the main background on scroll
-    useEffect(() => {
-        const container = pageContainerRef.current;
         const background = backgroundRef.current;
-        if (!container || !background || isMobile) {
-            if (background) background.style.transform = 'translateY(0px)';
-            return;
+        if (background) {
+            background.style.transform = 'translateY(0px)';
         }
-
-        let animationFrameId: number | null = null;
-
-        const handleScroll = () => {
-            const scrollTop = container.scrollTop;
-            // Apply parallax effect: move background at 20% of scroll speed
-            background.style.transform = `translateY(-${scrollTop * 0.2}px)`;
-            animationFrameId = null;
-        };
-
-        const onScroll = () => {
-            if (animationFrameId === null) {
-                animationFrameId = requestAnimationFrame(handleScroll);
-            }
-        };
-
-        // Reset background position when active page changes
-        background.style.transform = 'translateY(0px)';
-
-        container.addEventListener('scroll', onScroll, { passive: true });
-
-        return () => {
-            if (container) {
-                container.removeEventListener('scroll', onScroll);
-            }
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-        };
-    }, [activeIndex, isMobile]); // Re-run when page changes or on mobile toggle
+    }, [activeIndex]);
 
     const playClickSound = useCallback(() => {
         if (isSoundOn) {
+            if (!clickSound.current) {
+                clickSound.current = new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav');
+                clickSound.current.volume = 0.3;
+            }
             clickSound.current.currentTime = 0;
             clickSound.current.play().catch(() => {});
         }
@@ -195,27 +162,18 @@ const App: React.FC = () => {
             if (isMobile) {
                 const element = document.getElementById(key);
                 if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
+                    element.scrollIntoView({ behavior: 'auto' });
                     setActiveIndex(newIndex);
                 } else {
                     window.scrollTo({ top: 0, behavior: 'auto' });
-                    if ((document as any).startViewTransition) {
-                        (document as any).startViewTransition(() => setActiveIndex(newIndex));
-                    } else {
-                        setActiveIndex(newIndex);
-                    }
+                    setActiveIndex(newIndex);
                 }
             } else {
                 if (newIndex !== activeIndex) {
                     pageContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
-                    
-                    if ((document as any).startViewTransition) {
-                        (document as any).startViewTransition(() => setActiveIndex(newIndex));
-                    } else {
-                        setActiveIndex(newIndex);
-                    }
+                    setActiveIndex(newIndex);
                 } else {
-                    pageContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+                    pageContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
                 }
             }
         }
@@ -563,7 +521,9 @@ const App: React.FC = () => {
                         </button>
                     </div>
                     <div className="print-preview-content">
-                        <PrintableView activePageKey={activePageKey} />
+                        <Suspense fallback={<LoadingFallback />}>
+                            <PrintableView activePageKey={activePageKey} />
+                        </Suspense>
                     </div>
                 </div>,
                 document.getElementById('popup-root')!

@@ -35,16 +35,21 @@ const CursorEffect: React.FC = () => {
             
         const interactiveSelector = 'a, button, [role="button"], input[type="submit"], .timeline-milestone, .memories-grid-item, .project-card-new.has-post, .achievement-card, .social-icon-link, .filter-btn, .project-branch-title, .toggle-switch, .color-dot, .wallpaper-thumbnail';
 
+        let lastTarget: HTMLElement | null = null;
+
         const handleMouseMove = (e: MouseEvent) => {
             mousePos.current = { x: e.clientX, y: e.clientY };
 
             const target = e.target as HTMLElement;
-            if (target.closest(interactiveSelector)) {
-                innerCursor?.classList.add('mmc-hover');
-                outerCursor?.classList.add('mmc-hover');
-            } else {
-                innerCursor?.classList.remove('mmc-hover');
-                outerCursor?.classList.remove('mmc-hover');
+            if (target && target !== lastTarget) {
+                lastTarget = target;
+                if (target.closest(interactiveSelector)) {
+                    innerCursor?.classList.add('mmc-hover');
+                    outerCursor?.classList.add('mmc-hover');
+                } else {
+                    innerCursor?.classList.remove('mmc-hover');
+                    outerCursor?.classList.remove('mmc-hover');
+                }
             }
         };
 

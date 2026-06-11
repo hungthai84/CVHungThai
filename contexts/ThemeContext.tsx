@@ -54,7 +54,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [aiVoicePitch, setAiVoicePitchState] = useState<number>(1);
     const [aiVoiceRate, setAiVoiceRateState] = useState<number>(0.95);
     const [projectFilter, setProjectFilterState] = useState<string[]>([]);
-    const [wallpaper, setWallpaperState] = useState<WallpaperType>('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
+    const [wallpaper, setWallpaperState] = useState<WallpaperType>('gradient');
     
     // --- Setter Functions that include saving to localStorage ---
 
@@ -156,7 +156,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedWallpaper) {
             setWallpaperState(savedWallpaper);
         } else {
-            setWallpaperState('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
+            setWallpaperState('gradient');
         }
 
     }, []);

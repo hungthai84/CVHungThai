@@ -265,9 +265,35 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
 
     const availableVoices = useMemo(() => {
-        if (!voices.length) return [];
-        return voices.filter(v => v.lang.startsWith(language));
-    }, [voices, language]);
+        return voices;
+    }, [voices]);
+
+    const groupedVoices = useMemo(() => {
+        if (!voices.length) return { vi: [], en: [], other: [] };
+
+        const vi: typeof voices = [];
+        const en: typeof voices = [];
+        const other: typeof voices = [];
+
+        const seenKeys = new Set<string>();
+
+        voices.forEach(voice => {
+            const key = `${voice.name}_${voice.lang}`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
+            const vLang = voice.lang.toLowerCase();
+            if (vLang.startsWith('vi')) {
+                vi.push(voice);
+            } else if (vLang.startsWith('en')) {
+                en.push(voice);
+            } else {
+                other.push(voice);
+            }
+        });
+
+        return { vi, en, other };
+    }, [voices]);
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
     
@@ -571,9 +597,35 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                         if (isSpeaking) {
                                                             cancel();
                                                         } else {
-                                                            const isVi = localVoiceName.includes('Vietnamese') || localVoiceName.includes('tiếng Việt') || localVoiceName.includes('vi-VN');
-                                                            const text = isVi ? "Xin chào, đây là giọng nói thử nghiệm." : "Hello, this is a test voice.";
-                                                            speak(text, { voiceName: localVoiceName, lang: isVi ? 'vi' : 'en', pitch: localVoicePitch, rate: localVoiceRate });
+                                                            const selectedVoice = voices.find(v => v.name === localVoiceName);
+                                                            const voiceLang = selectedVoice?.lang?.toLowerCase() || '';
+                                                            const isVi = voiceLang.startsWith('vi') || localVoiceName.includes('tiếng Việt');
+                                                            const isEn = voiceLang.startsWith('en');
+                                                            let text = "Hello, this is a test voice.";
+                                                            let targetLang = voiceLang;
+
+                                                            if (isVi) {
+                                                                text = "Xin chào, đây là giọng nói thử nghiệm.";
+                                                                targetLang = 'vi';
+                                                            } else if (isEn) {
+                                                                text = "Hello, this is a test voice.";
+                                                                targetLang = 'en';
+                                                            } else if (voiceLang.startsWith('fr')) {
+                                                                text = "Bonjour, ceci est une voix de test.";
+                                                            } else if (voiceLang.startsWith('es')) {
+                                                                text = "Hola, esta es una voz de prueba.";
+                                                            } else if (voiceLang.startsWith('ja')) {
+                                                                text = "こんにちは、これはテストの音声です。";
+                                                            } else if (voiceLang.startsWith('zh')) {
+                                                                text = "您好，这是一段测试语音。";
+                                                            } else if (voiceLang.startsWith('ko')) {
+                                                                text = "안녕하세요, 테스트 목소리입니다.";
+                                                            } else if (voiceLang.startsWith('de')) {
+                                                                text = "Hallo, das ist eine Teststimme.";
+                                                            } else if (voiceLang.startsWith('it')) {
+                                                                text = "Ciao, questa è una voce di prova.";
+                                                            }
+                                                            speak(text, { voiceName: localVoiceName, lang: targetLang, pitch: localVoicePitch, rate: localVoiceRate });
                                                         }
                                                     }}
                                                     className="bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-primary p-1 rounded transition-colors text-xs flex items-center gap-1"
@@ -588,11 +640,33 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                     onChange={(e) => setLocalVoiceName(e.target.value)}
                                                     className="custom-select"
                                                 >
-                                                    {availableVoices.map(voice => (
-                                                        <option key={voice.name} value={voice.name}>
-                                                            {voice.name} ({voice.lang})
-                                                        </option>
-                                                    ))}
+                                                    {groupedVoices.vi.length > 0 && (
+                                                        <optgroup label={language === 'vi' ? "Giọng nói Tiếng Việt" : "Vietnamese Voices"}>
+                                                            {groupedVoices.vi.map(voice => (
+                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                    {voice.name} ({voice.lang})
+                                                                </option>
+                                                            ))}
+                                                        </optgroup>
+                                                    )}
+                                                    {groupedVoices.en.length > 0 && (
+                                                        <optgroup label={language === 'vi' ? "Giọng nói Tiếng Anh" : "English Voices"}>
+                                                            {groupedVoices.en.map(voice => (
+                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                    {voice.name} ({voice.lang})
+                                                                </option>
+                                                            ))}
+                                                        </optgroup>
+                                                    )}
+                                                    {groupedVoices.other.length > 0 && (
+                                                        <optgroup label={language === 'vi' ? "Giọng nói trình duyệt khác" : "Other Browser Voices"}>
+                                                            {groupedVoices.other.map(voice => (
+                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                    {voice.name} ({voice.lang})
+                                                                </option>
+                                                            ))}
+                                                        </optgroup>
+                                                    )}
                                                 </select>
                                                 <div className="select-arrow">
                                                     <Icons.ChevronDownIcon size={18} />

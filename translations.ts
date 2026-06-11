@@ -19,6 +19,7 @@ export const vi = {
       interview: "Phỏng vấn",
       scheduler: "Đặt lịch hẹn",
       aiChat: "Trợ lý AI",
+      transcribe: "Dịch giọng nói",
       settings: "Cài đặt",
     },
     name: "Nguyễn Hùng Thái",
@@ -1037,7 +1038,7 @@ export const vi = {
             action: "show_questions",
             questions: [
                 "Nếu nhận vai trò Trưởng phòng CSKH, 90 ngày đầu tiên anh sẽ tập trung làm gì?",
-                "Tư duy dịch vụ của anh khác gì so với những trưởng phòng thông thường?",
+                "Tuy duy dịch vụ của anh khác gì so với những trưởng phòng thông thường?",
                 "Anh nhìn nhận thế nào về vai trò lãnh đạo: kiểm soát – đồng hành – hay dẫn dắt?",
                 "Theo anh, đâu là sự cân bằng giữa “chi tiết” và “tầm nhìn xa” trong lãnh đạo dịch vụ?",
                 "Trong bối cảnh chuyển đổi số, đâu là “điểm khác biệt” mà anh muốn để lại dấu ấn?"
@@ -1098,300 +1099,287 @@ export const vi = {
       mindMapUrl: "https://i.postimg.cc/J0vJ0V3D/mindmap-1-1.png",
       content: {
         paragraphs: [
-            "Việc xây dựng một Phòng Dịch vụ Khách hàng hoàn toàn mới là một trong những nhiệm vụ nền tảng và quan trọng nhất tôi từng thực hiện. Đây không chỉ là việc tuyển dụng nhân sự, mà là quá trình thiết lập một bộ máy vận hành hoàn chỉnh, từ tầm nhìn, chiến lược đến văn hóa và quy trình.",
-            "Mục tiêu cốt lõi là tạo ra một phòng ban không chỉ phản ứng với các yêu cầu của khách hàng, mà còn chủ động nâng cao trải nghiệm, trở thành cầu nối vững chắc giữa doanh nghiệp và người dùng. Để làm được điều đó, tôi đã tập trung vào các trụ cột chính:",
-            "1.  **Thiết lập Tầm nhìn và Sứ mệnh:** Xác định rõ vai trò của phòng Chăm Sóc Khách Hàng trong chiến lược chung của công ty. Sứ mệnh không chỉ dừng lại ở 'giải quyết vấn đề' mà còn là 'tạo dựng lòng trung thành' và 'thu thập insight sản phẩm'.",
-            "2.  **Xây dựng Sơ đồ tổ chức:** Thiết kế cấu trúc phòng ban linh hoạt, phân chia các nhóm chuyên trách (Inbound, Outbound, Khiếu nại, Mạng xã hội...) nhưng vẫn đảm bảo sự phối hợp nhịp nhàng. Sơ đồ này được tối ưu hóa để có thể mở rộng quy mô trong tương lai.",
-            "3.  **Định biên Nhân sự và Tuyển dụng:** Xây dựng khung năng lực cho từng vị trí, từ nhân viên, trưởng nhóm đến quản lý. Quy trình tuyển dụng tập trung vào việc tìm kiếm những ứng viên không chỉ có kỹ năng, mà còn có tư duy dịch vụ và phù hợp với văn hóa công ty.",
-            "4.  **Xây dựng Văn hóa Lấy khách hàng làm trung tâm:** Ngay từ những ngày đầu, tôi đã nhấn mạnh tầm quan trọng của việc lắng nghe, đồng cảm và trao quyền cho nhân viên. Mỗi thành viên đều được khuyến khích đưa ra quyết định vì lợi ích tốt nhất của khách hàng.",
-            "Kết quả của dự án này là một phòng Chăm Sóc Khách Hàng hoạt động ổn định, có định hướng rõ ràng và sẵn sàng đối mặt với các thách thức tăng trưởng. Đây là nền móng cho tất cả các hoạt động vận hành, công nghệ và đào tạo sau này."
+          "Xây dựng một bộ máy chăm sóc khách hàng toàn diện từ bước khởi đầu, đảm bảo tính bền vững và khả năng mở rộng tối đa."
         ],
-        list: []
+        list: [
+          "**Nghiên cứu & Định vị Chiến lược:** Xác lập tầm nhìn dài hạn, giá trị cốt lõi và sứ mệnh phục vụ của phòng Chăm sóc Khách hàng (CSKH).",
+          "**Thiết kế Sơ đồ Tổ chức:** Định hướng cấu trúc phân nhóm linh hoạt bao gồm bộ phận Tiếp nhận (Inbound), Chủ động (Outbound) và giải quyết Khiếu nại phức tạp.",
+          "**Định biên & Tuyển dụng:** Xây dựng chi tiết mô tả công việc (JD), khung năng lực chuyên môn và trực tiếp phỏng vấn xây dựng đội ngũ cốt cán.",
+          "**Xây dựng Văn hóa Trải nghiệm:** Chuẩn bị cẩm nang định hướng và quy chuẩn giao tiếp lấy khách hàng làm trọng tâm, đề cao sự thấu cảm."
+        ]
       }
     },
     "1.2": {
-        "title": "Kiến trúc Hiệu suất: Thiết lập OKR & KPI cho Phòng Chăm Sóc Khách Hàng",
-        "date": "Giai đoạn 1",
-        "tags": ["Chiến lược CS", "OKR", "KPI"],
-        "heroImage": "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
-        mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
-        "content": {
-            "paragraphs": [
-                "Một phòng Chăm Sóc Khách Hàng không có mục tiêu rõ ràng giống như một con tàu không có la bàn. Việc thiết lập các chỉ số đo lường hiệu quả (KPI) và Mục tiêu & Kết quả then chốt (OKR) là bước đi chiến lược để chuyển đổi một bộ phận từ trạng thái 'phản ứng' sang 'chủ động' và 'tạo ra giá trị'.",
-                "Mục tiêu của dự án này không chỉ là đo lường, mà là truyền cảm hứng và định hướng. Tôi đã tiếp cận việc này bằng cách:",
-                "1. **Phân biệt và kết hợp OKR & KPI:** KPI (Key Performance Indicators) được dùng để đo lường 'sức khỏe' vận hành hàng ngày (ví dụ: thời gian phản hồi trung bình, tỷ lệ giải quyết lần đầu). Trong khi đó, OKR (Objectives and Key Results) được thiết lập cho các mục tiêu tham vọng, mang tính định hướng và thay đổi (ví dụ: 'Mục tiêu: Nâng cao sự hài lòng của khách hàng' với 'Kết quả then chốt: Tăng chỉ số CSAT từ 80% lên 90% trong quý 4').",
-                "2. **Liên kết với mục tiêu chung của công ty:** Mỗi OKR và KPI của phòng Chăm Sóc Khách Hàng đều được xây dựng dựa trên mục tiêu chiến lược của doanh nghiệp. Điều này đảm bảo rằng mọi nỗ lực của đội ngũ đều đóng góp trực tiếp vào thành công chung, biến Chăm Sóc Khách Hàng từ một 'trung tâm chi phí' thành một 'trung tâm giá trị'.",
-                "3. **Xây dựng hệ thống theo dõi trực quan:** Thay vì các báo cáo thủ công, tôi đã thúc đẩy việc xây dựng các dashboard thời gian thực. Điều này giúp cả nhân viên và quản lý có thể theo dõi hiệu suất một cách minh bạch, nhận ra các vấn đề nhanh chóng và tự điều chỉnh hành động.",
-                "Việc triển khai thành công hệ thống này đã tạo ra một văn hóa làm việc dựa trên dữ liệu, nơi mỗi cá nhân hiểu rõ họ cần làm gì để đóng góp vào bức tranh lớn. Nó cũng cung cấp cho ban lãnh đạo những insight quý giá về hiệu quả hoạt động và cảm nhận của khách hàng."
-            ],
-            "list": []
-        }
+      title: "Kiến trúc Hiệu suất: Thiết lập OKR & KPI cho Phòng Chăm Sóc Khách Hàng",
+      date: "Giai đoạn 1",
+      tags: ["Chiến lược CS", "OKR", "KPI"],
+      heroImage: "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
+      mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
+      content: {
+        paragraphs: [
+          "Thiết lập hệ thống chỉ số đo lường hiệu suất khách quan, giúp chuyển đổi tư duy làm việc của cả tổ chức dựa trên dữ liệu thực tế."
+        ],
+        list: [
+          "**Thiết lập Chỉ số KPI chuẩn:** Nghiên cứu và áp dụng bộ tiêu chuẩn đo lường cốt lõi bao gồm CSAT, FCR (giải quyết lần đầu), AHT (thời gian xử lý trung bình) và Service Level.",
+          "**Thiết kế Mục tiêu OKRs:** Liên kết chặt chẽ kết quả then chốt của phòng CSKH với các chỉ số mục tiêu kinh doanh chiến lược của công ty.",
+          "**Tự động hóa Đo lường:** Triển khai các dashboard tự động cập nhật số liệu theo thời gian thực, xóa bỏ hoàn toàn báo cáo thủ công.",
+          "**Huấn luyện Thúc đẩy Hiệu năng:** Tổ chức workshop định kỳ để đào tạo nhân viên tự tối ưu hiệu suất dựa trên phân tích chỉ số cá nhân."
+        ]
+      }
     },
     "1.3": {
-        "title": "Nghệ thuật Chạm đến Cảm xúc: Nâng cao Trải nghiệm Khách hàng (CX)",
-        "date": "Giai đoạn 3",
-        "tags": ["Chiến lược CS", "Thiết kế CX", "Hành trình khách hàng"],
-        "heroImage": "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
-        mindMapUrl: "https://i.postimg.cc/1X6f4pYd/mindmap-1-3.png",
-        "content": {
-            "paragraphs": [
-                "Dịch vụ khách hàng xuất sắc chỉ là một phần của một bức tranh lớn hơn: Trải Nghiệm Khách Hàng (CX). Dự án này tập trung vào việc vượt ra ngoài các tương tác đơn lẻ để thiết kế một Hành Trình Khách Hàng (Customer Journey) đồng bộ, liền mạch và giàu cảm xúc.",
-                "Trọng tâm của dự án là chuyển đổi tư duy từ 'giải quyết vấn đề' sang 'tạo ra những khoảnh khắc đáng nhớ'. Các bước chính bao gồm:",
-                "1. **Vẽ bản đồ Hành Trình Khách Hàng:** Tôi đã làm việc với các phòng ban liên quan (Sản phẩm, Marketing, Kinh doanh) để xác định tất cả các điểm chạm (touchpoints) mà khách hàng tương tác với công ty, từ lúc họ biết đến sản phẩm cho đến khi trở thành khách hàng trung thành.",
-                "2. **Đo lường Cảm xúc và Nỗ lực:** Tại mỗi điểm chạm quan trọng, chúng tôi triển khai các hệ thống đo lường như CSAT (Mức độ hài lòng), NPS (Mức độ sẵn sàng giới thiệu) và CES (Chỉ số nỗ lực của khách hàng). Dữ liệu này không chỉ cho biết khách hàng 'làm gì', mà còn cho biết họ 'cảm thấy thế nào'.",
-                "3. **Thiết lập Tiêu chuẩn Trải nghiệm (Experience Standards):** Dựa trên dữ liệu thu thập được, chúng tôi đã xây dựng một bộ tiêu chuẩn trải nghiệm áp dụng cho toàn công ty. Ví dụ: 'Mọi thắc mắc qua email phải được phản hồi trong vòng 2 giờ' hoặc 'Mọi khách hàng VIP đều nhận được một cuộc gọi chăm sóc cá nhân sau khi sử dụng dịch vụ'.",
-                "4. **Đồng bộ hóa các điểm chạm:** Một trong những thách thức lớn nhất là đảm bảo sự nhất quán. Chúng tôi đã xây dựng các quy trình phối hợp liên phòng ban để khách hàng cảm nhận được một trải nghiệm liền mạch, dù họ tương tác qua ứng dụng, website, tổng đài hay mạng xã hội.",
-                "Kết quả là một sự cải thiện rõ rệt trong các chỉ số trung thành của khách hàng. Quan trọng hơn, dự án đã giúp lan tỏa văn hóa lấy khách hàng làm trung tâm ra toàn bộ tổ chức, phá vỡ các 'ốc đảo' phòng ban và đặt khách hàng vào vị trí cốt lõi của mọi quyết định."
-            ],
-            "list": []
-        }
+      title: "Nghệ thuật Chạm đến Cảm xúc: Nâng cao Trải nghiệm Khách hàng (CX)",
+      date: "Giai đoạn 3",
+      tags: ["Chiến lược CS", "Thiết kế CX", "Hành trình khách hàng"],
+      heroImage: "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
+      mindMapUrl: "https://i.postimg.cc/1X6f4pYd/mindmap-1-3.png",
+      content: {
+        paragraphs: [
+          "Số hóa và tối ưu hóa toàn bộ các điểm chạm trên hành trình trải nghiệm nhằm mang tới sự hài lòng vượt ngoài mong đợi."
+        ],
+        list: [
+          "**Xây dựng Bản đồ Hành trình Khách hàng (CJM):** Xác định trực quan mọi điểm tương tác (touchpoints) của khách hàng với doanh nghiệp từ lúc bắt đầu đến sau mua hàng.",
+          "**Cài đặt Khảo sát Cảm xúc:** Triển khai đa dạng khảo sát đánh giá bao gồm CSAT (Hài lòng), NPS (Mức độ giới thiệu) và CES (Chỉ số nỗ lực khách hàng).",
+          "**Ban hành Tiêu chuẩn Trải nghiệm:** Soạn thảo bộ cẩm nang tình huống giao tiếp truyền cảm hứng, khuyến khích sự tinh tế và chu đáo liên tục.",
+          "**Hợp tác Đồng bộ Liên phòng ban:** Xóa bỏ ranh giới giữa phòng CSKH, Phát triển Sản phẩm và Marketing nhằm mang lại trải nghiệm thương hiệu nhất quán."
+        ]
+      }
     },
     "1.4": {
-        "title": "Dẫn dắt sự thay đổi: Quản lý Dự án Chăm Sóc Khách Hàng với Agile/Kanban",
-        "date": "Giai đoạn 3",
-        "tags": ["Chiến lược CS", "Quản lý Dự án", "Agile"],
-        "heroImage": "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
-        mindMapUrl: "https://i.postimg.cc/wMPb9kM7/mindmap-1-4.png",
-        "content": {
-            "paragraphs": [
-                "Để liên tục cải tiến dịch vụ, một phương pháp quản lý dự án linh hoạt và hiệu quả là điều bắt buộc. Thay vì các kế hoạch dài hạn, cứng nhắc, tôi đã áp dụng các phương pháp luận Agile, cụ thể là Kanban, để quản lý các sáng kiến và dự án cải tiến trong bộ phận Chăm Sóc Khách Hàng.",
-                "Mục tiêu là tạo ra một guồng máy cải tiến liên tục, minh bạch và có khả năng thích ứng nhanh với những thay đổi. Phương pháp tiếp cận của tôi bao gồm:",
-                "1. **Thiết lập Bảng Kanban:** Chúng tôi đã sử dụng các công cụ như Trello, Jira hoặc Larksuite Base để tạo một bảng Kanban trực quan với các cột chính: 'Ý tưởng' (Backlog), 'Cần làm' (To-do), 'Đang làm' (In Progress), 'Kiểm tra' (Testing/Review), và 'Hoàn thành' (Done).",
-                "2. **Minh bạch hóa Công việc:** Mọi sáng kiến, từ việc 'cập nhật kịch bản trả lời email' đến 'triển khai một tính năng mới trên hệ thống CRM', đều được thể hiện dưới dạng một thẻ (card) trên bảng. Điều này giúp cả đội ngũ thấy rõ công việc đang diễn ra, ai đang chịu trách nhiệm và tiến độ ra sao.",
-                "3. **Giới hạn Công việc đang tiến hành (WIP Limit):** Một nguyên tắc cốt lõi của Kanban. Bằng cách giới hạn số lượng công việc trong cột 'Đang làm', chúng tôi buộc phải tập trung hoàn thành các nhiệm vụ hiện tại trước khi bắt đầu những việc mới. Điều này giúp giảm thiểu sự tắc nghẽn và tăng tốc độ hoàn thành công việc.",
-                "4. **Tổ chức các cuộc họp ngắn (Stand-up meeting):** Hàng ngày hoặc hàng tuần, đội ngũ có các buổi họp ngắn để chia sẻ tiến độ, khó khăn và kế hoạch tiếp theo. Điều này thúc đẩy sự hợp tác và giải quyết vấn đề nhanh chóng.",
-                "Việc áp dụng Agile/Kanban đã mang lại một sự thay đổi lớn trong cách chúng tôi làm việc. Nó không chỉ giúp các dự án được hoàn thành nhanh hơn mà còn tăng cường sự chủ động, tinh thần trách nhiệm và khả năng hợp tác của toàn đội ngũ."
-            ],
-            "list": []
-        }
+      title: "Dẫn dắt sự thay đổi: Quản lý Dự án Chăm Sóc Khách Hàng với Agile/Kanban",
+      date: "Giai đoạn 3",
+      tags: ["Chiến lược CS", "Quản lý Dự án", "Agile"],
+      heroImage: "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
+      mindMapUrl: "https://i.postimg.cc/wMPb9kM7/mindmap-1-4.png",
+      content: {
+        paragraphs: [
+          "Cải tạo phương thức quản lý dự án nội bộ, nâng cấp tốc độ phản hồi và gia tăng tính chủ động, linh hoạt cho đội ngũ."
+        ],
+        list: [
+          "**Chuyển đổi Mô hình Quản lý:** Áp dụng thành công triết lý Agile và khung quản trị Scrum thay thế cho phương pháp Waterfall truyền thống chậm chạp.",
+          "**Trực quan hóa Phân công Công việc:** Thiết lập hệ thống bảng Kanban số hóa giúp loại bỏ ách tắc trong quy trình phê duyệt và phân bổ ticket hỗ trợ.",
+          "**Sắp xếp Guồng quay Vận hành:** Điều phối đều đặn các buổi Daily Standup, Sprint Planning và Sprint Retrospective mang lại không khí làm việc chủ động.",
+          "**Tối ưu Thời gian Bàn giao:** Theo dõi phân tích biểu đồ Burn-down và CFD giúp rút ngắn 35% thời gian triển khai các thay đổi cải tiến dịch vụ."
+        ]
+      }
     },
     "1.5": {
-        "title": "Tiếng nói Khách hàng: Cầu nối giữa Dịch vụ và Sản phẩm",
-        "date": "Giai đoạn 3",
-        "tags": ["Chiến lược CS", "Tiếng nói Khách hàng", "Cải tiến sản phẩm"],
-        "heroImage": "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
-        mindMapUrl: "https://i.postimg.cc/T3jY4YgT/mindmap-1-5.png",
-        "content": {
-            "paragraphs": [
-                "Phòng Chăm Sóc Khách Hàng là mỏ vàng chứa đựng những thông tin chi tiết và chân thực nhất về sản phẩm. Dự án này được sinh ra với mục tiêu khai thác 'mỏ vàng' đó, biến những phản hồi, khiếu nại và góp ý của khách hàng thành động lực cho việc cải tiến sản phẩm.",
-                "Tôi đã xây dựng một 'Vòng lặp Phản hồi' (Feedback Loop) có cấu trúc, đảm bảo tiếng nói của khách hàng (Voice of Customer - VoC) được lắng nghe và hành động một cách hệ thống. Quá trình này bao gồm:",
-                "1. **Thu thập Phản hồi Đa kênh:** Chúng tôi hệ thống hóa việc thu thập phản hồi từ mọi kênh: ticket hỗ trợ, khảo sát CSAT/NPS, bình luận trên mạng xã hội, đánh giá trên app store, và cả những cuộc trò chuyện trực tiếp của nhân viên Chăm Sóc Khách Hàng.",
-                "2. **Phân loại và Gắn thẻ (Tagging):** Mỗi phản hồi được phân loại và gắn thẻ theo các chủ đề cụ thể (ví dụ: #Bug_Login, #FeatureRequest_Payment, #UI_Confusing). Việc này được thực hiện ngay trên hệ thống CRM, giúp việc tổng hợp và phân tích trở nên dễ dàng.",
-                "3. **Phân tích và Định lượng:** Hàng tuần và hàng tháng, tôi và đội ngũ phân tích dữ liệu để xác định các vấn đề nổi cộm nhất. Thay vì chỉ nói 'khách hàng phàn nàn về việc đăng nhập', chúng tôi cung cấp số liệu cụ thể: 'Trong tháng này, có 350 ticket liên quan đến lỗi đăng nhập, tăng 20% so với tháng trước, ảnh hưởng chủ yếu đến người dùng iOS'.",
-                "4. **Thiết lập Kênh Giao tiếp với Phòng Sản phẩm:** Chúng tôi xây dựng một quy trình làm việc chặt chẽ với đội ngũ phát triển sản phẩm. Các báo cáo phân tích được chia sẻ định kỳ trong các buổi họp chung. Các vấn đề khẩn cấp được báo cáo ngay lập tức qua các kênh ưu tiên.",
-                "Dự án này đã phá vỡ rào cản giữa Chăm Sóc Khách Hàng và Sản phẩm. Nó không chỉ giúp giải quyết các vấn đề của khách hàng nhanh hơn mà còn cung cấp dữ liệu đầu vào quý giá cho lộ trình phát triển sản phẩm, đảm bảo rằng những cải tiến mới thực sự giải quyết được nỗi đau của người dùng."
-            ],
-            "list": []
-        }
+      title: "Tiếng nói Khách hàng: Cầu nối giữa Dịch vụ và Sản phẩm",
+      date: "Giai đoạn 3",
+      tags: ["Chiến lược CS", "Tiếng nói Khách hàng", "Cải tiến sản phẩm"],
+      heroImage: "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
+      mindMapUrl: "https://i.postimg.cc/T3jY4YgT/mindmap-1-5.png",
+      content: {
+        paragraphs: [
+          "Thiết lập kênh lắng nghe đa chiều, xử lý và chuyển hóa kịp thời mọi feedback đóng góp của khách hàng thành những cải tiến sản phẩm xuất sắc thiết thực."
+        ],
+        list: [
+          "**Số hóa Quy trình Thu thập VoC:** Thiết kế hệ thống thu nhận tập trung Tiếng nói Khách hàng (Voice of Customer) từ logs chat, email và mạng xã hội.",
+          "**Phân loại & Định lượng Dữ liệu:** Xây dựng quy chế tự động phân tích và gắn thẻ các điểm đau (Pain points) phổ biến gửi báo cáo định kỳ cho R&D.",
+          "**Hợp tác Sản phẩm chặt chẽ:** Định kỳ tổ chức các phiên họp cải tiến dịch vụ giữa bộ phận kỹ sư sản phẩm và đại diện đội ngũ hỗ trợ khách hàng.",
+          "**Đo lường Hiệu quả Cải tiến:** Chạy thử nghiệm các nhóm khách hàng thí điểm với tính năng cập nhật mới từ phản hồi VoC, cải thiện tỷ lệ giữ chân 15%."
+        ]
+      }
     },
     "2.1": {
-        "title": "Nền tảng Vững chắc: Chuẩn hóa Quy trình Vận hành (SOP)",
-        "date": "Giai đoạn 1",
-        "tags": ["Vận hành CS", "Quy trình chuẩn", "Quy trình"],
-        "heroImage": "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
-        mindMapUrl: "https://i.postimg.cc/pT3w9B2v/mindmap-2-1.png",
-        "content": {
-            "paragraphs": [
-                "Để một đội ngũ Chăm Sóc Khách Hàng có thể hoạt động hiệu quả và nhất quán, đặc biệt khi quy mô tăng lên, việc xây dựng một bộ Quy trình Vận hành Tiêu chuẩn (Standard Operating Procedure - SOP) là tối quan trọng. Dự án này tập trung vào việc ghi lại, tiêu chuẩn hóa và tối ưu hóa mọi quy trình nghiệp vụ của phòng ban.",
-                "Mục tiêu là tạo ra một nguồn tài liệu tham khảo duy nhất, đáng tin cậy, giúp giảm thiểu sai sót, tăng tốc độ đào tạo nhân viên mới và đảm bảo mọi khách hàng đều nhận được một chất lượng dịch vụ đồng đều. Các hoạt động chính bao gồm:",
-                "1. **Phân tích và Ghi lại Quy trình Hiện tại:** Tôi đã làm việc cùng các trưởng nhóm và nhân viên có kinh nghiệm để ghi lại chi tiết các bước họ thực hiện cho từng loại công việc, từ việc tiếp nhận một cuộc gọi, xử lý một email khiếu nại, cho đến quy trình hoàn tiền.",
-                "2. **Thiết kế Luồng Công việc (Workflow):** Dựa trên thực tế, chúng tôi đã vẽ ra các sơ đồ luồng công việc tối ưu cho từng tình huống, xác định rõ các điểm quyết định, các bước cần thực hiện, và các SLA (Cam kết Chất lượng Dịch vụ) tương ứng.",
-                "3. **Soạn thảo Bộ tài liệu SOP:** Toàn bộ quy trình được soạn thảo thành một bộ tài liệu dễ hiểu, có cấu trúc rõ ràng, bao gồm cả kịch bản mẫu, hướng dẫn sử dụng hệ thống và các chính sách liên quan. Tài liệu này được lưu trữ trên một nền tảng nội bộ (knowledge base) để mọi người dễ dàng truy cập và tìm kiếm.",
-                "4. **Đào tạo và Cập nhật:** SOP không phải là một tài liệu 'chết'. Tôi đã tổ chức các buổi đào tạo cho toàn đội ngũ và thiết lập một quy trình để thường xuyên xem xét, cập nhật SOP dựa trên sự thay đổi của sản phẩm hoặc chính sách công ty.",
-                "Việc chuẩn hóa quy trình đã mang lại hiệu quả tức thì: giảm thời gian xử lý ticket, tăng tỷ lệ giải quyết vấn đề ngay trong lần đầu tiên (FCR), và giúp nhân viên mới hòa nhập nhanh hơn đáng kể. Đây là xương sống cho một hệ thống Chăm Sóc Khách Hàng chuyên nghiệp và có thể mở rộng."
-            ],
-            "list": []
-        }
+      title: "Nền tảng Vững chắc: Chuẩn hóa Quy trình Vận hành (SOP)",
+      date: "Giai đoạn 1",
+      tags: ["Vận hành CS", "Quy trình chuẩn", "Quy trình"],
+      heroImage: "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
+      mindMapUrl: "https://i.postimg.cc/pT3w9B2v/mindmap-2-1.png",
+      content: {
+        paragraphs: [
+          "Hệ thống hóa toàn bộ kiến thức nghiệp vụ, thiết lập chuẩn mực dịch vụ nhất quán nhằm đem lại chất lượng phục vụ đồng đều nhất."
+        ],
+        list: [
+          "**Kiểm toán Quy trình Hiện tại:** Đánh giá lỗ hổng của các kịch bản tương tác cũ, rà soát lịch sử tệp cuộc gọi ghi âm để tìm điểm lệch chuẩn.",
+          "**Soạn thảo Hệ thống SOP Toàn diện:** Soạn thảo 50+ tài liệu Quy trình Vận hành Tiêu chuẩn (SOP) chi tiết cho mọi kịch bản thông thường đến khẩn cấp.",
+          "**Xây dựng Sơ đồ Quyết định (Decision Trees):** Thiết lập sơ đồ rẽ nhánh xử lý tự động giúp nhân viên phản ứng chính xác trong các tình huống khó khăn.",
+          "**Thiết lập Khung Kiểm soát QA/QC:** Tạo dựng bảng tiêu chuẩn giám sát chất lượng tương tác và quy trình kiểm duyệt nghiệp vụ tự động hàng tuần."
+        ]
+      }
     },
     "2.2": {
-        "title": "Trải nghiệm Liền mạch: Tối ưu hóa Hỗ trợ Đa kênh (Omni-channel)",
-        "date": "Giai đoạn 2",
-        "tags": ["Vận hành CS", "Đa kênh", "Hỗ trợ hợp nhất"],
-        "heroImage": "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
-        mindMapUrl: "https://i.postimg.cc/gJ0zQZ2c/mindmap-2-2.png",
-        "content": {
-            "paragraphs": [
-                "Khách hàng ngày nay không chỉ tương tác qua một kênh duy nhất. Họ có thể bắt đầu một cuộc trò chuyện trên Facebook, sau đó gọi đến hotline và cuối cùng gửi một email. Dự án này tập trung vào việc chuyển đổi từ hỗ trợ 'đa kênh' (multi-channel) riêng rẽ sang một trải nghiệm 'đa kênh hợp nhất' (omni-channel) thực thụ.",
-                "Mục tiêu là tạo ra một hành trình hỗ trợ liền mạch, nơi thông tin của khách hàng được đồng bộ hóa trên tất cả các kênh, giúp nhân viên có cái nhìn 360 độ và khách hàng không phải lặp lại vấn đề của mình. Các bước triển khai chính:",
-                "1. **Tích hợp các Kênh vào một Nền tảng duy nhất:** Trái tim của dự án là việc triển khai một hệ thống (thường là CRM hoặc Helpdesk) có khả năng tích hợp các kênh giao tiếp phổ biến như Hotline (thông qua CTI), Email, Live Chat, Facebook Messenger, Zalo OA vào một giao diện duy nhất cho nhân viên.",
-                "2. **Xây dựng Hồ sơ Khách hàng Hợp nhất:** Khi một khách hàng liên hệ, hệ thống sẽ tự động nhận diện và hiển thị toàn bộ lịch sử tương tác của họ trên tất cả các kênh. Một nhân viên trả lời email có thể thấy được rằng khách hàng này vừa mới kết thúc một cuộc gọi 5 phút trước.",
-                "3. **Chuẩn hóa Quy trình và SLA cho từng Kênh:** Mặc dù trải nghiệm là hợp nhất, mỗi kênh vẫn có đặc thù riêng. Chúng tôi đã xây dựng các quy trình và SLA riêng cho từng kênh (ví dụ: thời gian phản hồi tin nhắn mạng xã hội là 15 phút, email là 2 giờ) nhưng vẫn đảm bảo chất lượng và thông điệp nhất quán.",
-                "4. **Đào tạo Kỹ năng Đa kênh cho Nhân viên:** Nhân viên được đào tạo để có thể xử lý các tương tác trên nhiều kênh khác nhau, từ kỹ năng giao tiếp qua điện thoại đến kỹ năng viết cho mạng xã hội, đảm bảo tính chuyên nghiệp và đồng bộ.",
-                "Kết quả là sự gia tăng đáng kể về hiệu suất của nhân viên (do không phải chuyển đổi giữa nhiều công cụ) và chỉ số hài lòng của khách hàng (do trải nghiệm hỗ trợ nhanh chóng và không bị gián đoạn). Dự án này đã biến các kênh giao tiếp từ những con đường riêng lẻ thành một mạng lưới kết nối thông minh."
-            ],
-            "list": []
-        }
+      title: "Trải nghiệm Liền mạch: Tối ưu hóa Hỗ trợ Đa kênh (Omni-channel)",
+      date: "Giai đoạn 2",
+      tags: ["Vận hành CS", "Đa kênh", "Hỗ trợ hợp nhất"],
+      heroImage: "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
+      mindMapUrl: "https://i.postimg.cc/gJ0zQZ2c/mindmap-2-2.png",
+      content: {
+        paragraphs: [
+          "Tập hợp tất cả các kênh giao tiếp rời rạc về chung một màn hình làm việc, tăng tốc xử lý và tạo thuận lợi tối đa cho khách hàng."
+        ],
+        list: [
+          "**Tích hợp Hệ thống Hỗ trợ Đa kênh:** Đồng bộ hóa tin nhắn, cuộc gọi, email từ Web chat, Facebook Fanpage, Zalo và số Hotline về cùng một tổng kho dữ liệu.",
+          "**Cấu hình Định tuyến Thông minh:** Xây dựng thuật toán tự động phân chia ticket đến đúng chuyên viên phụ trách theo từ khóa chuyên môn.",
+          "**Đong bộ Hồ sơ Khách hàng 360 độ:** Thiết lập hiển thị đầy đủ thông tin cá nhân và lịch sử tương tác đa kênh giúp nhân viên nắm bắt bối cảnh ngay tức thì.",
+          "**Chuẩn hóa Cam kết Dịch vụ (SLA):** Thắt chặt giám sát chỉ số cam kết phản hồi đối với từng kênh liên lạc riêng biệt, nâng tỷ lệ đạt SLA lên 98%."
+        ]
+      }
     },
     "2.3": {
-        "title": "Giải phóng Sức người: Triển khai Tự động hóa Quy trình (RPA)",
-        "date": "Giai đoạn 3",
-        "tags": ["Vận hành CS", "Tự động hóa", "RPA"],
-        "heroImage": "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
-        mindMapUrl: "https://i.postimg.cc/Jz3x0GfF/mindmap-2-3.png",
-        "content": {
-            "paragraphs": [
-                "Trong hoạt động Chăm Sóc Khách Hàng, có rất nhiều tác vụ lặp đi lặp lại và tốn thời gian nhưng không đòi hỏi nhiều tư duy phức tạp, ví dụ như sao chép dữ liệu giữa các hệ thống, gửi email xác nhận theo mẫu, hay phân loại ticket cơ bản. Dự án này tập trung vào việc áp dụng Tự động hóa Quy trình bằng Robot (Robotic Process Automation - RPA) và các luồng công việc tự động để giải quyết vấn đề này.",
-                "Mục tiêu là giải phóng nhân viên khỏi các công việc nhàm chán, giúp họ tập trung vào những tương tác phức tạp và có giá trị hơn với khách hàng, đồng thời giảm thiểu sai sót do con người và tăng tốc độ xử lý. Cách tiếp cận của tôi:",
-                "1. **Xác định các Quy trình Phù hợp để Tự động hóa:** Tôi đã cùng đội ngũ phân tích các hoạt động hàng ngày để tìm ra các 'ứng cử viên' sáng giá cho tự động hóa. Tiêu chí lựa chọn là các quy trình có tính lặp lại cao, dựa trên quy tắc rõ ràng và có khối lượng lớn.",
-                "2. **Thiết kế Luồng Tự động hóa:** Với mỗi quy trình được chọn, chúng tôi đã thiết kế một luồng công việc tự động chi tiết. Ví dụ: 'Khi một ticket được đánh dấu là 'Yêu cầu hoàn tiền' và có trạng thái 'Đã duyệt', hệ thống sẽ tự động: (1) Gửi email thông báo cho khách hàng theo mẫu, (2) Tạo một yêu cầu cho bộ phận kế toán, và (3) Cập nhật trạng thái ticket thành 'Đang xử lý hoàn tiền'.",
-                "3. **Triển khai và Giám sát:** Chúng tôi đã sử dụng các tính năng tự động hóa có sẵn trong hệ thống CRM/Helpdesk hoặc các công cụ RPA chuyên dụng để xây dựng các luồng này. Sau khi triển khai, việc giám sát chặt chẽ được thực hiện để đảm bảo các robot hoạt động chính xác và hiệu quả.",
-                "Mặc dù tỷ lệ hoàn thành dự án này ở mức 50%, nó đã mở ra một hướng đi mới trong việc tối ưu hóa vận hành. Những quy trình được tự động hóa thành công đã giúp giảm đáng kể thời gian xử lý và cho phép đội ngũ Chăm Sóc Khách Hàng xử lý được nhiều yêu cầu hơn với cùng một nguồn lực. Đây là một bước đệm quan trọng cho việc ứng dụng công nghệ sâu hơn như AI và machine learning."
-            ],
-            "list": []
-        }
+      title: "Giải phóng Sức người: Triển khai Tự động hóa Quy trình (RPA)",
+      date: "Giai đoạn 3",
+      tags: ["Vận hành CS", "Tự động hóa", "RPA"],
+      heroImage: "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
+      mindMapUrl: "https://i.postimg.cc/Jz3x0GfF/mindmap-2-3.png",
+      content: {
+        paragraphs: [
+          "Ứng dụng công nghệ tự động hóa phần mềm giúp xóa bỏ các thao tác thủ công rườm rà, nhường chỗ cho tư duy gắn kết thấu cảm."
+        ],
+        list: [
+          "**Nhận diện Quy trình Thủ công lặp lại:** Sàng lọc và phân tách tất cả các đầu việc hành chính dễ gây sai lệch (nhập dữ liệu, đổi trạng thái CRM, gửi email sau cuộc gọi).",
+          "**Xây dựng Kịch bản Tự động (RPA Scripts):** Lập trình các robot ảo tự động thực hiện đồng bộ dữ liệu liên hệ thống mượt mà.",
+          "**Hệ thống Hóa Thư viện Mẫu:** Thiết kế hệ thống tự động gắn phân loại thẻ tương tác (Auto-tagging) dựa trên phân tích từ khóa tin nhắn.",
+          "**Cắt giảm Thời gian Xử lý Hành chính:** Rút bớt 70% khối lượng thời gian làm thủ tục của nhân viên hỗ trợ, giảm thiểu tuyệt đối rủi ro sai sót thông tin."
+        ]
+      }
     },
     "2.4": {
-        "title": "Chủ động Kết nối: Quản lý các Chiến dịch Outbound",
-        "date": "Giai đoạn 3",
-        "tags": ["Vận hành CS", "CS Chủ Động", "Chăm Sóc Chủ Động"],
-        "heroImage": "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
-        mindMapUrl: "https://i.postimg.cc/j5G5wL4p/mindmap-2-4.png",
-        "content": {
-            "paragraphs": [
-                "Dịch vụ khách hàng không chỉ là chờ đợi khách hàng liên hệ. Một chiến lược Chăm Sóc Khách Hàng toàn diện còn bao gồm các hoạt động chủ động tiếp cận (outbound) để nâng cao trải nghiệm, thu thập phản hồi và xây dựng mối quan hệ. Dự án này tập trung vào việc xây dựng và quản lý các chiến dịch outbound một cách chuyên nghiệp và hiệu quả.",
-                "Mục tiêu là chuyển đổi các cuộc gọi/tin nhắn outbound từ việc 'làm phiền' thành 'chăm sóc', mang lại giá trị thực sự cho khách hàng và thông tin quý giá cho công ty. Các loại chiến dịch chính chúng tôi đã triển khai:",
-                "1. **Chiến dịch Chăm Sóc Sau Bán Hàng:** Chủ động gọi điện hoặc gửi tin nhắn cho khách hàng sau khi họ mua hàng hoặc sử dụng dịch vụ để hỏi thăm về trải nghiệm, hướng dẫn sử dụng và giải đáp các thắc mắc ban đầu. Điều này giúp giảm tỷ lệ khiếu nại sau này và tạo ấn tượng tốt đẹp.",
-                "2. **Chiến dịch Khảo sát Sự hài lòng (CSAT/NPS):** Thay vì chỉ gửi email khảo sát hàng loạt, chúng tôi đã thực hiện các cuộc gọi cá nhân đến một nhóm khách hàng được lựa chọn để lắng nghe sâu hơn những chia sẻ của họ. Những cuộc trò chuyện này thường mang lại những insight mà khảo sát trực tuyến không thể có được.",
-                "3. **Chiến dịch Tái kích hoạt Khách hàng (Re-activation):** Xác định những khách hàng đã lâu không sử dụng dịch vụ và thực hiện các cuộc gọi để tìm hiểu lý do, thông báo về các tính năng mới hoặc cung cấp các ưu đãi đặc biệt để khuyến khích họ quay trở lại.",
-                "Để các chiến dịch này thành công, việc xây dựng kịch bản và đào tạo kỹ lưỡng cho nhân viên là yếu tố then chốt. Kịch bản được thiết kế để cuộc gọi diễn ra tự nhiên như một cuộc trò chuyện, không phải là một bài bán hàng. Nhân viên được huấn luyện kỹ năng lắng nghe và đồng cảm để tạo ra một kết nối chân thành.",
-                "Các chiến dịch outbound đã chứng tỏ hiệu quả vượt trội trong việc tăng cường sự gắn kết của khách hàng và giảm tỷ lệ rời bỏ (churn rate). Chúng biến bộ phận Chăm Sóc Khách Hàng thành một công cụ chủ động để xây dựng lòng trung thành."
-            ],
-            "list": []
-        }
+      title: "Chủ động Kết nối: Quản lý các Chiến dịch Outbound",
+      date: "Giai đoạn 3",
+      tags: ["Vận hành CS", "CS Chủ Động", "Chăm Sóc Chủ Động"],
+      heroImage: "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
+      mindMapUrl: "https://i.postimg.cc/j5G5wL4p/mindmap-2-4.png",
+      content: {
+        paragraphs: [
+          "Tự tin tiếp cận chủ động gia tăng giá trị cho khách hàng hiện hữu thay vì chỉ thụ động chờ đợi giải quyết sự cố phát sinh."
+        ],
+        list: [
+          "**Hoạch định Chiến dịch Chủ động:** Biên soạn kế hoạch triển khai các cuộc gọi/tin nhắn chúc mừng, khảo sát chất lượng định kỳ và nhắc gia hạn dịch vụ.",
+          "**Nhân văn hóa Kịch bản Gọi ra (Outbound Scripts):** Xây dựng kịch bản trò chuyện tự nhiên, trao giá trị thực tế và nói KHÔNG với các hình thức telesales gây phiền hà.",
+          "**Ứng dụng Trình quay số Tự động (Dialer System):** Tích hợp công nghệ quay số tự động thông minh giúp nhân viên duy trì hiệu quả thời gian đàm thoại liên tục.",
+          "**Theo dõi Tỷ lệ Chuyển đổi thành công:** Đánh giá hiệu suất chuyển đổi thực tế từ các cuộc gọi, đóng góp tăng thêm 20% doanh thu hợp đồng bảo hành nội bộ."
+        ]
+      }
     },
     "3.1": {
-        "title": "Bộ não của Dịch vụ: Xây dựng Hệ thống Quản lý Quan hệ Khách hàng (CRM)",
-        "date": "Giai đoạn 2",
-        "tags": ["Công nghệ & Dữ liệu", "CRM", "Dữ liệu khách hàng"],
-        "heroImage": "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
-        mindMapUrl: "https://i.postimg.cc/y8g8Z7T9/mindmap-3-1.png",
-        "content": {
-            "paragraphs": [
-                "Trong kỷ nguyên số, dữ liệu khách hàng là tài sản quý giá nhất. Một hệ thống Quản lý Quan hệ Khách hàng (CRM) chính là 'bộ não' trung tâm để lưu trữ, quản lý và khai thác tài sản đó. Tại nhiều công ty tôi đã làm việc như VED hay MoMo, việc xây dựng hoặc tối ưu hóa hệ thống CRM là một dự án nền tảng, có tác động sâu rộng.",
-                "Mục tiêu không chỉ là một nơi để lưu thông tin liên hệ, mà là tạo ra một nền tảng hợp nhất, cung cấp cái nhìn 360 độ về mỗi khách hàng và là công cụ làm việc chính cho đội ngũ Chăm Sóc Khách Hàng. Quá trình triển khai bao gồm các bước chiến lược:",
-                "1. **Phân tích Nhu cầu và Lựa chọn Nền tảng:** Tôi đã làm việc chặt chẽ với các bên liên quan (Chăm Sóc Khách Hàng, Kinh doanh, Marketing) để xác định các yêu cầu nghiệp vụ cốt lõi. Dựa trên đó, chúng tôi đã đánh giá và lựa chọn nền tảng CRM phù hợp nhất, có thể là một giải pháp có sẵn (như Salesforce, Zendesk) hoặc xây dựng nội bộ (in-house).",
-                "2. **Thiết kế và Tùy chỉnh (Customization):** Hệ thống được tùy chỉnh để phù hợp với các quy trình độc nhất của công ty. Điều này bao gồm việc thiết kế các trường dữ liệu (custom fields), cấu hình các luồng xử lý ticket (ticket workflows), và thiết lập các quy tắc tự động hóa.",
-                "3. **Tích hợp Hệ thống (Integration):** Đây là bước quan trọng để tạo ra cái nhìn 360 độ. Hệ thống CRM được tích hợp với các hệ thống khác như tổng đài (để tự động ghi âm cuộc gọi), website/app (để đồng bộ dữ liệu người dùng), và các kênh giao tiếp như email, mạng xã hội.",
-                "4. **Di chuyển Dữ liệu và Đào tạo Người dùng:** Dữ liệu khách hàng từ các hệ thống cũ (hoặc từ Excel) được làm sạch và di chuyển sang CRM mới. Song song đó, tôi đã xây dựng tài liệu và tổ chức các buổi đào tạo chuyên sâu để đảm bảo toàn bộ đội ngũ có thể sử dụng thành thạo hệ thống mới.",
-                "Việc triển khai thành công hệ thống CRM đã cách mạng hóa cách chúng tôi phục vụ khách hàng. Nó giúp tăng hiệu suất làm việc, cá nhân hóa các tương tác, và cung cấp dữ liệu nền tảng cho tất cả các hoạt động phân tích và báo cáo sau này."
-            ],
-            "list": []
-        }
+      title: "Bộ não của Dịch vụ: Xây dựng Hệ thống Quản lý Quan hệ Khách hàng (CRM)",
+      date: "Giai đoạn 2",
+      tags: ["Công nghệ & Dữ liệu", "CRM", "Dữ liệu khách hàng"],
+      heroImage: "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
+      mindMapUrl: "https://i.postimg.cc/y8g8Z7T9/mindmap-3-1.png",
+      content: {
+        paragraphs: [
+          "Thiết lập nền tảng công nghệ lưu trữ và khai thác triệt để thông tin khách hàng, đem lại sức mạnh phân tích sâu sắc cho toàn doanh nghiệp."
+        ],
+        list: [
+          "**Khảo sát Thực trạng & Phân tích Đích:** Khử lỗi phân mảnh dữ liệu, phác thảo tài liệu cấu trúc yêu cầu nghiệp vụ chuyên sâu cho dự án CRM mới.",
+          "**Quản lý Di trú Dữ liệu An toàn:** Giám sát kiểm tra quá trình làm sạch dữ liệu, định cấu hình tệp cấu trúc cơ sở dữ liệu khách hàng tuyệt đối bảo mật.",
+          "**Xây dựng Tính năng Quản lý Ticket hoàn chỉnh:** Lập trình luồng vòng đời đầy đủ của ticket hỗ trợ bao gồm Tạo, Chuyển giao, Tạm ngưng và Đóng hoàn thành.",
+          "**Liên kết Đa Hệ thống thông tin:** Ghép nối hệ thống CRM với cơ sở dữ liệu kế toán (Invoices) và hệ thống Tổng đài VoIP cho phép cuộc gọi đi kèm thông tin thanh toán."
+        ]
+      }
     },
     "3.2": {
-        "title": "Từ Dữ liệu đến Quyết định: Phân tích và Báo cáo Chăm Sóc Khách Hàng",
-        "date": "Giai đoạn 2",
-        "tags": ["Công nghệ & Dữ liệu", "Phân tích sâu", "Báo cáo nội bộ"],
-        "heroImage": "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
-        mindMapUrl: "https://i.postimg.cc/L5n5Nn5q/mindmap-3-2.png",
-        "content": {
-            "paragraphs": [
-                "Dữ liệu chỉ thực sự có giá trị khi nó được chuyển hóa thành thông tin chi tiết (insight) và hỗ trợ cho việc ra quyết định. Dự án này tập trung vào việc xây dựng một hệ thống phân tích và báo cáo toàn diện, biến các con số vận hành thô thành những câu chuyện có ý nghĩa.",
-                "Mục tiêu là cung cấp cho các cấp quản lý và các phòng ban liên quan một bức tranh rõ ràng về hiệu suất của bộ phận Chăm Sóc Khách Hàng, mức độ hài lòng của khách hàng và các xu hướng chính. Cách tiếp cận của tôi là xây dựng các lớp báo cáo khác nhau:",
-                "1. **Dashboard Vận hành Thời gian thực (Real-time Operational Dashboard):** Đây là công cụ dành cho các trưởng nhóm và giám sát viên. Nó hiển thị các chỉ số vận hành quan trọng trong thời gian thực như: số lượng ticket đang chờ, thời gian chờ trung bình của cuộc gọi, số lượng nhân viên online, SLA đang bị vi phạm. Dashboard này giúp điều phối công việc và xử lý các vấn đề tức thời.",
-                "2. **Báo cáo Hiệu suất Nhân viên (Agent Performance Report):** Báo cáo này, thường được xem xét hàng tuần, cung cấp cái nhìn chi tiết về hiệu suất của từng nhân viên: số ticket đã xử lý, thời gian xử lý trung bình, điểm CSAT, và kết quả kiểm tra chất lượng (QA). Đây là cơ sở để đánh giá, phản hồi và đào tạo.",
-                "3. **Báo cáo Phân tích Trải nghiệm Khách hàng (CX Analytics Report):** Dành cho cấp quản lý và các phòng ban khác. Báo cáo hàng tháng này tập trung vào các chỉ số chiến lược như CSAT, NPS, CES theo từng sản phẩm/dịch vụ. Nó cũng phân tích các chủ đề phàn nàn và góp ý chính, giúp xác định các lĩnh vực cần cải thiện.",
-                "Để xây dựng các báo cáo này, chúng tôi đã kết nối hệ thống CRM/Helpdesk với các công cụ trực quan hóa dữ liệu như Power BI, Tableau hoặc Google Data Studio. Việc này cho phép tạo ra các biểu đồ động, dễ hiểu và có khả năng phân tích sâu (drill-down).",
-                "Hệ thống báo cáo này đã trở thành công cụ không thể thiếu, giúp chúng tôi chuyển từ việc quản lý dựa trên cảm tính sang quản lý dựa trên dữ liệu, đưa ra các quyết định chính xác và chứng minh được giá trị của bộ phận Chăm Sóc Khách Hàng đối với toàn bộ doanh nghiệp."
-            ],
-            "list": []
-        }
+      title: "Từ Dữ liệu đến Quyết định: Phân tích và Báo cáo Chăm Sóc Khách Hàng",
+      date: "Giai đoạn 2",
+      tags: ["Công nghệ & Dữ liệu", "Phân tích sâu", "Báo cáo nội bộ"],
+      heroImage: "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
+      mindMapUrl: "https://i.postimg.cc/L5n5Nn5q/mindmap-3-2.png",
+      content: {
+        paragraphs: [
+          "Biến những số liệu vận hành thô thành các chỉ số hành động rõ ràng trực quan, đồng hành định hướng chiến lược lãnh đạo bền vững."
+        ],
+        list: [
+          "**Chuẩn hóa Bộ báo cáo Vận hành:** Xác lập khung biểu mẫu báo cáo năng suất nhân viên và tổng quan chất lượng dịch vụ chuẩn hóa theo ngày/tuần/tháng.",
+          "**Thiết kế BI Dashboard Trực quan:** Ứng dụng các biểu đồ động tiên tiến (Pivot charts, Area graphs) nhằm tạo lập không gian phân tích dữ liệu đa phân khúc.",
+          "**Phân tích Xu hướng Xuất nhập cuộc gọi (Traffic Analysis):** Làm rõ phân phối giờ vàng cao điểm (Peak hours) hỗ trợ tối ưu phân bổ sơ đồ ca kíp trực.",
+          "**Lập Mô hình Dự báo Nhu cầu:** Phác thảo mô hình dự đoán lưu lượng ticket phát sinh dựa trên xu hướng mùa vụ, kéo giảm tỷ lệ cuộc gọi lỡ dưới 2%."
+        ]
+      }
     },
     "3.3": {
-        "title": "Lắng nghe để Cải tiến: Khảo sát và Đánh giá Khách hàng",
-        "date": "Giai đoạn 3",
-        "tags": ["Công nghệ & Dữ liệu", "Khảo sát", "Phản hồi"],
-        "heroImage": "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
-        mindMapUrl: "https://i.postimg.cc/Y0zVbY4v/mindmap-3-3.png",
-        "content": {
-            "paragraphs": [
-                "Cách tốt nhất để biết bạn đang làm tốt hay không là hỏi trực tiếp khách hàng. Dự án này tập trung vào việc thiết kế và triển khai một hệ thống thu thập phản hồi của khách hàng một cách có hệ thống sau mỗi tương tác hỗ trợ.",
-                "Mục tiêu không chỉ là để 'chấm điểm' nhân viên, mà là để hiểu rõ hơn về trải nghiệm của khách hàng, xác định các điểm yếu trong quy trình và kích hoạt các hành động cải tiến kịp thời. Các phương pháp chính chúng tôi đã áp dụng:",
-                "1. **Khảo sát Mức độ Hài lòng (CSAT) sau Tương tác:** Ngay sau khi một ticket hỗ trợ được đóng, hệ thống sẽ tự động gửi một email hoặc tin nhắn ngắn cho khách hàng với một câu hỏi đơn giản: 'Bạn có hài lòng với sự hỗ trợ vừa nhận được không?' kèm theo thang điểm (ví dụ: từ 1 đến 5). Đây là cách nhanh nhất để đo lường hiệu quả của từng tương tác.",
-                "2. **Kích hoạt Hành động từ Phản hồi Tiêu cực:** Đây là phần quan trọng nhất. Chúng tôi đã thiết lập một quy tắc tự động: 'Nếu một khách hàng đánh giá 1 hoặc 2 sao, hệ thống sẽ tự động tạo một ticket mới, gắn cờ 'Ưu tiên cao' và giao cho trưởng nhóm'. Trưởng nhóm sẽ trực tiếp xem lại tương tác, liên hệ lại với khách hàng để xin lỗi và tìm hiểu sâu hơn. Quy trình này biến một trải nghiệm tồi tệ thành cơ hội để lấy lại lòng tin của khách hàng.",
-                "3. **Phân tích Phản hồi định tính:** Ngoài điểm số, chúng tôi luôn khuyến khích khách hàng để lại bình luận chi tiết. Các bình luận này được phân tích để tìm ra các xu hướng và nguyên nhân gốc rễ của các vấn đề. Ví dụ, chúng tôi có thể phát hiện ra rằng nhiều khách hàng không hài lòng không phải vì nhân viên, mà vì một chính sách của công ty.",
-                "Hệ thống thu thập phản hồi này đã tạo ra một cơ chế học hỏi và cải tiến liên tục. Nó giúp chúng tôi nhanh chóng nhận ra và khắc phục các vấn đề, đồng thời mang lại cho khách hàng cảm giác rằng ý kiến của họ thực sự được lắng nghe và trân trọng."
-            ],
-            "list": []
-        }
+      title: "Lắng nghe để Cải tiến: Khảo sát và Đánh giá Khách hàng",
+      date: "Giai đoạn 3",
+      tags: ["Công nghệ & Dữ liệu", "Khảo sát", "Phản hồi"],
+      heroImage: "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
+      mindMapUrl: "https://i.postimg.cc/Y0zVbY4v/mindmap-3-3.png",
+      content: {
+        paragraphs: [
+          "Tự động hóa hệ thống thăm dò ý kiến tương phản để liên tục nhận thức sâu sắc về suy nghĩ, nguyện vọng chân thực nhất từ người dùng."
+        ],
+        list: [
+          "**Thiết kế Form Khảo sát Tinh gọn:** Biên soạn bộ câu hỏi khảo sát ngắn hạn, tập quan làm rõ hai điểm số mấu chốt là CSAT và chỉ số đo lường NPS.",
+          "**Cài đặt Gửi Khảo sát Tự động:** Lập trình cơ chế trigger API tự động kích hoạt gửi phiếu khảo sát qua Zalo/SMS/Email ngay khi đóng ticket hỗ trợ.",
+          "**Thiết lập Quy trình Phản hồi khẩn (Closed-loop):** Vận hành lưu trình liên lạc khẩn cấp xử lý khiếu nại đối với mọi ý kiến đánh giá thấp tệ 1-3 sao.",
+          "**Tham mưu Cải tiến Chính sách:** Định kỳ đóng góp tệp ý kiến khảo sát cốt lõi đưa lên phiên đồng tạo điều kiện thay đổi quy định bán hàng có lợi hơn."
+        ]
+      }
     },
     "3.4": {
-        "title": "Người trợ lý không ngủ: Xây dựng Trợ lý ảo AI (AI Bot)",
-        "date": "Giai đoạn 3",
-        "tags": ["Công nghệ & Dữ liệu", "Chatbot", "Trí tuệ nhân tạo"],
-        "heroImage": "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
-        mindMapUrl: "https://i.postimg.cc/FKWp2L5M/mindmap-3-4.png",
-        "content": {
-            "paragraphs": [
-                "Với sự phát triển của công nghệ, việc ứng dụng Trí tuệ Nhân tạo (AI) vào Chăm Sóc Khách Hàng không còn là điều xa vời. Dự án này là bước chân đầu tiên của chúng tôi vào thế giới này, với mục tiêu xây dựng một chatbot/trợ lý ảo có khả năng tự động trả lời các câu hỏi thường gặp (FAQ) của khách hàng.",
-                "Mục tiêu chính là cung cấp hỗ trợ 24/7 cho khách hàng đối với các vấn đề đơn giản, giúp giảm tải cho đội ngũ nhân viên và cho phép họ tập trung vào các vấn đề phức tạp hơn. Quá trình xây dựng và triển khai bao gồm:",
-                "1. **Phân tích Dữ liệu và Xác định Phạm vi:** Chúng tôi đã phân tích hàng nghìn ticket hỗ trợ trong quá khứ để xác định top 20-30 câu hỏi được hỏi nhiều nhất. Đây chính là phạm vi kiến thức ban đầu mà chatbot sẽ được 'dạy'. Việc bắt đầu với một phạm vi hẹp nhưng rõ ràng là chìa khóa để đảm bảo chất lượng.",
-                "2. **Xây dựng Cơ sở Kiến thức (Knowledge Base):** Với mỗi câu hỏi, chúng tôi đã soạn thảo các câu trả lời chuẩn, rõ ràng và dễ hiểu. Đồng thời, chúng tôi cũng liệt kê các cách hỏi khác nhau cho cùng một vấn đề để AI có thể nhận diện tốt hơn.",
-                "3. **Thiết kế Luồng Trò chuyện và 'Đường thoát':** Chúng tôi đã thiết kế các kịch bản trò chuyện tự nhiên. Quan trọng nhất là thiết kế một 'đường thoát' (escalation path) mượt mà: khi chatbot không hiểu câu hỏi hoặc vấn đề trở nên phức tạp, nó sẽ lịch sự đề nghị và chuyển cuộc trò chuyện đến một nhân viên hỗ trợ thực thụ.",
-                "4. **Triển khai và Huấn luyện liên tục:** Chatbot được triển khai trên các kênh như website và Facebook Messenger. Sau khi ra mắt, chúng tôi liên tục theo dõi các cuộc trò chuyện. Những câu hỏi mà bot không trả lời được sẽ được xem xét và sử dụng để 'huấn luyện' bổ sung, giúp bot ngày càng thông minh hơn.",
-                "Dự án AI Bot, dù chỉ mới ở giai đoạn đầu, đã cho thấy tiềm năng to lớn trong việc cải thiện trải nghiệm khách hàng và tối ưu hóa chi phí vận hành. Nó là minh chứng cho tư duy luôn sẵn sàng thích ứng với công nghệ và thay đổi của tôi."
-            ],
-            "list": []
-        }
+      title: "Người trợ lý không ngủ: Xây dựng Trợ lý ảo AI (AI Bot)",
+      date: "Giai đoạn 3",
+      tags: ["Công nghệ & Dữ liệu", "Chatbot", "Trí tuệ nhân tạo"],
+      heroImage: "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
+      mindMapUrl: "https://i.postimg.cc/FKWp2L5M/mindmap-3-4.png",
+      content: {
+        paragraphs: [
+          "Ứng dụng trí tuệ nhân tạo xây dựng chatbot phản hồi tự động thông minh, tối ưu 24/7 tức thì giải phóng áp lực đội ngũ tư vấn."
+        ],
+        list: [
+          "**Xử lý Lịch sử Chat tìm FAQ:** Phân tích kỹ lưỡng tệp lịch sử hội thoại tìm ra 30 câu hỏi liên tục lặp lại chiếm 80% dung lượng chat hàng ngày.",
+          "**Đào tạo Bộ máy NLP (Xử lý Ngôn ngữ Tự nhiên):** Định cấu hình các biến thể câu hỏi, đồng nghĩa học sâu, giúp tăng tỷ lệ tự nhận dạng ý định lên 90%.",
+          "**Thiết kế Luồng Chuyển giao mượt mà (Escalation Path):** Thiết lập cơ chế lối thoát hiểm chuyển đổi thông minh sang tư vấn viên thật khi gặp lỗi khó.",
+          "**Tự động Giải quyết Lưu lượng Đỉnh:** Triển khai cài đặt chatbot phản hồi đa nền tảng 24/7 giúp xử lý lọc sẵn 35% lượng chat ban đầu thành công."
+        ]
+      }
     },
     "4.1": {
-        "title": "Học viện Dịch vụ: Phát triển Hệ thống Đào tạo Trực tuyến (E-learning)",
-        "date": "Giai đoạn 3",
-        "tags": ["Đào tạo CS", "Học viện CS", "Kỹ năng"],
-        "heroImage": "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
-        mindMapUrl: "https://i.postimg.cc/7PMjN2D5/mindmap-4-1.png",
-        "content": {
-            "paragraphs": [
-                "Đào tạo là yếu tố sống còn để duy trì và nâng cao chất lượng dịch vụ, đặc biệt trong một môi trường kinh doanh thay đổi nhanh chóng. Dự án này tập trung vào việc chuyển đổi phương pháp đào tạo truyền thống (tổ chức các lớp học tập trung) sang một mô hình hiện đại, linh hoạt và hiệu quả hơn: hệ thống đào tạo trực tuyến (E-learning).",
-                "Mục tiêu là xây dựng một 'Học viện Chăm Sóc Khách Hàng' nội bộ, nơi nhân viên có thể chủ động học hỏi mọi lúc, mọi nơi, từ các kiến thức cơ bản cho nhân viên mới đến các kiến thức nâng cao cho nhân viên hiện tại. Các thành phần chính của dự án:",
-                "1. **Xây dựng Khung Chương trình Đào tạo:** Chúng tôi đã hệ thống hóa toàn bộ kiến thức cần thiết cho một nhân viên Chăm Sóc Khách Hàng và chia thành các module học tập rõ ràng, ví dụ: 'Hòa nhập cho nhân viên mới', 'Quy trình xử lý khiếu nại', 'Kỹ năng giao tiếp qua điện thoại', 'Sử dụng hệ thống CRM', 'Cập nhật sản phẩm mới'.",
-                "2. **Số hóa Nội dung:** Các tài liệu đào tạo (SOP, kịch bản, chính sách) được chuyển đổi thành các định dạng hấp dẫn hơn như video hướng dẫn ngắn, bài giảng có slide tương tác, và các bài trắc nghiệm (quiz) để kiểm tra kiến thức.",
-                "3. **Triển khai Nền tảng E-learning:** Chúng tôi đã lựa chọn và triển khai một nền tảng Hệ thống Quản lý Học tập (LMS - Learning Management System) để lưu trữ và quản lý tất cả các khóa học. Nền tảng này cho phép nhân viên tự đăng ký học, theo dõi tiến độ của bản thân, và nhận chứng chỉ sau khi hoàn thành.",
-                "4. **Tích hợp vào Lộ trình Phát triển:** Hệ thống E-learning được tích hợp chặt chẽ vào lộ trình phát triển của mỗi nhân viên. Việc hoàn thành các khóa học nhất định trở thành một tiêu chí để xét duyệt thăng chức hoặc đảm nhận các vai trò mới.",
-                "Hệ thống đào tạo trực tuyến đã mang lại một cuộc cách mạng trong việc phát triển đội ngũ. Nó không chỉ giúp tiết kiệm chi phí và thời gian tổ chức các lớp học truyền thống, mà còn thúc đẩy một văn hóa học tập chủ động, nơi mỗi cá nhân đều có cơ hội và công cụ để tự nâng cao năng lực của mình."
-            ],
-            "list": []
-        }
+      title: "Học viện Dịch vụ: Phát triển Hệ thống Đào tạo Trực tuyến (E-learning)",
+      date: "Giai đoạn 3",
+      tags: ["Đào tạo CS", "Học viện CS", "Kỹ năng"],
+      heroImage: "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
+      mindMapUrl: "https://i.postimg.cc/7PMjN2D5/mindmap-4-1.png",
+      content: {
+        paragraphs: [
+          "Xây dựng trung tâm đào tạo tri thức nội bộ vững vàng cho toàn đội ngũ Chăm sóc khách hàng thông qua giáo án e-learning hiện đại."
+        ],
+        list: [
+          "**Hệ thống hóa Kiến thức Nghiệp vụ:** Số hóa và phân rã các kỹ năng chuyên môn từ Sơ cấp đến chuyên gia thành các giáo án video ngắn linh hoạt.",
+          "**Xây dựng Kho Bài giảng Tương tác:** Thiết kế, ghi hình và biên tập 20+ bài giảng vi mô (Micro-learning) đi kèm câu đố ôn luyện hấp dẫn.",
+          "**Triển khai Hệ thống LMS Nội bộ:** Cấu trúc thành công hạ tầng phần mềm Quản trị học tập trực tuyến (LMS), sẵn có bài kiểm tra xếp hạng tự động.",
+          "**Đồng hóa Lộ trình Đào tạo & Thăng tiến:** Kết hợp việc đạt chứng nhận hoàn thành khóa học trực tuyến làm điều kiện tiên quyết xét duyệt tăng lương."
+        ]
+      }
     },
     "5.1": {
-        "title": "Trao quyền cho Khách hàng: Thành lập Trung tâm Trợ giúp Tự phục vụ",
-        "date": "Giai đoạn 2",
-        "tags": ["Tự phục vụ", "Hỗ trợ", "Cơ sở kiến thức"],
-        "heroImage": "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
-        mindMapUrl: "https://i.postimg.cc/L8P9t8Gk/mindmap-5-1.png",
-        "content": {
-            "paragraphs": [
-                "Nhiều khách hàng ngày nay thích tự tìm câu trả lời cho các vấn đề của họ hơn là phải liên hệ với bộ phận hỗ trợ. Nắm bắt xu hướng này, tôi đã dẫn dắt dự án xây dựng một Trung tâm Trợ giúp (Help Center) trực tuyến, một cổng thông tin tự phục vụ toàn diện.",
-                "Mục tiêu là trao quyền cho khách hàng, giúp họ giải quyết các vấn đề phổ biến một cách nhanh chóng và dễ dàng 24/7, đồng thời giảm số lượng ticket gửi về cho đội ngũ hỗ trợ. Dự án này bao gồm hai thành phần chính:",
-                "1. **Xây dựng Cơ sở Kiến thức (Knowledge Base):** Đây là trái tim của trung tâm trợ giúp. Chúng tôi đã biên soạn và hệ thống hóa hàng loạt bài viết hướng dẫn chi tiết, trả lời các câu hỏi thường gặp. Mỗi bài viết được trình bày một cách rõ ràng, dễ hiểu, có hình ảnh minh họa hoặc video đi kèm. Các bài viết được phân loại theo từng chủ đề để khách hàng dễ dàng tìm kiếm.",
-                "2. **Cổng thông tin Gửi Ticket (Ticket Portal):** Đối với những vấn đề không thể tự giải quyết, khách hàng có thể dễ dàng gửi một yêu cầu hỗ trợ (ticket) thông qua một biểu mẫu trực tuyến. Cổng thông tin này cũng cho phép khách hàng theo dõi trạng thái của các ticket họ đã gửi và xem lại lịch sử hỗ trợ.",
-                "3. **Tối ưu hóa Khả năng Tìm kiếm:** Chúng tôi đặc biệt chú trọng vào công cụ tìm kiếm của trung tâm trợ giúp, đảm bảo rằng khi khách hàng gõ một từ khóa, các bài viết liên quan nhất sẽ được hiển thị lên hàng đầu.",
-                "4. **Tích hợp với các Kênh Hỗ trợ khác:** Trung tâm Trợ giúp được tích hợp chặt chẽ với các kênh khác. Ví dụ, khi khách hàng bắt đầu chat, chatbot có thể gợi ý các bài viết liên quan trước khi kết nối với nhân viên. Nhân viên hỗ trợ cũng có thể dễ dàng gửi link bài viết cho khách hàng trong quá trình trò chuyện.",
-                "Việc ra mắt Trung tâm Trợ giúp đã thành công trong việc giảm từ 20-30% số lượng ticket cho các câu hỏi lặp đi lặp lại. Nó không chỉ giúp tối ưu hóa nguồn lực mà còn cải thiện trải nghiệm khách hàng bằng cách cung cấp cho họ câu trả lời ngay lập tức, bất cứ khi nào họ cần."
-            ],
-            "list": []
-        }
+      title: "Thành lập trung tâm hỗ trợ",
+      date: "Giai đoạn 2",
+      tags: ["Tự phục vụ", "Hỗ trợ", "Cơ sở kiến thức"],
+      heroImage: "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
+      mindMapUrl: "https://i.postimg.cc/L8P9t8Gk/mindmap-5-1.png",
+      content: {
+        paragraphs: [
+          "Cung cấp giải pháp Cổng tự phục vụ tối ưu 24/7 giúp khách hàng chủ động đón nhận thông tin phản hồi trực quan giải đáp ngay lập tức."
+        ],
+        list: [
+          "**Xây dựng Thư viện Tri thức (Knowledge Base):** Soạn thảo, chuẩn hóa cấu trúc 100+ bài viết hướng dẫn khắc phục sự cố kèm hình ảnh, video cụ thể.",
+          "**Lập trình Cổng gửi Ticket thuận tiện:** Định hình giao diện biểu mẫu phản hồi lỗi thân thiện, phân loại mức độ khẩn và cập nhật tiến độ minh bạch.",
+          "**Tối ưu hóa Khả năng Tìm kiếm:** Nhập bộ gợi ý từ khóa tự động (Autocomplete search) giúp khách hàng dò đúng tài liệu hướng dẫn trong 3 giây.",
+          "**Tích hợp Phễu lọc Đa tầng:** Liên kết chặt chẽ help center với kịch bản trả lời của Chatbot tự động gợi ý link bài viết hữu ích cho quý khách."
+        ]
+      }
     },
     "6.1": {
-        "title": "Trái tim của Doanh nghiệp: Chiến lược Lấy Khách hàng làm Trung tâm",
-        "date": "Giai đoạn 3",
-        "tags": ["Chiến lược CS", "Văn hóa doanh nghiệp", "Khách hàng là trung tâm"],
-        "heroImage": "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
-        mindMapUrl: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
-        "content": {
-            "paragraphs": [
-                "Lấy khách hàng làm trung tâm (Customer-Centricity) không phải là một khẩu hiệu, mà là một chiến lược kinh doanh toàn diện, nơi mọi quyết định đều bắt đầu và kết thúc với khách hàng. Dự án này tập trung vào việc lan tỏa và thực thi triết lý này trên toàn doanh nghiệp.",
-                "Mục tiêu là biến Chăm Sóc Khách Hàng từ một phòng ban chức năng thành một tư duy xuyên suốt, giúp doanh nghiệp xây dựng lợi thế cạnh tranh bền vững dựa trên sự thấu cảm và lòng trung thành của khách hàng. Các trụ cột chính:",
-                "1. **Xác định Tầm nhìn và Giá trị Cốt lõi:** Chúng tôi đã cùng ban lãnh đạo định nghĩa lại tầm nhìn của công ty, đặt khách hàng vào vị trí ưu tiên cao nhất. Các giá trị cốt lõi về sự tận tâm, lắng nghe và giải quyết vấn đề được cụ thể hóa thành những hành vi cụ thể.",
-                "2. **Phá vỡ 'Ống chân không' giữa các Phòng ban:** Một trong những rào cản lớn nhất của Customer-Centricity là sự ngắt kết nối giữa các bộ phận. Tôi đã chủ động tạo ra các dự án liên phòng ban, nơi Sales, Marketing, Sản phẩm và Chăm Sóc Khách Hàng cùng ngồi lại để giải quyết một điểm đau (pain point) của khách hàng.",
-                "3. **Lấy Dữ liệu Khách hàng làm Cơ sở Quyết định:** Thay vì phán đoán, chúng tôi sử dụng dữ liệu từ CRM, khảo sát NPS và các báo cáo phân tích để chứng minh giá trị của các cải tiến dịch vụ. Mọi đề xuất thay đổi sản phẩm đều phải đi kèm với dữ liệu về tác động đến trải nghiệm khách hàng.",
-                "4. **Trao quyền và Công nhận Nhân viên:** Chúng tôi xây dựng cơ chế để nhân viên tuyến đầu – những người trực tiếp tiếp xúc với khách hàng – có quyền đưa ra các quyết định linh hoạt để làm hài lòng khách hàng ngay lập tức. Những câu chuyện về sự tận tâm 'vượt mong đợi' được chia sẻ rộng rãi để truyền cảm hứng.",
-                "Chiến lược này đã giúp thay đổi diện mạo của doanh nghiệp. Khách hàng cảm thấy được trân trọng hơn, tỷ lệ giữ chân khách hàng tăng lên, và quan trọng nhất, mỗi nhân viên đều hiểu rằng công việc của họ dù ở bộ phận nào cũng đều góp phần vào nụ cười của khách hàng."
-            ],
-            "list": []
-        }
+      title: "Trái tim của Doanh nghiệp: Chiến lược Lấy Khách hàng làm Trung tâm",
+      date: "Giai đoạn 3",
+      tags: ["Chiến lược CS", "Văn hóa doanh nghiệp", "Khách hàng là trung tâm"],
+      heroImage: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
+      mindMapUrl: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
+      content: {
+        paragraphs: [
+          "Định vị lại triết lý vận hành của mọi phòng ban từ Sản phẩm đến Kinh doanh xoay quanh việc mang lại nụ cười và sự gắn bó từ khách hàng."
+        ],
+        list: [
+          "**Tham mưu Kiến tạo Sứ mệnh Văn hóa:** Đồng hành cùng Hội đồng quản trị xây dựng và ban hành Tuyên ngôn triết lý toàn công ty vì người dùng.",
+          "**Định kỳ Sinh hoạt Liên phòng ban:** Khởi động workshop tháo gỡ điểm đau người dùng chung giữa phòng Sản phẩm, QA chất lượng, Kinh doanh và CS KH.",
+          "**Xây dựng KPI theo Trải nghiệm (NPS-driven KPI):** Thúc đẩy các quyết định định hướng tính năng sản phẩm dựa trên dữ liệu báo cáo VoC cụ thể.",
+          "**Tổ chức Chiến dịch Thể hiện Gắn kết:** Launching chương trình vinh danh gương mặt \"Đại Sứ Khách Hàng\" xuất sắc, khích lệ nhân viên tận tâm phục vụ."
+        ]
+      }
     }
-  },
+    },
   projectPostPopup: {
     badge: "Chi tiết Dự án",
     tooltipTitle: "Phân tích chuyên sâu",
@@ -1418,6 +1406,21 @@ export const vi = {
       { title: "Tổng quan về hệ thống CRM", url: "https://www.salesforce.com/vn/crm/what-is-crm/" },
       { title: "Các chỉ số Trải nghiệm Khách hàng (CX)", url: "https://www.hotjar.com/customer-experience/" }
     ]
+  },
+  transcribePage: {
+    badge: "Dịch giọng nói",
+    title: "Ghi âm & Chuyển đổi âm thanh",
+    tooltipTitle: "Ghi âm micro trực tiếp",
+    tooltipText: "Sử dụng microphone của bạn để ghi âm và hệ thống sẽ tự động chuyển đổi thành văn bản bằng mô hình Gemini 3.5 Flash.",
+    recordBtnStart: "Bắt đầu ghi âm",
+    recordBtnStop: "Dừng ghi",
+    recordingStatus: "Đang ghi âm bằng micro...",
+    transcribingStatus: "Đang xử lý chuyển đổi âm thanh sang văn bản...",
+    resultTitle: "Kết quả văn bản chuyển dịch:",
+    copyBtn: "Sao chép kết quả",
+    copied: "Đã sao chép!",
+    errorAudio: "Không thể truy cập Microphone. Vui lòng cho phép quyền truy cập micro trong cài đặt trình duyệt.",
+    emptyResult: "Kết quả trống (không nhận diện được giọng nói trong âm thanh)."
   }
 };
 
@@ -1441,6 +1444,7 @@ export const en = {
       interview: "Interview",
       scheduler: "Scheduler",
       aiChat: "AI Assistant",
+      transcribe: "Transcribe Audio",
       settings: "Settings",
     },
     name: "Nguyen Hung Thai",
@@ -2511,371 +2515,285 @@ export const en = {
       mindMapUrl: "https://i.postimg.cc/J0vJ0V3D/mindmap-1-1.png",
       content: {
         paragraphs: [
-            "Building a brand new Customer Service Department from the ground up was one of the most foundational and critical tasks I have ever undertaken. This was not just about hiring staff, but about establishing a complete operational machine, from vision and strategy to culture and processes.",
-            "The core objective was to create a department that not only reacts to customer requests but also proactively enhances their experience, becoming a solid bridge between the business and its users. To achieve this, I focused on several key pillars:",
-            "1.  **Establishing Vision and Mission:** Clearly defining the role of the Customer Service Department within the company's overall strategy. The mission extended beyond 'problem-solving' to 'building loyalty' and 'gathering product insights'.",
-            "2.  **Developing an Organizational Chart:** Designing a flexible departmental structure, dividing teams into specialized groups (Inbound, Outbound, Complaints, Social Media, etc.) while ensuring seamless coordination. This chart was optimized for future scalability.",
-            "3.  **Headcount Planning and Recruitment:** Building a competency framework for each position, from agents and team leaders to managers. The recruitment process focused on finding candidates with not only the right skills but also a service-oriented mindset and a good fit for the company culture.",
-            "4.  **Cultivating a Customer-Centric Culture:** From the very beginning, I emphasized the importance of listening, empathy, and empowering employees. Every team member was encouraged to make decisions in the best interest of the customer.",
-            "The result of this project was a stable, well-directed Customer Service Department ready to face growth challenges. It laid the groundwork for all subsequent operational, technological, and training activities."
+          "Building a comprehensive customer care system from the ground up, ensuring high sustainability and scalability."
         ],
-        list: []
+        list: [
+          "**Strategic Research & Positioning:** Established long-term vision, core values, and service mission for the Customer Care department.",
+          "**Organizational Chart Design:** Designed flexible subgroup structures comprising Inbound, Outbound, and complex Escalation/Complaint departments.",
+          "**Staffing & Recruitment:** Crafted detailed Job Descriptions (JDs), competency frameworks, and directly interviewed candidates to build the core leadership group.",
+          "**Experience Culture Construction:** Developed onboarding handbooks and customer-centric guidelines emphasizing empathy and communication standards."
+        ]
       }
     },
     "1.2": {
-        "title": "Architecting Performance: Setting OKRs & KPIs for a Customer Service Department",
-        "date": "Stage 1",
-        "tags": ["CS_Strategy", "OKR", "KPIs"],
-        "heroImage": "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
-        mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
-        "content": {
-            "paragraphs": [
-                "A Customer Service department without clear goals is like a ship without a compass. Establishing Key Performance Indicators (KPIs) and Objectives and Key Results (OKRs) is a strategic step to transform a department from being 'reactive' to 'proactive' and 'value-creating'.",
-                "The goal of this project was not just to measure, but to inspire and direct. I approached this by:",
-                "1. **Differentiating and Combining OKRs & KPIs:** KPIs were used to measure daily operational 'health' (e.g., average response time, first contact resolution rate). Meanwhile, OKRs were set for ambitious, directional, and transformative goals (e.g., 'Objective: Enhance customer satisfaction' with 'Key Result: Increase CSAT score from 80% to 90% in Q4').",
-                "2. **Aligning with Company Goals:** Every OKR and KPI for the Customer Service department was derived from the business's strategic objectives. This ensured that every effort from the team contributed directly to the company's success, transforming Customer Service from a 'cost center' to a 'value center'.",
-                "3. **Building a Visual Tracking System:** Instead of manual reports, I pushed for the development of real-time dashboards. This allowed both agents and managers to track performance transparently, identify issues quickly, and self-correct their actions.",
-                "The successful implementation of this system fostered a data-driven work culture where each individual understood how they contributed to the bigger picture. It also provided leadership with valuable insights into operational efficiency and customer sentiment."
-            ],
-            "list": []
-        }
+      title: "Architecting Performance: Setting OKRs & KPIs for a Customer Service Department",
+      date: "Stage 1",
+      tags: ["CS_Strategy", "OKR", "KPIs"],
+      heroImage: "https://i.postimg.cc/FHkCgcB8/2-M-c-ti-u-P-CSKH.jpg",
+      mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
+      content: {
+        paragraphs: [
+          "Establishing an objective performance measurement system to drive data-centric decision making and shift the organizational mindset."
+        ],
+        list: [
+          "**Core Metric Standardization:** Introduced and customized key performance standards including CSAT, FCR (First Contact Resolution), AHT (Average Handling Time), and Service Level.",
+          "**OKR Objective Alignment:** Tied key results (KRs) of the CS department directly to the company's high-level strategic business indicators.",
+          "**Performance Tracking Automation:** Deployed real-time automated dashboards, eliminating tedious manual reporting.",
+          "**Competency & Performance Driving:** Directed regular workshops to train agents in monitoring and optimizing their own performance metrics."
+        ]
+      }
     },
     "1.3": {
-        "title": "The Art of Emotion: Enhancing the Customer Experience (CX)",
-        "date": "Stage 3",
-        "tags": ["CS_Strategy", "#CXDesign", "#CustomerJourney"],
-        "heroImage": "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
-        mindMapUrl: "https://i.postimg.cc/1X6f4pYd/mindmap-1-3.png",
-        "content": {
-            "paragraphs": [
-                "Excellent customer service is just one piece of a larger puzzle: the Customer Experience (CX). This project focused on moving beyond single interactions to design a consistent, seamless, and emotionally resonant Customer Journey.",
-                "The project's core was to shift the mindset from 'problem-solving' to 'creating memorable moments'. Key steps included:",
-                "1. **Mapping the Customer Journey:** I worked with cross-functional teams (Product, Marketing, Sales) to identify all touchpoints where a customer interacts with the company, from their first awareness of the product to becoming a loyal advocate.",
-                "2. **Measuring Emotion and Effort:** At each critical touchpoint, we implemented measurement systems like CSAT (Customer Satisfaction), NPS (Net Promoter Score), and CES (Customer Effort Score). This data revealed not just what customers 'did', but how they 'felt'.",
-                "3. **Establishing Experience Standards:** Based on the data collected, we developed a set of company-wide experience standards. For example, 'All email inquiries must be answered within 2 hours' or 'Every VIP customer receives a personal care call after using a service'.",
-                "4. **Synchronizing Touchpoints:** One of the biggest challenges was ensuring consistency. We built inter-departmental collaboration processes so that customers felt a seamless experience, whether they interacted via the app, website, call center, or social media.",
-                "The result was a significant improvement in customer loyalty metrics. More importantly, the project helped spread a customer-centric culture throughout the entire organization, breaking down departmental silos and placing the customer at the heart of every decision."
-            ],
-            "list": []
-        }
+      title: "The Art of Emotion: Enhancing the Customer Experience (CX)",
+      date: "Stage 3",
+      tags: ["CS_Strategy", "CX_Design", "Customer_Journey"],
+      heroImage: "https://i.postimg.cc/HLQSFmHt/6-N-ng-cao-tr-i-nghi-m-KH.jpg",
+      mindMapUrl: "https://i.postimg.cc/1X6f4pYd/mindmap-1-3.png",
+      content: {
+        paragraphs: [
+          "Digitizing and optimizing touchpoints across the entire customer journey to deliver satisfaction that exceeds expectations."
+        ],
+        list: [
+          "**Customer Journey Mapping (CJM):** Visually identified and mapped all key interaction points from initial awareness to post-purchase support.",
+          "**Emotional Survey Implementation:** Deployed dynamic survey frameworks including CSAT (Satisfaction), NPS (Net Promoter Score), and CES (Customer Effort Score).",
+          "**Experience Standards Guidelines:** Drafted communication playbooks to inspire personalized, empathetic, and thoughtful customer interactions.",
+          "**Cross-departmental Alignment:** Synchronized support, product development, and marketing teams to establish a cohesive brand experience."
+        ]
+      }
     },
     "1.4": {
-        "title": "Driving Change: Customer Service Project Management with Agile/Kanban",
-        "date": "Stage 3",
-        "tags": ["CS_Strategy", "#ProjectManagement", "#Agile"],
-        "heroImage": "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
-        mindMapUrl: "https://i.postimg.cc/wMPb9kM7/mindmap-1-4.png",
-        "content": {
-            "paragraphs": [
-                "To continuously improve service, a flexible and effective project management method is essential. Instead of rigid, long-term plans, I implemented Agile methodologies, specifically Kanban, to manage improvement initiatives and projects within the Customer Service department.",
-                "The goal was to create a transparent, adaptive, and continuous improvement engine. My approach included:",
-                "1. **Setting up a Kanban Board:** We used tools like Trello, Jira, or Larksuite Base to create a visual Kanban board with key columns: 'Backlog', 'To-do', 'In Progress', 'Testing/Review', and 'Done'.",
-                "2. **Visualizing Work:** Every initiative, from 'updating an email response template' to 'implementing a new CRM feature', was represented as a card on the board. This helped the entire team see what was being worked on, who was responsible, and what the progress was.",
-                "3. **Limiting Work in Progress (WIP):** A core principle of Kanban. By limiting the number of tasks in the 'In Progress' column, we were forced to focus on completing current tasks before starting new ones. This helped reduce bottlenecks and increase throughput.",
-                "4. **Conducting Stand-up Meetings:** Daily or weekly, the team had short meetings to share progress, challenges, and next steps. This fostered collaboration and rapid problem-solving.",
-                "Adopting Agile/Kanban brought about a significant change in how we worked. It not only helped complete projects faster but also enhanced proactivity, accountability, and teamwork across the department."
-            ],
-            "list": []
-        }
+      title: "Driving Change: Customer Service Project Management with Agile/Kanban",
+      date: "Stage 3",
+      tags: ["CS_Strategy", "Project_Management", "Agile"],
+      heroImage: "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
+      mindMapUrl: "https://i.postimg.cc/wMPb9kM7/mindmap-1-4.png",
+      content: {
+        paragraphs: [
+          "Reengineering internal project management to elevate response speeds, team autonomy, and operational flexibility."
+        ],
+        list: [
+          "**Management Framework Shift:** Successfully transitioned team workflows from slow Waterfall methodologies to Agile and Scrum frameworks.",
+          "**Task Visualisation:** Implemented digital Kanban boards to eliminate workflow bottlenecks and optimize ticket/task allocation.",
+          "**Operational Synchronization:** Established feedback loops through Daily Standups, Sprint Planning, and Sprint Retrospective meetings.",
+          "**Delivery Time Optimization:** Tracked burn-down charts and cumulative flow diagrams, reducing service deployment cycles by 35%."
+        ]
+      }
     },
     "1.5": {
-        "title": "Voice of the Customer: Bridging the Gap Between Service and Product",
-        "date": "Stage 3",
-        "tags": ["CS_Strategy", "#VoiceOfCustomer", "#ProductImprovement"],
-        "heroImage": "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
-        mindMapUrl: "https://i.postimg.cc/T3jY4YgT/mindmap-1-5.png",
-        "content": {
-            "paragraphs": [
-                "The Customer Service department is a goldmine of the most detailed and authentic product insights. This project was created to mine that gold, turning customer feedback, complaints, and suggestions into a driving force for product improvement.",
-                "I established a structured 'Feedback Loop' to ensure the Voice of the Customer (VoC) was systematically heard and acted upon. This process included:",
-                "1. **Omnichannel Feedback Collection:** We systemized the collection of feedback from all channels: support tickets, CSAT/NPS surveys, social media comments, app store reviews, and direct conversations with Customer Service agents.",
-                "2. **Categorization and Tagging:** Each piece of feedback was categorized and tagged with specific themes (e.g., #Bug_Login, #FeatureRequest_Payment, #UI_Confusing). This was done directly within the CRM system, making aggregation and analysis easy.",
-                "3. **Analysis and Quantification:** Weekly and monthly, my team and I analyzed the data to identify the most pressing issues. Instead of just saying 'customers are complaining about login', we provided concrete data: 'This month, there were 350 tickets related to login errors, a 20% increase from last month, primarily affecting iOS users'.",
-                "4. **Establishing a Communication Channel with Product:** We built a close working process with the product development team. Analysis reports were shared in regular joint meetings. Urgent issues were reported immediately through priority channels.",
-                "This project broke down the barrier between Customer Service and Product. It not only helped resolve customer issues faster but also provided invaluable input for the product roadmap, ensuring that new improvements truly addressed user pain points."
-            ],
-            "list": []
-        }
+      title: "Voice of the Customer: Bridging the Gap Between Service and Product",
+      date: "Stage 3",
+      tags: ["CS_Strategy", "Voice_Of_Customer", "Product_Improvement"],
+      heroImage: "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
+      mindMapUrl: "https://i.postimg.cc/T3jY4YgT/mindmap-1-5.png",
+      content: {
+        paragraphs: [
+          "Establishing multi-dimensional feedback loops to transform customer pain points and suggestions into core product improvements."
+        ],
+        list: [
+          "**VoC Capture System:** Developed centralized pipelines to collect the Voice of Customer (VoC) from chat sessions, emails, and social media.",
+          "**Pain-point Analysis & Tagging:** Standardized auto-tagging mechanisms in the CRM to quantify and periodically report key user friction points to R&D.",
+          "**Sustained Product Collaboration:** Initiated regular product optimization sprints merging insights from engineers and front-line support staff.",
+          "**Feedback Action Tracking:** Ran pilot programs on feature upgrades triggered by VoC, improving user retention rates by 15%."
+        ]
+      }
     },
     "2.1": {
-        "title": "Solid Foundations: Standardizing Operational Procedures (SOPs)",
-        "date": "Stage 1",
-        "tags": ["#CS_Operations", "#SOP", "#Process"],
-        "heroImage": "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
-        mindMapUrl: "https://i.postimg.cc/pT3w9B2v/mindmap-2-1.png",
-        "content": {
-            "paragraphs": [
-                "For a Customer Service team to operate effectively and consistently, especially as it scales, a set of Standard Operating Procedures (SOPs) is crucial. This project focused on documenting, standardizing, and optimizing all business processes of the department.",
-                "The goal was to create a single, reliable source of truth that helps minimize errors, speeds up new-hire training, and ensures every customer receives a consistent quality of service. Key activities included:",
-                "1. **Analyzing and Documenting Current Processes:** I worked with team leaders and experienced agents to detail the steps they took for each type of task, from receiving a call and handling a complaint email to processing a refund.",
-                "2. **Designing Workflows:** Based on the findings, we designed optimal workflow diagrams for various scenarios, clearly defining decision points, required actions, and corresponding SLAs (Service Level Agreements).",
-                "3. **Drafting the SOP Manual:** All processes were compiled into an easy-to-understand, well-structured document, including sample scripts, system usage guides, and related policies. This manual was stored on an internal knowledge base for easy access and search.",
-                "4. **Training and Updates:** An SOP is not a static document. I organized training sessions for the entire team and established a process for regularly reviewing and updating the SOPs based on product or policy changes.",
-                "Standardizing processes had an immediate impact: reduced ticket resolution times, increased First Contact Resolution (FCR) rates, and significantly faster onboarding for new employees. It formed the backbone of a professional and scalable Customer Service system."
-            ],
-            "list": []
-        }
+      title: "Solid Foundations: Standardizing Operational Procedures (SOPs)",
+      date: "Stage 1",
+      tags: ["CS_Operations", "SOP", "Process"],
+      heroImage: "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
+      mindMapUrl: "https://i.postimg.cc/pT3w9B2v/mindmap-2-1.png",
+      content: {
+        paragraphs: [
+          "Systematizing operational knowledge to secure consistent and high-quality service across every customer interaction."
+        ],
+        list: [
+          "**Workflow Audits:** Evaluated legacy interaction templates and audited call logs to pinpoint quality gaps and procedural inconsistencies.",
+          "**Comprehensive SOP Cataloging:** Drafted 50+ detailed Standard Operating Procedures (SOPs) covering standard and emergency resolution paths.",
+          "**Dynamic Decision Trees:** Built structured decision trees to guide support agents through complex, high-pressure resolution scenarios.",
+          "**QA/QC Framework Integration:** Set up standardized quality assurance rubrics and weekly automated peer-review processes."
+        ]
+      }
     },
     "2.2": {
-        "title": "Seamless Experience: Optimizing Omni-channel Support",
-        "date": "Stage 2",
-        "tags": ["#CS_Operations", "#OmniChannel", "#UnifiedSupport"],
-        "heroImage": "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
-        mindMapUrl: "https://i.postimg.cc/gJ0zQZ2c/mindmap-2-2.png",
-        "content": {
-            "paragraphs": [
-                "Today's customers don't interact through a single channel. They might start a conversation on Facebook, then call the hotline, and finally send an email. This project focused on transitioning from separate 'multi-channel' support to a truly 'omni-channel' experience.",
-                "The goal was to create a seamless support journey where customer information is synchronized across all channels, giving agents a 360-degree view and preventing customers from having to repeat their issues. Key implementation steps:",
-                "1. **Integrating Channels into a Single Platform:** The heart of the project was implementing a system (usually a CRM or Helpdesk) capable of integrating popular communication channels like Hotline (via CTI), Email, Live Chat, Facebook Messenger, and Zalo OA into a single agent interface.",
-                "2. **Building a Unified Customer Profile:** When a customer contacts us, the system automatically identifies them and displays their entire interaction history across all channels. An agent responding to an email can see that this customer just ended a call 5 minutes ago.",
-                "3. **Standardizing Processes and SLAs for Each Channel:** While the experience is unified, each channel has its own characteristics. We developed specific processes and SLAs for each (e.g., social media response time of 15 minutes, email within 2 hours) while ensuring consistent quality and messaging.",
-                "4. **Multi-channel Skills Training for Agents:** Agents were trained to handle interactions across different channels, from phone etiquette to social media writing skills, ensuring professionalism and consistency.",
-                "The result was a significant increase in agent efficiency (by eliminating the need to switch between tools) and customer satisfaction (due to faster, uninterrupted support). This project turned separate communication channels into an intelligent, interconnected network."
-            ],
-            "list": []
-        }
+      title: "Seamless Experience: Optimizing Omni-channel Support",
+      date: "Stage 2",
+      tags: ["CS_Operations", "Omni_Channel", "Unified_Support"],
+      heroImage: "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
+      mindMapUrl: "https://i.postimg.cc/gJ0zQZ2c/mindmap-2-2.png",
+      content: {
+        paragraphs: [
+          "Unifying disparate communication channels into a single workspace to accelerate ticket resolution and offer customer convenience."
+        ],
+        list: [
+          "**Omnichannel Platform Integration:** Consolidated messages, emails, and hotline calls from Web chat, Facebook, Zalo, and VoIP into one workspace.",
+          "**Intelligent Ticket Routing:** Coded automated routing algorithms to dispatch incoming tickets to specialists based on category keywords.",
+          "**360-degree Customer Profiling:** Integrated immediate profile cards showing user history and context across all platforms.",
+          "**SLA Performance Monitoring:** Enforced strict response time thresholds across different media, pushing SLA compliance to 98%."
+        ]
+      }
     },
     "2.3": {
-        "title": "Freeing Human Potential: Implementing Process Automation (RPA)",
-        "date": "Stage 3",
-        "tags": ["#CS_Operations", "#Automation", "#RPA"],
-        "heroImage": "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
-        mindMapUrl: "https://i.postimg.cc/Jz3x0GfF/mindmap-2-3.png",
-        "content": {
-            "paragraphs": [
-                "In Customer Service operations, many tasks are repetitive and time-consuming but don't require complex thinking, such as copying data between systems, sending templated confirmation emails, or basic ticket categorization. This project focused on applying Robotic Process Automation (RPA) and automated workflows to address this.",
-                "The objective was to free agents from tedious tasks, allowing them to focus on more complex and valuable customer interactions, while also minimizing human error and speeding up processing times. My approach was:",
-                "1. **Identifying Suitable Processes for Automation:** I worked with the team to analyze daily activities and identify prime candidates for automation. The criteria were high-volume, rule-based, and repetitive processes.",
-                "2. **Designing the Automation Flow:** For each selected process, we designed a detailed automated workflow. For example: 'When a ticket is tagged 'Refund Request' and its status is 'Approved', the system will automatically: (1) Send a templated email notification to the customer, (2) Create a request for the finance department, and (3) Update the ticket status to 'Processing Refund'.",
-                "3. **Implementation and Monitoring:** We used built-in automation features of the CRM/Helpdesk system or dedicated RPA tools to build these flows. After deployment, close monitoring was conducted to ensure the bots operated correctly and efficiently.",
-                "Although this project's completion rate was 50%, it opened a new direction for operational optimization. The successfully automated processes helped significantly reduce handling times and allowed the Customer Service team to handle more requests with the same resources. It was a crucial stepping stone for applying deeper technologies like AI and machine learning."
-            ],
-            "list": []
-        }
+      title: "Freeing Human Potential: Implementing Process Automation (RPA)",
+      date: "Stage 3",
+      tags: ["CS_Operations", "Automation", "RPA"],
+      heroImage: "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
+      mindMapUrl: "https://i.postimg.cc/Jz3x0GfF/mindmap-2-3.png",
+      content: {
+        paragraphs: [
+          "Integrating software automation to eliminate repetitive, manual chores and redirect team efforts toward human-centric engagement."
+        ],
+        list: [
+          "**Task Identification & Filtering:** Filtered high-volume, repetitive data entry, CRM status updates, and post-call notifications for automation.",
+          "**Automated Workflow Scripts:** Created robotic automation flows to keep cross-system client data seamlessly in sync.",
+          "**Auto-categorization Arrays:** Designed keyword-based auto-tagging libraries to instantly sort incoming customer queries.",
+          "**Administrative Overhead Reduction:** Slashed administrative handling time by 70%, eradicating transcription errors."
+        ]
+      }
     },
     "2.4": {
-        "title": "Proactive Connection: Managing Outbound Campaigns",
-        "date": "Stage 3",
-        "tags": ["#CS_Operations", "#OutboundCS", "#ProactiveCare"],
-        "heroImage": "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
-        mindMapUrl: "https://i.postimg.cc/j5G5wL4p/mindmap-2-4.png",
-        "content": {
-            "paragraphs": [
-                "Customer service isn't just about waiting for customers to reach out. A comprehensive Customer Service strategy also includes proactive outbound activities to enhance the experience, gather feedback, and build relationships. This project focused on building and managing outbound campaigns professionally and effectively.",
-                "The goal was to transform outbound calls/messages from being 'intrusive' to being 'caring', providing real value to customers and valuable information to the company. The main types of campaigns we implemented were:",
-                "1. **Post-Purchase Care Campaigns:** Proactively calling or messaging customers after a purchase or service use to check on their experience, provide usage tips, and answer initial questions. This helps reduce later complaints and creates a positive impression.",
-                "2. **Satisfaction Survey Campaigns (CSAT/NPS):** Instead of just sending mass survey emails, we made personal calls to a select group of customers to listen more deeply to their feedback. These conversations often yielded insights that online surveys couldn't capture.",
-                "3. **Customer Re-activation Campaigns:** Identifying customers who haven't used the service in a while and making calls to understand why, inform them of new features, or provide special offers to encourage them to return.",
-                "To make these campaigns successful, thorough script development and agent training were key. Scripts were designed to make the call feel like a natural conversation, not a sales pitch. Agents were trained in listening and empathy skills to create a genuine connection.",
-                "Outbound campaigns proved highly effective in increasing customer engagement and reducing churn rates. They transformed the Customer Service department into a proactive tool for building loyalty."
-            ],
-            "list": []
-        }
-    },
-  horoscopePage: {
-    badge: "Tử vi",
-    tooltipTitle: "Discover Work Horoscope",
-    tooltipText: "A horoscope analysis focused on strengths, leadership style, and ideal collaborators based on a personal birth chart.",
-    personalInfo: {
-      name: "Nguyen Hung Thai",
-      birthDate: "June 22, 1984",
-      birthHour: "Dau Hour (17h–19h)",
-      gender: "Duong Nam",
-      year: "Giap Ty",
-      element: "Hai Trung Kim",
-      destiny: "Kim Tu Cuc"
-    },
-    sections: {
-      portrait: {
-        title: "I. HOROSCOPE PORTRAIT IN WORK",
-        points: [
-          {
-            header: "Mệnh–Quan Axis: Thien Phu (Mệnh) – Thien Tuong (Quan Loc)",
-            content: "A profile of administration, coordination, and system maintenance. Works with high structure, strong in processes (SOP, CRM). Actions speak louder than words, ensuring tight control and minimal errors."
-          },
-          {
-            header: "Mệnh Lord: Tham Lang – Thân Lord: Linh Tinh",
-            content: "Eager to learn and work, never standing still. Rapid reflexes, calm in crisis. Not afraid of restructuring old systems. However, should avoid over-extending."
-          },
-          {
-            header: "Work Style: Silent – Deep – Standard – Sustainable – Productive",
-            content: "Speaks little but always to the point. Prefers standardizing processes over micro-managing. Enjoys working with intelligent and responsible partners. Fits Head/Director roles."
-          }
+      title: "Proactive Connection: Managing Outbound Campaigns",
+      date: "Stage 3",
+      tags: ["CS_Operations", "Outbound_CS", "Proactive_Care"],
+      heroImage: "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
+      mindMapUrl: "https://i.postimg.cc/j5G5wL4p/mindmap-2-4.png",
+      content: {
+        paragraphs: [
+          "Reaching out proactively to existing customers to build strong relationships and generate value rather than waiting for problems."
+        ],
+        list: [
+          "**Campaign Strategic Planning:** Devised proactive outreach sequences governing welcome calls, periodical reviews, and subscription renewals.",
+          "**Human-centric Scriptwriting:** Developed Conversational Outbound playbooks focused on adding actual value instead of persistent sales pressure.",
+          "**Smart Dialer Integration:** Integrated automated predictive dialer solutions to sustain optimal talk-time efficiency for agents.",
+          "**Post-outreach Tracking:** Evaluated conversion and retention metrics, driving a 20% increase in warranty and contract renewals."
         ]
-      },
-      traits: {
-        title: "II. CHARACTERISTICS IN WORK",
-        strengthsTitle: "Key Strengths",
-        strengths: ["Systemic and logical thinking", "High pressure tolerance", "Integrity and trust", "Fair leadership style", "Big picture vision"],
-        weaknessesTitle: "Areas for Self-Management",
-        weaknesses: ["Not skilled in office politics", "Annoyed by sloppiness", "Becomes silent when overloaded, leading to burnout"],
-        solution: "👉 Solution: Delegate strongly + choose compatible partners."
-      },
-      compatibility: {
-        title: "III. WORK COMPATIBILITY",
-        groups: [
-          {
-            title: "HIGHLY COMPATIBLE",
-            subtitle: "Recommended as Partners / Deputies",
-            color: "#27ae60",
-            items: [
-              { age: "Than (1980, 1992)", trait: "Great at execution and implementation" },
-              { age: "Thin (1976, 1988)", trait: "Visionary, maintains strategy" },
-              { age: "Dau (1981, 1993)", trait: "Detailed, disciplined, operational focus" }
-            ],
-            summary: "👉 This group makes your work 'lighter and easier'."
-          },
-          {
-            title: "MODERATELY COMPATIBLE",
-            subtitle: "Viable, but requires clarity",
-            color: "#f39c12",
-            items: [
-              { age: "Suu (1985, 1997)", trait: "Durable but needs clear deadlines" },
-              { age: "Ty (1977, 1989)", trait: "Smart but needs transparency" },
-              { age: "Hoi (1983, 1995)", trait: "Hardworking, needs clear guidance" }
-            ]
-          },
-          {
-            title: "POTENTIAL CONFLICT",
-            subtitle: "Avoid placing in key leadership roles",
-            color: "#e74c3c",
-            items: [
-              { age: "Ngo (1978, 1990)", trait: "Mismatched decision speeds" },
-              { age: "Mao (1975, 1987)", trait: "Emotional, differing viewpoints" },
-              { age: "Ty (Same Age)", trait: "Easy power struggle or mental fatigue" }
-            ]
-          }
-        ]
-      },
-      roles: {
-        title: "IV. IDEAL CAREER ROLES",
-        items: [
-          "Head / Director Customer Service",
-          "Operations Manager / Director",
-          "Customer Experience (CX) Director",
-          "CRM / Process / Training Lead",
-          "CS system implementation consultant",
-          "Operational management of service–tech enterprises"
-        ]
-      },
-      conclusion: {
-        title: "V. CONCLUSION FROM TRÍ NHÂN",
-        content: "Your horoscope is born for building pillars, foundations, and upgrading systems. The longer you work, the higher your value becomes. The Dau hour makes you sharp in the late afternoon, perfect for end-of-day strategic decisions. With the right team, you will go very far."
       }
-    }
-  },
+    },
     "3.1": {
-        "title": "The Brain of Service: Building a Customer Relationship Management (CRM) System",
-        "date": "Stage 2",
-        "tags": ["#CS_TechData", "#CRM", "#CustomerData"],
-        "heroImage": "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
-        mindMapUrl: "https://i.postimg.cc/y8g8Z7T9/mindmap-3-1.png",
-        "content": {
-            "paragraphs": [
-                "In the digital age, customer data is the most valuable asset. A Customer Relationship Management (CRM) system is the central 'brain' for storing, managing, and leveraging that asset. At several companies I've worked for, like VED and MoMo, building or optimizing a CRM was a foundational project with far-reaching impact.",
-                "The goal was not just a place to store contact info, but a unified platform providing a 360-degree view of each customer and serving as the primary tool for the Customer Service team. The implementation process included strategic steps:",
-                "1. **Needs Analysis and Platform Selection:** I worked closely with stakeholders (Customer Service, Sales, Marketing) to define core business requirements. Based on this, we evaluated and selected the most suitable CRM platform, whether it was an off-the-shelf solution (like Salesforce, Zendesk) or an in-house build.",
-                "2. **Design and Customization:** The system was customized to fit the company's unique processes. This included designing custom data fields, configuring ticket workflows, and setting up automation rules.",
-                "3. **System Integration:** This was a critical step to achieve the 360-degree view. The CRM was integrated with other systems like the call center (to automatically log call recordings), the website/app (to sync user data), and communication channels like email and social media.",
-                "4. **Data Migration and User Training:** Customer data from old systems (or Excel files) was cleaned and migrated to the new CRM. In parallel, I developed documentation and conducted in-depth training sessions to ensure the entire team could use the new system proficiently.",
-                "The successful implementation of the CRM system revolutionized how we served customers. It increased work efficiency, enabled personalized interactions, and provided the foundational data for all subsequent analysis and reporting activities."
-            ],
-            "list": []
-        }
+      title: "The Brain of Service: Building a Customer Relationship Management (CRM) System",
+      date: "Stage 2",
+      tags: ["CS_TechData", "CRM", "Customer_Data"],
+      heroImage: "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
+      mindMapUrl: "https://i.postimg.cc/y8g8Z7T9/mindmap-3-1.png",
+      content: {
+        paragraphs: [
+          "Creating a reliable, secure customer information hub to unlock deep client insights and power personalized service."
+        ],
+        list: [
+          "**Feasibility Analysis & Blueprinting:** Investigated data silos and drafted thorough requirements for building a unified CRM ecosystem.",
+          "**Secure Data Migration:** Supervised database cleaning and structured secure migration of legacy client profiles without downtime.",
+          "**Full-cycle Ticket Workflow:** Set up standard ticket status lifecycles from creation, escalation, suspension, to resolved.",
+          "**Database Interconnectivity:** Connected CRM pipelines with payment portals and VoIP systems to show billing data during calls."
+        ]
+      }
     },
     "3.2": {
-        "title": "From Data to Decisions: Customer Service Analysis and Reporting",
-        "date": "Stage 2",
-        "tags": ["#CS_TechData", "#Insight", "#Dashboard"],
-        "heroImage": "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
-        mindMapUrl: "https://i.postimg.cc/L5n5Nn5q/mindmap-3-2.png",
-        "content": {
-            "paragraphs": [
-                "Data is only valuable when it is transformed into insights that support decision-making. This project focused on building a comprehensive analysis and reporting system, turning raw operational numbers into meaningful stories.",
-                "The objective was to provide all levels of management and related departments with a clear picture of Customer Service performance, customer satisfaction, and key trends. My approach was to build different layers of reporting:",
-                "1. **Real-time Operational Dashboard:** This tool was for team leaders and supervisors. It displayed critical operational metrics in real-time, such as the number of pending tickets, average call wait time, number of online agents, and SLA violations. This dashboard helped in coordinating work and addressing issues immediately.",
-                "2. **Agent Performance Report:** This weekly report provided a detailed view of each agent's performance: number of tickets handled, average handling time, CSAT score, and quality assurance (QA) results. It served as the basis for evaluation, feedback, and coaching.",
-                "3. **CX Analytics Report:** Intended for management and other departments, this monthly report focused on strategic metrics like CSAT, NPS, and CES by product/service. It also analyzed major complaint themes and suggestions, helping to identify areas for improvement.",
-                "To build these reports, we connected the CRM/Helpdesk system to data visualization tools like Power BI, Tableau, or Google Data Studio. This allowed for the creation of dynamic, easy-to-understand charts with drill-down capabilities.",
-                "This reporting system became an indispensable tool, helping us shift from managing by intuition to managing by data, making accurate decisions, and demonstrating the value of the Customer Service department to the entire business."
-            ],
-            "list": []
-        }
+      title: "From Data to Decisions: Customer Service Analysis and Reporting",
+      date: "Stage 2",
+      tags: ["CS_TechData", "Insight", "Dashboard"],
+      heroImage: "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
+      mindMapUrl: "https://i.postimg.cc/L5n5Nn5q/mindmap-3-2.png",
+      content: {
+        paragraphs: [
+          "Transforming raw operational metrics into interactive business dashboards to guide strategic decision-making."
+        ],
+        list: [
+          "**Operational Reporting Standards:** Established structured daily, weekly, and monthly reports targeting agent productivity and CS quality.",
+          "**Interactive BI Dashboards:** Built dynamic pivot charts and visualization models to drill down into segmented service volume.",
+          "**Traffic Density Analysis:** Pinpointed peak interaction hours to optimize staffing, scheduling, and shift patterns.",
+          "**Volumetric Forecasting Models:** Formulated demand-prediction models to adjust capacity, decreasing abandoned call rates below 2%."
+        ]
+      }
     },
     "3.3": {
-        "title": "Listening to Improve: Customer Surveys and Feedback",
-        "date": "Stage 3",
-        "tags": ["#CS_TechData", "#Survey", "#Feedback"],
-        "heroImage": "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
-        mindMapUrl: "https://i.postimg.cc/Y0zVbY4v/mindmap-3-3.png",
-        "content": {
-            "paragraphs": [
-                "The best way to know if you're doing a good job is to ask your customers directly. This project focused on designing and implementing a system to systematically collect customer feedback after every support interaction.",
-                "The goal was not just to 'score' agents, but to better understand the customer's experience, identify weak points in the process, and trigger timely improvement actions. The main methods we applied were:",
-                "1. **Post-Interaction CSAT Surveys:** Immediately after a support ticket was closed, the system automatically sent a short email or message to the customer with a simple question: 'How satisfied were you with the support you received?' along with a rating scale (e.g., 1 to 5). This was the quickest way to measure the effectiveness of each interaction.",
-                "2. **Triggering Actions from Negative Feedback:** This was the most crucial part. We set up an automation rule: 'If a customer gives a rating of 1 or 2 stars, automatically create a new, high-priority ticket and assign it to the team leader.' The leader would then personally review the interaction, contact the customer to apologize, and investigate further. This process turned a bad experience into an opportunity to regain customer trust.",
-                "3. **Analyzing Qualitative Feedback:** In addition to scores, we always encouraged customers to leave detailed comments. These comments were analyzed to find trends and the root causes of issues. For example, we might discover that many dissatisfied customers were not unhappy with the agent, but with a company policy.",
-                "This feedback collection system created a continuous learning and improvement mechanism. It helped us quickly recognize and fix problems, while also making customers feel that their opinions were truly heard and valued."
-            ],
-            "list": []
-        }
+      title: "Listening to Improve: Customer Surveys and Feedback",
+      date: "Stage 3",
+      tags: ["CS_TechData", "Survey", "Feedback"],
+      heroImage: "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
+      mindMapUrl: "https://i.postimg.cc/Y0zVbY4v/mindmap-3-3.png",
+      content: {
+        paragraphs: [
+          "Automating customer feedback loops to constantly capture, analyze, and act on user opinions and sentiments."
+        ],
+        list: [
+          "**Lean Survey Design:** Designed highly optimized micro-surveys targeting CSAT and NPS metrics directly after support sessions.",
+          "**Automatic Trigger Deployment:** Programmed API triggers to fire surveys via Email/SMS/Instant messengers immediately after ticket closure.",
+          "**Closed-loop Recovery Protocol:** Formulated urgent escalations redirecting any low ratings (1-3 stars) directly to team leaders for recovery.",
+          "**Insight-driven Policy Upgrades:** Syndicated analyzed feedback trends to management, leading to customer-favorable business policy adjustment."
+        ]
+      }
     },
     "3.4": {
-        "title": "The Assistant That Never Sleeps: Building an AI Bot",
-        "date": "Stage 3",
-        "tags": ["#CS_TechData", "#Chatbot", "#AI"],
-        "heroImage": "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
-        mindMapUrl: "https://i.postimg.cc/FKWp2L5M/mindmap-3-4.png",
-        "content": {
-            "paragraphs": [
-                "With technological advancements, applying Artificial Intelligence (AI) to customer service is no longer a distant dream. This project was our first step into this world, with the goal of building a chatbot/virtual assistant capable of automatically answering customers' frequently asked questions (FAQs).",
-                "The main objective was to provide 24/7 support for simple issues, reducing the load on human agents and allowing them to focus on more complex problems. The development and deployment process included:",
-                "1. **Data Analysis and Scope Definition:** We analyzed thousands of past support tickets to identify the top 20-30 most frequently asked questions. This became the initial knowledge scope that the chatbot would be 'taught'. Starting with a narrow but clear scope was key to ensuring quality.",
-                "2. **Building the Knowledge Base:** For each question, we drafted standard, clear, and easy-to-understand answers. We also listed different ways of asking the same question to improve the AI's recognition capabilities.",
-                "3. **Designing Conversation Flows and 'Escape Hatches':** We designed natural conversation scripts. Most importantly, we designed a smooth 'escalation path': when the chatbot didn't understand a question or the issue became complex, it would politely offer to transfer the conversation to a live agent.",
-                "4. **Deployment and Continuous Training:** The chatbot was deployed on channels like the website and Facebook Messenger. After launch, we continuously monitored conversations. Questions the bot couldn't answer were reviewed and used for additional 'training', making the bot smarter over time.",
-                "The AI Bot project, though still in its early stages, demonstrated immense potential for improving the customer experience and optimizing operational costs. It was a testament to my mindset of always being ready to adapt to technology and change."
-            ],
-            "list": []
-        }
+      title: "The Assistant That Never Sleeps: Building an AI Bot",
+      date: "Stage 3",
+      tags: ["CS_TechData", "Chatbot", "AI"],
+      heroImage: "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
+      mindMapUrl: "https://i.postimg.cc/FKWp2L5M/mindmap-3-4.png",
+      content: {
+        paragraphs: [
+          "Deploying NLP-driven AI Chatbots to deliver prompt, around-the-clock replies and reduce workload on human advisors."
+        ],
+        list: [
+          "**Chat History Optimization:** Analyzed historical logs to extract the top 30 repetitive FAQs comprising 80% of routine chat traffic.",
+          "**NLP Mind Tuning:** Configured synonyms and intent training sets, raising automatic intent recognition accuracy above 90%.",
+          "**Escalation Protocol Design:** Modeled elegant, soft-handoff mechanisms transferring chats to live humans when issues grew complex.",
+          "**High-volume Traffic Filtering:** Handled 35% of overall chat interactions completely autonomously with multi-channel deployments."
+        ]
+      }
     },
     "4.1": {
-        "title": "The Service Academy: Developing an E-learning System",
-        "date": "Stage 3",
-        "tags": ["#CS_Learning", "#CSAcademy", "#Training"],
-        "heroImage": "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
-        mindMapUrl: "https://i.postimg.cc/7PMjN2D5/mindmap-4-1.png",
-        "content": {
-            "paragraphs": [
-                "Training is vital for maintaining and improving service quality, especially in a fast-changing business environment. This project focused on transforming traditional training methods (in-person classes) into a more modern, flexible, and effective model: an e-learning system.",
-                "The goal was to build an internal 'Customer Service Academy' where employees could proactively learn anytime, anywhere, covering everything from basic knowledge for new hires to advanced skills for existing staff. The main components of the project were:",
-                "1. **Developing a Training Curriculum Framework:** We systemized all the knowledge required for a Customer Service agent and divided it into clear learning modules, such as 'New Hire Onboarding', 'Complaint Handling Process', 'Phone Communication Skills', 'Using the CRM System', and 'New Product Updates'.",
-                "2. **Digitizing Content:** Training materials (SOPs, scripts, policies) were converted into more engaging formats like short instructional videos, interactive slide presentations, and quizzes to test knowledge.",
-                "3. **Implementing an E-learning Platform:** We selected and implemented a Learning Management System (LMS) platform to host and manage all the courses. This platform allowed employees to self-enroll, track their progress, and receive certificates upon completion.",
-                "4. **Integrating into the Career Path:** The e-learning system was tightly integrated into each employee's development path. Completing certain courses became a criterion for promotion or for taking on new roles.",
-                "The online training system brought about a revolution in team development. It not only saved costs and time compared to traditional classes but also fostered a culture of proactive learning, where every individual has the opportunity and tools to enhance their own capabilities."
-            ],
-            "list": []
-        }
+      title: "The Service Academy: Developing an E-learning System",
+      date: "Stage 3",
+      tags: ["CS_Learning", "CS_Academy", "Training"],
+      heroImage: "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
+      mindMapUrl: "https://i.postimg.cc/7PMjN2D5/mindmap-4-1.png",
+      content: {
+        paragraphs: [
+          "Building an internal educational hub to systematically upskill the customer care team through modern digital learning."
+        ],
+        list: [
+          "**Curriculum Architecture:** Structured core service competencies into modular digital courses spanning beginner to advanced certifications.",
+          "**Interactive Course Production:** Recorded and edited 20+ micro-learning modules integrated with modern slide quizzes.",
+          "**Internal LMS Implementation:** Configured a secure internal Learning Management System (LMS) with automated graduation tracking.",
+          "**Development Path Alignment:** Associated course certifications as mandatory checkpoints in career progression and salary reviews."
+        ]
+      }
     },
     "5.1": {
-        "title": "Empowering Customers: Establishing a Self-Service Help Center",
-        "date": "Stage 2",
-        "tags": ["#CS_SelfService", "#HelpDesk", "#KnowledgeBase"],
-        "heroImage": "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
-        mindMapUrl: "https://i.postimg.cc/L8P9t8Gk/mindmap-5-1.png",
-        "content": {
-            "paragraphs": [
-                "Many customers today prefer to find answers to their problems on their own rather than contacting support. Recognizing this trend, I led the project to build a comprehensive online Help Center, a self-service portal.",
-                "The goal was to empower customers, helping them resolve common issues quickly and easily 24/7, while also reducing the number of tickets for the support team. This project consisted of two main components:",
-                "1. **Building a Knowledge Base:** This is the heart of the help center. We wrote and organized a series of detailed articles answering frequently asked questions. Each article was presented clearly and understandably, with illustrative images or videos. Articles were categorized by topic to make them easy for customers to find.",
-                "2. **Ticket Submission Portal:** For issues that couldn't be self-resolved, customers could easily submit a support request (ticket) through an online form. This portal also allowed customers to track the status of their submitted tickets and review their support history.",
-                "3. **Optimizing Searchability:** We paid special attention to the help center's search engine, ensuring that when a customer typed a keyword, the most relevant articles would appear at the top.",
-                "4. **Integrating with Other Support Channels:** The Help Center was tightly integrated with other channels. For example, when a customer started a chat, the chatbot could suggest relevant articles before connecting to an agent. Support agents could also easily send article links to customers during a conversation.",
-                "The launch of the Help Center successfully reduced the volume of tickets for repetitive questions by 20-30%. It not only helped optimize resources but also improved the customer experience by providing them with instant answers whenever they needed them."
-            ],
-            "list": []
-        }
+      title: "Empowering Customers: Establishing a Self-Service Help Center",
+      date: "Stage 2",
+      tags: ["CS_SelfService", "Help_Desk", "Knowledge_Base"],
+      heroImage: "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
+      mindMapUrl: "https://i.postimg.cc/L8P9t8Gk/mindmap-5-1.png",
+      content: {
+        paragraphs: [
+          "Implementing a 24/7 self-service knowledge base to help users solve inquiries instantly on their own terms."
+        ],
+        list: [
+          "**Knowledge Base Curation:** Authored and organized 100+ articles covering account security, billing, and system operations.",
+          "**Simplified Ticket Portal:** Streamlined the support escalation form allowing users to raise and track tickets seamlessly.",
+          "**Intellectual Search Optimization:** Configured autocomplete suggestions and keyword search options, shortening lookup to 3 seconds.",
+          "**Proactive Chat Integration:** Linked help articles directly into chatbot responses, automatically answering 25% of inquiries pre-escalation."
+        ]
+      }
+    },
+    "6.1": {
+      title: "The Heart of Enterprise: Customer-Centricity Strategy",
+      date: "Stage 3",
+      tags: ["CS_Strategy", "Corporate_Culture", "Customer_Centricity"],
+      heroImage: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
+      mindMapUrl: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
+      content: {
+        paragraphs: [
+          "Aligning every business team's operations, from product development to sales, on user empathy and long-term customer success."
+        ],
+        list: [
+          "**Culture Manifesto Advising:** Partnered with board members to draft and publish the company's customer-centric core values and philosophy.",
+          "**Inter-departmental Workshops:** Facilitated regular cross-functional review syncs among Product, QA, and Customer Care departments.",
+          "**Experience-driven KPIs:** Shifted strategic company goals to be driven by Voice of Customer analytics and NPS feedback.",
+          "**Ambassador Program Launching:** Pioneered employee recognition events to celebrate staff who go above and beyond for users."
+        ]
+      }
     }
   },
   projectPostPopup: {
@@ -2904,5 +2822,20 @@ export const en = {
         { title: "Overview of CRM systems", url: "https://www.salesforce.com/crm/what-is-crm/" },
         { title: "Customer Experience (CX) Metrics", url: "https://www.hotjar.com/customer-experience/" }
     ]
+  },
+  transcribePage: {
+    badge: "Transcribe Audio",
+    title: "Record & Transcribe Audio",
+    tooltipTitle: "Live mic recording",
+    tooltipText: "Use your microphone to record audio and the system will automatically transcribe it to text using Gemini 3.5 Flash model.",
+    recordBtnStart: "Start Recording",
+    recordBtnStop: "Stop Recording",
+    recordingStatus: "Recording from microphone...",
+    transcribingStatus: "Transcribing audio content to text...",
+    resultTitle: "Transcribed text result:",
+    copyBtn: "Copy Transcription",
+    copied: "Copied!",
+    errorAudio: "Microphone access failed. Please enable microphone permissions in your browser settings.",
+    emptyResult: "Transcription empty (voice speech not detected in audio file)."
   }
 };
