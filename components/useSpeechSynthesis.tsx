@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-function splitTextForGtts(text: string, maxLength = 200): string[] {
+function splitTextForGtts(text: string, maxLength = 160): string[] {
     const words = text.split(' ');
     const chunks: string[] = [];
     let currentChunk = '';
@@ -10,6 +10,44 @@ function splitTextForGtts(text: string, maxLength = 200): string[] {
         } else {
             if (currentChunk) chunks.push(currentChunk);
             currentChunk = word;
+        }
+    }
+    if (currentChunk) chunks.push(currentChunk);
+    return chunks;
+}
+
+function splitTextIntoSentences(text: string, maxLength = 160): string[] {
+    // Split by sentence boundaries (. ! ?) to preserve natural intonation and pauses
+    const sentences = text.match(/[^.!?]+[.!?]+(\s+|$)|[^.!?]+(\s+|$)/g) || [text];
+    const chunks: string[] = [];
+    let currentChunk = '';
+
+    for (const sentence of sentences) {
+        const trimmed = sentence.trim();
+        if (!trimmed) continue;
+
+        if (trimmed.length <= maxLength) {
+            if ((currentChunk + ' ' + trimmed).length <= maxLength) {
+                currentChunk += (currentChunk ? ' ' : '') + trimmed;
+            } else {
+                if (currentChunk) chunks.push(currentChunk);
+                currentChunk = trimmed;
+            }
+        } else {
+            // Sentence is too long, split by words to fit within maxLength
+            if (currentChunk) {
+                chunks.push(currentChunk);
+                currentChunk = '';
+            }
+            const words = trimmed.split(/\s+/);
+            for (const word of words) {
+                if ((currentChunk + ' ' + word).length <= maxLength) {
+                    currentChunk += (currentChunk ? ' ' : '') + word;
+                } else {
+                    if (currentChunk) chunks.push(currentChunk);
+                    currentChunk = word;
+                }
+            }
         }
     }
     if (currentChunk) chunks.push(currentChunk);
@@ -55,8 +93,11 @@ if (typeof window !== 'undefined' && !interactionListenerAttached) {
 }
 
 const gTTSVoices: SpeechSynthesisVoice[] = [
-    { name: 'Google Translate TTS (gTTS)', lang: 'vi-VN', default: false, localService: false, voiceURI: 'gtts-vi' } as any,
-    { name: 'Google Translate TTS (gTTS)', lang: 'en-US', default: false, localService: false, voiceURI: 'gtts-en' } as any,
+    { name: 'Gemini 3.5 Turbo AI (Mới nhất)', lang: 'en-US', default: false, localService: false, voiceURI: 'gemini-ai-turbo' } as any,
+    { name: 'Gemini 3.5 Live Translate', lang: 'en-US', default: false, localService: false, voiceURI: 'gemini-ai-translate' } as any,
+    { name: 'Google Translate (Tiếng Việt)', lang: 'vi-VN', default: false, localService: false, voiceURI: 'gtts-vi' } as any,
+    { name: 'Google Translate (English)', lang: 'en-US', default: false, localService: false, voiceURI: 'gtts-en' } as any,
+    { name: 'Google Translate (Multilingual/Auto)', lang: 'en-US', default: false, localService: false, voiceURI: 'gtts-multi' } as any,
 ];
 
 let globalGttsAudioQueue: HTMLAudioElement[] = [];
@@ -66,6 +107,7 @@ export const useSpeechSynthesis = () => {
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
     const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
     const keepAliveIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const activeSessionRef = useRef<string | null>(null);
 
     useEffect(() => {
         const handleGlobalStop = () => setIsSpeaking(false);
@@ -102,6 +144,7 @@ export const useSpeechSynthesis = () => {
     }, []);
 
     const cancel = useCallback(() => {
+        activeSessionRef.current = null;
         setIsSpeaking(false);
         if (window.speechSynthesis) {
             window.speechSynthesis.cancel();
@@ -127,23 +170,135 @@ export const useSpeechSynthesis = () => {
 
             // Cancel any ongoing speech to ensure clean state
             cancel();
+            
+            const sessionId = Math.random().toString(36).substring(2);
+            activeSessionRef.current = sessionId;
 
-            const isGttsVoice = options.voiceName && options.voiceName.includes('gTTS');
+            const isGttsVoice = options.voiceName && (options.voiceName.includes('gTTS') || options.voiceName.includes('Google Translate'));
+            const isGeminiVoice = options.voiceName && options.voiceName.includes('Gemini');
 
-            if (isGttsVoice) {
+            if (isGeminiVoice || isGttsVoice) {
                 try {
                     setIsSpeaking(true);
                     const targetLangCode = options.lang === 'en' ? 'en' : 'vi';
-                    const chunks = splitTextForGtts(text, 200);
+                    const chunks = splitTextIntoSentences(text, isGeminiVoice ? 500 : 160);
+                    
+                    if (isGeminiVoice) {
+                        let currentIndex = 0;
+                        const playNextGemini = async () => {
+                            if (activeSessionRef.current !== sessionId) return;
+
+                            if (currentIndex >= chunks.length) {
+                                setIsSpeaking(false);
+                                window.dispatchEvent(new Event('speech-synthesis-stopped'));
+                                options.onEnd?.();
+                                return;
+                            }
+
+                            try {
+                                const res = await fetch('/api/tts/gemini', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        text: chunks[currentIndex],
+                                        lang: targetLangCode,
+                                        voice: 'Zephyr'
+                                    })
+                                });
+                                
+                                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                                
+                                const data = await res.json();
+                                if (data.audio) {
+                                    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+                                    const binaryString = atob(data.audio);
+                                    const bytes = new Uint8Array(binaryString.length);
+                                    for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+                                    
+                                    const pcm16 = new Int16Array(bytes.buffer);
+                                    const float32 = new Float32Array(pcm16.length);
+                                    for (let i = 0; i < pcm16.length; i++) float32[i] = pcm16[i] / 32768.0;
+                                    
+                                    const buffer = audioCtx.createBuffer(1, float32.length, 24000);
+                                    buffer.getChannelData(0).set(float32);
+                                    
+                                    const source = audioCtx.createBufferSource();
+                                    source.buffer = buffer;
+                                    source.connect(audioCtx.destination);
+                                    source.onended = () => {
+                                        if (activeSessionRef.current === sessionId) {
+                                            currentIndex++;
+                                            playNextGemini();
+                                        }
+                                        audioCtx.close();
+                                    };
+                                    source.start();
+                                } else {
+                                    throw new Error('No audio data');
+                                }
+                            } catch (err) {
+                                console.warn('Gemini TTS failed, falling back to gTTS:', err);
+                                if (activeSessionRef.current !== sessionId) return;
+
+                                try {
+                                    const chunk = chunks[currentIndex];
+                                    const isSlow = options.rate !== undefined && options.rate < 0.8;
+                                    const googleLang = targetLangCode === 'en' ? 'en' : 'vi';
+                                    const fallbackUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${googleLang}&client=gtx&ttsspeed=${isSlow ? 0.24 : 1}`;
+                                    
+                                    const audio = new Audio();
+                                    audio.src = fallbackUrl;
+                                    audio.preload = 'auto';
+                                    if (options.rate !== undefined) audio.playbackRate = options.rate;
+                                    
+                                    globalGttsAudioQueue.push(audio);
+                                    
+                                    const cleanupAudio = () => {
+                                        audio.onended = null;
+                                        audio.onerror = null;
+                                        globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
+                                    };
+                                    
+                                    audio.onended = () => {
+                                        if (activeSessionRef.current !== sessionId) return;
+                                        cleanupAudio();
+                                        currentIndex++;
+                                        playNextGemini();
+                                    };
+                                    
+                                    audio.onerror = (e) => {
+                                        console.warn('Fallback gTTS failed:', e);
+                                        cleanupAudio();
+                                        currentIndex++;
+                                        playNextGemini();
+                                    };
+                                    
+                                    audio.play().catch(() => {
+                                        cleanupAudio();
+                                        currentIndex++;
+                                        playNextGemini();
+                                    });
+                                } catch (fallbackErr) {
+                                    console.error('Fallback failed:', fallbackErr);
+                                    currentIndex++;
+                                    playNextGemini();
+                                }
+                            }
+                        };
+                        playNextGemini();
+                        return;
+                    }
+
+                    // Pure gTTS logic
                     const isSlow = options.rate !== undefined && options.rate < 0.8;
                     const urls = chunks.map(chunk => ({
-                        url: `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${targetLangCode}&client=tw-ob&ttsspeed=${isSlow ? 0.24 : 1}`
+                        url: `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${targetLangCode}&client=gtx&ttsspeed=${isSlow ? 0.24 : 1}`
                     }));
                     
                     if (urls.length > 0) {
                         let currentIndex = 0;
-
                         const playNext = () => {
+                            if (activeSessionRef.current !== sessionId) return;
                             if (currentIndex >= urls.length) {
                                 setIsSpeaking(false);
                                 window.dispatchEvent(new Event('speech-synthesis-stopped'));
@@ -151,40 +306,42 @@ export const useSpeechSynthesis = () => {
                                 return;
                             }
 
-                            const audio = new Audio(urls[currentIndex].url);
+                            const audio = new Audio();
+                            audio.src = urls[currentIndex].url;
+                            audio.preload = 'auto';
                             if (options.rate !== undefined) audio.playbackRate = options.rate;
-                            if (options.pitch !== undefined && (audio as any).mozPreservesPitch !== undefined) {
-                                (audio as any).preservesPitch = options.pitch === 1;
-                            }
-
                             globalGttsAudioQueue.push(audio);
 
-                            audio.onended = () => {
+                            const cleanupAudio = () => {
+                                audio.onended = null;
+                                audio.onerror = null;
                                 globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
+                            };
+
+                            audio.onended = () => {
+                                if (activeSessionRef.current !== sessionId) return;
+                                cleanupAudio();
                                 currentIndex++;
                                 playNext();
                             };
                             audio.onerror = () => {
-                                globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
+                                cleanupAudio();
                                 currentIndex++;
-                                playNext(); // Skip error and try next
+                                playNext();
                             };
-                            
-                            audio.play().catch(err => {
-                                console.error('gTTS Audio Play Error:', err);
-                                setIsSpeaking(false);
-                                window.dispatchEvent(new Event('speech-synthesis-stopped'));
-                                options.onEnd?.();
+                            audio.play().catch(() => {
+                                cleanupAudio();
+                                currentIndex++;
+                                playNext();
                             });
                         };
-
                         playNext();
                     } else {
                         setIsSpeaking(false);
                         options.onEnd?.();
                     }
                 } catch (err) {
-                    console.error('gTTS Error:', err);
+                    console.error('TTS execution error:', err);
                     setIsSpeaking(false);
                     options.onEnd?.();
                 }
@@ -197,9 +354,6 @@ export const useSpeechSynthesis = () => {
                 return;
             }
 
-            const utterance = new SpeechSynthesisUtterance(text);
-            utteranceRef.current = utterance;
-
             let targetLangCode = 'vi-VN';
             if (options.lang === 'en') {
                 targetLangCode = 'en-US';
@@ -208,7 +362,6 @@ export const useSpeechSynthesis = () => {
             } else if (options.lang) {
                 targetLangCode = options.lang;
             }
-            utterance.lang = targetLangCode;
             
             let selectedVoice: SpeechSynthesisVoice | undefined;
 
@@ -219,10 +372,22 @@ export const useSpeechSynthesis = () => {
 
             // 2. If no specific voice or specific voice not found, apply smart fallback based on language
             if (!selectedVoice) {
-                if (targetLangCode === 'vi-VN') {
+                if (targetLangCode === 'vi-VN' || targetLangCode.startsWith('vi')) {
                     const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
-                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
+                        const viPriorityList = [
+                            'Microsoft HoaiMy Online',
+                            'Microsoft NamMinh Online',
+                            'Google tiếng Việt',
+                            'Google Vietnamese',
+                        ];
+                        
+                        let preferredVoice: SpeechSynthesisVoice | undefined;
+                        for (const name of viPriorityList) {
+                            preferredVoice = vietnameseVoices.find(v => v.name.includes(name));
+                            if (preferredVoice) break;
+                        }
+
                         if (!preferredVoice) {
                             preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('vietnam') || v.name.toLowerCase().includes('tiếng việt'));
                         }
@@ -233,12 +398,18 @@ export const useSpeechSynthesis = () => {
                 } else { // en-US
                     const englishVoices = voices.filter(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-'));
                     const enPriorityList = [
+                        'Microsoft Onyx Turbo Multilingual Online',
+                        'Microsoft Brian Online',
+                        'Microsoft Christopher Online',
+                        'Microsoft Aria Online',
+                        'Microsoft Guy Online',
+                        'Microsoft AvaMultilingual Online',
                         'Google US English',
                         'Google UK English Male',
                         'Google UK English Female',
                     ];
                     for (const name of enPriorityList) {
-                        const voice = englishVoices.find(v => v.name === name);
+                        const voice = englishVoices.find(v => v.name.includes(name));
                         if (voice) {
                             selectedVoice = voice;
                             break;
@@ -250,17 +421,131 @@ export const useSpeechSynthesis = () => {
                 }
             }
 
-
-            if (selectedVoice) {
-                utterance.voice = selectedVoice;
-            } else {
-                 if (voices.length > 0) {
-                    console.warn(`${targetLangCode} voice not found, using browser default for language.`);
-                }
+            // Fallback strategy: if the selected voice is remote network-based and might trigger "synthesis-failed",
+            // pre-locate a localService fallback voice in the same language family.
+            let backupVoice: SpeechSynthesisVoice | undefined;
+            if (selectedVoice && !selectedVoice.localService) {
+                const langPrefix = targetLangCode.split('-')[0].toLowerCase();
+                backupVoice = voices.find(v => v.localService && v.lang.toLowerCase().startsWith(langPrefix));
             }
 
+            const chunks = splitTextIntoSentences(text, 160);
+            if (chunks.length === 0) {
+                options.onEnd?.();
+                return;
+            }
+
+            setIsSpeaking(true);
+            let currentIndex = 0;
+            let retryWithBackup = false;
+
+            const playNextChunk = () => {
+                if (activeSessionRef.current !== sessionId) return;
+
+                if (currentIndex >= chunks.length) {
+                    cleanup();
+                    return;
+                }
+
+                const chunkText = chunks[currentIndex];
+                const utterance = new SpeechSynthesisUtterance(chunkText);
+                utteranceRef.current = utterance;
+                
+                utterance.lang = targetLangCode;
+                
+                // Real voices from window.speechSynthesis.getVoices() have extra properties 
+                // and methods that our gTTS mock objects lack. 
+                // We check if it is truly a SpeechSynthesisVoice by checking if it exists in the 
+                // original browser voices list or has standard behavior.
+                const isRealVoice = selectedVoice && 
+                                   window.speechSynthesis.getVoices().some(v => v.name === selectedVoice.name && v.lang === selectedVoice.lang);
+
+                if (retryWithBackup && backupVoice) {
+                    utterance.voice = backupVoice;
+                } else if (selectedVoice && isRealVoice) {
+                    utterance.voice = selectedVoice;
+                    
+                    // Special handling for Multilingual voices: they often prefer their base language
+                    // even when reading other languages.
+                    if (selectedVoice.name.toLowerCase().includes('multilingual')) {
+                        utterance.lang = selectedVoice.lang;
+                    }
+                }
+
+                if (options.pitch !== undefined) utterance.pitch = options.pitch;
+                if (options.rate !== undefined) utterance.rate = options.rate;
+
+                utterance.onstart = () => {
+                    if (activeSessionRef.current !== sessionId) return;
+                    setIsSpeaking(true);
+                    
+                    // Start or refresh keep-alive ping for Chrome
+                    if (keepAliveIntervalRef.current) clearInterval(keepAliveIntervalRef.current);
+                    keepAliveIntervalRef.current = setInterval(() => {
+                        if (window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+                            window.speechSynthesis.resume();
+                        }
+                    }, 5000);
+                };
+
+                utterance.onend = () => {
+                    if (activeSessionRef.current !== sessionId) return;
+                    currentIndex++;
+                    playNextChunk();
+                };
+
+                utterance.onerror = (event: SpeechSynthesisErrorEvent) => {
+                    if (activeSessionRef.current !== sessionId) return;
+
+                    if (event.error === 'not-allowed') {
+                        console.warn('Speech synthesis was blocked by browser. Stopping.');
+                        cleanup();
+                    } else if (event.error === 'interrupted') {
+                        console.log('Speech synthesis chunk was interrupted.');
+                    } else if (event.error === 'synthesis-failed' || event.error === 'network') {
+                        console.warn(`Speech synthesis error (${event.error}). Retrying with gTTS fallback...`);
+                        
+                        const remainingText = chunks.slice(currentIndex).join('. ');
+                        
+                        if (keepAliveIntervalRef.current) {
+                            clearInterval(keepAliveIntervalRef.current);
+                            keepAliveIntervalRef.current = null;
+                        }
+                        
+                        // Default to the first Vietnamese gTTS voice if we were speaking Vietnamese, otherwise English
+                        const fallbackVoiceName = targetLangCode.startsWith('vi') 
+                            ? 'Google Translate (Tiếng Việt)' 
+                            : 'Google Translate (English)';
+
+                        // Small delay before switching to HTTP mode
+                        setTimeout(() => {
+                            if (activeSessionRef.current === sessionId) {
+                                speak(remainingText, {
+                                    ...options,
+                                    voiceName: fallbackVoiceName
+                                });
+                            }
+                        }, 300);
+                        return;
+                    } else {
+                        console.error('SpeechSynthesisUtterance error:', event.error);
+                        
+                        if (!retryWithBackup && backupVoice) {
+                            console.warn('Voice failed. Trying offline backup voice:', backupVoice.name);
+                            retryWithBackup = true;
+                            playNextChunk();
+                        } else {
+                            currentIndex++;
+                            playNextChunk();
+                        }
+                    }
+                };
+
+                window.speechSynthesis.speak(utterance);
+            };
 
             const cleanup = () => {
+                if (activeSessionRef.current !== sessionId) return;
                 setIsSpeaking(false);
                 window.dispatchEvent(new Event('speech-synthesis-stopped'));
                 if (keepAliveIntervalRef.current) {
@@ -272,32 +557,8 @@ export const useSpeechSynthesis = () => {
                 }
             };
 
-            if (options.pitch !== undefined) utterance.pitch = options.pitch;
-            if (options.rate !== undefined) utterance.rate = options.rate;
-
-            utterance.onstart = () => {
-                setIsSpeaking(true);
-                // Start keep-alive ping, a workaround for browsers like Chrome
-                if (keepAliveIntervalRef.current) clearInterval(keepAliveIntervalRef.current);
-                keepAliveIntervalRef.current = setInterval(() => {
-                    if (window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
-                        window.speechSynthesis.resume();
-                    }
-                }, 5000);
-            };
-
-            utterance.onend = cleanup;
-            utterance.onerror = (event: SpeechSynthesisErrorEvent) => {
-                // Handle the "not-allowed" error which occurs when speech is initiated without user gesture.
-                if (event.error === 'not-allowed') {
-                    console.warn('Speech synthesis was blocked by the browser. It will retry after user interaction.');
-                } else if (event.error !== 'interrupted') {
-                    console.error('SpeechSynthesisUtterance.onerror:', event.error);
-                }
-                cleanup();
-            };
-
-            window.speechSynthesis.speak(utterance);
+            // Begin speaking the first chunk
+            playNextChunk();
         };
 
         // If the user has already interacted, speak immediately.

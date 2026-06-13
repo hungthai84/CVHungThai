@@ -194,14 +194,14 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
                         </section>
 
                         <section className="p-section">
-                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
-                                {t.projectsPage.badge} (Dự án tiêu biểu)
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.4rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.projectsPage.badge} (Dự án tiêu biểu - 16 dự án)
                             </h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                {projects.slice(0, 3).map(proj => (
-                                    <div key={proj.id} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
-                                        <strong style={{ color: '#101733' }}>{proj.title}</strong>
-                                        <p style={{ margin: '0.1rem 0 0 0', color: '#4b5563' }}>{proj.description}</p>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.2rem 1rem' }}>
+                                {projects.map((proj, idx) => (
+                                    <div key={proj.id} style={{ fontSize: '7.5pt', lineHeight: 1.2, display: 'flex', gap: '0.3rem', alignItems: 'flex-start' }}>
+                                        <span style={{ color: '#f97316', fontWeight: 800 }}>{idx + 1}.</span>
+                                        <span style={{ color: '#101733', fontWeight: 600 }}>{proj.title}</span>
                                     </div>
                                 ))}
                             </div>

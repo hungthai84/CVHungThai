@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
   <script src="https://scena.link/app.js"></script>
@@ -102,7 +102,7 @@
     }
 
     body {
-      font-family: "Inter", sans-serif;
+      font-family: "Play", "Inter", sans-serif;
       font-size: 1rem;
       line-height: 1.7;
       overflow: hidden;
@@ -1150,6 +1150,19 @@
         overflow: hidden;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* --- Premium Scroll Fade-In & Parallax Animation --- */
+    .info-card-scroll-animate {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+        transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, opacity;
+    }
+    
+    .info-card-scroll-animate.visible-in-view {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
     
     
@@ -3573,6 +3586,212 @@
       animation: idle-glow-animation 2.5s infinite ease-in-out;
     }
     
+    /* Banner Audio Speak Button */
+    .banner-speak-btn {
+        margin-top: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 9999px;
+        padding: 0.5rem 1.25rem 0.5rem 0.625rem;
+        color: white;
+        text-shadow: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+    }
+    .banner-speak-btn:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+    }
+    .banner-speak-btn:active {
+        transform: translateY(0) scale(0.98);
+    }
+    .banner-speak-glow-circle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: #f59e0b;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    .banner-speak-btn:hover .banner-speak-glow-circle {
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.9), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        transform: scale(1.05);
+    }
+
+    /* Nav Speak Button (Next to Badge) */
+    .nav-speak-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--sidebar-bg);
+        border: 1.5px solid var(--card-border);
+        border-radius: 9999px;
+        padding: 0.25rem 0.75rem 0.25rem 0.35rem;
+        color: var(--color-brand-text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: var(--card-box-shadow);
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .nav-speak-btn:hover {
+        transform: translateY(-1.5px);
+        border-color: var(--color-brand-orange);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .nav-speak-glow-circle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background: #f59e0b;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+    }
+    .nav-speak-glow-circle.is-playing {
+        background: #ef4444;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.65);
+    }
+    .nav-speak-badge {
+        white-space: nowrap;
+        opacity: 0.85;
+    }
+    .nav-sound-wave {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        height: 8px;
+        margin-left: 2px;
+    }
+    .nav-sound-wave span {
+        width: 2px;
+        height: 100%;
+        background: #ef4444;
+        border-radius: 2px;
+        animation: navWavePulse 1s infinite ease-in-out;
+    }
+    .nav-sound-wave span:nth-child(2) { animation-delay: 0.2s; }
+    .nav-sound-wave span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes navWavePulse {
+        0%, 100% { height: 4px; }
+        50% { height: 10px; }
+    }
+    .banner-speak-glow-circle::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        background: rgba(245, 158, 11, 0.3);
+        z-index: 1;
+        animation: bannerGlowPulse 2s infinite ease-in-out;
+    }
+    .banner-speak-glow-circle.is-playing::before {
+        animation: bannerGlowPulsePlay 1s infinite alternate;
+        background: rgba(239, 68, 68, 0.4);
+    }
+    .banner-speak-glow-circle.is-playing {
+        background: #ef4444;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    .banner-speak-text-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        line-height: 1.25;
+    }
+    .banner-speak-badge {
+        font-size: 0.625rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #fbbf24;
+    }
+    .banner-speak-title {
+        font-size: 0.775rem;
+        font-weight: 600;
+        color: white;
+    }
+    
+    @keyframes bannerGlowPulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+        50% {
+            transform: scale(1.3);
+            opacity: 0.9;
+            filter: blur(2px);
+        }
+    }
+    @keyframes bannerGlowPulsePlay {
+        0% {
+            transform: scale(0.95);
+            opacity: 0.4;
+        }
+        100% {
+            transform: scale(1.4);
+            opacity: 1;
+            filter: blur(3px);
+        }
+    }
+    
+    /* Sound wave animation helper */
+    .banner-sound-wave {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 11px;
+        margin-left: 0.5rem;
+    }
+    .banner-sound-wave span {
+        width: 2px;
+        background: #fbbf24;
+        border-radius: 9999px;
+    }
+    .banner-speak-glow-circle.is-playing + .banner-speak-text-group + .banner-sound-wave span {
+        background: #ef4444;
+    }
+    .banner-sound-wave span:nth-child(1) {
+        height: 50%;
+        animation: soundWaveHeight 0.8s ease-in-out infinite alternate;
+    }
+    .banner-sound-wave span:nth-child(2) {
+        height: 100%;
+        animation: soundWaveHeight 0.6s ease-in-out infinite alternate 0.15s;
+    }
+    .banner-sound-wave span:nth-child(3) {
+        height: 35%;
+        animation: soundWaveHeight 0.7s ease-in-out infinite alternate 0.3s;
+    }
+    @keyframes soundWaveHeight {
+        0% {
+            height: 25%;
+        }
+        100% {
+            height: 100%;
+        }
+    }
+    
     .project-post-body p {
         font-size: 1rem;
         line-height: 1.8;
@@ -4819,7 +5038,7 @@
     }
 
     #printable-content {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Play', 'Inter', sans-serif;
         color: #333;
     }
     #printable-content .print-page {

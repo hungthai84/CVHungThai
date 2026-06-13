@@ -269,30 +269,96 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     }, [voices]);
 
     const groupedVoices = useMemo(() => {
-        if (!voices.length) return { vi: [], en: [], other: [] };
+        if (!voices.length) return { vi: [], multi: [], en: [] };
 
         const vi: typeof voices = [];
+        const multi: typeof voices = [];
         const en: typeof voices = [];
-        const other: typeof voices = [];
 
         const seenKeys = new Set<string>();
+
+        const viPriorityList = [
+            'Microsoft HoaiMy Online',
+            'Microsoft NamMinh Online',
+            'Google tiếng Việt',
+        ];
+
+        const enPriorityList = [
+            'Gemini 3.5 Turbo AI (Mới nhất)',
+            'Gemini 3.5 Live Translate',
+            'Microsoft Onyx Turbo Multilingual Online',
+            'Microsoft Brian Online',
+            'Microsoft Christopher Online',
+            'Microsoft Aria Online',
+            'Microsoft Guy Online',
+            'Microsoft AvaMultilingual Online',
+            'Microsoft AndrewMultilingual Online',
+            'Google US English',
+            'Google UK English Male',
+            'Google UK English Female',
+        ];
 
         voices.forEach(voice => {
             const key = `${voice.name}_${voice.lang}`;
             if (seenKeys.has(key)) return;
             seenKeys.add(key);
 
-            const vLang = voice.lang.toLowerCase();
-            if (vLang.startsWith('vi')) {
+            const name = voice.name.toLowerCase();
+            const lang = voice.lang.toLowerCase();
+            
+            const isGtts = name.includes('gtts');
+            const isGemini = name.includes('gemini');
+            const isNatural = name.includes('natural');
+            const isTurbo = name.includes('turbo');
+            const isNeural = name.includes('neural');
+            const isGoogle = name.includes('google');
+            const isMicrosoft = name.includes('microsoft') && (name.includes('online') || name.includes('turbo') || name.includes('natural'));
+            
+            const isReliable = voice.localService || isGtts || isGemini || isNatural || isTurbo || isNeural || isGoogle || isMicrosoft;
+            
+            if (!isReliable) return;
+
+            // Categorize
+            if (lang.startsWith('vi')) {
                 vi.push(voice);
-            } else if (vLang.startsWith('en')) {
+            } else if (isGemini || name.includes('multilingual') || name.includes('international') || (isGoogle && lang.startsWith('en')) || (isMicrosoft && name.includes('multilingual'))) {
+                multi.push(voice);
+            } else if (lang.startsWith('en')) {
                 en.push(voice);
-            } else {
-                other.push(voice);
             }
         });
 
-        return { vi, en, other };
+        // Sort based on priority lists
+        const sortByPriority = (priorityList: string[]) => (a: SpeechSynthesisVoice, b: SpeechSynthesisVoice) => {
+            const indexA = priorityList.findIndex(p => a.name.includes(p));
+            const indexB = priorityList.findIndex(p => b.name.includes(p));
+            
+            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+            if (indexA !== -1) return -1;
+            if (indexB !== -1) return 1;
+            
+            // Push Turbo/Natural/Neural voices higher even if not in priority list
+            const score = (v: SpeechSynthesisVoice) => {
+                const n = v.name.toLowerCase();
+                if (n.includes('turbo')) return 1;
+                if (n.includes('natural')) return 2;
+                if (n.includes('neural')) return 3;
+                if (n.includes('online')) return 4;
+                return 10;
+            };
+            
+            const scoreA = score(a);
+            const scoreB = score(b);
+            if (scoreA !== scoreB) return scoreA - scoreB;
+
+            return a.name.localeCompare(b.name);
+        };
+
+        vi.sort(sortByPriority(viPriorityList));
+        en.sort(sortByPriority(enPriorityList));
+        multi.sort(sortByPriority(enPriorityList)); // Use English list for multi as most are EN based
+
+        return { vi, multi, en };
     }, [voices]);
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
@@ -642,11 +708,49 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                 >
                                                     {groupedVoices.vi.length > 0 && (
                                                         <optgroup label={language === 'vi' ? "Giọng nói Tiếng Việt" : "Vietnamese Voices"}>
-                                                            {groupedVoices.vi.map(voice => (
-                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                    {voice.name} ({voice.lang})
-                                                                </option>
-                                                            ))}
+                                                            {groupedVoices.vi.map(voice => {
+                                                                let displayName = voice.name;
+                                                                const lowerName = voice.name.toLowerCase();
+                                                                if (lowerName.includes('google tiếng việt') || lowerName.includes('google vietnamese')) {
+                                                                    displayName = language === 'vi'
+                                                                        ? `${voice.name} (Chrome - Tự nhiên & Miễn phí)`
+                                                                        : `${voice.name} (Chrome - Natural & Free)`;
+                                                                } else if (lowerName.includes('hoaimy')) {
+                                                                    displayName = language === 'vi'
+                                                                        ? `${voice.name} (Microsoft - Nữ truyền cảm)`
+                                                                        : `${voice.name} (Microsoft Neural Female)`;
+                                                                } else if (lowerName.includes('namminh')) {
+                                                                    displayName = language === 'vi'
+                                                                        ? `${voice.name} (Microsoft - Nam trầm ấm)`
+                                                                        : `${voice.name} (Microsoft Neural Male)`;
+                                                                } else if (lowerName.includes('translate') || lowerName.includes('gtts')) {
+                                                                    displayName = language === 'vi'
+                                                                        ? `${voice.name} (Google dịch - Dự phòng cực nhanh)`
+                                                                        : `${voice.name} (Google Translate - Fast Backup)`;
+                                                                }
+                                                                return (
+                                                                    <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                        {displayName}
+                                                                    </option>
+                                                                );
+                                                            })}
+                                                        </optgroup>
+                                                    )}
+                                                    {groupedVoices.multi.length > 0 && (
+                                                        <optgroup label={language === 'vi' ? "Giọng nói Đa ngôn ngữ" : "Multilingual Voices"}>
+                                                            {groupedVoices.multi.map(voice => {
+                                                                let displayName = voice.name;
+                                                                if (voice.name.includes('Gemini')) {
+                                                                    displayName = language === 'vi'
+                                                                        ? `${voice.name} (Mới nhất - Gemini AI)`
+                                                                        : `${voice.name} (Latest - Gemini AI)`;
+                                                                }
+                                                                return (
+                                                                    <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                        {displayName}
+                                                                    </option>
+                                                                );
+                                                            })}
                                                         </optgroup>
                                                     )}
                                                     {groupedVoices.en.length > 0 && (
@@ -658,20 +762,41 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                             ))}
                                                         </optgroup>
                                                     )}
-                                                    {groupedVoices.other.length > 0 && (
-                                                        <optgroup label={language === 'vi' ? "Giọng nói trình duyệt khác" : "Other Browser Voices"}>
-                                                            {groupedVoices.other.map(voice => (
-                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                    {voice.name} ({voice.lang})
-                                                                </option>
-                                                            ))}
-                                                        </optgroup>
-                                                    )}
                                                 </select>
                                                 <div className="select-arrow">
                                                     <Icons.ChevronDownIcon size={18} />
                                                 </div>
                                             </div>
+                                            {localVoiceName && (localVoiceName.toLowerCase().includes('google tiếng việt') || localVoiceName.toLowerCase().includes('google vietnamese')) && (
+                                                <div className="mt-2 text-xs text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded-lg flex gap-2 items-start leading-relaxed">
+                                                    <span className="text-sm">💡</span>
+                                                    <span>
+                                                        {language === 'vi'
+                                                            ? 'Bạn đã chọn Giọng Google Chrome. Đây là giọng đọc cao cấp mặc định của trình duyệt Chrome, có âm điệu cực kỳ chuẩn văn phong và mượt mà!'
+                                                            : 'You selected the Google Chrome Voice. This is a premium native browser voice with highly natural Vietnamese phrasing!'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {localVoiceName && localVoiceName.includes('Gemini') && (
+                                                <div className="mt-2 text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 rounded-lg flex gap-2 items-start leading-relaxed">
+                                                    <span className="text-sm">✨</span>
+                                                    <span>
+                                                        {language === 'vi'
+                                                            ? 'Đây là giọng nói tiên tiến dịch/phát âm chuẩn quốc tế sử dụng mô hình Gemini 3.5 AI/3.1 TTS thời gian thực.'
+                                                            : 'Advanced voice offering international translation and real-time generation powered by Gemini 3.5 AI/3.1 TTS.'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {localVoiceName && localVoiceName.includes('Microsoft') && (
+                                                <div className="mt-2 text-xs text-blue-600 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-2 rounded-lg flex gap-2 items-start leading-relaxed">
+                                                    <span className="text-sm">🎙️</span>
+                                                    <span>
+                                                        {language === 'vi'
+                                                            ? 'Đây là giọng đọc Microsoft Online Neural thế hệ mới, hỗ trợ ngắt nghỉ truyền cảm và âm điệu rõ nét.'
+                                                            : 'Next-generation Microsoft Online Neural voice with expressive breathing and high clarity.'}
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="setting-item flex-col items-start gap-2">
                                             <label htmlFor="ai-voice-pitch" className="w-full flex justify-between">

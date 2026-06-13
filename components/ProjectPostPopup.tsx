@@ -10,6 +10,7 @@ import LinkEmbedPopup from './LinkEmbedPopup';
 import Lightbox from './Lightbox';
 import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
+import { useSpeechSynthesis } from './useSpeechSynthesis';
 
 const PROJECT_IMAGES: Record<string, string> = {
     "1.1": "https://i.postimg.cc/Y9ywtYwY/1-1-Xay-dung-Phong-Dich-vu-Khach-hang.png",
@@ -54,6 +55,54 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     }, [projectId, post, t]);
     
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
+
+    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
+    const { isSpeaking, speak, cancel } = useSpeechSynthesis();
+
+    useEffect(() => {
+        return () => {
+            cancel();
+        };
+    }, [projectId, cancel]);
+
+    const handleToggleSpeech = () => {
+        if (isSpeaking) {
+            cancel();
+        } else {
+            const getPlainText = (htmlOrMarkdown: string) => {
+                return htmlOrMarkdown
+                    .replace(/<[^>]*>/g, ' ')
+                    .replace(/\*\*|__/g, '')
+                    .replace(/&bull;/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            };
+
+            const plainParagraphs = post.content.paragraphs.map((p: string) => getPlainText(p));
+            const plainList = post.content.list ? post.content.list.map((item: string) => getPlainText(item)) : [];
+            
+            const intro = language === 'vi' 
+                ? `Sau đây là nội dung chi tiết bài viết dự án mang tên: ${post.title}.`
+                : `The following is the detailed article for the project of: ${post.title}.`;
+                
+            const fullSpeechText = [
+                intro,
+                ...plainParagraphs,
+                ...plainList
+            ].join('. ');
+
+            const defaultAiVoiceName = 'Google Translate TTS (gTTS)';
+            const voiceToUse = selectedAiVoiceName || defaultAiVoiceName;
+
+            speak(fullSpeechText, {
+                voiceName: voiceToUse,
+                lang: language,
+                pitch: aiVoicePitch,
+                rate: aiVoiceRate
+            });
+        }
+    };
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -185,13 +234,41 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     return (
         <PageLayout id={id}>
             <div className={`info-card project-post-page-card ${projectClass}`}> 
-                <div className="project-post-nav-header">
-                    <InfoBadge
-                        icon={<Icons.PencilIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
+                <div className="project-post-nav-header flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleToggleSpeech}
+                            type="button"
+                            className={`nav-speak-btn ${isSpeaking ? 'active-speaking' : ''}`}
+                            title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin dự án' : 'Read project details')}
+                        >
+                            <div className={`nav-speak-glow-circle ${isSpeaking ? 'is-playing' : ''}`}>
+                                {isSpeaking ? (
+                                    <Icons.PauseIcon size={12} className="relative z-10 fill-white text-white" />
+                                ) : (
+                                    <Icons.PlayIcon size={12} className="relative z-10 fill-white text-white translate-x-[1px]" />
+                                )}
+                            </div>
+                            <div className="nav-speak-text-group">
+                                <span className="nav-speak-badge">
+                                    {language === 'vi' ? 'Trình đọc tin AI' : 'AI Reader'}
+                                </span>
+                            </div>
+                            {isSpeaking && (
+                                <div className="nav-sound-wave">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            )}
+                        </button>
+                        <InfoBadge
+                            icon={<Icons.PencilIcon />}
+                            text={pageData.badge}
+                            tooltipTitle={pageData.tooltipTitle}
+                            tooltipText={pageData.tooltipText}
+                        />
+                    </div>
                     <button
                         onClick={() => onNavigate?.('projects')}
                         className="btn btn-secondary z-10"
@@ -219,10 +296,14 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     </div>
                                                 </div>
 
+
+
                                             </div>
                                         </div>
                                         
                                         <div className="project-post-body">
+
+
                                             {achievement && (
                                                 <div className="project-post-achievement-card-wrapper mb-6 animate-fadeIn" style={{ width: '50%', minWidth: '280px', maxWidth: '100%' }}>
                                                     <div className="text-xs uppercase tracking-wider font-semibold opacity-60 mb-2.5 flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
