@@ -316,10 +316,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         const enPriorityList = [
             'Microsoft Aria Online',
             'Microsoft Christopher Online',
-            'Microsoft Guy Online',
-            'Microsoft Brian Online',
             'Google US English',
-            'Google UK English Male',
             'Google UK English Female',
         ];
 
@@ -341,7 +338,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
             if (lang.startsWith('vi')) {
                 vi.push(voice);
             } else if (lang.startsWith('en')) {
-                en.push(voice);
+                // Keep only the selected high-quality English voices
+                const isPreferred = enPriorityList.some(priority => voice.name.includes(priority));
+                if (isPreferred) {
+                    en.push(voice);
+                }
             } else if (name.includes('multilingual') || name.includes('international')) {
                 multi.push(voice);
             }
