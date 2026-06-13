@@ -150,7 +150,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
         // Migration from old 'video' value to the new URL-based system
         if (savedWallpaper === 'video') {
-            savedWallpaper = 'https://cdn.scena.ai/project/9626/3831bf105bab4a399b35e79c5a8b4f1d3cfc4fe5ea48812f948fa55c90792dc4.mp4';
+            savedWallpaper = 'https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4';
         }
 
         if (savedWallpaper) {

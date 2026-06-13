@@ -369,10 +369,11 @@ const App: React.FC = () => {
     const isCustomOrbiting = wallpaper === 'orbiting-planets';
     const isCustomDotted = wallpaper === 'dotted-pattern';
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
+    const isWaveGradient = wallpaper === 'wave-gradient';
 
     return (
         <>
-            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}>
+            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''} ${isWaveGradient ? 'wallpaper-wave-gradient' : ''}`}>
                 {isVideo ? (
                     <video 
                         key={wallpaper}
@@ -385,6 +386,12 @@ const App: React.FC = () => {
                     />
                 ) : isCustomOrbiting ? (
                     <div className="holder"></div>
+                ) : isWaveGradient ? (
+                    <div className="wave-container">
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                    </div>
                 ) : isCustomDotted || isCustomDarkDotted ? (
                     null
                 ) : (
@@ -439,7 +446,7 @@ const App: React.FC = () => {
                                 onClick={() => {
                                     setThemeMode(themeMode === 'light' ? 'dark' : 'light');
                                 }}
-                                className="top-theme-toggle-btn"
+                                className="top-theme-toggle-btn highlighted-white-btn"
                                 title={themeMode === 'light' ? (language === 'vi' ? 'Chuyển sang chế độ tối' : 'Switch to dark mode') : (language === 'vi' ? 'Chuyển sang chế độ sáng' : 'Switch to light mode')}
                                 aria-label="Toggle theme"
                             >

@@ -1508,13 +1508,7 @@ export const vi = {
     submitComment: "Gửi bình luận",
     generatingMindMap: "Đang tạo sơ đồ tư duy...",
     mindMapError: "Không thể tạo sơ đồ tư duy lúc này.",
-    sidebarWidgetTitle: "Sơ đồ tư duy",
-    referenceLinksTitle: "Tài liệu tham khảo",
-    referenceLinks: [
-      { title: "Tìm hiểu về phương pháp Agile", url: "https://www.atlassian.com/vi/agile" },
-      { title: "Tổng quan về hệ thống CRM", url: "https://www.salesforce.com/vn/crm/what-is-crm/" },
-      { title: "Các chỉ số Trải nghiệm Khách hàng (CX)", url: "https://www.hotjar.com/customer-experience/" }
-    ]
+    sidebarWidgetTitle: "Sơ đồ tư duy"
   },
   transcribePage: {
     badge: "Dịch giọng nói",
@@ -3042,13 +3036,7 @@ export const en = {
     submitComment: "Submit Comment",
     generatingMindMap: "Generating mind map...",
     mindMapError: "Could not generate mind map at this time.",
-    sidebarWidgetTitle: "Mind Map",
-    referenceLinksTitle: "Reference Links",
-    referenceLinks: [
-        { title: "Learn about Agile methodology", url: "https://www.atlassian.com/agile" },
-        { title: "Overview of CRM systems", url: "https://www.salesforce.com/crm/what-is-crm/" },
-        { title: "Customer Experience (CX) Metrics", url: "https://www.hotjar.com/customer-experience/" }
-    ]
+    sidebarWidgetTitle: "Mind Map"
   },
   transcribePage: {
     badge: "Transcribe Audio",

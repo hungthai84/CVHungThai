@@ -65,13 +65,13 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card home-hero-card">
-                 <video 
+                    <video 
                     autoPlay 
                     muted 
                     loop 
                     playsInline 
                     className="home-hero-card-bg-video"
-                    src="https://cdn.scena.ai/project/9626/3831bf105bab4a399b35e79c5a8b4f1d3cfc4fe5ea48812f948fa55c90792dc4.mp4"
+                    src="https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4"
                     poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
                 />
                 <div className="home-hero-card-overlay"></div>
@@ -82,6 +82,7 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                             text={heroData.badge || t.sidebar.nav.home}
                             tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
                             tooltipText={heroData.tooltipText || "Chào mừng đến với hồ sơ cá nhân của tôi."}
+                            className="white-highlight-badge"
                         />
                     </div>
                     

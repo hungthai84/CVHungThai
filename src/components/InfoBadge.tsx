@@ -5,12 +5,13 @@ interface InfoBadgeProps {
     text: string;
     tooltipTitle: string;
     tooltipText: string;
+    className?: string;
 }
 
-const InfoBadge: React.FC<InfoBadgeProps> = ({ icon, text, tooltipTitle, tooltipText }) => {
+const InfoBadge: React.FC<InfoBadgeProps> = ({ icon, text, tooltipTitle, tooltipText, className = '' }) => {
     return (
-        <div className="about-badge-container">
-            <div className="info-badge">
+        <div className={`about-badge-container ${className}`}>
+            <div className={`info-badge ${className ? 'highlighted-white-badge' : ''}`}>
                 <div className="badge-glow"></div>
                 <span className="badge-content">
                     {icon}

@@ -6,7 +6,6 @@ import * as Icons from './Icons';
 import { useTheme } from '../contexts/ThemeContext';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
-import LinkEmbedPopup from './LinkEmbedPopup';
 import Lightbox from './Lightbox';
 import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
@@ -54,8 +53,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         return achList.find((a: any) => a.id === projectId || a.title === post?.title);
     }, [projectId, post, t]);
     
-    const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
-
     const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
     const { isSpeaking, speak, cancel } = useSpeechSynthesis();
 
@@ -236,24 +233,26 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             <div className={`info-card project-post-page-card ${projectClass}`}> 
                 <div className="project-post-nav-header flex items-center justify-between">
                     <div className="flex items-center gap-4">
+                        <InfoBadge
+                            icon={<Icons.PencilIcon />}
+                            text={pageData.badge}
+                            tooltipTitle={pageData.tooltipTitle}
+                            tooltipText={pageData.tooltipText}
+                        />
+                    </div>
+                    <div className="flex items-center gap-3 relative z-10">
                         <button
                             onClick={handleToggleSpeech}
                             type="button"
-                            className={`nav-speak-btn ${isSpeaking ? 'active-speaking' : ''}`}
+                            className={`btn btn-secondary ${isSpeaking ? 'active-speaking' : ''}`}
                             title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin dự án' : 'Read project details')}
                         >
-                            <div className={`nav-speak-glow-circle ${isSpeaking ? 'is-playing' : ''}`}>
-                                {isSpeaking ? (
-                                    <Icons.PauseIcon size={12} className="relative z-10 fill-white text-white" />
-                                ) : (
-                                    <Icons.PlayIcon size={12} className="relative z-10 fill-white text-white translate-x-[1px]" />
-                                )}
-                            </div>
-                            <div className="nav-speak-text-group">
-                                <span className="nav-speak-badge">
-                                    {language === 'vi' ? 'Trình đọc tin AI' : 'AI Reader'}
-                                </span>
-                            </div>
+                            {isSpeaking ? (
+                                <Icons.PauseIcon size={18} className="text-red-500 fill-current" />
+                            ) : (
+                                <Icons.PlayIcon size={18} className="translate-x-[1px]" />
+                            )}
+                            <span>{language === 'vi' ? 'Trình đọc tin AI' : 'AI Reader'}</span>
                             {isSpeaking && (
                                 <div className="nav-sound-wave">
                                     <span></span>
@@ -262,20 +261,14 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                 </div>
                             )}
                         </button>
-                        <InfoBadge
-                            icon={<Icons.PencilIcon />}
-                            text={pageData.badge}
-                            tooltipTitle={pageData.tooltipTitle}
-                            tooltipText={pageData.tooltipText}
-                        />
+                        <button
+                            onClick={() => onNavigate?.('projects')}
+                            className="btn btn-secondary"
+                        >
+                            <Icons.ChevronLeftIcon size={18} />
+                            <span>{pageData.backToProjects}</span>
+                        </button>
                     </div>
-                    <button
-                        onClick={() => onNavigate?.('projects')}
-                        className="btn btn-secondary z-10"
-                    >
-                        <Icons.ChevronLeftIcon size={18} />
-                        <span>{pageData.backToProjects}</span>
-                    </button>
                 </div>
 
                  <div className="project-post-scroll-content no-scrollbar" ref={scrollRef}>
@@ -288,7 +281,10 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                         <div className="project-hero-container">
                                             {post.heroImage && <img src={post.heroImage} alt={post.title} className="project-post-hero-image-bg" />}
                                             <div className="project-hero-container-inner">
-                                                <h1 className="project-post-title on-banner">{post.title}</h1>
+                                                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+                                                    <h1 className="project-post-title on-banner flex-1">{post.title}</h1>
+                                                </div>
+
                                                 <div className="project-hero-meta">
                                                     <span className="project-post-date">{post.date}</span>
                                                     <div className="project-post-tags">
@@ -388,17 +384,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     ))}
                                                 </div>
                                             </div>
-                                            
-                                            <div className="sidebar-widget">
-                                                <h4 className="sidebar-widget-title">{pageData.referenceLinksTitle}</h4>
-                                                <ul className="reference-links-list">
-                                                    {(pageData.referenceLinks || []).map((link: {title: string, url: string}) => (
-                                                        <li key={link.title}>
-                                                            <a onClick={(e) => { e.preventDefault(); setEmbeddingUrl(link.url); }}>{link.title}</a>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
                                         </div>
                                     )}
 
@@ -475,10 +460,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                         </main>
                     </div>
                 </div>
-            {embeddingUrl && document.getElementById('popup-root') && createPortal(
-                <LinkEmbedPopup url={embeddingUrl} onClose={() => setEmbeddingUrl(null)} />,
-                document.getElementById('popup-root')!
-            )}
             {isLightboxOpen && PROJECT_IMAGES[projectId] && (
                 <Lightbox
                     images={[{ src: PROJECT_IMAGES[projectId], alt: post.title }]}

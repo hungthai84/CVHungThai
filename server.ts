@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { requireAuth, AuthRequest } from "./middleware/auth.ts";
+import { requireAuth, AuthRequest } from "./src/middleware/auth.ts";
 import { getOrCreateUser } from "./src/db/users.ts";
 import { db } from "./src/db/index.ts";
 import { entries, chatHistory } from "./src/db/schema.ts";

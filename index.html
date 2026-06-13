@@ -1309,7 +1309,7 @@
         width: 100%;
         height: 100%;
         z-index: 2;
-        background-image: linear-gradient(to top, rgba(var(--sidebar-bg-rgb), 0.5) 0%, rgba(var(--sidebar-bg-rgb), 0) 50%);
+        background-image: linear-gradient(to top, rgba(var(--sidebar-bg-rgb), 0.1) 0%, rgba(var(--sidebar-bg-rgb), 0) 40%);
     }
     .home-hero-card-content-wrapper {
         position: relative;
@@ -3653,6 +3653,26 @@
         border-color: var(--color-brand-orange);
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+    .nav-speak-btn.on-banner-btn {
+        background: rgba(var(--card-bg-rgb), 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.35rem 1rem 0.35rem 0.35rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .on-banner-btn .nav-speak-badge {
+        color: white;
+        opacity: 0.9;
+        font-weight: 700;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .on-banner-btn:hover {
+        background: rgba(var(--card-bg-rgb), 0.3);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+    }
     .nav-speak-glow-circle {
         position: relative;
         display: flex;
@@ -5292,6 +5312,90 @@
       from { opacity: 1; }
       to { opacity: 0; }
     }
+
+    /* Wave gradient background */
+    .wallpaper-wave-gradient {
+        background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
+        animation: wave-bg-gradient 15s ease infinite;
+        background-size: 400% 400%;
+        background-attachment: fixed;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    @keyframes wave-bg-gradient {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 0% 0%; }
+    }
+    
+    .wave-container {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        overflow: hidden;
+        z-index: 0;
+    }
+    
+    .wave-container .wave {
+        background: rgb(255 255 255 / 25%);
+        border-radius: 1000% 1000% 0 0;
+        position: absolute; /* Changed from fixed to absolute to contain inside .app-background */
+        width: 200%;
+        height: 12em;
+        animation: wave-animation 10s -3s linear infinite;
+        transform: translate3d(0, 0, 0);
+        opacity: 0.8;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+    }
+    
+    .wave-container .wave:nth-of-type(2) {
+        bottom: -1.25em;
+        animation: wave-animation 18s linear reverse infinite;
+        opacity: 0.8;
+    }
+    
+    .wave-container .wave:nth-of-type(3) {
+        bottom: -2.5em;
+        animation: wave-animation 20s -1s reverse infinite;
+        opacity: 0.9;
+    }
+    
+    @keyframes wave-animation {
+        2% { transform: translateX(1); }
+        25% { transform: translateX(-25%); }
+        50% { transform: translateX(-50%); }
+        75% { transform: translateX(-25%); }
+        100% { transform: translateX(1); }
+    }
+    
+    /* White prominent styles requested by user */
+    .highlighted-white-btn,
+    .white-highlight-badge .highlighted-white-badge {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        color: #000000 !important;
+        border: 2px solid #ffffff !important;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    .highlighted-white-btn svg,
+    .white-highlight-badge .highlighted-white-badge svg,
+    .highlighted-white-btn span,
+    .white-highlight-badge .highlighted-white-badge span {
+        color: #000000 !important;
+    }
+    
+    .highlighted-white-btn:hover,
+    .white-highlight-badge:hover .highlighted-white-badge {
+        background-color: #ffffff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.7) !important;
+        border-color: #ffffff !important;
+    }
   </style>
 <script type="importmap">
 {
@@ -5305,7 +5409,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body>
 	   <!-- Mouase Magic Cursor Start -->
@@ -5321,6 +5424,6 @@
   <div id="popup-root"></div>
   
   <script src="https://scena.link/app.js"></script>
-  <script type="module" src="/index.tsx"></script>
+  <script type="module" src="/src/index.tsx"></script>
 </body>
 </html>

@@ -137,6 +137,31 @@ const specialAndVideoWallpapers = [
         thumbnail: 'https://i.postimg.cc/L6TVLSPN/videoframe-3537.png',
     },
     {
+        id: 'https://cdn.dribbble.com/userupload/18230475/file/original-d7ab36998c2277e97c1996d837a4673c.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/jS3rSGdF/videoframe-8901.png',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/16365481/file/original-527fee647d12f31fce8a309ad136c4bb.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/BnmJ1jNN/videoframe-3046.png',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/15594644/file/original-6008d4b0ddcff73c116cb7989a144a71.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/NfYtJ6zp/videoframe-1990.png',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/14779635/file/original-1aca59fc5dc52bee9dcd291a27effcbf.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/yNJW1hB0/videoframe-3097.png',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/10782874/file/original-06f7280dda982b62cd9452b0da032598.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/vBgPtKyD/videoframe-4678.png',
+    },
+    {
         id: 'orbiting-planets',
         type: 'custom' as const,
         thumbnail: 'https://images.pexels.com/photos/1655166/pexels-photo-1655166.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -154,6 +179,11 @@ const specialAndVideoWallpapers = [
         thumbnail: `radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)`,
         thumbnailBgColor: '#1d1f20',
         thumbnailBgSize: '11px 11px',
+    },
+    {
+        id: 'wave-gradient',
+        type: 'custom' as const,
+        thumbnail: 'linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%)',
     },
 ];
 
@@ -284,15 +314,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         ];
 
         const enPriorityList = [
-            'Gemini 3.5 Turbo AI (Mới nhất)',
-            'Gemini 3.5 Live Translate',
-            'Microsoft Onyx Turbo Multilingual Online',
-            'Microsoft Brian Online',
-            'Microsoft Christopher Online',
             'Microsoft Aria Online',
+            'Microsoft Christopher Online',
             'Microsoft Guy Online',
-            'Microsoft AvaMultilingual Online',
-            'Microsoft AndrewMultilingual Online',
+            'Microsoft Brian Online',
             'Google US English',
             'Google UK English Male',
             'Google UK English Female',
@@ -306,25 +331,19 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
             const name = voice.name.toLowerCase();
             const lang = voice.lang.toLowerCase();
             
-            const isGtts = name.includes('gtts');
-            const isGemini = name.includes('gemini');
-            const isNatural = name.includes('natural');
-            const isTurbo = name.includes('turbo');
-            const isNeural = name.includes('neural');
             const isGoogle = name.includes('google');
-            const isMicrosoft = name.includes('microsoft') && (name.includes('online') || name.includes('turbo') || name.includes('natural'));
+            const isMicrosoftOnline = name.includes('microsoft') && name.includes('online');
             
-            const isReliable = voice.localService || isGtts || isGemini || isNatural || isTurbo || isNeural || isGoogle || isMicrosoft;
-            
-            if (!isReliable) return;
+            // Only keep Chrome (Google) and Edge (Microsoft Online) voices
+            if (!isGoogle && !isMicrosoftOnline) return;
 
             // Categorize
             if (lang.startsWith('vi')) {
                 vi.push(voice);
-            } else if (isGemini || name.includes('multilingual') || name.includes('international') || (isGoogle && lang.startsWith('en')) || (isMicrosoft && name.includes('multilingual'))) {
-                multi.push(voice);
             } else if (lang.startsWith('en')) {
                 en.push(voice);
+            } else if (name.includes('multilingual') || name.includes('international')) {
+                multi.push(voice);
             }
         });
 
@@ -898,6 +917,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                                     backgroundSize: (option as any).thumbnailBgSize || '200% 200%' 
                                                                 }}>
                                                             </div>
+                                                        ) : option.type === 'video' ? (
+                                                            <video 
+                                                                src={`${option.id}#t=0.001`} 
+                                                                className="wallpaper-video-preview-img" 
+                                                                muted 
+                                                                playsInline 
+                                                                preload="metadata"
+                                                                style={{ objectFit: 'cover' }}
+                                                                onMouseEnter={(e) => { e.currentTarget.play().catch(() => {}); }}
+                                                                onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
+                                                            />
                                                         ) : (
                                                             <img src={option.thumbnail} alt={`Wallpaper thumbnail ${index}`} className="wallpaper-video-preview-img" />
                                                         )}
@@ -918,7 +948,16 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                         aria-label={`Wallpaper option ${index + 1}`}
                                                         title={`Wallpaper option ${index + 1}`}
                                                     >
-                                                        <img src={option.thumbnail} alt={`Wallpaper thumbnail ${index}`} className="wallpaper-video-preview-img" />
+                                                        <video 
+                                                            src={`${option.id}#t=0.001`} 
+                                                            className="wallpaper-video-preview-img" 
+                                                            muted 
+                                                            playsInline 
+                                                            preload="metadata"
+                                                            style={{ objectFit: 'cover' }}
+                                                            onMouseEnter={(e) => { e.currentTarget.play().catch(() => {}); }}
+                                                            onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
+                                                        />
                                                     </button>
                                                 ))}
                                             </div>

@@ -33,7 +33,7 @@ const LanguageSwitcher: React.FC = () => {
 
     return (
         <div className="language-switcher-dropdown" ref={dropdownRef}>
-            <button className="language-switcher-button" onClick={() => setIsOpen(!isOpen)} aria-haspopup="true" aria-expanded={isOpen}>
+            <button className="language-switcher-button highlighted-white-btn" onClick={() => setIsOpen(!isOpen)} aria-haspopup="true" aria-expanded={isOpen}>
                 <Icons.GlobeAltIcon size={18} />
                 <span>{currentLanguageName}</span>
                 <Icons.ChevronDownIcon size={16} className={`chevron-icon ${isOpen ? 'open' : ''}`} />
