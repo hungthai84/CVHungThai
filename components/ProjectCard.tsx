@@ -2,8 +2,6 @@ import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import type { Project, ViewMode } from './ProjectsPage';
 import OptimizedImage from './OptimizedImage';
-import { useSpeechSynthesis } from './useSpeechSynthesis';
-import { useTheme } from '../contexts/ThemeContext';
 import * as Icons from './Icons';
 
 interface ProjectCardProps {
@@ -16,28 +14,12 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) => {
     const { t, language } = useI18n();
     const pageData = t.projectsPage;
-    const { speak, cancel, isSpeaking } = useSpeechSynthesis();
-    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
 
     const achievement = React.useMemo(() => {
         const achs = t.achievementsPage?.achievements;
         if (!Array.isArray(achs)) return null;
         return achs.find((a: any) => a.id === project.id || a.title === project.title);
     }, [project.id, project.title, t]);
-
-    const handleReadAloud = (e: React.MouseEvent) => {
-        e.stopPropagation(); // prevent clicking the card
-        if (isSpeaking) {
-            cancel();
-        } else {
-            speak(project.description, { 
-                voiceName: selectedAiVoiceName, 
-                lang: language,
-                pitch: aiVoicePitch,
-                rate: aiVoiceRate
-            });
-        }
-    };
 
     return (
         <div
@@ -75,15 +57,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
                     <h4 className="project-card-new-title mb-0 pr-8">
                         <span className="project-card-new-id">{project.id}</span>. {project.title}
                     </h4>
-                    {isAiVoiceOn && (
-                        <button
-                            onClick={handleReadAloud}
-                            className={`p-2 rounded-full absolute right-5 top-12 transition-colors ${isSpeaking ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-primary'}`}
-                            aria-label="Read description"
-                        >
-                            {isSpeaking ? <Icons.PauseIcon size={16} /> : <Icons.PlayIcon size={16} />}
-                        </button>
-                    )}
                 </div>
                 <p className="project-card-new-description mt-3">{project.description}</p>
                 {hasPost && (

@@ -3,7 +3,6 @@ import React, { useMemo, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
-import { useSpeechSynthesis } from './useSpeechSynthesis';
 import { useTheme } from '../contexts/ThemeContext';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
@@ -55,10 +54,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     }, [projectId, post, t]);
     
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
-    const [scrollProgress, setScrollProgress] = useState(0);
-
-    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
-    const { speak, cancel, isSpeaking } = useSpeechSynthesis();
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -71,18 +66,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     
-    const fullArticleText = useMemo(() => {
-        if (!post || !post.content) return '';
-        const textParts = [post.title];
-        if (post.content.paragraphs) {
-            textParts.push(...post.content.paragraphs);
-        }
-        if (post.content.list) {
-            textParts.push(...post.content.list);
-        }
-        return textParts.join('\n\n');
-    }, [post]);
-
     const allProjects = t.projectsPage.projects;
     const relatedPosts = useMemo(() => {
         if (!post) return [];
@@ -95,28 +78,15 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
 
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
-        cancel();
-        setScrollProgress(0);
-    }, [projectId, cancel]);
+    }, [projectId]);
 
     if (!post) {
         return <PageLayout id={id}><div className="info-card">Loading project...</div></PageLayout>;
     }
 
     const handleRelatedPostClick = (newProjectId: string) => {
-        cancel();
         if (onNavigate) {
             onNavigate(`project-${newProjectId}`);
-        }
-    };
-
-    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-        const target = e.currentTarget;
-        const scrollHeight = target.scrollHeight - target.clientHeight;
-        if (scrollHeight > 0) {
-            setScrollProgress((target.scrollTop / scrollHeight) * 100);
-        } else {
-            setScrollProgress(0);
         }
     };
 
@@ -202,17 +172,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         }
     };
 
-    const handleToggleReadAloud = () => {
-        if (!fullArticleText.trim() || !isAiVoiceOn) return;
-
-        if (isSpeaking) {
-            cancel();
-        } else {
-            // Using the professional male voice as priority if available
-            speak(fullArticleText, { voiceName: selectedAiVoiceName, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
-        }
-    };
-
     const getInitials = (name: string) => {
         const nameParts = name.trim().split(' ');
         if (nameParts.length > 1) {
@@ -242,13 +201,8 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                     </button>
                 </div>
 
-                 <div className="project-post-scroll-content no-scrollbar" ref={scrollRef} onScroll={handleScroll}>
-                     <div className="project-post-progress-container" aria-hidden="true">
-                         <div 
-                             className="project-post-progress-bar" 
-                             style={{ width: `${scrollProgress}%` }}
-                         />
-                     </div>
+                 <div className="project-post-scroll-content no-scrollbar" ref={scrollRef}>
+
                     <main className="project-post-main">
                         <div className="project-post-content-wrapper">
                             <div className="project-post-layout-grid">
@@ -264,29 +218,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                         {post.tags.map((tag: string) => <span key={tag}>#{tag}</span>)}
                                                     </div>
                                                 </div>
-                                                {isAiVoiceOn && (
-                                                    <div className="project-post-voice-reader-container">
-                                                        <div className="audio-player-widget">
-                                                             <button 
-                                                                className={`audio-player-button ${isSpeaking ? 'speaking' : 'idle-glow'}`}
-                                                                onClick={handleToggleReadAloud}
-                                                                aria-label={isSpeaking ? pageData.pauseReading : pageData.readAloud}
-                                                            >
-                                                                {isSpeaking ? <Icons.PauseIcon /> : <Icons.PlayIcon />}
-                                                             </button>
-                                                             <div className="audio-player-info">
-                                                                <span className="audio-player-title">
-                                                                    {isSpeaking ? pageData.nowPlaying : pageData.listenToArticle}
-                                                                </span>
-                                                                {isSpeaking && (
-                                                                    <div className="audio-visualizer">
-                                                                        <span></span><span></span><span></span><span></span>
-                                                                    </div>
-                                                                )}
-                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                )}
+
                                             </div>
                                         </div>
                                         
