@@ -24,6 +24,7 @@ interface ProjectsPageProps {
 }
 
 export type ViewMode = 'grid' | 'list' | 'masonry';
+export type SortOrder = 'newest' | 'oldest' | 'alphabetical';
 
 // Helper to safely parse JSON from localStorage
 function safeJSONParse<T>(item: string | null, fallback: T): T {
@@ -55,6 +56,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
+    const [sortBy, setSortBy] = useState<SortOrder>('oldest');
     
     // --- Data processing for filters ---
     const allGroups = useMemo(() => Array.from(new Set(allProjects.map(p => p.group))), [allProjects]);
@@ -72,17 +74,23 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
         const savedStages = safeJSONParse<string[]>(localStorage.getItem('projectsSelectedStages'), []);
         if (Array.isArray(savedGroups)) setSelectedGroups(savedGroups);
         if (Array.isArray(savedStages)) setSelectedStages(savedStages);
+
+        const savedSortBy = localStorage.getItem('projectsSortBy') as SortOrder | null;
+        if (savedSortBy && ['newest', 'oldest', 'alphabetical'].includes(savedSortBy)) {
+            setSortBy(savedSortBy);
+        }
     }, []);
 
     // --- Save state to localStorage on change ---
     useEffect(() => { localStorage.setItem('projectsViewMode', viewMode); }, [viewMode]);
     useEffect(() => { localStorage.setItem('projectsSelectedGroups', JSON.stringify(selectedGroups)); }, [selectedGroups]);
     useEffect(() => { localStorage.setItem('projectsSelectedStages', JSON.stringify(selectedStages)); }, [selectedStages]);
+    useEffect(() => { localStorage.setItem('projectsSortBy', sortBy); }, [sortBy]);
 
     // --- Filtering logic ---
     const filteredProjects = useMemo(() => {
         const lowercasedSearchTerm = searchTerm.toLowerCase();
-        return allProjects.filter(project => {
+        let filtered = allProjects.filter(project => {
             const groupMatch = selectedGroups.length === 0 || selectedGroups.includes(project.group);
             const stageMatch = selectedStages.length === 0 || selectedStages.includes(project.stage);
             const hashtagMatch = projectFilter.length === 0 || project.hashtags.some(tag => projectFilter.includes(tag));
@@ -91,7 +99,19 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                 project.description.toLowerCase().includes(lowercasedSearchTerm);
             return groupMatch && stageMatch && hashtagMatch && searchMatch;
         });
-    }, [allProjects, selectedGroups, selectedStages, projectFilter, searchTerm]);
+
+        // Sorting
+        return filtered.sort((a, b) => {
+            if (sortBy === 'alphabetical') {
+                return a.title.localeCompare(b.title);
+            } else if (sortBy === 'newest') {
+                return allProjects.indexOf(b) - allProjects.indexOf(a);
+            } else {
+                return allProjects.indexOf(a) - allProjects.indexOf(b);
+            }
+        });
+
+    }, [allProjects, selectedGroups, selectedStages, projectFilter, searchTerm, sortBy]);
     
     const handleCardClick = (projectId: string) => {
         if (onNavigate && (t.projectPosts as any)[projectId]) {
@@ -117,6 +137,8 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                     setViewMode={setViewMode}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
                     allGroups={allGroups}
                     selectedGroups={selectedGroups}
                     setSelectedGroups={setSelectedGroups}
