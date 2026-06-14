@@ -9,8 +9,8 @@ import { useTheme } from './contexts/ThemeContext';
 import { useI18n } from './contexts/i18nContext';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
-import ClockWeatherWidget from './components/ClockWeatherWidget';
-import PasswordPrompt from './components/PasswordPrompt';
+
+
 
 // Lazy load page components to minimize initial bundle size and optimize website load speeds
 const SkillsPage = lazy(() => import('./components/SkillsPage'));
@@ -487,7 +487,7 @@ const App: React.FC = () => {
                                     })}
                                 </div>
                             </div>
-                             <ClockWeatherWidget />
+
                         </div>
 
                         <div className="right-panel-middle-controls">
