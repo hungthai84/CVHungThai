@@ -107,6 +107,36 @@ const specialAndVideoWallpapers = [
         thumbnail: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
     },
     {
+        id: 'https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4',
+        type: 'video' as const,
+        thumbnail: 'https://i.postimg.cc/jS3rSGdF/videoframe-8901.png',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/18230475/file/original-d7ab36998c2277e97c1996d837a4673c.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/16365481/file/original-527fee647d12f31fce8a309ad136c4bb.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/15594644/file/original-6008d4b0ddcff73c116cb7989a144a71.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/14779635/file/original-1aca59fc5dc52bee9dcd291a27effcbf.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/10782874/file/original-06f7280dda982b62cd9452b0da032598.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
         id: 'https://cdn.dribbble.com/userupload/32524948/file/original-3c68e4ad227ae70e1875ef71289be2b0.mp4',
         type: 'video' as const,
         thumbnail: 'https://i.postimg.cc/jS3rSGdF/videoframe-8901.png',
@@ -265,35 +295,37 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
 
     const availableVoices = useMemo(() => {
-        return voices;
+        return voices.filter(v => v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt'));
     }, [voices]);
 
     const groupedVoices = useMemo(() => {
-        if (!voices.length) return { vi: [], en: [], other: [] };
+        if (!availableVoices.length) return { vi: [] };
 
-        const vi: typeof voices = [];
-        const en: typeof voices = [];
-        const other: typeof voices = [];
-
+        const vi: typeof availableVoices = [];
         const seenKeys = new Set<string>();
 
-        voices.forEach(voice => {
+        availableVoices.forEach(voice => {
             const key = `${voice.name}_${voice.lang}`;
             if (seenKeys.has(key)) return;
             seenKeys.add(key);
 
-            const vLang = voice.lang.toLowerCase();
-            if (vLang.startsWith('vi')) {
-                vi.push(voice);
-            } else if (vLang.startsWith('en')) {
-                en.push(voice);
-            } else {
-                other.push(voice);
-            }
+            vi.push(voice);
         });
 
-        return { vi, en, other };
-    }, [voices]);
+        return { vi };
+    }, [availableVoices]);
+
+    useEffect(() => {
+        if (groupedVoices.vi.length > 0) {
+            const hasVoice = groupedVoices.vi.some(v => v.name === localVoiceName);
+            if (!hasVoice) {
+                const defaultVi = groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.name.includes('gTTS') || v.lang.startsWith('vi')) || groupedVoices.vi[0];
+                if (defaultVi) {
+                    setLocalVoiceName(defaultVi.name);
+                }
+            }
+        }
+    }, [groupedVoices.vi, localVoiceName]);
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
     
@@ -640,32 +672,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                     onChange={(e) => setLocalVoiceName(e.target.value)}
                                                     className="custom-select"
                                                 >
-                                                    {groupedVoices.vi.length > 0 && (
-                                                        <optgroup label={language === 'vi' ? "Giọng nói Tiếng Việt" : "Vietnamese Voices"}>
-                                                            {groupedVoices.vi.map(voice => (
-                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                    {voice.name} ({voice.lang})
-                                                                </option>
-                                                            ))}
-                                                        </optgroup>
-                                                    )}
-                                                    {groupedVoices.en.length > 0 && (
-                                                        <optgroup label={language === 'vi' ? "Giọng nói Tiếng Anh" : "English Voices"}>
-                                                            {groupedVoices.en.map(voice => (
-                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                    {voice.name} ({voice.lang})
-                                                                </option>
-                                                            ))}
-                                                        </optgroup>
-                                                    )}
-                                                    {groupedVoices.other.length > 0 && (
-                                                        <optgroup label={language === 'vi' ? "Giọng nói trình duyệt khác" : "Other Browser Voices"}>
-                                                            {groupedVoices.other.map(voice => (
-                                                                <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                    {voice.name} ({voice.lang})
-                                                                </option>
-                                                            ))}
-                                                        </optgroup>
+                                                    {groupedVoices.vi.length > 0 ? (
+                                                        groupedVoices.vi.map(voice => (
+                                                            <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                {voice.name} ({voice.lang})
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option value="">Không tìm thấy giọng nói Tiếng Việt</option>
                                                     )}
                                                 </select>
                                                 <div className="select-arrow">
@@ -773,9 +787,33 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                                     backgroundSize: (option as any).thumbnailBgSize || '200% 200%' 
                                                                 }}>
                                                             </div>
-                                                        ) : (
-                                                            <img src={option.thumbnail} alt={`Wallpaper thumbnail ${index}`} className="wallpaper-video-preview-img" />
-                                                        )}
+                                                        ) : (<>
+                                                            <video 
+                                                              src={option.id} 
+                                                              muted 
+                                                              loop 
+                                                              playsInline autoPlay 
+                                                              preload="auto" 
+                                                             poster={option.thumbnail || undefined}
+                                                             className="wallpaper-video-preview-img" 
+                                                             style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
+                                                         />
+                                                         <div style={{
+                                                             position: 'absolute',
+                                                             bottom: '3px',
+                                                             right: '3px',
+                                                             backgroundColor: 'rgba(0,0,0,0.6)',
+                                                             color: '#fff',
+                                                             fontSize: '6.5pt',
+                                                             padding: '1.5px 3.5px',
+                                                             borderRadius: '3px',
+                                                             pointerEvents: 'none',
+                                                             lineHeight: '1',
+                                                             fontWeight: '700'
+                                                         }}>
+                                                             VIDEO
+                                                         </div>
+                                                        </>)}
                                                     </button>
                                                 ))}
                                             </div>
@@ -787,14 +825,39 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                              <div className="wallpaper-selector">
                                                 {videoWallpapers.map((option, index) => (
                                                     <button
-                                                        key={option.id}
-                                                        className={`wallpaper-thumbnail ${localWallpaper === option.id ? 'active' : ''}`}
-                                                        onClick={() => setLocalWallpaper(option.id)}
-                                                        aria-label={`Wallpaper option ${index + 1}`}
-                                                        title={`Wallpaper option ${index + 1}`}
-                                                    >
-                                                        <img src={option.thumbnail} alt={`Wallpaper thumbnail ${index}`} className="wallpaper-video-preview-img" />
-                                                    </button>
+                                                         key={option.id}
+                                                         className={`wallpaper-thumbnail ${localWallpaper === option.id ? 'active' : ''}`}
+                                                         onClick={() => setLocalWallpaper(option.id)}
+                                                         aria-label={`Wallpaper option ${index + 1}`}
+                                                         title={`Wallpaper option ${index + 1}`}
+                                                         style={{ overflow: 'hidden', position: 'relative' }}
+                                                     >
+                                                         <>
+                                                             <video 
+                                                                  src={option.id} 
+                                                                  muted 
+                                                                  loop 
+                                                                  playsInline autoPlay preload="auto" poster={option.thumbnail || undefined}
+                                                                  className="wallpaper-video-preview-img" 
+                                                                  style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
+                                                              />
+                                                              <div style={{
+                                                                  position: 'absolute',
+                                                                  bottom: '3px',
+                                                                  right: '3px',
+                                                                  backgroundColor: 'rgba(0,0,0,0.6)',
+                                                                  color: '#fff',
+                                                                  fontSize: '6.5pt',
+                                                                  padding: '1.5px 3.5px',
+                                                                  borderRadius: '3px',
+                                                                  pointerEvents: 'none',
+                                                                  lineHeight: '1',
+                                                                  fontWeight: '700'
+                                                              }}>
+                                                                  VIDEO
+                                                              </div>
+                                                         </>
+                                                     </button>
                                                 ))}
                                             </div>
                                         </div>

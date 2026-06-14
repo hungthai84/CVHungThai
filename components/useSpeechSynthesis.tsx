@@ -94,7 +94,6 @@ if (typeof window !== 'undefined' && !interactionListenerAttached) {
 
 const gTTSVoices: SpeechSynthesisVoice[] = [
     { name: 'Google Translate TTS (gTTS)', lang: 'vi-VN', default: false, localService: false, voiceURI: 'gtts-vi' } as any,
-    { name: 'Google Translate TTS (gTTS)', lang: 'en-US', default: false, localService: false, voiceURI: 'gtts-en' } as any,
 ];
 
 let globalGttsAudioQueue: HTMLAudioElement[] = [];
@@ -246,6 +245,9 @@ export const useSpeechSynthesis = () => {
                 return;
             }
 
+            // Filter out mock gTTS voices to prevent assigning fake objects to speechSynthesis utterance.voice
+            const realVoices = voices.filter(v => v.voiceURI !== 'gtts-vi');
+
             let targetLangCode = 'vi-VN';
             if (options.lang === 'en') {
                 targetLangCode = 'en-US';
@@ -259,13 +261,22 @@ export const useSpeechSynthesis = () => {
 
             // 1. Try to find the specifically requested voice
             if (options.voiceName) {
-                selectedVoice = voices.find(voice => voice.name === options.voiceName);
+                selectedVoice = realVoices.find(voice => voice.name === options.voiceName);
+                if (!selectedVoice) {
+                    // Try case-insensitive substring match (e.g. "Nam Minh" matches "Microsoft NamMinh Online")
+                    // Strip space to handle "Nam Minh" matching "NamMinh" too
+                    const searchNameClean = options.voiceName.toLowerCase().replace(/\s+/g, '');
+                    selectedVoice = realVoices.find(voice => {
+                        const voiceNameClean = voice.name.toLowerCase().replace(/\s+/g, '');
+                        return voiceNameClean.includes(searchNameClean);
+                    });
+                }
             }
 
             // 2. If no specific voice or specific voice not found, apply smart fallback based on language
             if (!selectedVoice) {
                 if (targetLangCode === 'vi-VN') {
-                    const vietnameseVoices = voices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
+                    const vietnameseVoices = realVoices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
                         let preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
                         if (!preferredVoice) {
@@ -276,7 +287,7 @@ export const useSpeechSynthesis = () => {
                         selectedVoice = preferredVoice || vietnameseVoices[0];
                     }
                 } else { // en-US
-                    const englishVoices = voices.filter(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-'));
+                    const englishVoices = realVoices.filter(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-'));
                     const enPriorityList = [
                         'Google US English',
                         'Google UK English Male',
@@ -300,7 +311,7 @@ export const useSpeechSynthesis = () => {
             let backupVoice: SpeechSynthesisVoice | undefined;
             if (selectedVoice && !selectedVoice.localService) {
                 const langPrefix = targetLangCode.split('-')[0].toLowerCase();
-                backupVoice = voices.find(v => v.localService && v.lang.toLowerCase().startsWith(langPrefix));
+                backupVoice = realVoices.find(v => v.localService && v.lang.toLowerCase().startsWith(langPrefix));
             }
 
             const chunks = splitTextIntoSentences(text, 160);

@@ -33,10 +33,6 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const pageData = t.aiChatPage;
     const { isAiVoiceOn, selectedAiVoiceName, setAiVoiceOn, aiVoicePitch, aiVoiceRate } = useTheme();
     
-    const userVoiceName = language === 'vi' ? 'Google tiếng Việt' : 'Google US English';
-    const defaultAiVoiceName = language === 'vi' ? 'Google tiếng Việt' : 'Google US English';
-    const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
-
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +43,16 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const [attachmentPreview, setAttachmentPreview] = useState<string | null>(null);
     const [userName, setUserName] = useState('');
     const [userGender, setUserGender] = useState<'Nam' | 'Nữ' | null>(null);
+
+    const userVoiceName = useMemo(() => {
+        if (language === 'vi') {
+            return userGender === 'Nữ' ? 'Hoài Minh' : 'An';
+        }
+        return 'Google US English';
+    }, [language, userGender]);
+
+    const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
+    const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -127,8 +133,38 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         }
     }, [input]);
 
+    const lastSpokenViewRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (!isAiVoiceOn) return;
+        
+        if (view === 'collect_info') {
+            if (lastSpokenViewRef.current === 'collect_info') return;
+            lastSpokenViewRef.current = 'collect_info';
+
+            const initialWelcome = "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Thái. Trước khi bắt đầu, vui lòng cho tôi biết tên và giới tính của bạn.";
+            speak(initialWelcome, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
+        } else if (view === 'categories') {
+            if (lastSpokenViewRef.current === 'categories') return;
+            lastSpokenViewRef.current = 'categories';
+
+            if (userName) {
+                const [greeting, ...restOfWelcome] = pageData.welcomeMessage.split('!');
+                const personalizedWelcomeMessage = language === 'vi'
+                    ? `${greeting} ${userSalutation} ${userName}!${restOfWelcome.join('!')}`
+                    : `${greeting} ${userName}!${restOfWelcome.join('!')}`;
+                
+                speak(personalizedWelcomeMessage, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
+            }
+        } else {
+            // Clear or set to chat so entering other states can trigger speech again
+            lastSpokenViewRef.current = 'chat';
+        }
+    }, [view, isAiVoiceOn, aiVoiceToUse, language, aiVoicePitch, aiVoiceRate, userName, userSalutation, pageData.welcomeMessage, speak]);
+
     const startNewChat = () => {
         cancel();
+        lastSpokenViewRef.current = null;
         setMessages([]);
         setError(null);
         setView('collect_info');

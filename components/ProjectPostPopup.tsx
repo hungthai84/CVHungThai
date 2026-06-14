@@ -235,12 +235,32 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         <PageLayout id={id}>
             <div className={`info-card project-post-page-card ${projectClass}`}> 
                 <div className="project-post-nav-header flex items-center justify-between">
-                    <InfoBadge
-                        icon={<Icons.PencilIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
+                    <div className="flex items-center gap-3">
+                        <InfoBadge
+                            icon={<Icons.PencilIcon />}
+                            text={pageData.badge}
+                            tooltipTitle={pageData.tooltipTitle}
+                            tooltipText={pageData.tooltipText}
+                        />
+                        <button
+                            onClick={handleToggleSpeech}
+                            type="button"
+                            className="info-badge flex items-center gap-2 hover:translate-y-[-2px] hover:border-[var(--color-brand-orange)] hover:shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-all duration-300"
+                            title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin' : 'Read Aloud')}
+                            style={{ height: '38px', padding: '0px 1.25rem', boxSizing: 'border-box', backgroundColor: '#ffffff', color: '#101733', borderColor: 'rgba(0, 0, 0, 0.1)', shadow: '0 4px 10px rgba(0,0,0,0.05)' }}
+                        >
+                            <span className="badge-content relative flex items-center gap-2">
+                                {isSpeaking ? (
+                                    <Icons.PauseIcon size={14} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)] animate-pulse" />
+                                ) : (
+                                    <Icons.PlayIcon size={14} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)]" />
+                                )}
+                                <span>
+                                    {isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop audio') : (language === 'vi' ? 'Trình đọc tin' : 'AI Reader')}
+                                </span>
+                            </span>
+                        </button>
+                    </div>
                     <button
                         onClick={() => onNavigate?.('projects')}
                         className="btn btn-secondary z-10"
@@ -267,36 +287,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                         {post.tags.map((tag: string) => <span key={tag}>#{tag}</span>)}
                                                     </div>
                                                 </div>
-
-                                                <button
-                                                    onClick={handleToggleSpeech}
-                                                    type="button"
-                                                    className="banner-speak-btn"
-                                                    title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin' : 'Read Aloud')}
-                                                >
-                                                    <div className={`banner-speak-glow-circle ${isSpeaking ? 'is-playing' : ''}`}>
-                                                        {isSpeaking ? (
-                                                            <Icons.PauseIcon size={12} className="relative z-10 fill-white text-white" />
-                                                        ) : (
-                                                            <Icons.PlayIcon size={12} className="relative z-10 fill-white text-white translate-x-[1px]" />
-                                                        )}
-                                                    </div>
-                                                    <div className="banner-speak-text-group">
-                                                        <span className="banner-speak-badge">
-                                                            {language === 'vi' ? 'Trình đọc tin AI' : 'AI Reader'}
-                                                        </span>
-                                                        <span className="banner-speak-title">
-                                                            {isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop audio') : (language === 'vi' ? 'Đọc thông tin' : 'Read Aloud')}
-                                                        </span>
-                                                    </div>
-                                                    {isSpeaking && (
-                                                        <div className="banner-sound-wave">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    )}
-                                                </button>
 
                                             </div>
                                         </div>
@@ -387,17 +377,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                         </div>
                                                     ))}
                                                 </div>
-                                            </div>
-                                            
-                                            <div className="sidebar-widget">
-                                                <h4 className="sidebar-widget-title">{pageData.referenceLinksTitle}</h4>
-                                                <ul className="reference-links-list">
-                                                    {(pageData.referenceLinks || []).map((link: {title: string, url: string}) => (
-                                                        <li key={link.title}>
-                                                            <a onClick={(e) => { e.preventDefault(); setEmbeddingUrl(link.url); }}>{link.title}</a>
-                                                        </li>
-                                                    ))}
-                                                </ul>
                                             </div>
                                         </div>
                                     )}

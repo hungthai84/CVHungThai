@@ -197,20 +197,13 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
                             <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
                                 {t.projectsPage.badge} (Dự án tiêu biểu)
                             </h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                {(() => {
-                                    const featuredIds = ['5.1', '6.1', '1.1'];
-                                    const featuredProjects = projects.filter(p => featuredIds.includes(p.id))
-                                        .sort((a, b) => featuredIds.indexOf(a.id) - featuredIds.indexOf(b.id));
-                                    const displayedProjects = featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 3);
-                                    
-                                    return displayedProjects.map(proj => (
-                                        <div key={proj.id} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
-                                            <strong style={{ color: '#101733' }}>{proj.title}</strong>
-                                            <p style={{ margin: '0.1rem 0 0 0', color: '#4b5563', textAlign: 'justify' }}>{proj.description}</p>
-                                        </div>
-                                    ));
-                                })()}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.3rem 0.8rem', fontSize: '7.5pt', lineHeight: '1.2' }}>
+                                {projects.map((proj, idx) => (
+                                    <div key={proj.id} style={{ display: 'flex', gap: '0.35rem', borderBottom: '1px dashed rgba(0,0,0,0.06)', paddingBottom: '0.15rem', alignItems: 'flex-start' }}>
+                                        <span style={{ color: '#f97316', fontWeight: 700, minWidth: '1.4rem' }}>{idx + 1}.</span>
+                                        <span style={{ color: '#101733', fontWeight: 500 }}>{proj.title}</span>
+                                    </div>
+                                ))}
                             </div>
                         </section>
                     </div>

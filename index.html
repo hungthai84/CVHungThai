@@ -150,6 +150,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      opacity: 1 !important;
     }
 
     .background-gradient {
@@ -677,7 +678,7 @@
       margin: 0;
       color: var(--color-brand-text-secondary);
       font-size: 0.9375rem;
-      font-weight: 500;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1204,6 +1205,16 @@
         border-color: var(--color-brand-orange);
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    .home-hero-card .info-badge {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        color: #101733 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+    }
+    .home-hero-card .info-badge svg {
+        color: var(--color-brand-orange) !important;
+    }
     
     .badge-tooltip {
         position: absolute;
@@ -1288,6 +1299,7 @@
         object-fit: cover;
         transform: translate(-50%, -50%);
         z-index: 1;
+        opacity: 1 !important;
     }
     .home-hero-card-overlay {
         position: absolute;
@@ -1297,6 +1309,7 @@
         height: 100%;
         z-index: 2;
         background-image: linear-gradient(to top, rgba(var(--sidebar-bg-rgb), 0.5) 0%, rgba(var(--sidebar-bg-rgb), 0) 50%);
+        opacity: 0 !important;
     }
     .home-hero-card-content-wrapper {
         position: relative;
@@ -1327,17 +1340,17 @@
       font-size: 1.5rem;
       font-weight: 500;
       margin-bottom: 0.5rem;
-      color: var(--color-brand-text-primary);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      color: #ffffff !important;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 2px 5px rgba(0,0,0,0.8);
     }
 
     .home-hero-content h1.hero-name-text {
       font-size: 1.75rem;
       font-weight: 700;
       margin: 0 0 1rem 0;
-      color: var(--color-brand-text-primary);
+      color: #ffffff !important;
       line-height: 1.2;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0 2px 10px rgba(0,0,0,0.9);
     }
 
     .home-hero-content h2.hero-typed-text-container {
@@ -4115,23 +4128,23 @@
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: var(--sidebar-bg);
-      border: var(--color-brand-glass-border);
-      color: var(--color-brand-text-primary);
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      color: #101733 !important;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: var(--card-box-shadow);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .top-theme-toggle-btn:hover {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-      background-color: var(--color-brand-active-menu-bg);
+      border-color: var(--accent-color) !important;
+      color: var(--accent-color) !important;
+      background-color: #ffffff !important;
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 4px 12px rgba(var(--accent-color-rgb), 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
     }
     
     .language-switcher-dropdown {
@@ -4142,20 +4155,21 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1rem;
-      border: var(--color-brand-glass-border);
-      background: var(--sidebar-bg);
+      border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      background: #ffffff !important;
       border-radius: 999px;
-      color: var(--color-brand-text-primary);
+      color: #101733 !important;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: var(--card-box-shadow);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
     }
     .language-switcher-button:hover {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-      background-color: var(--color-brand-active-menu-bg);
+      border-color: var(--accent-color) !important;
+      color: var(--accent-color) !important;
+      background-color: #ffffff !important;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
     }
     .language-switcher-button .chevron-icon {
       transition: transform 0.2s ease-in-out;
