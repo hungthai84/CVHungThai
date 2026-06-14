@@ -86,12 +86,18 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                     key={videoUrl}
                     autoPlay 
                     muted={isMuted} 
-                    loop 
+                    loop={!isIntroPlaying} 
                     playsInline 
                     className="home-hero-card-bg-video"
                     src={videoUrl}
                     poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
                     style={{ opacity: 1 }}
+                    onEnded={() => {
+                        if (isIntroPlaying) {
+                            setVideoUrl(DEFAULT_VIDEO);
+                            setIsMuted(true);
+                        }
+                    }}
                 />
                 <div className="home-hero-card-overlay" style={{ opacity: 0 }}></div>
                 <div className="home-hero-card-content-wrapper">

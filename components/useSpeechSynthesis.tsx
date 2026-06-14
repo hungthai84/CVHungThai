@@ -76,10 +76,6 @@ if (typeof window !== 'undefined' && !interactionListenerAttached) {
     interactionListenerAttached = true;
 }
 
-const gTTSVoices: SpeechSynthesisVoice[] = [
-    { name: 'Google Translate TTS (gTTS)', lang: 'vi-VN', default: false, localService: false, voiceURI: 'gtts-vi' } as any,
-];
-
 let globalGttsAudioQueue: HTMLAudioElement[] = [];
 
 export const useSpeechSynthesis = () => {
@@ -99,12 +95,13 @@ export const useSpeechSynthesis = () => {
     useEffect(() => {
         const loadVoices = () => {
             const availableVoices = window.speechSynthesis.getVoices();
+            console.log('Available voices:', availableVoices.map(v => `${v.name} (${v.lang}) [local=${v.localService}]`));
             
             // Collect all available voices but put Google voices first if they exist
             const googleVoices = availableVoices.filter(v => v.name.includes('Google'));
             const otherVoices = availableVoices.filter(v => !v.name.includes('Google'));
             
-            setVoices([...gTTSVoices, ...googleVoices, ...otherVoices]);
+            setVoices([...googleVoices, ...otherVoices]);
         };
 
         // Load voices initially and on change
@@ -163,7 +160,7 @@ export const useSpeechSynthesis = () => {
                     const chunks = splitTextIntoSentences(text, 160);
                     const isSlow = options.rate !== undefined && options.rate < 0.8;
                     const urls = chunks.map(chunk => ({
-                        url: `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${targetLangCode}&client=tw-ob&ttsspeed=${isSlow ? 0.24 : 1}`
+                        url: `/api/tts?text=${encodeURIComponent(chunk)}&lang=${targetLangCode}&slow=${isSlow}`
                     }));
                     
                     if (urls.length > 0) {
@@ -179,7 +176,11 @@ export const useSpeechSynthesis = () => {
                                 return;
                             }
 
-                            const audio = new Audio(urls[currentIndex].url);
+                            const audio = document.createElement('audio');
+                            audio.setAttribute('referrerpolicy', 'no-referrer');
+                            (audio as any).referrerPolicy = 'no-referrer';
+                            audio.src = urls[currentIndex].url;
+                            
                             if (options.rate !== undefined) audio.playbackRate = options.rate;
                             if (options.pitch !== undefined && (audio as any).mozPreservesPitch !== undefined) {
                                 (audio as any).preservesPitch = options.pitch === 1;
@@ -193,7 +194,8 @@ export const useSpeechSynthesis = () => {
                                 currentIndex++;
                                 playNext();
                             };
-                            audio.onerror = () => {
+                            audio.onerror = (e) => {
+                                console.error('Audio object error details:', e);
                                 if (activeSessionRef.current !== sessionId) return;
                                 globalGttsAudioQueue = globalGttsAudioQueue.filter(a => a !== audio);
                                 currentIndex++;
@@ -262,7 +264,13 @@ export const useSpeechSynthesis = () => {
                 if (targetLangCode === 'vi-VN') {
                     const vietnameseVoices = realVoices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
-                        let preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam minh') || v.name.toLowerCase().includes('namminh'));
+                        let preferredVoice = vietnameseVoices.find(v => 
+                            v.name.toLowerCase().includes('nam hoàng') || 
+                            v.name.toLowerCase().includes('nam hoang')
+                        );
+                        if (!preferredVoice) {
+                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam minh') || v.name.toLowerCase().includes('namminh'));
+                        }
                         if (!preferredVoice) {
                             preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
                         }

@@ -215,7 +215,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
 
     const availableVoices = useMemo(() => {
-        return voices.filter(v => v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt'));
+        return voices.filter(v => (v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt')) && !v.name.includes('gTTS'));
     }, [voices]);
 
     const groupedVoices = useMemo(() => {
@@ -239,7 +239,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         if (groupedVoices.vi.length > 0) {
             const hasVoice = groupedVoices.vi.some(v => v.name === localVoiceName);
             if (!hasVoice) {
-                const defaultVi = groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.name.includes('gTTS') || v.lang.startsWith('vi')) || groupedVoices.vi[0];
+                const defaultVi = groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.lang.startsWith('vi')) || groupedVoices.vi[0];
                 if (defaultVi) {
                     setLocalVoiceName(defaultVi.name);
                 }

@@ -99,6 +99,151 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                         font-size: 1.1rem !important;
                     }
                 }
+
+                /* Horoscope 3D Book Styles */
+                .horoscope-book-wrapper {
+                    position: relative;
+                    width: 85px;
+                    height: 110px;
+                    perspective: 400px;
+                    cursor: pointer;
+                    margin: 0 auto;
+                }
+                .horoscope-book {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    transform-style: preserve-3d;
+                    transition: transform 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+                    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.5);
+                    border-radius: 4px 8px 8px 4px;
+                }
+                .horoscope-book-wrapper:hover .horoscope-book {
+                    transform: rotateY(-20deg) translateX(4px);
+                    box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.7);
+                }
+                .horoscope-book-cover {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(135deg, #1e0f3c 0%, #0d061f 100%);
+                    border: 1.5px solid #d4af37;
+                    border-left: 5px solid #d4af37;
+                    border-radius: 4px 8px 8px 4px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                }
+                .horoscope-book-cover::before {
+                    content: '';
+                    position: absolute;
+                    inset: 3px;
+                    border: 1px dashed rgba(212, 175, 55, 0.4);
+                    border-radius: 2px 6px 6px 2px;
+                    pointer-events: none;
+                }
+                .horoscope-book-spine-lines {
+                    position: absolute;
+                    left: 1px;
+                    top: 10%;
+                    bottom: 10%;
+                    width: 1px;
+                    background: rgba(255, 255, 255, 0.15);
+                }
+                .yinyang-symbol {
+                    width: 42px;
+                    height: 42px;
+                    background: linear-gradient(to right, #000 50%, #fff 50%);
+                    border-radius: 50%;
+                    position: relative;
+                    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5), inset 0 0 0 1.5px #d4af37;
+                    transition: transform 0.4s ease;
+                }
+                .yinyang-symbol::before {
+                    content: '';
+                    position: absolute;
+                    width: 21px;
+                    height: 21px;
+                    background: #000;
+                    border-radius: 50%;
+                    top: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-image: radial-gradient(#fff 3px, transparent 3px);
+                }
+                .yinyang-symbol::after {
+                    content: '';
+                    position: absolute;
+                    width: 21px;
+                    height: 21px;
+                    background: #fff;
+                    border-radius: 50%;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-image: radial-gradient(#000 3px, transparent 3px);
+                }
+                .yinyang-spinning {
+                    animation: yinyang-spin 8s infinite linear;
+                }
+                @keyframes yinyang-spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                .book-title-viet {
+                    font-size: 10px;
+                    font-weight: 700;
+                    color: #d4af37;
+                    margin-top: 10px;
+                    letter-spacing: 1.5px;
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+                    text-transform: uppercase;
+                }
+                .book-glow {
+                    position: absolute;
+                    inset: -15px;
+                    background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+                    border-radius: 50%;
+                    opacity: 0;
+                    transition: opacity 0.5s ease;
+                    pointer-events: none;
+                    z-index: -1;
+                }
+                .book-glow-active {
+                    opacity: 1;
+                    animation: pulse-glow 2s infinite ease-in-out;
+                }
+                @keyframes pulse-glow {
+                    0%, 100% { transform: scale(1); opacity: 0.25; }
+                    50% { transform: scale(1.15); opacity: 0.5; }
+                }
+                .magical-stars-container {
+                    position: absolute;
+                    top: -15px;
+                    left: 0;
+                    right: 0;
+                    height: 30px;
+                    pointer-events: none;
+                    display: flex;
+                    justify-content: space-around;
+                    z-index: 2;
+                }
+                .magical-star {
+                    font-size: 12px;
+                    color: #d4af37;
+                    opacity: 0;
+                }
+                .magical-star-active {
+                    animation: float-up 1.6s infinite ease-out;
+                }
+                @keyframes float-up {
+                    0% { transform: translateY(15px) scale(0.6); opacity: 0; }
+                    50% { opacity: 1; }
+                    100% { transform: translateY(-15px) scale(1.1); opacity: 0; }
+                }
             `}</style>
             <div className="info-card">
                 <div className="about-header">
@@ -110,9 +255,9 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     />
                 </div>
 
-                <div className="custom-video-player-wrapper">
+                <div className="custom-video-player-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     <div 
-                        className="cover-letter-video-container" 
+                        className="horoscope-book-wrapper" 
                         title={isPlaying ? "Tạm dừng" : "Nghe tử vi"}
                         onClick={handlePlayPause}
                         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePlayPause(); }}
@@ -120,6 +265,10 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                         tabIndex={0}
                         aria-label="Play or pause the horoscope audio"
                     >
+                        {/* Magical glowing back aura */}
+                        <div className={`book-glow ${isPlaying ? 'book-glow-active' : ''}`}></div>
+                        
+                        {/* Audio track inside hidden video element to keep perfect API mapping */}
                         <video
                             ref={videoRef}
                             src="https://cdn.scena.ai/project/9626/b40b848d5a2ad108760073e8c64bd80f963850ab7e79c19af228c82a83f6419d.mp3"
@@ -130,14 +279,37 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                             onPlay={() => setIsPlaying(true)}
                             onPause={() => setIsPlaying(false)}
                             onEnded={() => setIsPlaying(false)}
-                            className="cover-letter-video-element"
-                            poster="https://i.postimg.cc/0QyHjYN4/Avata-Gif.gif"
+                            style={{ display: 'none' }}
                         >
                             Trình duyệt của bạn không hỗ trợ thẻ media.
                         </video>
+
+                        {/* Stitched 3D style book */}
+                        <div className="horoscope-book">
+                            <div className="horoscope-book-cover">
+                                {/* Spine detail */}
+                                <div className="horoscope-book-spine-lines"></div>
+                                
+                                {/* Yin-Yang spinning center wheel */}
+                                <div className={`yinyang-symbol ${isPlaying ? 'yinyang-spinning' : ''}`}></div>
+                                
+                                {/* Elegant gold header text */}
+                                <span className="book-title-viet">Tử Vi</span>
+                            </div>
+                        </div>
+
+                        {/* Ambient stars rising when playing */}
+                        {isPlaying && (
+                            <div className="magical-stars-container">
+                                <span className="magical-star magical-star-active" style={{ animationDelay: '0s' }}>✧</span>
+                                <span className="magical-star magical-star-active" style={{ animationDelay: '0.5s' }}>✦</span>
+                                <span className="magical-star magical-star-active" style={{ animationDelay: '1s' }}>✧</span>
+                            </div>
+                        )}
                     </div>
                     <button 
                         className="custom-play-button" 
+                        style={{ bottom: '-15px' }}
                         onClick={handlePlayPause} 
                         aria-label={isPlaying ? "Tạm dừng" : "Phát"}
                     >

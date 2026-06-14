@@ -341,9 +341,7 @@ export const vi = {
                 "Đóng góp vào sự phát triển bền vững của công ty."
             ],
             achievements: [],
-            images: [
-                "https://i.ibb.co/wNTXx871/T-m-Job.jpg"
-            ]
+            images: []
         }
     ]
   },
@@ -1875,9 +1873,7 @@ export const en = {
                 "Contribute to the sustainable growth of the company."
             ],
             achievements: [],
-            images: [
-                "https://i.ibb.co/wNTXx871/T-m-Job.jpg"
-            ]
+            images: []
         }
     ]
   },

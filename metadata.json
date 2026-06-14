@@ -3,5 +3,5 @@
   "name": "Nguyễn Hùng Thái 27.04",
   "description": "Hùng Thái  25.08",
   "prompt": "",
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API", "MAJOR_CAPABILITY_CLOUD_SQL"]
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

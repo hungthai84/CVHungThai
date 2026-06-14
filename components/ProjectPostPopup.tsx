@@ -92,7 +92,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                 ...plainList
             ].join('. ');
 
-            const defaultAiVoiceName = 'Google Translate TTS (gTTS)';
+            const defaultAiVoiceName = language === 'vi' ? 'Nam Hoàng' : 'Google US English';
             const voiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
             speak(fullSpeechText, {
@@ -235,31 +235,25 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         <PageLayout id={id}>
             <div className={`info-card project-post-page-card ${projectClass}`}> 
                 <div className="project-post-nav-header flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <div>
                         <InfoBadge
                             icon={<Icons.PencilIcon />}
                             text={pageData.badge}
                             tooltipTitle={pageData.tooltipTitle}
                             tooltipText={pageData.tooltipText}
+                            style={{ 
+                                height: '42px', 
+                                padding: '0px 1.25rem', 
+                                boxSizing: 'border-box', 
+                                display: 'inline-flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                backgroundColor: '#ffffff', 
+                                color: '#101733', 
+                                borderColor: 'rgba(0, 0, 0, 0.1)', 
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+                            }}
                         />
-                        <button
-                            onClick={handleToggleSpeech}
-                            type="button"
-                            className="info-badge flex items-center gap-2 hover:translate-y-[-2px] hover:border-[var(--color-brand-orange)] hover:shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-all duration-300"
-                            title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin' : 'Read Aloud')}
-                            style={{ height: '38px', padding: '0px 1.25rem', boxSizing: 'border-box', backgroundColor: '#ffffff', color: '#101733', borderColor: 'rgba(0, 0, 0, 0.1)', shadow: '0 4px 10px rgba(0,0,0,0.05)' }}
-                        >
-                            <span className="badge-content relative flex items-center gap-2">
-                                {isSpeaking ? (
-                                    <Icons.PauseIcon size={14} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)] animate-pulse" />
-                                ) : (
-                                    <Icons.PlayIcon size={14} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)]" />
-                                )}
-                                <span>
-                                    {isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop audio') : (language === 'vi' ? 'Trình đọc tin' : 'AI Reader')}
-                                </span>
-                            </span>
-                        </button>
                     </div>
                     <button
                         onClick={() => onNavigate?.('projects')}
@@ -287,8 +281,43 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                         {post.tags.map((tag: string) => <span key={tag}>#{tag}</span>)}
                                                     </div>
                                                 </div>
-
                                             </div>
+
+                                            <button
+                                                onClick={handleToggleSpeech}
+                                                type="button"
+                                                className="info-badge banner-audio-button-glowing flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all duration-300"
+                                                title={isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop reading') : (language === 'vi' ? 'Đọc thông tin' : 'Read Aloud')}
+                                                style={{ 
+                                                    position: 'absolute',
+                                                    left: '1.25rem',
+                                                    bottom: '1.25rem',
+                                                    zIndex: 10,
+                                                    height: '38px', 
+                                                    padding: '0px 1.25rem', 
+                                                    boxSizing: 'border-box', 
+                                                    backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                                                    color: '#101733', 
+                                                    border: '1px solid rgba(255, 255, 255, 0.3)', 
+                                                    borderRadius: '20px',
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontWeight: 500,
+                                                    fontSize: '0.825rem'
+                                                }}
+                                            >
+                                                <span className="badge-content relative flex items-center justify-center gap-2">
+                                                    {isSpeaking ? (
+                                                        <Icons.PauseIcon size={13} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)] animate-pulse" />
+                                                    ) : (
+                                                        <Icons.PlayIcon size={13} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)]" />
+                                                    )}
+                                                    <span>
+                                                        {isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop audio') : (language === 'vi' ? 'Trình đọc tin' : 'AI Reader')}
+                                                    </span>
+                                                </span>
+                                            </button>
                                         </div>
                                         
                                         <div className="project-post-body">

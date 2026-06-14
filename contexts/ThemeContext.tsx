@@ -47,12 +47,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     
     
     const [isSoundOn, setSoundOnState] = useState<boolean>(true);
-    const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(false);
-    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Nam Minh');
+    const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
+    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Nam Hoàng');
     const [aiVoicePitch, setAiVoicePitchState] = useState<number>(1);
     const [aiVoiceRate, setAiVoiceRateState] = useState<number>(0.95);
     const [projectFilter, setProjectFilterState] = useState<string[]>([]);
-    const [wallpaper, setWallpaperState] = useState<WallpaperType>('https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4');
+    const [wallpaper, setWallpaperState] = useState<WallpaperType>('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
     
     // --- Setter Functions that include saving to localStorage ---
 
@@ -130,7 +130,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedDarkColor) setDarkThemeColorState(savedDarkColor);
         
         setSoundOnState(savedSound === null ? true : savedSound === 'true');
-        setAiVoiceOnState(savedAiVoice === null ? false : savedAiVoice === 'true');
+        setAiVoiceOnState(savedAiVoice === null ? true : savedAiVoice === 'true');
         if (savedVoiceName) setSelectedAiVoiceNameState(savedVoiceName);
         if (savedVoicePitch) setAiVoicePitchState(parseFloat(savedVoicePitch));
         if (savedVoiceRate) setAiVoiceRateState(parseFloat(savedVoiceRate));
@@ -153,7 +153,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedWallpaper) {
             setWallpaperState(savedWallpaper);
         } else {
-            setWallpaperState('https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4');
+            setWallpaperState('https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4');
         }
 
     }, []);
