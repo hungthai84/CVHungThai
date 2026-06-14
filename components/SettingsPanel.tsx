@@ -47,11 +47,6 @@ const specialAndVideoWallpapers = [
         thumbnail: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
     },
     {
-        id: 'https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/jS3rSGdF/videoframe-8901.png',
-    },
-    {
         id: 'https://cdn.dribbble.com/userupload/18230475/file/original-d7ab36998c2277e97c1996d837a4673c.mp4',
         type: 'video' as const,
         thumbnail: '',
@@ -310,9 +305,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
                                 {localAiVoice && availableVoices.length > 0 && (
                                     <>
-                                        <div className="setting-item">
-                                            <div className="flex items-center justify-between w-full">
-                                                <label htmlFor="ai-voice-select">{settingsText.aiVoiceSelect}</label>
+                                        <div className="setting-item flex-col items-start">
+                                            <label htmlFor="ai-voice-select" className="mb-2 w-full">{settingsText.aiVoiceSelect}</label>
+                                            <div className="flex items-center gap-3 w-full">
                                                 <button
                                                     onClick={() => {
                                                         if (isSpeaking) {
@@ -349,12 +344,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                             speak(text, { voiceName: localVoiceName, lang: targetLang, pitch: localVoicePitch, rate: localVoiceRate });
                                                         }
                                                     }}
-                                                    className="bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-primary p-1 rounded transition-colors text-xs flex items-center gap-1"
+                                                    className="bg-primary text-white hover:bg-primary/90 p-1.5 rounded-full transition-colors flex items-center justify-center w-8 h-8 shadow-sm flex-shrink-0 focus:outline-none"
+                                                    title={isSpeaking ? "Pause Preview" : "Play Preview"}
                                                 >
-                                                    {isSpeaking ? <Icons.PauseIcon size={14} /> : <Icons.PlayIcon size={14} />} Preview
+                                                    {isSpeaking ? <Icons.PauseIcon size={16} /> : <Icons.PlayIcon size={16} />}
                                                 </button>
-                                            </div>
-                                            <div className="custom-select-wrapper">
+                                                <div className="custom-select-wrapper flex-grow w-full">
                                                 <select 
                                                     id="ai-voice-select"
                                                     value={localVoiceName}
@@ -375,10 +370,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                     <Icons.ChevronDownIcon size={18} />
                                                 </div>
                                             </div>
+                                            </div>
                                         </div>
                                         <div className="setting-item flex-col items-start gap-2">
                                             <label htmlFor="ai-voice-pitch" className="w-full flex justify-between">
-                                                Pitch ({localVoicePitch.toFixed(1)})
+                                                Cao độ ({localVoicePitch.toFixed(1)})
                                             </label>
                                             <input
                                                 id="ai-voice-pitch"
@@ -393,7 +389,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                         </div>
                                         <div className="setting-item flex-col items-start gap-2">
                                             <label htmlFor="ai-voice-rate" className="w-full flex justify-between">
-                                                Rate ({localVoiceRate.toFixed(2)})
+                                                Tốc độ ({localVoiceRate.toFixed(2)})
                                             </label>
                                             <input
                                                 id="ai-voice-rate"

@@ -295,23 +295,19 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     zIndex: 10,
                                                     height: '38px', 
                                                     padding: '0px 1.25rem', 
-                                                    boxSizing: 'border-box', 
-                                                    backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-                                                    color: '#101733', 
-                                                    border: '1px solid rgba(255, 255, 255, 0.3)', 
+                                                    boxSizing: 'border-box',
                                                     borderRadius: '20px',
                                                     display: 'inline-flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    fontWeight: 500,
                                                     fontSize: '0.825rem'
                                                 }}
                                             >
                                                 <span className="badge-content relative flex items-center justify-center gap-2">
                                                     {isSpeaking ? (
-                                                        <Icons.PauseIcon size={13} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)] animate-pulse" />
+                                                        <Icons.PauseIcon size={13} className="animate-pulse" />
                                                     ) : (
-                                                        <Icons.PlayIcon size={13} className="fill-[var(--color-brand-orange)] text-[var(--color-brand-orange)]" />
+                                                        <Icons.PlayIcon size={13} />
                                                     )}
                                                     <span>
                                                         {isSpeaking ? (language === 'vi' ? 'Dừng đọc' : 'Stop audio') : (language === 'vi' ? 'Trình đọc tin' : 'AI Reader')}
