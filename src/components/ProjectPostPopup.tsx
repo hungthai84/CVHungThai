@@ -1,7 +1,7 @@
 
 import React, { useMemo, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useI18n } from '../contexts/i18n';
+import { useI18n } from '../contexts/i18nContext';
 import * as Icons from './Icons';
 import { useTheme } from '../contexts/ThemeContext';
 import PageLayout from './PageLayout';

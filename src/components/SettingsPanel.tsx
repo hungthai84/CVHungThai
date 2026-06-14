@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import { useI18n } from '../contexts/i18n';
+import { useI18n } from '../contexts/i18nContext';
 import * as Icons from './Icons';
 import { useSpeechSynthesis } from './useSpeechSynthesis';
 import PageLayout from './PageLayout';

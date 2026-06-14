@@ -6,7 +6,7 @@ import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 import * as Icons from './components/Icons';
 import { useTheme } from './contexts/ThemeContext';
-import { useI18n } from './contexts/i18n';
+import { useI18n } from './contexts/i18nContext';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';

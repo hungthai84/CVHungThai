@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 // Note: 'typed.js' is loaded globally from a <script> tag in index.html
-import { useI18n } from '../contexts/i18n';
+import { useI18n } from '../contexts/i18nContext';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';

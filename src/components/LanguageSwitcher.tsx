@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useI18n } from '../contexts/i18n';
+import { useI18n } from '../contexts/i18nContext';
 import * as Icons from './Icons';
 
 const LanguageSwitcher: React.FC = () => {

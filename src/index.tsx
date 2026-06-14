@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { I18nProvider } from './contexts/i18n';
+import { I18nProvider } from './contexts/i18nContext';
 import './lib/firebase';
 
 const rootElement = document.getElementById('root');
