@@ -262,7 +262,10 @@ export const useSpeechSynthesis = () => {
                 if (targetLangCode === 'vi-VN') {
                     const vietnameseVoices = realVoices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
-                        let preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
+                        let preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam minh') || v.name.toLowerCase().includes('namminh'));
+                        if (!preferredVoice) {
+                            preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');
+                        }
                         if (!preferredVoice) {
                             preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('vietnam') || v.name.toLowerCase().includes('tiếng việt'));
                         }

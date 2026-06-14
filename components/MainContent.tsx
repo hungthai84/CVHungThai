@@ -23,6 +23,23 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
     const heroData = t.hero;
     const typedEl = useRef(null);
     const typedInstance = useRef<any>(null);
+    const DEFAULT_VIDEO = "https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4";
+    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/1dc04314870ccd1da345b28cb9a539bdb8af303524e169e67691ae3ac5b6e654.mp4";
+
+    const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
+    const [isMuted, setIsMuted] = React.useState(true);
+
+    const isIntroPlaying = videoUrl === INTRO_VIDEO;
+
+    const handleToggleIntro = () => {
+        if (isIntroPlaying) {
+            setVideoUrl(DEFAULT_VIDEO);
+            setIsMuted(true);
+        } else {
+            setVideoUrl(INTRO_VIDEO);
+            setIsMuted(false);
+        }
+    };
 
     useEffect(() => {
         // Strings for the typing animation from translations
@@ -66,12 +83,13 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
         <PageLayout id={id}>
             <div className="info-card home-hero-card">
                  <video 
+                    key={videoUrl}
                     autoPlay 
-                    muted 
+                    muted={isMuted} 
                     loop 
                     playsInline 
                     className="home-hero-card-bg-video"
-                    src="https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4"
+                    src={videoUrl}
                     poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
                     style={{ opacity: 1 }}
                 />
@@ -93,6 +111,15 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                             <span ref={typedEl}></span>
                         </h2>
                     </div>
+
+                    <button 
+                        onClick={handleToggleIntro}
+                        className="intro-play-button"
+                        title={isIntroPlaying ? "Bỏ qua video giới thiệu" : "Xem video giới thiệu"}
+                    >
+                        {isIntroPlaying ? <Icons.XMarkIcon size={20} /> : <Icons.PlayIcon size={20} />}
+                        <span>{isIntroPlaying ? "Bỏ qua" : "Giới thiệu"}</span>
+                    </button>
                 </div>
             </div>
         </PageLayout>

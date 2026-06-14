@@ -141,21 +141,9 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         if (view === 'collect_info') {
             if (lastSpokenViewRef.current === 'collect_info') return;
             lastSpokenViewRef.current = 'collect_info';
-
-            const initialWelcome = "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Thái. Trước khi bắt đầu, vui lòng cho tôi biết tên và giới tính của bạn.";
-            speak(initialWelcome, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
         } else if (view === 'categories') {
             if (lastSpokenViewRef.current === 'categories') return;
             lastSpokenViewRef.current = 'categories';
-
-            if (userName) {
-                const [greeting, ...restOfWelcome] = pageData.welcomeMessage.split('!');
-                const personalizedWelcomeMessage = language === 'vi'
-                    ? `${greeting} ${userSalutation} ${userName}!${restOfWelcome.join('!')}`
-                    : `${greeting} ${userName}!${restOfWelcome.join('!')}`;
-                
-                speak(personalizedWelcomeMessage, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
-            }
         } else {
             // Clear or set to chat so entering other states can trigger speech again
             lastSpokenViewRef.current = 'chat';

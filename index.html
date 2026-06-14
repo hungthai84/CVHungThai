@@ -97,7 +97,7 @@
     
     html {
       margin: 0 !important;
-      font-size: clamp(14px, 1.3vw, 16px);
+      font-size: clamp(15px, 1.3vw, 17px);
       scroll-behavior: smooth;
     }
 
@@ -1384,6 +1384,63 @@
         left: 2.5rem;
     }
 
+    .intro-play-button {
+        position: absolute !important;
+        bottom: 2.5rem !important;
+        right: 2.5rem !important;
+        background-color: #ffffff !important;
+        border: none !important;
+        color: #101733 !important;
+        padding: 1rem 2.5rem !important;
+        border-radius: 999px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.8rem !important;
+        font-weight: 800 !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+        z-index: 10;
+        margin: 0 !important;
+        font-size: 1.2rem !important;
+        font-family: "Inter", sans-serif;
+    }
+
+    /* Soft glow matching icon color */
+    .intro-play-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--accent-color);
+        z-index: -1;
+        filter: blur(10px);
+        opacity: 0.3;
+        border-radius: 999px;
+        transition: all 0.3s ease;
+    }
+
+    .intro-play-button:hover {
+        transform: translateY(-2px) scale(1.02) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+        color: var(--accent-color) !important;
+    }
+
+    .intro-play-button:hover::before {
+        opacity: 0.5;
+        filter: blur(15px);
+    }
+
+    .intro-play-button:active {
+        transform: translateY(0) scale(0.97) !important;
+    }
+
+    .intro-play-button svg {
+        color: var(--accent-color) !important;
+    }
+
     /* Cover Letter Page with Video */
     .custom-video-player-wrapper {
         position: absolute;
@@ -1822,8 +1879,8 @@
     }
 
     .service-logo-item-new {
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.55rem;
+        height: 2.55rem;
         border-radius: 50%;
         background-color: var(--sidebar-bg);
         padding: 4px;
