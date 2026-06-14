@@ -19,7 +19,7 @@ const getRandomVibrantColor = () => {
 };
 
 const MainContent: React.FC<MainContentProps> = ({ id }) => {
-    const { t } = useI18n();
+    const { t, language } = useI18n();
     const heroData = t.hero;
     const typedEl = useRef(null);
     const typedInstance = useRef<any>(null);
@@ -28,8 +28,26 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
     const [isMuted, setIsMuted] = React.useState(true);
+    const [welcomeMessage, setWelcomeMessage] = React.useState('');
 
     const isIntroPlaying = videoUrl === INTRO_VIDEO;
+
+    useEffect(() => {
+        const hour = new Date().getHours();
+        let timeGreeting = language === 'en' ? "Good morning" : "Chào buổi sáng";
+        if (hour >= 12 && hour < 18) {
+            timeGreeting = language === 'en' ? "Good afternoon" : "Chào buổi chiều";
+        } else if (hour >= 18) {
+            timeGreeting = language === 'en' ? "Good evening" : "Chào buổi tối";
+        }
+
+        const savedName = localStorage.getItem('userName');
+        if (savedName) {
+            setWelcomeMessage(`${timeGreeting}, ${savedName}!`);
+        } else {
+            setWelcomeMessage(`${timeGreeting}!`);
+        }
+    }, [language]);
 
     const handleToggleIntro = () => {
         if (isIntroPlaying) {
@@ -111,6 +129,11 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                     </div>
                     
                     <div className="home-hero-content">
+                        {welcomeMessage && (
+                            <div className="text-xl md:text-2xl font-medium text-white/90 mb-3 drop-shadow-md tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                                {welcomeMessage}
+                            </div>
+                        )}
                         <p className="hero-intro-text">{heroData.intro}</p>
                         <h1 className="hero-name-text">{heroData.name}</h1>
                         <h2 className="hero-typed-text-container">
