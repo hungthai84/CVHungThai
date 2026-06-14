@@ -15,17 +15,12 @@ interface SidebarProps {
     activeItemKey: string;
     setActiveItemKey: (key: string) => void;
     isMobile?: boolean;
-    isSidebarHidden?: boolean;
-    setIsSidebarHidden?: (val: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
     navStructure,
     activeItemKey, 
-    setActiveItemKey, 
-    isMobile = false,
-    isSidebarHidden = false,
-    setIsSidebarHidden,
+    setActiveItemKey,
 }) => {
     const { t, language } = useI18n();
     const navLabels = t.sidebar.nav;
@@ -33,13 +28,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     const handleNavClick = (pageKey: string) => {
         setActiveItemKey(pageKey);
-    };
-
-    const handleHideSidebar = () => {
-        if (setIsSidebarHidden) {
-            setIsSidebarHidden(true);
-            localStorage.setItem('isSidebarHidden', 'true');
-        }
     };
 
     // Filter navigation menu items based on search query
@@ -111,45 +99,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                     )}
                 </ul>
             </nav>
-
-            {/* Sidebar Toggle Button - Vertically Centered */}
-            {!isMobile && setIsSidebarHidden && (
-                <button
-                    onClick={handleHideSidebar}
-                    className="sidebar-hide-btn-middle"
-                    title={language === 'vi' ? 'Ẩn hoàn toàn sidebar' : 'Hide sidebar completely'}
-                    aria-label="Hide sidebar"
-                    style={{
-                        position: 'absolute',
-                        right: '-14px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: '28px',
-                        height: '28px',
-                        borderRadius: '50%',
-                        backgroundColor: 'var(--card-bg)',
-                        border: '1px solid var(--card-border)',
-                        color: 'var(--color-brand-text-secondary)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        zIndex: 100,
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                        transition: 'all 0.25s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'var(--color-brand-active-menu-bg)';
-                        e.currentTarget.style.color = 'var(--color-brand-orange)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'var(--card-bg)';
-                        e.currentTarget.style.color = 'var(--color-brand-text-secondary)';
-                    }}
-                >
-                    <Icons.ChevronLeftIcon size={16} />
-                </button>
-            )}
 
         </aside>
     );

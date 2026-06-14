@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
@@ -10,7 +9,6 @@ import { useI18n } from './contexts/i18n';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
-import PasswordPrompt from './components/PasswordPrompt';
 
 // Lazy load page components to minimize initial bundle size and optimize website load speeds
 const SkillsPage = lazy(() => import('./components/SkillsPage'));
@@ -72,7 +70,7 @@ const App: React.FC = () => {
     const { t, language } = useI18n();
     const { isSoundOn, wallpaper, themeMode, setThemeMode } = useTheme();
 
-    const { projectPostPages, allPages, pageKeys, mainPages, mainPageKeys } = React.useMemo(() => {
+    const { allPages, pageKeys, mainPages, mainPageKeys } = React.useMemo(() => {
         const projectPostPages = t.projectsPage.projects.map(p => ({
             key: `project-${p.id}`,
             tKey: p.title,
@@ -86,7 +84,7 @@ const App: React.FC = () => {
         const mainPages = baseNavStructure.filter(p => p.showInMenu !== false);
         const mainPageKeys = mainPages.map(p => p.key);
 
-        return { projectPostPages, allPages, pageKeys, mainPages, mainPageKeys };
+        return { allPages, pageKeys, mainPages, mainPageKeys };
     }, [t.projectsPage.projects]);
     
     const [activeIndex, setActiveIndex] = useState(0);
@@ -96,9 +94,6 @@ const App: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
-    const [isSidebarHidden, setIsSidebarHidden] = useState(() => {
-        return localStorage.getItem('isSidebarHidden') === 'true';
-    });
 
 
     const clickSound = useRef<HTMLAudioElement | null>(null);
@@ -243,9 +238,7 @@ const App: React.FC = () => {
         activeItemKey: pageKeys[activeIndex],
         setActiveItemKey: isMobile ? handleSetPageAndCloseMenu : handleSetPage,
         isMobile,
-        isSidebarHidden,
-        setIsSidebarHidden,
-    }), [activeIndex, isMobile, handleSetPageAndCloseMenu, handleSetPage, isSidebarHidden, pageKeys]);
+    }), [activeIndex, isMobile, handleSetPageAndCloseMenu, handleSetPage, pageKeys]);
     
     const ActivePageComponent = allPages[activeIndex]?.component;
     const componentProps = React.useMemo(() => {
@@ -395,20 +388,7 @@ const App: React.FC = () => {
                 )}
             </div>
             
-            <div className={`site-wrapper ${!isMobile && isSidebarHidden ? 'sidebar-hidden-desktop' : ''}`}>
-                {!isMobile && isSidebarHidden && (
-                    <button 
-                        onClick={() => {
-                            setIsSidebarHidden(false);
-                            localStorage.setItem('isSidebarHidden', 'false');
-                        }}
-                        className="sidebar-floating-toggle-btn"
-                        title={language === 'vi' ? 'Hiện sidebar' : 'Show sidebar'}
-                        aria-label="Show sidebar"
-                    >
-                        <Icons.ChevronRightIcon size={16} />
-                    </button>
-                )}
+            <div className={`site-wrapper`}>
                  {isMobile ? (
                     <>
                         <MobileHeader

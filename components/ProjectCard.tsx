@@ -12,7 +12,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) => {
-    const { t, language } = useI18n();
+    const { t } = useI18n();
     const pageData = t.projectsPage;
 
     const achievement = React.useMemo(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useI18n } from '../contexts/i18n';
@@ -6,72 +6,12 @@ import * as Icons from './Icons';
 import { useSpeechSynthesis } from './useSpeechSynthesis';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
-import * as translations from '../translations';
 
 interface SettingsPageProps {
     id?: string;
 }
 
-// --- Data Management Helper Functions ---
-
-const flattenObject = (obj: any, path: string = ''): Record<string, string> => {
-    let result: Record<string, string> = {};
-
-    for (const key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            const newPath = path ? `${path}.${key}` : key;
-            const value = obj[key];
-
-            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-                result = { ...result, ...flattenObject(value, newPath) };
-            } else if (Array.isArray(value)) {
-                 if (value.every(item => typeof item === 'string')) {
-                    result[newPath] = value.join('\n');
-                } else {
-                     value.forEach((item, index) => {
-                        const arrayPath = `${newPath}.${index}`;
-                        if (typeof item === 'object' && item !== null) {
-                            result = { ...result, ...flattenObject(item, arrayPath) };
-                        } else {
-                            result[arrayPath] = String(item);
-                        }
-                    });
-                }
-            } else {
-                result[newPath] = String(value);
-            }
-        }
-    }
-    return result;
-};
-
-
-const unflattenObject = (data: Record<string, string>) => {
-    const result: any = {};
-    for (const key in data) {
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-            const keys = key.split('.');
-            let current = result;
-            while (keys.length > 1) {
-                const part = keys.shift()!;
-                const nextPartIsNumber = /^\d+$/.test(keys[0]);
-                if (!current[part]) {
-                    current[part] = nextPartIsNumber ? [] : {};
-                }
-                current = current[part];
-            }
-            const value = data[key];
-            // This is a heuristic. If a field was flattened from a string array,
-            // it will be a multi-line string. In this data structure, this is a safe assumption.
-            if (typeof value === 'string' && value.includes('\n')) {
-                current[keys[0]] = value.split('\n');
-            } else {
-                 current[keys[0]] = value;
-            }
-        }
-    }
-    return result;
-};
+// Removed data management helpers
 
 
 const lightGradientWallpapers = [
@@ -188,14 +128,13 @@ const specialAndVideoWallpapers = [
 ];
 
 const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
-    const { t, language } = useI18n();
+    const { t } = useI18n();
     const pageData = t.settingsPage;
     const settingsText = t.settings;
     const {
         themeMode, setThemeMode,
         lightThemeColor, setLightThemeColor,
         darkThemeColor, setDarkThemeColor,
-        // isCursorEffectOn, setCursorEffect,
         isSoundOn, setSoundOn,
         isAiVoiceOn, setAiVoiceOn,
         selectedAiVoiceName, setSelectedAiVoiceName,
@@ -205,15 +144,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     } = useTheme();
 
     const { voices, speak, cancel, isSpeaking } = useSpeechSynthesis();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const clickSound = useRef(new Audio('https://rainbowit.net/themes/inbio/wp-content/themes/inbio/template-parts/audio/link-hover-and-click.wav'));
 
 
     // --- Local State for pending changes ---
     const [localThemeMode, setLocalThemeMode] = useState(themeMode);
     const [localLightThemeColor, setLocalLightThemeColor] = useState(lightThemeColor);
     const [localDarkThemeColor, setLocalDarkThemeColor] = useState(darkThemeColor);
-    // const [localCursorEffect, setLocalCursorEffect] = useState(isCursorEffectOn);
     const [localSound, setLocalSound] = useState(isSoundOn);
     const [localAiVoice, setLocalAiVoice] = useState(isAiVoiceOn);
     const [localVoiceName, setLocalVoiceName] = useState(selectedAiVoiceName);
@@ -235,21 +171,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         }
     };
 
-    useEffect(() => {
-        clickSound.current.volume = 0.3;
-    }, []);
-
-    const playClickSound = useCallback(() => {
-        if (isSoundOn) {
-            clickSound.current.currentTime = 0;
-            clickSound.current.play().catch(() => {});
-        }
-        if (navigator.vibrate) {
-            navigator.vibrate(10);
-        }
-    }, [isSoundOn]);
-
-
     // Reset local state if context changes (e.g., settings loaded initially)
     useEffect(() => {
         setLocalThemeMode(themeMode);
@@ -267,7 +188,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         setThemeMode(localThemeMode);
         setLightThemeColor(localLightThemeColor);
         setDarkThemeColor(localDarkThemeColor);
-        // setCursorEffect(localCursorEffect);
         setSoundOn(localSound);
         setAiVoiceOn(localAiVoice);
         setSelectedAiVoiceName(localVoiceName);
@@ -338,237 +258,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
     const videoWallpapers = useMemo(() => specialAndVideoWallpapers.filter(w => w.type === 'video'), []);
     
-    const handleExportData = () => {
-        const flattenedVi = flattenObject(translations.vi);
-        const flattenedEn = flattenObject(translations.en);
-        const allKeys = Array.from(new Set([...Object.keys(flattenedVi), ...Object.keys(flattenedEn)])).sort();
-
-        const escapeCsvCell = (cellData: string) => {
-            const str = String(cellData || '');
-            if (str.includes(',') || str.includes('"') || str.includes('\n')) {
-                return `"${str.replace(/"/g, '""')}"`;
-            }
-            return str;
-        };
-
-        const csvRows = [
-            'key,vi,en', // Header
-            ...allKeys.map(key => {
-                const viValue = escapeCsvCell(flattenedVi[key]);
-                const enValue = escapeCsvCell(flattenedEn[key]);
-                return `${key},${viValue},${enValue}`;
-            })
-        ];
-
-        const csvContent = csvRows.join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        if (link.href) {
-            URL.revokeObjectURL(link.href);
-        }
-        link.href = URL.createObjectURL(blob);
-        link.download = 'portfolio_data.csv';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
-    const handleImportClick = () => {
-        fileInputRef.current?.click();
-    };
-    
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const text = e.target?.result as string;
-            try {
-                const lines = text.split(/\r?\n/);
-                const header = lines[0].split(',');
-                if (header[0] !== 'key' || header[1] !== 'vi' || header[2] !== 'en') {
-                    throw new Error('Invalid CSV header');
-                }
-                
-                const dataVi: Record<string, string> = {};
-                const dataEn: Record<string, string> = {};
-
-                for (let i = 1; i < lines.length; i++) {
-                    if (!lines[i].trim()) continue;
-                    const parts = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                    const key = parts[0]?.trim();
-                    let viValue = (parts[1] || '').trim();
-                    let enValue = (parts[2] || '').trim();
-
-                    // Unescape quotes
-                    const unescape = (val: string) => {
-                         if (val.startsWith('"') && val.endsWith('"')) {
-                           return val.slice(1, -1).replace(/""/g, '"');
-                        }
-                        return val;
-                    }
-                    
-                    if(key) {
-                        dataVi[key] = unescape(viValue);
-                        dataEn[key] = unescape(enValue);
-                    }
-                }
-
-                const customTranslations = {
-                    vi: unflattenObject(dataVi),
-                    en: unflattenObject(dataEn),
-                };
-                
-                localStorage.setItem('customTranslations', JSON.stringify(customTranslations));
-                alert(settingsText.importSuccess);
-                window.location.reload();
-            } catch (error) {
-                console.error('Error parsing CSV:', error);
-                alert(settingsText.importError);
-            }
-        };
-        reader.readAsText(file);
-    };
-
-    const generateTextContent = () => {
-        let content = '';
-    
-        const addTitle = (title: string) => {
-            content += `\n\n==============================\n`;
-            content += `${title.toUpperCase()}\n`;
-            content += `==============================\n\n`;
-        };
-    
-        // Header
-        content += `${t.sidebar.name}\n`;
-        content += `${t.sidebar.jobTitle}\n`;
-    
-        // Cover Letter
-        addTitle(t.coverLetterPage.badge);
-        content += `${t.coverLetterPage.greeting}\n\n`;
-        t.coverLetterPage.paragraphs.forEach(p => content += `${p}\n\n`);
-        content += `${t.coverLetterPage.closing}\n`;
-        content += `${t.coverLetterPage.signature}\n`;
-        
-        // About Me
-        addTitle(t.aboutPage.badge);
-        t.aboutPage.paragraphs.forEach(p => content += `${p.replace(/<strong>/g, '').replace(/<\/strong>/g, '')}\n\n`);
-        content += `Giá trị cốt lõi: ${t.aboutPage.coreValues}\n\n`;
-        content += `${t.aboutPage.concludingParagraph.replace(/<strong>/g, '').replace(/<\/strong>/g, '')}\n\n`;
-        content += `${t.aboutPage.personalInfoTitle}:\n`;
-        t.aboutPage.infoItems.forEach(item => {
-            content += `- ${item.label}: ${item.value}\n`;
-        });
-    
-        // Work Experience
-        addTitle(t.workExperiencePage.title);
-        t.workExperiencePage.jobs.forEach(job => {
-            content += `\n---\n`;
-            content += `Công ty: ${job.company} (${job.date})\n`;
-            content += `Vị trí: ${job.title}\n`;
-            content += `Quy mô nhóm: ${job.teamSize}\n`;
-            content += `Trách nhiệm:\n`;
-            job.responsibilities.forEach(r => content += `  - ${r}\n`);
-            if (job.achievements.length > 0) {
-                content += `Thành tựu chính:\n`;
-                job.achievements.forEach(a => content += `  - ${a.label}: ${a.value}%\n`);
-            }
-        });
-    
-        // Skills
-        addTitle(t.skillsPage.title);
-        t.skillsPage.categories.forEach(category => {
-            content += `\n${category.title}:\n`;
-            category.skills.forEach(skill => {
-                content += `- ${skill.name} (${skill.level}%)\n`;
-            });
-        });
-    
-        // Education
-        addTitle(t.educationPage.title);
-        t.educationPage.items.forEach(item => {
-            content += `\n${item.year} - ${item.title}\n`;
-            content += `${item.institution}\n`;
-            content += `${item.description}\n`;
-        });
-        
-        // Achievements
-        addTitle(t.achievementsPage.badge);
-        const achievementsByCategory: Record<string, any[]> = t.achievementsPage.achievements.reduce((acc, ach) => {
-            if (!acc[ach.category]) {
-                acc[ach.category] = [];
-            }
-            acc[ach.category].push(ach);
-            return acc;
-        }, {} as Record<string, any[]>);
-    
-        Object.entries(achievementsByCategory).forEach(([category, achievements]) => {
-            content += `\n${category}:\n`;
-            achievements.forEach(ach => {
-                content += `- ${ach.title}: ${ach.rate}%\n`;
-            });
-        });
-        
-        // Services/Domains
-        addTitle(t.servicesPage.badge);
-        t.servicesPage.services.forEach(service => {
-            content += `\n${service.title}:\n`;
-            content += `${service.description}\n`;
-        });
-    
-        // Projects
-        addTitle(t.projectsPage.badge);
-        t.projectsPage.projects.forEach(project => {
-            content += `\n---\n`;
-            content += `Dự án: ${project.title} (ID: ${project.id})\n`;
-            content += `Mô tả: ${project.description}\n`;
-            content += `Nhóm: ${project.group}, Giai đoạn: ${project.stage}\n`;
-            content += `Thẻ: ${project.hashtags.join(', ')}\n`;
-            
-            const post = (t.projectPosts as any)[project.id];
-            if (post && post.title !== "Thông tin dự án chưa được cập nhật") {
-                content += `Chi tiết:\n`;
-                post.content.paragraphs.forEach((p: string) => content += `  ${p}\n`);
-            }
-        });
-    
-        return content;
-    };
-
-    const handleExportApp = (format: 'html' | 'txt') => {
-        playClickSound();
-    
-        if (format === 'html') {
-            let htmlString = document.documentElement.outerHTML;
-    
-            // Replace the relative path of the main script with an absolute one
-            const scriptRegex = /src="\/index.tsx"/g;
-            const absoluteSrc = `src="${window.location.origin}/index.tsx"`;
-            htmlString = htmlString.replace(scriptRegex, absoluteSrc);
-    
-            const blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'index.html';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        } else if (format === 'txt') {
-            const textContent = generateTextContent();
-            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'portfolio_summary.txt';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        }
-    };
-
-
     return (
         <PageLayout id={id}>
             <div className="info-card">

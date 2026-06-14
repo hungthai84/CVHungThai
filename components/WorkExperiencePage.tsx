@@ -143,7 +143,7 @@ const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
     );
 };
 
-const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate, isForPrint = false }) => {
+const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint = false }) => {
     const { t, language } = useI18n();
     const pageData = t.workExperiencePage;
     const jobs: Job[] = useMemo(() => [...(pageData.jobs || [])], [pageData.jobs]);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useI18n } from '../contexts/i18n';
-import * as Icons from './Icons';
 
 interface PrintableViewProps {
     activePageKey?: string;

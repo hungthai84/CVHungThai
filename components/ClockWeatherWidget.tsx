@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 
 const CustomWeatherIcon = () => (
     <div className="weather-icon-wrapper-animated" aria-label="Animated weather illustration">

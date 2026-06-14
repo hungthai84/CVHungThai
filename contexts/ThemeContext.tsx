@@ -11,8 +11,6 @@ interface ThemeContextType {
     setLightThemeColor: (color: ThemeColor) => void;
     darkThemeColor: ThemeColor;
     setDarkThemeColor: (color: ThemeColor) => void;
-    // isCursorEffectOn: boolean;
-    // setCursorEffect: (isOn: boolean) => void;
     isSoundOn: boolean;
     setSoundOn: (isOn: boolean) => void;
     isAiVoiceOn: boolean;
@@ -33,7 +31,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const hexToRgb = (hex: string): string => {
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    const fullHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+    const fullHex = hex.replace(shorthandRegex, (_m, r, g, b) => r + r + g + g + b + b);
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(fullHex);
     if (!result) return "0, 0, 0";
     const r = parseInt(result[1], 16);
@@ -131,7 +129,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         if (savedLightColor) setLightThemeColorState(savedLightColor);
         if (savedDarkColor) setDarkThemeColorState(savedDarkColor);
         
-        // setCursorEffectState(savedCursor === null ? true : savedCursor === 'true');
         setSoundOnState(savedSound === null ? true : savedSound === 'true');
         setAiVoiceOnState(savedAiVoice === null ? false : savedAiVoice === 'true');
         if (savedVoiceName) setSelectedAiVoiceNameState(savedVoiceName);
@@ -182,8 +179,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setLightThemeColor,
         darkThemeColor,
         setDarkThemeColor,
-        // isCursorEffectOn,
-        // setCursorEffect,
         isSoundOn,
         setSoundOn,
         isAiVoiceOn,

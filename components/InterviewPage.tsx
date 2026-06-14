@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
@@ -8,15 +8,8 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t } = useI18n();
     const pageData = t.interviewPage;
     
-    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 767 : false);
     const [showPrompt, setShowPrompt] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 767);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     const handleAccept = () => {
         setShowPrompt(false);

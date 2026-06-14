@@ -1,21 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-function splitTextForGtts(text: string, maxLength = 160): string[] {
-    const words = text.split(' ');
-    const chunks: string[] = [];
-    let currentChunk = '';
-    for (const word of words) {
-        if ((currentChunk + ' ' + word).length <= maxLength) {
-            currentChunk += (currentChunk ? ' ' : '') + word;
-        } else {
-            if (currentChunk) chunks.push(currentChunk);
-            currentChunk = word;
-        }
-    }
-    if (currentChunk) chunks.push(currentChunk);
-    return chunks;
-}
-
 function splitTextIntoSentences(text: string, maxLength = 160): string[] {
     // Split by sentence boundaries (. ! ?) to preserve natural intonation and pauses
     const sentences = text.match(/[^.!?]+[.!?]+(\s+|$)|[^.!?]+(\s+|$)/g) || [text];

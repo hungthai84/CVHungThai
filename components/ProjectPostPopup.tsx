@@ -56,7 +56,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     
     const [embeddingUrl, setEmbeddingUrl] = useState<string | null>(null);
 
-    const { isAiVoiceOn, selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
+    const { selectedAiVoiceName, aiVoicePitch, aiVoiceRate } = useTheme();
     const { isSpeaking, speak, cancel } = useSpeechSynthesis();
 
     useEffect(() => {
