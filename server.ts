@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { apiRouter } from "./api-routes.js"; // ESM extension compatibility
+import { apiRouter } from "./api-routes"; // ESM extension compatibility
 
 async function startServer() {
   const app = express();

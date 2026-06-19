@@ -447,7 +447,7 @@ const App: React.FC = () => {
                         <div className="right-panel-top-content">
                             <div className={`avatar-social-container ${isSocialsOpen ? 'open' : ''}`}>
                                 <button className="right-panel-avatar-button" onClick={() => setIsSocialsOpen(!isSocialsOpen)} title="Social Links">
-                                    <img src="https://i.postimg.cc/0QyHjYN4/Avata-Gif.gif" alt="Avatar" className="right-panel-avatar" />
+                                    <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt="Avatar" className="right-panel-avatar" />
                                 </button>
                                 <div className="social-icons-ring" style={{ '--icon-count': socialLinks.length } as React.CSSProperties}>
                                     {socialLinks.map((link: any, index: number) => {

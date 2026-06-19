@@ -1,6 +1,6 @@
 import express from "express";
 import serverless from "serverless-http";
-import { apiRouter } from "../../api-routes.js";
+import { apiRouter } from "../../api-routes";
 
 const app = express();
 

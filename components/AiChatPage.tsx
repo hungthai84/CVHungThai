@@ -244,7 +244,9 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch AI response');
+                    const errorData = await response.json().catch(() => ({}));
+                    const errMsg = errorData.error || 'Failed to fetch AI response';
+                    throw new Error(errMsg);
                 }
 
                 setIsLoading(false);
@@ -275,11 +277,18 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                         speak(currentText, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                     }
                 }
-            } catch (err) {
+            } catch (err: any) {
                 console.error("Error generating content:", err);
-                setError(pageData.errorMessage);
+                let displayError = pageData.errorMessage;
+                if (err?.message?.includes('429') && err?.message?.includes('RESOURCE_EXHAUSTED')) {
+                    displayError = language === 'vi' 
+                        ? 'Project AI Studio của bạn đã hết tín dụng API. Vui lòng cấu hình billing https://ai.studio/projects để tiếp tục sử dụng.'
+                        : 'Your API credits are depleted. Please check your AI Studio billing at https://ai.studio/projects.';
+                }
+                
+                setError(displayError);
                 setIsLoading(false);
-                setMessages(prev => [...prev, { id: Date.now().toString(), text: pageData.errorMessage, sender: 'model' }]);
+                setMessages(prev => [...prev, { id: Date.now().toString(), text: displayError, sender: 'model' }]);
             }
         };
     
@@ -359,7 +368,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     <div key={msg.id} className={`chat-message ${msg.sender === 'user' ? 'user' : 'ai'}`}>
                         <div className={`chat-avatar ${msg.sender} ${isLoading && msg.isStreaming ? 'thinking' : ''}`}>
                             {msg.sender === 'model' ? (
-                                <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
+                                <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
                             ) : (
                                 <Icons.UserIcon className="user-icon-svg" />
                             )}
@@ -389,7 +398,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 {isLoading && messages[messages.length-1]?.sender !== 'model' && (
                     <div className="chat-message ai">
                         <div className="chat-avatar thinking">
-                           <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
+                           <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <div className="typing-indicator"><span></span><span></span><span></span></div>
@@ -424,7 +433,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="ai-suggestions-view">
                     <div className="chat-message ai ai-welcome-message">
                         <div className="chat-avatar">
-                            <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
+                            <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <p>{personalizedWelcomeMessage}</p>
@@ -490,7 +499,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="ai-suggestions-view" style={{ justifyContent: 'center' }}>
                     <div className="chat-message ai ai-welcome-message">
                         <div className="chat-avatar">
-                            <img src="https://i.postimg.cc/nhWTyNyG/Avata-Gif-2.gif" alt={pageData.avatarAlt} />
+                            <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <p>{initialWelcome}</p>

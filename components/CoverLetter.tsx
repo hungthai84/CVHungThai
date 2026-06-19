@@ -69,7 +69,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                             onPause={() => setIsPlaying(false)}
                             onEnded={() => setIsPlaying(false)}
                             className="cover-letter-video-element"
-                            poster="https://i.postimg.cc/0QyHjYN4/Avata-Gif.gif"
+                            poster="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif"
                         >
                             Trình duyệt của bạn không hỗ trợ thẻ video.
                         </video>

@@ -283,7 +283,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
         }
     };
     return (
-        <PageLayout id={id}>
+        <PageLayout id={id} className="work-experience-section">
             <div className={`info-card work-experience-card`}>
                  <div className="about-header">
                     <InfoBadge
@@ -311,7 +311,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                             muted
                             loop
                             className="cover-letter-video-element"
-                            poster="https://i.postimg.cc/0QyHjYN4/Avata-Gif.gif"
+                            poster="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif"
                         >
                             Trình duyệt của bạn không hỗ trợ thẻ video.
                         </video>
@@ -356,7 +356,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         </div>
                     </div>
                     {activeJob && !isMobile && (
-                        <div className="job-card" key={activeJob.key}>
+                        <div className="job-card" key={activeJob.key} style={{ border: `2px solid ${activeJob.color}`, borderRadius: '20px', padding: '1.5rem', marginTop: '1rem' }}>
                            <div className="job-card-scrollable-content no-scrollbar">
                                 <div className="job-card-details-grid">
                                     <div>
@@ -375,7 +375,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     flexShrink: 0,
-                                                    border: `1px solid ${activeJob.color}`
+                                                    border: `2px solid ${activeJob.color}`
                                                 }}>
                                                     <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
                                                 </div>
@@ -422,7 +422,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
             </div>
             {showDetailPopup && activeJob && document.getElementById('popup-root') && createPortal(
                 <div className="video-popup-overlay" onClick={() => setShowDetailPopup(false)}>
-                    <div className="video-popup-content experience-popup-content no-scrollbar" onClick={e => e.stopPropagation()} style={{ padding: '1.5rem', overflowY: 'auto' }}>
+                    <div className="video-popup-content experience-popup-content no-scrollbar" onClick={e => e.stopPropagation()} style={{ padding: '1.5rem', overflowY: 'auto', border: `2px solid ${activeJob.color}` }}>
                         <button className="video-popup-close-btn" onClick={() => setShowDetailPopup(false)} aria-label="Close details">
                             <Icons.XMarkIcon />
                         </button>
@@ -442,7 +442,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     flexShrink: 0,
-                                    border: `1px solid ${activeJob.color}`
+                                    border: `2px solid ${activeJob.color}`
                                 }}>
                                     <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
                                 </div>
