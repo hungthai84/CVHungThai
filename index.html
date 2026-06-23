@@ -2446,27 +2446,24 @@
     
     /* Work Experience Page */
     .work-experience-section {
-        height: auto !important;
-        min-height: 100%;
-        display: block; /* Override default flex 100% height */
+        height: 100%;
     }
     .work-experience-section .section-inner {
-        height: auto !important;
-        min-height: 100%;
+        height: 100%;
     }
     .work-experience-card {
-        height: auto !important;
-        min-height: 100%;
-        overflow: visible !important;
-        display: block !important;
+        height: 100%;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column;
     }
     .work-experience-info {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        height: auto;
-        min-height: 100%;
+        flex: 1;
+        min-height: 0;
         box-sizing: border-box;
     }
     .timeline-navigation-wrapper {
@@ -2579,13 +2576,14 @@
         width: 100%;
         max-width: 1100px;
         transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        height: auto;
+        flex: 1;
+        min-height: 0;
         margin-bottom: 2rem;
         display: flex;
         flex-direction: column;
         background-color: transparent;
         border: none;
-        overflow: visible;
+        overflow: hidden;
         padding: 1rem 0;
         box-shadow: none;
     }
@@ -2595,7 +2593,9 @@
         border-color: transparent;
     }
     .job-card-scrollable-content {
-        overflow-y: visible;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
         padding-right: 0.5rem;
     }
     .job-card-details-grid {

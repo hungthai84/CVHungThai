@@ -4,6 +4,7 @@ import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
+import Lightbox from './Lightbox';
 
 interface Achievement {
     label: string;
@@ -120,7 +121,12 @@ const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, co
 
 import OptimizedImage from './OptimizedImage';
 
-const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
+interface JobImageSliderProps {
+    images: string[];
+    onImageClick?: (index: number) => void;
+}
+
+const JobImageSlider: React.FC<JobImageSliderProps> = ({ images, onImageClick }) => {
     if (!images || images.length === 0) {
         return null;
     }
@@ -131,13 +137,20 @@ const JobImageSlider: React.FC<{ images: string[] }> = ({ images }) => {
     return (
         <div className="job-image-slider-container">
             <div className="job-image-slider-track">
-                {doubledImages.map((src, index) => (
-                    <div className="job-image-slider-slide" key={index}>
-                        <div className="job-image-slide">
-                           <OptimizedImage src={src} alt={`Work sample ${index + 1}`} loading="lazy" />
+                {doubledImages.map((src, index) => {
+                    const originalIndex = index % images.length;
+                    return (
+                        <div 
+                            className="job-image-slider-slide cursor-pointer" 
+                            key={index}
+                            onClick={() => onImageClick?.(originalIndex)}
+                        >
+                            <div className="job-image-slide transform hover:scale-[1.06] active:scale-95 transition-all duration-300">
+                               <OptimizedImage src={src} alt={`Work sample ${originalIndex + 1}`} loading="lazy" />
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
@@ -269,6 +282,30 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     const activeJob = jobs[activeJobIndex];
     const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 767 : false);
     const [showDetailPopup, setShowDetailPopup] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+    const lightboxImages = useMemo(() => {
+        if (!activeJob?.images) return [];
+        return activeJob.images.map(img => ({ src: img, alt: activeJob.company }));
+    }, [activeJob]);
+
+    const handleOpenLightbox = (index: number) => {
+        setLightboxIndex(index);
+    };
+
+    const handleCloseLightbox = () => {
+        setLightboxIndex(null);
+    };
+
+    const handleNextLightbox = () => {
+        if (lightboxImages.length === 0) return;
+        setLightboxIndex(prev => (prev === null ? 0 : (prev + 1) % lightboxImages.length));
+    };
+
+    const handlePrevLightbox = () => {
+        if (lightboxImages.length === 0) return;
+        setLightboxIndex(prev => (prev === null ? 0 : (prev - 1 + lightboxImages.length) % lightboxImages.length));
+    };
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 767);
@@ -348,7 +385,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                     </div>
                                     <div className="timeline-dot-container">
                                         <div className="timeline-dot" style={{ borderColor: index === activeJobIndex ? job.color : undefined }}>
-                                             <img src={job.logoUrl} alt={`${job.company} logo`} className="timeline-dot-img"/>
+                                             <img src={job.logoUrl} alt={`${job.company} logo`} className="timeline-dot-img" referrerPolicy="no-referrer" />
                                         </div>
                                     </div>
                                 </div>
@@ -356,63 +393,91 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         </div>
                     </div>
                     {activeJob && !isMobile && (
-                        <div className="job-card" key={activeJob.key} style={{ border: `2px solid ${activeJob.color}`, borderRadius: '20px', padding: '1.5rem', width: '100%', height: 'auto', minHeight: '390px', marginLeft: '25.5px', marginRight: '25.5px', marginTop: '25.5px', marginBottom: '25.5px' }}>
+                        <div 
+                            className="job-card flex flex-col justify-between" 
+                            key={activeJob.key} 
+                            style={{ 
+                                border: `2px solid ${activeJob.color}`, 
+                                borderRadius: '24px', 
+                                padding: '1.75rem', 
+                                width: 'calc(100% - 51px)', 
+                                flex: 1, 
+                                minHeight: 0, 
+                                marginLeft: '25.5px', 
+                                marginRight: '25.5px', 
+                                marginTop: '25.5px', 
+                                marginBottom: '25.5px',
+                                background: 'rgba(var(--card-bg-rgb), 0.55)',
+                                backdropFilter: 'blur(16px)',
+                                WebkitBackdropFilter: 'blur(16px)',
+                                boxShadow: `0 12px 40px -8px rgba(0, 0, 0, 0.4), 0 0 15px -3px ${activeJob.color}33`,
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
                            <div className="job-card-scrollable-content no-scrollbar">
                                 <div className="job-card-details-grid">
                                     <div>
                                         <div className="job-header-info">
-                                            <span className="job-date">{formatJobDate(activeJob.date)}</span>
+                                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                                                <Icons.CalendarDaysIcon size={14} className="text-slate-400 shrink-0" />
+                                                {formatJobDate(activeJob.date)}
+                                            </span>
                                             
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
                                                 <div style={{ 
-                                                    width: '32px', 
-                                                    height: '32px', 
-                                                    borderRadius: '50%', 
+                                                    width: '50px', 
+                                                    height: '50px', 
+                                                    borderRadius: '100px', 
                                                     backgroundColor: 'white', 
                                                     padding: '2px', 
-                                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     flexShrink: 0,
                                                     border: `2px solid ${activeJob.color}`
                                                 }}>
-                                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+                                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '50px', height: '50px', borderRadius: '100px' }} className="object-contain" referrerPolicy="no-referrer" />
                                                 </div>
-                                                <h4 style={{ margin: 0, color: activeJob.color }}>{activeJob.company}</h4>
+                                                <h4 className="text-lg font-bold m-0 tracking-tight" style={{ color: activeJob.color }}>{activeJob.company}</h4>
                                             </div>
-
-                                            <h3 style={{ marginTop: '0.25rem', marginBottom: '0.5rem', lineHeight: 1.3, fontSize: '1rem' }}>{activeJob.title}</h3>
-
-                                            <div className="job-team-size" style={{marginTop: '0.5rem'}}>
+ 
+                                            <h3 className="text-xl font-extrabold tracking-tight text-[var(--color-brand-text-primary)] mt-1.5 mb-2 leading-snug">{activeJob.title}</h3>
+ 
+                                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 mt-2 text-slate-300">
+                                               <Icons.UsersIcon size={12} className="text-slate-400 shrink-0" />
                                                <span>{pageData.managedTitle}: </span>
-                                               <strong>{activeJob.teamSize}</strong>
-                                           </div>
+                                               <strong className="text-white font-semibold">{activeJob.teamSize}</strong>
+                                            </div>
                                         </div>
-                                        <h5 style={{marginTop: '1.5rem'}}>{pageData.descriptionTitle}</h5>
-                                        <ul>
-                                           {activeJob.responsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                                        <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400" style={{marginTop: '1.75rem', marginBottom: '0.75rem'}}>{pageData.descriptionTitle}</h5>
+                                        <ul className="popup-responsibilities" style={{ borderTop: 'none', paddingTop: 0 }}>
+                                           {activeJob.responsibilities.map((item, index) => (
+                                               <li key={index} style={{ marginBottom: '0.625rem', fontSize: '0.925rem', lineHeight: '1.5', color: 'var(--color-brand-text-secondary)' }}>
+                                                   {item}
+                                               </li>
+                                           ))}
                                         </ul>
                                     </div>
                                     <div>
                                         {activeJob.achievements.length > 0 && (
                                            <>
-                                           <h5>{pageData.achievementsTitle}</h5>
+                                           <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400" style={{marginBottom: '1rem'}}>{pageData.achievementsTitle}</h5>
                                            <div className="achievements-grid">
                                                {activeJob.achievements.map((ach, index) => (
                                                    <JobAchievementCard key={index} achievement={ach} color={activeJob.color} />
                                                ))}
                                            </div>
                                            </>
-                                       )}
+                                        )}
                                         
                                     </div>
                                 </div>
                                
                                {activeJob.images && activeJob.images.length > 0 && (
-                                   <div className="job-image-slider-wrapper" style={{ marginTop: '1rem' }}>
-                                       <h5>{pageData.relatedImagesTitle}</h5>
-                                       <JobImageSlider images={activeJob.images} />
+                                   <div className="job-image-slider-wrapper" style={{ marginTop: '1.5rem', borderTop: '1px solid var(--color-brand-glass-border)', paddingTop: '1.5rem' }}>
+                                       <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">{pageData.relatedImagesTitle}</h5>
+                                       <JobImageSlider images={activeJob.images} onImageClick={handleOpenLightbox} />
                                    </div>
                                )}
                            </div>
@@ -430,21 +495,21 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         <div className="job-header-info">
                             <span className="job-date">{formatJobDate(activeJob.date)}</span>
                             
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
                                 <div style={{ 
-                                    width: '32px', 
-                                    height: '32px', 
-                                    borderRadius: '50%', 
+                                    width: '50px', 
+                                    height: '50px', 
+                                    borderRadius: '100px', 
                                     backgroundColor: 'white', 
                                     padding: '2px', 
-                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     flexShrink: 0,
                                     border: `2px solid ${activeJob.color}`
                                 }}>
-                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '50px', height: '50px', borderRadius: '100px', objectFit: 'contain' }} referrerPolicy="no-referrer" />
                                 </div>
                                 <h4 style={{ margin: 0, color: activeJob.color }}>{activeJob.company}</h4>
                             </div>
@@ -476,7 +541,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         {activeJob.images && activeJob.images.length > 0 && (
                             <div className="job-image-slider-wrapper" style={{ marginTop: '1.5rem' }}>
                                 <h5>{pageData.relatedImagesTitle}</h5>
-                                <JobImageSlider images={activeJob.images} />
+                                <JobImageSlider images={activeJob.images} onImageClick={handleOpenLightbox} />
                             </div>
                         )}
                     </div>
@@ -497,6 +562,16 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         />
                     </div>
                 </div>,
+                document.getElementById('popup-root')!
+            )}
+            {lightboxIndex !== null && lightboxImages.length > 0 && document.getElementById('popup-root') && createPortal(
+                <Lightbox
+                    images={lightboxImages}
+                    currentIndex={lightboxIndex}
+                    onClose={handleCloseLightbox}
+                    onNext={handleNextLightbox}
+                    onPrev={handlePrevLightbox}
+                />,
                 document.getElementById('popup-root')!
             )}
         </PageLayout>
