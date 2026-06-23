@@ -24,7 +24,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
         <header className="mobile-header">
             <h1 className="mobile-header-title">{title}</h1>
             <div className="mobile-header-controls">
-                <button onClick={onPrintClick} className="header-icon-button" aria-label="Print or save as PDF" title="In hoặc lưu PDF">
+                <button onClick={onPrintClick} className="header-icon-button" aria-label="View or download CV" title="Xem & Tải CV">
                     <Icons.PrinterIcon />
                 </button>
                 <button onClick={onOpenSettings} className="header-icon-button" aria-label="Settings" title="Cài đặt">

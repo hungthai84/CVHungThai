@@ -123,7 +123,7 @@ export const vi = {
         {
             key: "v247",
             date: "2007 - 2011",
-            company: "V247 Call",
+            company: "Công ty Viễn Liên V247",
             logoUrl: "https://i.ibb.co/2Y3tNsnd/Call-V247.png",
             color: "#1E90FF",
             title: "Trưởng nhóm CSKH",
@@ -157,7 +157,7 @@ export const vi = {
         {
             key: "lbc",
             date: "2011 - 2013",
-            company: "Life Broadband Communication (LBC)",
+            company: "Công ty Cổ Phần Thông Tin Băng Rộng Cuộc Sống (LBC)",
             logoUrl: "https://i.ibb.co/DDYsQ20B/LBC.png",
             color: "#F37021",
             title: "Trưởng phòng Dịch vụ Khách hàng",
@@ -193,7 +193,7 @@ export const vi = {
         {
             key: "ved",
             date: "2013 - 2016",
-            company: "Vietnam eSport (VED)",
+            company: "Công ty Cổ Phần Việt Nam eSport (VED",
             logoUrl: "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
             color: "#ED1B2F",
             title: "Trưởng phòng Dịch vụ Khách hàng",
@@ -225,7 +225,7 @@ export const vi = {
         {
             key: "prudential",
             date: "2016 - 2018",
-            company: "Prudential Vietnam Assurance",
+            company: "Công ty Bảo hiểm nhân thọ Prudential Vietnam",
             logoUrl: "https://i.ibb.co/LThmXHs/Prudentinal.png",
             color: "#AE2070",
             title: "Quản lý Trung tâm Cuộc gọi",
@@ -255,7 +255,7 @@ export const vi = {
         {
             key: "mservice",
             date: "2018 - 2021",
-            company: "Mservice (Ví điện tử MoMo)",
+            company: "Công ty Cổ Phần Mservice (Ví điện tử MoMo)",
             logoUrl: "https://i.ibb.co/jXJXLvT/Momo.png",
             color: "#D82D8B",
             title: "Trưởng phòng Dịch vụ Khách hàng",
@@ -292,7 +292,7 @@ export const vi = {
         {
             key: "finviet",
             date: "2023 - 2024",
-            company: "Finviet Technology Group",
+            company: "Công ty Cổ Phần Công Nghệ Finviet",
             logoUrl: "https://i.ibb.co/mVfX9RkG/Finviet.png",
             color: "#49C16C",
             title: "Trưởng phòng Dịch vụ Khách hàng",

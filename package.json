@@ -17,6 +17,8 @@
     "express": "^5.2.1",
     "firebase": "^12.13.0",
     "google-tts-api": "^2.0.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "lucide-react": "^0.541.0",
     "motion": "^12.40.0",
     "react": "^19.1.1",

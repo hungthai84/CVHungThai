@@ -9,6 +9,8 @@ import { useI18n } from './contexts/i18n';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
+import PdfFallbackModal from './components/PdfFallbackModal';
+import { generatePdfFromElement } from './utils/pdfGenerator';
 
 // Lazy load page components to minimize initial bundle size and optimize website load speeds
 const SkillsPage = lazy(() => import('./components/SkillsPage'));
@@ -94,6 +96,9 @@ const App: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
+    const [isPdfFallbackOpen, setIsPdfFallbackOpen] = useState(false);
+    const [fallbackPdfUrl, setFallbackPdfUrl] = useState<string | undefined>(undefined);
+    const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [scrollPercent, setScrollPercent] = useState(0);
 
 
@@ -372,10 +377,29 @@ const App: React.FC = () => {
         handleSetPage(mainPageKeys[0]);
     };
 
-    const handlePrint = () => {
-        window.print();
+    const handleDownloadPdf = async () => {
+        setIsGeneratingPdf(true);
+        try {
+            const result = await generatePdfFromElement('printable-content', `CV_Nguyen_Hung_Thai_${language.toUpperCase()}.pdf`);
+            if (!result.success) {
+                console.error("PDF generation failed:", result.error);
+                setFallbackPdfUrl(result.blobUrl);
+                setIsPdfFallbackOpen(true);
+            } else {
+                // If it succeeded but might have been blocked by browser download settings,
+                // we still provide the fallback option if the blobUrl is available.
+                setFallbackPdfUrl(result.blobUrl);
+                // We don't necessarily open the modal if success was reported,
+                // but if we want to be "robust" we could show it if it takes too long.
+            }
+        } catch (error) {
+            console.error("Error in handleDownloadPdf:", error);
+            setIsPdfFallbackOpen(true);
+        } finally {
+            setIsGeneratingPdf(false);
+        }
     };
-    
+
     const PageNavButtons = () => (
         <>
             {canGoPrev && (
@@ -549,7 +573,7 @@ const App: React.FC = () => {
                         </div>
 
                         <div className="right-panel-middle-controls">
-                            <button onClick={() => setIsPrintViewOpen(true)} className="header-icon-button control-printer" aria-label="Print or save as PDF" title="In hoặc lưu PDF">
+                            <button onClick={() => setIsPrintViewOpen(true)} className="header-icon-button control-cv" aria-label="View or download CV" title="Xem & Tải CV">
                                 <Icons.PrinterIcon size={22} />
                             </button>
                             <button onClick={() => handleSetPage('scheduler')} className={`header-icon-button control-scheduler ${pageKeys[activeIndex] === 'scheduler' ? 'active' : ''}`} aria-label="Lên lịch hẹn" title="Lên lịch hẹn">
@@ -575,11 +599,24 @@ const App: React.FC = () => {
                 </div>
             )}
 
+            {isPdfFallbackOpen && (
+                <PdfFallbackModal 
+                    isOpen={isPdfFallbackOpen} 
+                    onClose={() => setIsPdfFallbackOpen(false)} 
+                    pdfUrl={fallbackPdfUrl}
+                />
+            )}
+
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(
                 <div className="print-preview-overlay">
                     <div className="print-preview-floating-controls">
-                        <button onClick={handlePrint} className="header-icon-button" title="Tải file PDF">
-                            <Icons.DownloadIcon />
+                        <button 
+                            onClick={handleDownloadPdf} 
+                            className={`header-icon-button ${isGeneratingPdf ? 'animate-pulse opacity-70' : ''}`} 
+                            title="Tải file PDF"
+                            disabled={isGeneratingPdf}
+                        >
+                            {isGeneratingPdf ? <Icons.ArrowPathIcon className="animate-spin" /> : <Icons.DownloadIcon />}
                         </button>
                         <button onClick={() => setIsPrintViewOpen(false)} className="header-icon-button" title="Đóng">
                             <Icons.XMarkIcon />

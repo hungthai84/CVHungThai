@@ -5362,7 +5362,8 @@
       body > *:not(#popup-root) { display: none !important; }
       #popup-root > *:not(.print-preview-overlay) { display: none !important; }
       .print-preview-overlay { position: static !important; background: none !important; backdrop-filter: none !important; padding: 0 !important; display: block !important; }
-      .print-preview-floating-controls, .print-preview-content { display: none !important; }
+      .print-preview-floating-controls { display: none !important; }
+      .print-preview-content { display: block !important; background: none !important; padding: 0 !important; }
       
       body #printable-content { display: block !important; }
       
@@ -5549,18 +5550,6 @@
         -webkit-backdrop-filter: none !important;
     }
   </style>
-<script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.15.0",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "react": "https://aistudiocdn.com/react@^19.1.1",
-    "react-dom": "https://aistudiocdn.com/react-dom@^19.1.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.541.0"
-  }
-}
-</script>
   <script src="https://scena.link/app.js" async defer></script>
 </head>
 <body>

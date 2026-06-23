@@ -27,7 +27,6 @@ import {
     ChevronUp,
     ChevronLeft,
     ChevronRight,
-    X,
     MessageCircle,
     ClipboardList,
     BarChart2,
@@ -70,9 +69,14 @@ import {
     Search,
     Filter,
     FileUp,
+    RefreshCw,
+    X as XIconLucide,
+    ExternalLink,
 } from 'lucide-react';
 
 // Re-exporting with the original names used in the app
+export const FileTextIcon = FileText;
+export const FileIcon = Folder; // Folder is sometimes used for projects, but I'll add File later if needed.
 export const ArrowUpIcon = ArrowUp;
 export const CubeIcon = Package;
 export const PencilIcon = PenSquare;
@@ -100,7 +104,7 @@ export const ChevronDownIcon = ChevronDown;
 export const ChevronUpIcon = ChevronUp;
 export const ChevronLeftIcon = ChevronLeft;
 export const ChevronRightIcon = ChevronRight;
-export const XMarkIcon = X;
+export const XMarkIcon = XIconLucide;
 export const ChatBubbleLeftRightIcon = MessageCircle;
 export const ClipboardDocumentListIcon = ClipboardList;
 export const ChartBarIcon = BarChart2;
@@ -145,3 +149,6 @@ export const SearchIcon = Search;
 // FIX: The 'Filter' icon was used but not imported.
 export const FilterIcon = Filter;
 export const UploadIcon = FileUp;
+export const ArrowPathIcon = RefreshCw;
+export const XIcon = XIconLucide;
+export const ExternalLinkIcon = ExternalLink;

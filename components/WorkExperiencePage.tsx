@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
+import { motion } from 'motion/react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
@@ -160,9 +161,69 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     const { t, language } = useI18n();
     const pageData = t.workExperiencePage;
     const jobs: Job[] = useMemo(() => [...(pageData.jobs || [])], [pageData.jobs]);
-    const [activeJobIndex, setActiveJobIndex] = useState(jobs.length - 1);
     
+    // Initialize from localStorage or default to 0
+    const [activeJobIndex, setActiveJobIndex] = useState(() => {
+        const saved = localStorage.getItem('work_experience_last_index');
+        return saved ? parseInt(saved, 10) : 0;
+    });
+    const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start false to allow restore check
     const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    // Function to play a gentle click sound
+    const playClickSound = () => {
+        try {
+            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.1);
+        } catch (e) {
+            // Silently fail if audio context is blocked
+        }
+    };
+
+    // Save state to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('work_experience_last_index', activeJobIndex.toString());
+    }, [activeJobIndex]);
+
+    // Handle initial mount: decide whether to auto-play
+    useEffect(() => {
+        const saved = localStorage.getItem('work_experience_last_index');
+        if (!saved) {
+            setIsAutoPlaying(true); // If never visited, auto-play from start
+        }
+    }, []);
+    
+    useEffect(() => {
+        if (!isAutoPlaying || isForPrint || jobs.length === 0) return;
+
+        const interval = setInterval(() => {
+            setActiveJobIndex((prev) => {
+                const next = prev + 1;
+                if (next >= jobs.length) {
+                    setIsAutoPlaying(false);
+                    return prev;
+                }
+                playClickSound(); // Play sound on auto-switch
+                return next;
+            });
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [isAutoPlaying, jobs.length, isForPrint]);
     const timelineContainerRef = useRef<HTMLDivElement | null>(null);
     
     const [showVideoPopup, setShowVideoPopup] = useState(false);
@@ -314,7 +375,9 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     }, []);
 
     const handleMilestoneClick = (index: number) => {
+        setIsAutoPlaying(false);
         setActiveJobIndex(index);
+        playClickSound(); // Play sound on manual click
         if (isMobile) {
             setShowDetailPopup(true);
         }
@@ -384,9 +447,20 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                         <span>{job.date.split(' - ')[0]}</span>
                                     </div>
                                     <div className="timeline-dot-container">
-                                        <div className="timeline-dot" style={{ borderColor: index === activeJobIndex ? job.color : undefined }}>
+                                        <motion.div 
+                                            className="timeline-dot" 
+                                            style={{ borderColor: index === activeJobIndex ? job.color : undefined }}
+                                            animate={index === activeJobIndex ? { 
+                                                y: [0, -6, 0],
+                                            } : { y: 0 }}
+                                            transition={index === activeJobIndex ? { 
+                                                duration: 1.2, 
+                                                repeat: Infinity,
+                                                ease: "easeInOut"
+                                            } : {}}
+                                        >
                                              <img src={job.logoUrl} alt={`${job.company} logo`} className="timeline-dot-img" referrerPolicy="no-referrer" />
-                                        </div>
+                                        </motion.div>
                                     </div>
                                 </div>
                             ))}
