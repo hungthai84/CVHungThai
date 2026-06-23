@@ -439,13 +439,6 @@ const App: React.FC = () => {
                         className="background-video"
                         src={wallpaper}
                         style={{
-                            objectFit: 'cover',
-                            width: '100vw',
-                            height: '100vh',
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            zIndex: -1,
                             transition: 'opacity 0.5s ease-in-out',
                             opacity: 1
                         }}

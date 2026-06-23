@@ -47,7 +47,7 @@ const WorkVideoPage: React.FC<WorkVideoPageProps> = ({ id, onNavigate }) => {
                             autoPlay={!isMobile}
                             muted={!isMobile}
                             playsInline
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                     </div>
                 </div>

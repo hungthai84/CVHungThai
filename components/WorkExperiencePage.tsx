@@ -162,12 +162,9 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     const pageData = t.workExperiencePage;
     const jobs: Job[] = useMemo(() => [...(pageData.jobs || [])], [pageData.jobs]);
     
-    // Initialize from localStorage or default to 0
-    const [activeJobIndex, setActiveJobIndex] = useState(() => {
-        const saved = localStorage.getItem('work_experience_last_index');
-        return saved ? parseInt(saved, 10) : 0;
-    });
-    const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start false to allow restore check
+    // Always start from 0 as requested
+    const [activeJobIndex, setActiveJobIndex] = useState(0);
+    const [isAutoPlaying, setIsAutoPlaying] = useState(true); 
     const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     // Function to play a gentle click sound
@@ -194,19 +191,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
         }
     };
 
-    // Save state to localStorage whenever it changes
-    useEffect(() => {
-        localStorage.setItem('work_experience_last_index', activeJobIndex.toString());
-    }, [activeJobIndex]);
-
-    // Handle initial mount: decide whether to auto-play
-    useEffect(() => {
-        const saved = localStorage.getItem('work_experience_last_index');
-        if (!saved) {
-            setIsAutoPlaying(true); // If never visited, auto-play from start
-        }
-    }, []);
-    
+    // Auto-play interval logic
     useEffect(() => {
         if (!isAutoPlaying || isForPrint || jobs.length === 0) return;
 
@@ -224,6 +209,28 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
 
         return () => clearInterval(interval);
     }, [isAutoPlaying, jobs.length, isForPrint]);
+
+    // Reset when becoming visible (for mobile scroll-based navigation)
+    useEffect(() => {
+        if (isForPrint) return;
+        
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setActiveJobIndex(0);
+                    setIsAutoPlaying(true);
+                }
+            },
+            { threshold: 0.2 } // Trigger when 20% of the section is visible
+        );
+
+        const currentRef = document.getElementById(id || '');
+        if (currentRef) {
+            observer.observe(currentRef);
+        }
+
+        return () => observer.disconnect();
+    }, [id, isForPrint]);
     const timelineContainerRef = useRef<HTMLDivElement | null>(null);
     
     const [showVideoPopup, setShowVideoPopup] = useState(false);
