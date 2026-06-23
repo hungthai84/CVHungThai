@@ -101,7 +101,15 @@ export const useSpeechSynthesis = () => {
             const googleVoices = availableVoices.filter(v => v.name.includes('Google'));
             const otherVoices = availableVoices.filter(v => !v.name.includes('Google'));
             
-            setVoices([...googleVoices, ...otherVoices]);
+            const mockGttsVoice: SpeechSynthesisVoice = {
+                name: 'Google Translate TTS (gTTS - Miễn phí)',
+                lang: 'vi-VN',
+                localService: false,
+                default: false,
+                voiceURI: 'gtts-vi'
+            };
+
+            setVoices([mockGttsVoice, ...googleVoices, ...otherVoices]);
         };
 
         // Load voices initially and on change
@@ -265,11 +273,12 @@ export const useSpeechSynthesis = () => {
                     const vietnameseVoices = realVoices.filter(v => v.lang === 'vi-VN' || v.lang.startsWith('vi'));
                     if (vietnameseVoices.length > 0) {
                         let preferredVoice = vietnameseVoices.find(v => 
-                            v.name.toLowerCase().includes('nam hoàng') || 
-                            v.name.toLowerCase().includes('nam hoang')
+                            v.name === 'Microsoft Nam Minh Online (Natural) - Vie(vi-VN)' ||
+                            v.name.toLowerCase().includes('nam minh') || 
+                            v.name.toLowerCase().includes('namminh')
                         );
                         if (!preferredVoice) {
-                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam minh') || v.name.toLowerCase().includes('namminh'));
+                            preferredVoice = vietnameseVoices.find(v => v.name.toLowerCase().includes('nam hoàng') || v.name.toLowerCase().includes('nam hoang'));
                         }
                         if (!preferredVoice) {
                             preferredVoice = vietnameseVoices.find(v => v.name === 'Google tiếng Việt' || v.name === 'Google Vietnamese');

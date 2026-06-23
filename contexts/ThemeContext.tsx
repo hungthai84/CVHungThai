@@ -48,7 +48,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     
     const [isSoundOn, setSoundOnState] = useState<boolean>(true);
     const [isAiVoiceOn, setAiVoiceOnState] = useState<boolean>(true);
-    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Nam Hoàng');
+    const [selectedAiVoiceName, setSelectedAiVoiceNameState] = useState<string>('Nam Minh');
     const [aiVoicePitch, setAiVoicePitchState] = useState<number>(1);
     const [aiVoiceRate, setAiVoiceRateState] = useState<number>(0.95);
     const [projectFilter, setProjectFilterState] = useState<string[]>([]);

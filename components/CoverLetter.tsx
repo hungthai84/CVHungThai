@@ -84,8 +84,8 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                 </div>
                 
                 <div className="cover-letter-content no-scrollbar" ref={contentRef}>
-                    <div className="cover-letter-inner-card">
-                        <p>{pageData.greeting}</p>
+                    <div className="cover-letter-inner-card" style={{ lineHeight: '1.35' }}>
+                        <p style={{ marginBottom: '0.4rem' }}>{pageData.greeting}</p>
                         {paragraphs.map((p, index) => {
                             const lines = p.split('\n').map((line, lineIndex) => (
                                 <React.Fragment key={lineIndex}>
@@ -93,14 +93,14 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                                     <br />
                                 </React.Fragment>
                             ));
-                            return <p key={index}>{lines}</p>;
+                            return <p key={index} style={{ marginBottom: '0.4rem' }}>{lines}</p>;
                         })}
-                        <div className="cover-letter-signature-block">
-                            <p style={{marginBottom: 0}}>{pageData.closing}</p>
+                        <div className="cover-letter-signature-block" style={{ marginTop: '1rem' }}>
+                            <p style={{marginBottom: 0, lineHeight: '1.2'}}>{pageData.closing}</p>
                                 {pageData.signatureImage && (
-                                <img src={pageData.signatureImage} alt="Chữ ký" className="signature-image" />
+                                <img src={pageData.signatureImage} alt="Chữ ký" className="signature-image" style={{ margin: '0.25rem 0' }} />
                             )}
-                            <p style={{margin: 0}} className="signature-name">{pageData.signature}</p>
+                            <p style={{margin: 0, lineHeight: '1.2'}} className="signature-name">{pageData.signature}</p>
                         </div>
                     </div>
                 </div>

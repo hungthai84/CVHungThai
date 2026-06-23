@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { motion } from 'motion/react';
 
 interface PageLayoutProps {
     children: ReactNode;
@@ -9,11 +10,17 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children, id, className }) => {
 
     return (
-        <section id={id} className={className}>
+        <motion.section 
+            id={id} 
+            className={className}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+        >
             <div className="section-inner">
                 {children}
             </div>
-        </section>
+        </motion.section>
     );
 };
 

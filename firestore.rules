@@ -33,6 +33,16 @@ service cloud.firestore {
              data.createdAt == request.time;
     }
 
+    // Validation helper for Message
+    function isValidMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+             data.keys().size() == 4 &&
+             data.name is string && data.name.size() <= 120 &&
+             data.email is string && data.email.size() <= 150 &&
+             data.message is string && data.message.size() <= 3000 &&
+             data.createdAt == request.time;
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow create: if isOwner(userId) && isValidUser(request.resource.data);
@@ -44,6 +54,24 @@ service cloud.firestore {
       allow read, list: if true;
       allow create: if isValidComment(request.resource.data);
       allow update, delete: if false; // Feedback comments are immutable after submission
+    }
+
+    match /messages/{messageId} {
+      allow create: if isValidMessage(request.resource.data);
+      allow read, update, delete: if false; // Private messages, write-only
+    }
+
+    match /stats/{statId} {
+      allow read: if true;
+      allow create: if statId == 'visitor_counter' && 
+                      request.resource.data.keys().hasAll(['count']) && 
+                      request.resource.data.keys().size() == 1 && 
+                      request.resource.data.count == 1;
+      allow update: if statId == 'visitor_counter' && 
+                      request.resource.data.keys().hasAll(['count']) && 
+                      request.resource.data.keys().size() == 1 && 
+                      request.resource.data.count is int && 
+                      request.resource.data.count == resource.data.count + 1;
     }
   }
 }

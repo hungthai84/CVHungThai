@@ -39,7 +39,14 @@ const deepMerge = <T extends Record<string, any>>(target: T, source: Record<stri
 export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [language, setLanguage] = useState<Language>(() => {
         const savedLang = localStorage.getItem('language');
-        return (savedLang === 'en' || savedLang === 'vi') ? savedLang : 'vi'; // Default to Vietnamese
+        if (savedLang === 'en' || savedLang === 'vi') return savedLang;
+        
+        // Detect browser language
+        const browserLang = navigator.language.toLowerCase();
+        if (browserLang.startsWith('vi')) return 'vi';
+        if (browserLang.startsWith('en')) return 'en';
+        
+        return 'vi'; // Default to Vietnamese
     });
 
     useEffect(() => {
@@ -77,7 +84,12 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useI18n = () => {
     const context = useContext(I18nContext);
     if (context === undefined) {
-        throw new Error('useI18n must be used within an I18nProvider');
+        console.warn('useI18n was called outside I18nProvider. Using fallback translations.');
+        return {
+            language: 'vi' as Language,
+            setLanguage: () => {},
+            t: translations.vi
+        };
     }
     return context;
 };

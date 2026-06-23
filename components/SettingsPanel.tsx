@@ -102,6 +102,26 @@ const specialAndVideoWallpapers = [
         thumbnail: 'https://i.postimg.cc/L6TVLSPN/videoframe-3537.png',
     },
     {
+        id: 'https://cdn.dribbble.com/userupload/12532568/file/original-816b8af88c5a4336e9f0467a7848033e.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/9535990/file/original-3a87c5fdf2433287d096795a11fa9ee4.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/13253460/file/original-85659da2508a303a516780470e3ae354.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/9783516/file/original-47f57ffecea5c7874ff6d6c2f0ce42bf.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
         id: 'orbiting-planets',
         type: 'custom' as const,
         thumbnail: 'https://images.pexels.com/photos/1655166/pexels-photo-1655166.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -210,7 +230,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
 
     const availableVoices = useMemo(() => {
-        return voices.filter(v => (v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt')) && !v.name.includes('gTTS'));
+        return voices.filter(v => v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt') || v.name.includes('gTTS'));
     }, [voices]);
 
     const groupedVoices = useMemo(() => {
@@ -234,7 +254,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         if (groupedVoices.vi.length > 0) {
             const hasVoice = groupedVoices.vi.some(v => v.name === localVoiceName);
             if (!hasVoice) {
-                const defaultVi = groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.lang.startsWith('vi')) || groupedVoices.vi[0];
+                const defaultVi = groupedVoices.vi.find(v => v.name.includes('gTTS')) || 
+                                  groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.lang.startsWith('vi')) || 
+                                  groupedVoices.vi[0];
                 if (defaultVi) {
                     setLocalVoiceName(defaultVi.name);
                 }
@@ -321,7 +343,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                             let targetLang = voiceLang;
 
                                                             if (isVi) {
-                                                                text = "Xin chào, đây là giọng nói thử nghiệm.";
+                                                                text = "Xin chào, tôi là Nguyễn Hùng Thái.";
                                                                 targetLang = 'vi';
                                                             } else if (isEn) {
                                                                 text = "Hello, this is a test voice.";

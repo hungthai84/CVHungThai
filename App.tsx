@@ -9,6 +9,8 @@ import { useI18n } from './contexts/i18n';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
+import QuickContactButton from './components/QuickContactButton';
+import VisitorCounter from './components/VisitorCounter';
 
 // Lazy load page components to minimize initial bundle size and optimize website load speeds
 const SkillsPage = lazy(() => import('./components/SkillsPage'));
@@ -94,9 +96,48 @@ const App: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
+    const [scrollPercent, setScrollPercent] = useState(0);
 
 
     const clickSound = useRef<HTMLAudioElement | null>(null);
+
+    const handleScroll = useCallback(() => {
+        if (isMobile) {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollHeight > 0) {
+                setScrollPercent((scrollTop / scrollHeight) * 100);
+            } else {
+                setScrollPercent(0);
+            }
+        } else {
+            const container = pageContainerRef.current;
+            if (container) {
+                const scrollTop = container.scrollTop;
+                const scrollHeight = container.scrollHeight - container.clientHeight;
+                if (scrollHeight > 0) {
+                    setScrollPercent((scrollTop / scrollHeight) * 100);
+                } else {
+                    setScrollPercent(0);
+                }
+            }
+        }
+    }, [isMobile]);
+
+    useEffect(() => {
+        setScrollPercent(0);
+
+        if (isMobile) {
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            return () => window.removeEventListener('scroll', handleScroll);
+        } else {
+            const container = pageContainerRef.current;
+            if (container) {
+                container.addEventListener('scroll', handleScroll, { passive: true });
+                return () => container.removeEventListener('scroll', handleScroll);
+            }
+        }
+    }, [isMobile, activeIndex, handleScroll]);
     
     // Parallax effect removed to prevent scroll lag and CPU usage on every render frame
     useEffect(() => {
@@ -375,6 +416,17 @@ const App: React.FC = () => {
                         playsInline 
                         className="background-video"
                         src={wallpaper}
+                        style={{
+                            objectFit: 'cover',
+                            width: '100vw',
+                            height: '100vh',
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            zIndex: -1,
+                            transition: 'opacity 0.5s ease-in-out',
+                            opacity: 1
+                        }}
                     />
                 ) : isCustomOrbiting ? (
                     <div className="holder"></div>
@@ -413,6 +465,32 @@ const App: React.FC = () => {
                 )}
                 
                 <main className={`content is-${isMobile && isOnMainPage ? 'mobile-all-pages' : activePageKey}`}>
+                    {/* Subtle Progressive Scroll Indicator */}
+                    <div 
+                        className="scroll-progress-container animate-fade-in"
+                        style={{
+                            position: isMobile ? 'fixed' : 'absolute',
+                            top: isMobile ? 'var(--mobile-header-height)' : '0',
+                            left: 0,
+                            right: 0,
+                            height: '3px',
+                            zIndex: 101,
+                            background: 'rgba(255, 255, 255, 0.02)',
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        <div 
+                            className="scroll-progress-fill"
+                            style={{
+                                width: `${scrollPercent}%`,
+                                height: '100%',
+                                background: 'linear-gradient(90deg, var(--color-brand-orange, #f97316), var(--accent-color, #4361ff))',
+                                transition: 'width 0.1s cubic-bezier(0.1, 0.8, 0.25, 1)',
+                                boxShadow: '0 1px 8px var(--accent-color, #4361ff)',
+                            }}
+                        ></div>
+                    </div>
+
                     {!isMobile && activePageKey === 'home' && (
                         <div className="top-right-actions">
                             <button
@@ -431,9 +509,18 @@ const App: React.FC = () => {
                     <div className="page-container no-scrollbar" ref={pageContainerRef}>
                         <Suspense fallback={<LoadingFallback />}>
                             {isMobile && isOnMainPage ? (
-                                mainPages.map((page) => {
+                                mainPages.map((page, index) => {
                                     const PageComp = page.component;
-                                    return <PageComp key={page.key} id={page.key} onNavigate={handleSetPage} />;
+                                    return (
+                                        <React.Fragment key={page.key}>
+                                            <PageComp id={page.key} onNavigate={handleSetPage} />
+                                            {index < mainPages.length - 1 && (
+                                                <div className="section-divider py-8 px-6 flex items-center justify-center">
+                                                    <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--accent-color)] to-transparent opacity-40"></div>
+                                                </div>
+                                            )}
+                                        </React.Fragment>
+                                    );
                                 })
                             ) : (
                                 ActivePageComponent && <ActivePageComponent key={activePageKey} {...componentProps} />
@@ -461,6 +548,7 @@ const App: React.FC = () => {
                                 </div>
                             </div>
                              <ClockWeatherWidget />
+                             <VisitorCounter />
                         </div>
 
                         <div className="right-panel-middle-controls">
@@ -489,6 +577,8 @@ const App: React.FC = () => {
                     <PageNavButtons />
                 </div>
             )}
+
+            <QuickContactButton />
 
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(
                 <div className="print-preview-overlay">

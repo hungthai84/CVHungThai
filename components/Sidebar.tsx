@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useI18n } from '../contexts/i18n';
 import * as Icons from './Icons';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface NavItem {
     key: string;
@@ -21,8 +22,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     navStructure,
     activeItemKey, 
     setActiveItemKey,
+    isMobile
 }) => {
     const { t, language } = useI18n();
+    const { themeMode, setThemeMode } = useTheme();
     const navLabels = t.sidebar.nav;
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -99,7 +102,20 @@ const Sidebar: React.FC<SidebarProps> = ({
                     )}
                 </ul>
             </nav>
-
+            {isMobile && (
+                <div className="mobile-theme-toggle" style={{ padding: '1rem', borderTop: '1px solid var(--color-brand-glass-border)' }}>
+                     <button
+                        onClick={() => {
+                            setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+                        }}
+                        className="flex items-center gap-2 text-sm w-full"
+                        aria-label="Toggle theme"
+                    >
+                        {themeMode === 'light' ? <Icons.MoonIcon size={18} /> : <Icons.SunIcon size={18} />}
+                        {themeMode === 'light' ? (language === 'vi' ? 'Chế độ tối' : 'Dark mode') : (language === 'vi' ? 'Chế độ sáng' : 'Light mode')}
+                    </button>
+                </div>
+            )}
         </aside>
     );
 };

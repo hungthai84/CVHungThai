@@ -92,8 +92,8 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                 ...plainList
             ].join('. ');
 
-            const defaultAiVoiceName = language === 'vi' ? 'Nam Hoàng' : 'Google US English';
-            const voiceToUse = selectedAiVoiceName || defaultAiVoiceName;
+            const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
+            const voiceToUse = language === 'vi' ? 'Nam Minh' : (selectedAiVoiceName || defaultAiVoiceName);
 
             speak(fullSpeechText, {
                 voiceName: voiceToUse,
@@ -355,12 +355,12 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                 return <p key={index} dangerouslySetInnerHTML={{ __html: formattedText }} />;
                                             })}
                                             {post.content.list && (
-                                                <ul>
+                                                <ol style={{ listStyleType: 'decimal', paddingLeft: '1.5rem', marginTop: '1rem', marginBottom: '1rem' }}>
                                                     {post.content.list.map((item: string, index: number) => {
                                                          const formattedText = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                                                         return <li key={index} dangerouslySetInnerHTML={{ __html: formattedText }} />;
+                                                         return <li key={index} dangerouslySetInnerHTML={{ __html: formattedText }} style={{ listStyleType: 'decimal', marginBottom: '0.75rem' }} />;
                                                     })}
-                                                </ul>
+                                                </ol>
                                             )}
                                             {PROJECT_IMAGES[projectId] && (
                                                 <div className="project-detail-image-wrapper mt-6 pt-6 border-t border-dashed border-gray-200 dark:border-gray-700 flex flex-col items-center">

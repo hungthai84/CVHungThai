@@ -5,6 +5,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useSpeechSynthesis } from './useSpeechSynthesis';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
+import { hardcodedAnswers, questionGroups, QuestionGroup } from '../lib/chat-data';
 
 interface Message {
     id: string;
@@ -42,54 +43,25 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const [attachmentPreview, setAttachmentPreview] = useState<string | null>(null);
     const [userName, setUserName] = useState('');
     const [userGender, setUserGender] = useState<'Nam' | 'Nữ' | null>(null);
+    const [isQuestionsPopupOpen, setIsQuestionsPopupOpen] = useState(false);
+    const [showQuestionsBtn, setShowQuestionsBtn] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState<QuestionGroup | null>(null);
 
     const userVoiceName = useMemo(() => {
         if (language === 'vi') {
-            return userGender === 'Nữ' ? 'Hoài Minh' : 'An';
+            return userGender === 'Nữ' ? 'Hoài Minh' : 'Nam Minh';
         }
         return 'Google US English';
     }, [language, userGender]);
 
-    const defaultAiVoiceName = language === 'vi' ? 'Nam Hoàng' : 'Google US English';
-    const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
+    const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
+    const aiVoiceToUse = language === 'vi' ? 'Nam Minh' : (selectedAiVoiceName || defaultAiVoiceName);
 
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
+
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-     const hardcodedAnswers = useMemo(() => ({
-        vi: {
-            "Anh xử lý ra sao khi nhân viên Chăm Sóc Khách Hàng bị khách hàng phàn nàn?": "Trước hết, anh Thái luôn bắt đầu bằng việc xác minh thông tin và lắng nghe cả hai phía – khách hàng và nhân viên – để đảm bảo cái nhìn công bằng. Anh ấy xử lý dựa trên ba nguyên tắc: chính trực, minh bạch, và bám sát giá trị cốt lõi của công ty.\n\nNếu sự việc chỉ là hiểu lầm, anh sẽ trực tiếp đứng ra xin lỗi khách hàng, đồng thời coaching riêng cho nhân viên để rút kinh nghiệm.\n\nNếu có vi phạm về thái độ phục vụ, anh sẽ tạm dừng công việc nhân viên, mở buổi đánh giá với cấp quản lý liên quan, và tùy mức độ sẽ có quyết định kỷ luật, kể cả sa thải nếu gây thiệt hại nghiêm trọng cho uy tín công ty.\n\nQuan trọng nhất là anh Thái luôn nhấn mạnh rằng, xử lý khiếu nại không chỉ để giải quyết sự cố, mà còn là cơ hội để cải thiện hệ thống, nâng chuẩn dịch vụ và bảo vệ thương hiệu.",
-            "Với vai trò lãnh đạo, anh thường truyền động lực cho đội ngũ bằng cách nào?": "Anh Thái theo triết lý “trao quyền – đồng hành – phản hồi nhanh”. Anh ấy tin rằng khi nhân viên được tin tưởng, họ sẽ làm việc bằng trách nhiệm chứ không phải vì bị giám sát.\n\nCụ thể, anh ấy thường áp dụng:\n\nCơ chế trao quyền rõ ràng: giao mục tiêu kèm quyền quyết định trong phạm vi nhất định.\n\nPhản hồi 2 chiều: khuyến khích nhân viên góp ý ngược lại lãnh đạo, tạo cảm giác được lắng nghe.\n\nChương trình ghi nhận & khen thưởng nhanh: không chờ đến cuối quý, mà khen ngay khi có thành tích.\n\nHoạt động gắn kết đội nhóm: từ workshop nội bộ đến các buổi “team coffee talk” để tạo tinh thần đồng đội.\n\nĐào tạo & mentoring cá nhân hóa: giúp mỗi thành viên thấy rõ lộ trình thăng tiến và giá trị bản thân.",
-            "Anh có thể chia sẻ một tình huống khủng hoảng dịch vụ mà anh từng xử lý theo mô hình STAR (Situation – Task – Action – Result)?": "Theo chia sẻ, đây là một ví dụ theo mô hình STAR:\n\nSituation: Hệ thống Chăm Sóc Khách Hàng của một công ty anh từng làm đã gặp sự cố diện rộng khiến hàng nghìn khách hàng không thể truy cập dịch vụ.\n\nTask: Với vai trò quản lý, anh ấy phải đảm bảo khách hàng nhận được thông tin minh bạch và hỗ trợ liên tục, đồng thời ổn định tinh thần đội ngũ.\n\nAction: Anh ấy đã lập tức thiết lập một “trung tâm chỉ huy tạm thời” 24/7, phân công từng nhóm phụ trách: tiếp nhận – xử lý kỹ thuật – truyền thông khủng hoảng. Đồng thời, anh ấy đã đích thân trả lời các khách hàng VIP để hạ nhiệt căng thẳng.\n\nResult: Sau 36 giờ, hệ thống khôi phục. Dù sự cố lớn, nhưng tỷ lệ churn (rời bỏ dịch vụ) chỉ 1,5%, thấp hơn dự báo, và khách hàng đánh giá cao sự minh bạch và phản ứng kịp thời của công ty.",
-            "Anh có kỷ niệm nào đáng nhớ về một lần thấu cảm khách hàng ngoài mong đợi không?": "Anh Thái chia sẻ một kỷ niệm đáng nhớ:\nCó một khách hàng lớn tuổi gọi đến tổng đài, giọng run run vì không biết cách sử dụng ứng dụng mới. Thay vì chỉ hướng dẫn qua loa, anh ấy đã quyết định cử nhân viên trực tiếp đến tận nhà hỗ trợ, đồng thời chuẩn bị một bản hướng dẫn in kèm chữ to để bác dễ sử dụng.\n\nBác rất xúc động và chia sẻ: “Tôi cảm giác như công ty không chỉ coi tôi là khách hàng, mà còn là người thân.” Kỷ niệm đó khiến anh ấy càng tin rằng, dịch vụ xuất sắc không nằm ở công nghệ hay quy trình phức tạp, mà ở sự thấu cảm đúng lúc, đúng cách.",
-            "Khi có mâu thuẫn giữa phòng Chăm Sóc Khách Hàng và các phòng ban khác, anh thường xử lý thế nào?": "Anh Thái luôn coi mâu thuẫn liên phòng ban là cơ hội để cải thiện quy trình. Nguyên tắc của anh ấy là không đổ lỗi – chỉ tập trung vào giải pháp.\n\nCách xử lý của anh ấy:\n\nLắng nghe cả hai phía để nắm bối cảnh thực tế.\n\nTrung gian điều phối: đưa các bên ngồi lại, xác định mục tiêu chung (trải nghiệm khách hàng).\n\nChia nhỏ vấn đề: phân tách đâu là lỗi hệ thống, đâu là con người, đâu là quy trình.\n\nThiết lập quy tắc phối hợp rõ ràng: ví dụ SLA giữa Chăm Sóc Khách Hàng và kỹ thuật, hay quy trình “escalate” thông tin lên cấp cao.\n\nTheo dõi sau xử lý: tránh lặp lại xung đột, xây dựng văn hóa “hợp tác – không đối đầu”.",
-            "Chào anh Nguyễn Hùng Thái, anh có thể giới thiệu ngắn gọn về bản thân cũng như hành trình 22 năm trong lĩnh vực chăm sóc khách hàng của mình không?": "Chào bạn. Trí Nhân có thể tóm tắt về anh Thái như sau: Anh ấy bắt đầu từ vị trí tổng đài viên tại Mobifone vào năm 2003 và trong hơn 22 năm qua đã đảm nhiệm các vai trò Trưởng nhóm – Trưởng phòng chăm sóc khách hàng tại nhiều doanh nghiệp lớn như ShopeePay, Prudential, MoMo, Finviet... Sứ mệnh của anh ấy là xây dựng hệ thống chăm sóc khách hàng hiệu quả, nhân văn và bền vững.",
-            "Điều gì khiến anh gắn bó lâu dài với lĩnh vực chăm sóc khách hàng đến vậy?": "Anh Thái tin rằng mỗi tương tác dù nhỏ nhất đều mang lại cơ hội tạo ra giá trị lớn. Đối với anh, chăm sóc khách hàng không chỉ là công việc – đó là hành trình thấu cảm và kiến tạo niềm tin.",
-            "Theo anh, yếu tố quan trọng nhất khi xây dựng phòng chăm sóc khách hàng là gì?": "Theo anh Thái, đó là sự kết nối hài hòa giữa quy trình – công nghệ – con người. Khi ba trụ cột này đồng bộ thì trải nghiệm khách hàng sẽ bền vững và khác biệt.",
-            "Thành tựu nào anh cảm thấy tự hào nhất trong sự nghiệp của mình?": "Anh Thái tự hào nhất khi xây dựng trung tâm hỗ trợ khách hàng cho ứng dụng MoMo từ con số 0, xử lý hơn một triệu yêu cầu mỗi tháng mà vẫn duy trì mức hài lòng khách hàng trên 82%.",
-            "Phong cách lãnh đạo của anh trong vai trò trưởng phòng chăm sóc khách hàng là gì?": "Anh ấy theo hướng “trao quyền, đồng hành và phản hồi nhanh”. Anh ấy muốn xây dựng đội ngũ chủ động – nơi mỗi thành viên làm việc bằng tinh thần trách nhiệm, không phải vì giám sát.",
-            "Tình huống áp lực nhất anh từng xử lý trong chăm sóc khách hàng là gì?": "Khi hệ thống gặp sự cố trên diện rộng, anh Thái đã thiết lập “trung tâm chỉ huy tạm thời” 24/7 để phản hồi nhanh khủng hoảng, bảo vệ niềm tin cộng đồng và hỗ trợ khách hàng một cách minh bạch, kịp thời.",
-            "Quan điểm của anh về ứng dụng chuyển đổi số trong chăm sóc khách hàng?": "Anh Thái tin vào việc ứng dụng Big Data – Trí tuệ nhân tạo – Tự động hóa để dịch chuyển từ mô hình phản ứng sang mô hình dự đoán nhu cầu khách hàng.",
-            "Nếu nhận vai trò Trưởng phòng Chăm Sóc Khách Hàng, 90 ngày đầu tiên anh sẽ tập trung làm gì?": "Mục tiêu 90 ngày đầu của anh Thái sẽ là: Đánh giá thực trạng hệ thống, xử lý các điểm nghẽn nhanh mang lại kết quả “quick win”, đồng thời xây dựng lộ trình 12 tháng để nâng cấp toàn diện hệ thống chăm sóc khách hàng."
-        },
-        en: {
-            "How do you handle it when a customer service employee receives a complaint from a customer?": "First and foremost, Mr. Thai always starts by verifying the information and listening to both sides – the customer and the employee – to ensure a fair perspective. He handles it based on three principles: integrity, transparency, and adherence to the company's core values.\n\nIf it's just a misunderstanding, he will personally apologize to the customer and provide private coaching to the employee to learn from the experience.\n\nIf there is a violation of service attitude, he will temporarily suspend the employee's duties, open an evaluation meeting with the relevant management, and depending on the severity, make a disciplinary decision, including termination if it causes serious damage to the company's reputation.\n\nMost importantly, Mr. Thai always emphasizes that handling complaints is not just about resolving incidents, but also an opportunity to improve the system, raise service standards, and protect the brand.",
-            "As a leader, how do you usually motivate your team?": "Mr. Thai follows the philosophy of \"empowerment – companionship – quick feedback.\" He believes that when employees are trusted, they work out of responsibility, not because they are being monitored.\n\nSpecifically, he often applies:\n\nA clear empowerment mechanism: assigning goals with decision-making authority within a certain scope.\n\nTwo-way feedback: encouraging employees to give feedback to leadership, creating a sense of being heard.\n\nQuick recognition & reward programs: not waiting until the end of the quarter, but rewarding achievements immediately.\n\nTeam bonding activities: from internal workshops to \"team coffee talks\" to build team spirit.\n\nPersonalized training & mentoring: helping each member see their career path and self-worth clearly.",
-            "Can you share a service crisis situation you handled using the STAR model (Situation – Task – Action – Result)?": "Here is an example according to the STAR model:\n\nSituation: The customer service system at a company he worked for once experienced a widespread outage, preventing thousands of customers from accessing the service.\n\nTask: As a manager, he had to ensure customers received transparent information and continuous support while stabilizing the team's morale.\n\nAction: He immediately set up a temporary 24/7 \"command center,\" assigning teams to handle: reception – technical processing – crisis communication. At the same time, he personally responded to VIP customers to de-escalate tensions.\n\nResult: After 36 hours, the system was restored. Despite the major incident, the churn rate was only 1.5%, lower than forecasted, and customers appreciated the company's transparency and timely response.",
-            "Do you have any memorable stories about empathizing with a customer in an unexpected way?": "Mr. Thai shares a memorable story:\nAn elderly customer called the hotline, his voice trembling because he didn't know how to use a new application. Instead of just giving brief instructions, he decided to send an employee directly to his home to assist, and also prepared a printed guide with large text for his convenience.\n\nHe was very moved and shared: \"I feel like the company sees me not just as a customer, but as family.\" That memory reinforces his belief that excellent service isn't about complex technology or processes, but about the right empathy at the right time.",
-            "When there are conflicts between the customer service department and other departments, how do you usually handle them?": "Mr. Thai always sees inter-departmental conflicts as opportunities to improve processes. His principle is no blame – just focus on solutions.\n\nHis approach:\n\nListen to both sides to understand the context.\n\nMediate: bring the parties together to identify the common goal (customer experience).\n\nBreak down the problem: separate system errors from human errors and process flaws.\n\nEstablish clear coordination rules: for example, SLAs between CS and technical teams, or a process for escalating information.\n\nFollow up after resolution: to prevent recurrence and build a culture of \"collaboration, not confrontation.\"",
-            "Hello Mr. Nguyen Hung Thai, could you briefly introduce yourself and your 22-year journey in the customer service field?": "Hello. I can summarize Mr. Thai's journey for you: He started as a call center agent at Mobifone in 2003, and over the past 22 years, has held roles such as Team Leader and Head of Customer Service at major companies like ShopeePay, Prudential, MoMo, and Finviet. His mission is to build customer service systems that are efficient, humane, and sustainable.",
-            "What has kept you committed to the customer service field for so long?": "Mr. Thai believes that every interaction, no matter how small, presents an opportunity to create significant value. For him, customer service is not just a job – it's a journey of empathy and building trust.",
-            "In your opinion, what is the most important factor when building a customer service department?": "According to Mr. Thai, it is the harmonious connection between processes, technology, and people. When these three pillars are synchronized, the customer experience becomes sustainable and distinctive.",
-            "What achievement are you most proud of in your career?": "Mr. Thai is most proud of building the customer support center for the MoMo app from scratch, handling over a million requests per month while maintaining a customer satisfaction rate above 82%.",
-            "What is your leadership style as a head of customer service?": "He follows an approach of 'empowerment, partnership, and quick feedback.' He wants to build a proactive team where each member works with a sense of responsibility, not because they are being monitored.",
-            "What was the most stressful situation you have handled in customer service?": "When the system experienced a widespread outage, Mr. Thai set up a temporary 24/7 'command center' to respond quickly to the crisis, protect community trust, and support customers transparently and promptly.",
-            "What are your views on applying digital transformation in customer service?": "Mr. Thai believes in applying Big Data, Artificial Intelligence, and Automation to shift from a reactive model to one that predicts customer needs.",
-            "If you took on the role of Head of Customer Service, what would you focus on in the first 90 days?": "Mr. Thai's goals for the first 90 days would be: To assess the current state of the system, address bottlenecks to achieve 'quick wins,' and simultaneously build a 12-month roadmap for a comprehensive upgrade of the customer service system."
-        }
-    }), [language]);
 
     const { userSalutation, genderDescription } = useMemo(() => {
         if (language === 'vi') {
@@ -123,7 +95,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         
         if (view === 'collect_info') {
             if (lastSpokenViewRef.current === 'collect_info') return;
-            const initialWelcome = "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Thái. Trước khi bắt đầu, vui lòng cho tôi biết tên và giới tính của bạn.";
+            const initialWelcome = pageData.collectInfoGreeting;
             speak(initialWelcome, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
             lastSpokenViewRef.current = 'collect_info';
         } else if (view === 'categories') {
@@ -174,6 +146,8 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         setError(null);
         setIsLoading(true);
         setView('chat');
+        setShowQuestionsBtn(false); // Hide button when new message starts
+        setIsQuestionsPopupOpen(false); // Close popup if open
 
         const hardcodedAnswer = hardcodedAnswers[language][rawInput.trim() as keyof typeof hardcodedAnswers[typeof language]];
     
@@ -207,6 +181,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     sender: 'model',
                 };
                 setMessages(prev => [...prev, modelMessage]);
+                setShowQuestionsBtn(true); // AI finished hardcoded answer
                 if (isAiVoiceOn) {
                     speak(hardcodedAnswer, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                 }
@@ -273,6 +248,8 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                         msg.id === modelMessageId ? { ...msg, isStreaming: false } : msg
                     ));
 
+                    setShowQuestionsBtn(true);
+
                     if (isAiVoiceOn) {
                         speak(currentText, { voiceName: aiVoiceToUse, lang: language, pitch: aiVoicePitch, rate: aiVoiceRate });
                     }
@@ -282,8 +259,8 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 let displayError = pageData.errorMessage;
                 if (err?.message?.includes('429') && err?.message?.includes('RESOURCE_EXHAUSTED')) {
                     displayError = language === 'vi' 
-                        ? 'Project AI Studio của bạn đã hết tín dụng API. Vui lòng cấu hình billing https://ai.studio/projects để tiếp tục sử dụng.'
-                        : 'Your API credits are depleted. Please check your AI Studio billing at https://ai.studio/projects.';
+                        ? 'Project AI Studio của bạn đã hết tín dụng API (Prepayment credits depleted). Vui lòng cấu hình billing tại https://ai.studio/projects để tiếp tục sử dụng.'
+                        : 'Your AI Studio API credits are depleted (Prepayment credits depleted). Please check your billing at https://ai.studio/projects to continue.';
                 }
                 
                 setError(displayError);
@@ -314,7 +291,9 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
 
             const responseMessage: Message = {
                 id: Date.now().toString(),
-                text: `${responseText}\n\n<iframe src="${prompt.embedUrl}" width="100%" height="315" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`,
+                text: `${responseText}
+
+<iframe src="${prompt.embedUrl}" width="100%" height="315" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`,
                 sender: 'model',
             };
             
@@ -329,7 +308,14 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     };
 
     const handleQuestionClick = (question: string) => {
+        setIsQuestionsPopupOpen(false);
+        setSelectedGroup(null);
         handleSend(question);
+    };
+
+    const toggleQuestionsPopup = () => {
+        setIsQuestionsPopupOpen(!isQuestionsPopupOpen);
+        setSelectedGroup(null);
     };
 
     const handleAttachmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -368,7 +354,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     <div key={msg.id} className={`chat-message ${msg.sender === 'user' ? 'user' : 'ai'}`}>
                         <div className={`chat-avatar ${msg.sender} ${isLoading && msg.isStreaming ? 'thinking' : ''}`}>
                             {msg.sender === 'model' ? (
-                                <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
+                                <img src="https://i.ibb.co/84G7YgJF/Icon-Avata-AI-Support-2.png" alt={pageData.avatarAlt} />
                             ) : (
                                 <Icons.UserIcon className="user-icon-svg" />
                             )}
@@ -398,7 +384,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 {isLoading && messages[messages.length-1]?.sender !== 'model' && (
                     <div className="chat-message ai">
                         <div className="chat-avatar thinking">
-                           <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
+                           <img src="https://i.ibb.co/84G7YgJF/Icon-Avata-AI-Support-2.png" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <div className="typing-indicator"><span></span><span></span><span></span></div>
@@ -433,7 +419,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="ai-suggestions-view">
                     <div className="chat-message ai ai-welcome-message">
                         <div className="chat-avatar">
-                            <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
+                            <img src="https://i.ibb.co/84G7YgJF/Icon-Avata-AI-Support-2.png" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <p>{personalizedWelcomeMessage}</p>
@@ -461,11 +447,19 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                         <div className="selected-category-view">
                             <h3>{selectedCategory.title}</h3>
                             <div className="suggested-prompts-container">
-                                {selectedCategory.questions?.map((q, i) => (
-                                    <button key={i} className="suggested-prompt-btn" onClick={() => handleQuestionClick(q)}>
-                                        {q}
-                                    </button>
-                                ))}
+                                {selectedCategory.questions?.map((q, i) => {
+                                    const hasAnswer = !!hardcodedAnswers[language][q.trim()];
+                                    return (
+                                        <button 
+                                            key={i} 
+                                            className={`suggested-prompt-btn ${!hasAnswer ? 'unanswered' : ''}`} 
+                                            onClick={() => handleQuestionClick(q)}
+                                        >
+                                            <span>{q}</span>
+                                            {!hasAnswer && <span className="unanswered-badge">{language === 'vi' ? 'Chưa trả lời' : 'No answer'}</span>}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     )}
@@ -492,14 +486,14 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                 setView('categories');
             }
         };
-        const initialWelcome = "Xin chào! Tôi là Trí Nhân, trợ lý AI của anh Thái. Trước khi bắt đầu, vui lòng cho tôi biết tên và giới tính của bạn.";
+        const initialWelcome = pageData.collectInfoGreeting;
 
         return (
             <div className="ai-suggestions-scroll-container no-scrollbar">
                 <div className="ai-suggestions-view" style={{ justifyContent: 'center' }}>
                     <div className="chat-message ai ai-welcome-message">
                         <div className="chat-avatar">
-                            <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt={pageData.avatarAlt} />
+                            <img src="https://i.ibb.co/84G7YgJF/Icon-Avata-AI-Support-2.png" alt={pageData.avatarAlt} />
                         </div>
                         <div className="message-bubble">
                             <p>{initialWelcome}</p>
@@ -509,7 +503,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     <form onSubmit={handleStart} className="user-info-form">
                         <input 
                             type="text"
-                            placeholder="Nhập tên của bạn"
+                            placeholder={pageData.namePlaceholder}
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             required
@@ -519,16 +513,20 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                             <button 
                                 type="button"
                                 className={userGender === 'Nam' ? 'active' : ''}
-                                onClick={() => setUserGender('Nam')}
+                                onClick={() => {
+                                    setUserGender('Nam');
+                                }}
                             >
-                                Nam
+                                {pageData.genderMale}
                             </button>
                             <button
                                 type="button"
                                 className={userGender === 'Nữ' ? 'active' : ''}
-                                onClick={() => setUserGender('Nữ')}
+                                onClick={() => {
+                                    setUserGender('Nữ');
+                                }}
                             >
-                                Nữ
+                                {pageData.genderFemale}
                             </button>
                         </div>
                         <button 
@@ -536,7 +534,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                             className="btn btn-primary"
                             disabled={!userName.trim() || !userGender}
                         >
-                            Bắt đầu trò chuyện
+                            {pageData.startChatBtn}
                         </button>
                     </form>
                 </div>
@@ -544,6 +542,60 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         );
     };
     
+    const renderQuestionsPopup = () => {
+        if (!isQuestionsPopupOpen) return null;
+
+        const groups = questionGroups[language] || [];
+
+        return (
+            <div className="questions-popup-overlay" onClick={toggleQuestionsPopup}>
+                <div className="questions-popup-content" onClick={(e) => e.stopPropagation()}>
+                    <div className="questions-popup-header">
+                        <div className="header-title-area">
+                            {selectedGroup && (
+                                <button className="back-btn" onClick={() => setSelectedGroup(null)}>
+                                    <Icons.ChevronLeftIcon size={20} />
+                                </button>
+                            )}
+                            <h3>{selectedGroup ? selectedGroup.title : pageData.questionsPopupTitle}</h3>
+                        </div>
+                        <button onClick={toggleQuestionsPopup}>
+                            <Icons.XMarkIcon size={20} />
+                        </button>
+                    </div>
+                    <div className="questions-list no-scrollbar">
+                        {!selectedGroup ? (
+                            groups.map((group, i) => (
+                                <button 
+                                    key={i} 
+                                    className="question-item category-item"
+                                    onClick={() => setSelectedGroup(group)}
+                                >
+                                    <span>{group.title}</span>
+                                    <Icons.ChevronRightIcon size={16} />
+                                </button>
+                            ))
+                        ) : (
+                            selectedGroup.questions.map((q, i) => {
+                                const hasAnswer = !!hardcodedAnswers[language][q.trim()];
+                                return (
+                                    <button 
+                                        key={i} 
+                                        className={`question-item ${!hasAnswer ? 'unanswered' : ''}`}
+                                        onClick={() => handleQuestionClick(q)}
+                                    >
+                                        <span>{q}</span>
+                                        {!hasAnswer && <span className="unanswered-badge">{language === 'vi' ? 'Chưa trả lời' : 'No answer'}</span>}
+                                    </button>
+                                );
+                            })
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <PageLayout id={id}>
             <div className="info-card">
@@ -572,6 +624,18 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                             {view === 'chat' || messages.length > 0 ? renderChatView() : renderSuggestionsView()}
                             
                             <div className="chatbot-input-area">
+                                {showQuestionsBtn && !isLoading && (
+                                    <button 
+                                        className="suggested-questions-btn-toggle"
+                                        onClick={toggleQuestionsPopup}
+                                    >
+                                        <Icons.ListIcon size={18} />
+                                        {pageData.suggestedQuestionsBtn}
+                                    </button>
+                                )}
+                                
+                                {renderQuestionsPopup()}
+
                                 {attachmentPreview && (
                                     <div className="attachment-preview">
                                         <img src={attachmentPreview} alt="attachment preview" />

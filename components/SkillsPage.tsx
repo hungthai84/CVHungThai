@@ -110,7 +110,14 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ id }) => {
                     {categories.length > 0 ? (
                         categories.map((category) => (
                             <div key={category.key} className="resume-item-card">
-                                <h3 className="category-title" style={{ color: category.color || themeColor }}>{category.title}</h3>
+                                <h3 className="category-title" style={{ color: category.color || themeColor }}>
+                                    {category.key === 'professional' && <Icons.WrenchScrewdriverIcon className="inline mr-2" size={20} />}
+                                    {category.key === 'soft' && <Icons.UsersIcon className="inline mr-2" size={20} />}
+                                    {category.key === 'interdisciplinary' && <Icons.LayersIcon className="inline mr-2" size={20} />}
+                                    {category.key === 'business' && <Icons.BriefcaseIcon className="inline mr-2" size={20} />}
+                                    {category.key === 'language' && <Icons.GlobeAltIcon className="inline mr-2" size={20} />}
+                                    {category.title}
+                                </h3>
                                 <div className="skills-grid-v2">
                                     {category.skills.map((skill, skillIndex) => {
                                         const currentIndex = globalSkillIndex;

@@ -284,7 +284,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     };
     return (
         <PageLayout id={id} className="work-experience-section">
-            <div className={`info-card work-experience-card`}>
+            <div className="info-card work-experience-card flex flex-col h-full">
                  <div className="about-header">
                     <InfoBadge
                         icon={<Icons.BriefcaseIcon />}
@@ -326,8 +326,8 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                 </div>
 
                 <div className="work-experience-info">
-                    <div className="timeline-navigation-wrapper no-scrollbar">
-                        <div className="timeline-container" ref={timelineContainerRef}>
+                    <div className="timeline-navigation-wrapper no-scrollbar" style={{ height: '130px' }}>
+                        <div className="timeline-container" ref={timelineContainerRef} style={{ height: '120px' }}>
                              <div id="timeline-segments-container"></div>
                              <div id="timeline-progress-bar"></div>
                             {jobs.map((job, index) => (
@@ -356,7 +356,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                         </div>
                     </div>
                     {activeJob && !isMobile && (
-                        <div className="job-card" key={activeJob.key} style={{ border: `2px solid ${activeJob.color}`, borderRadius: '20px', padding: '1.5rem', marginTop: '1rem' }}>
+                        <div className="job-card" key={activeJob.key} style={{ border: `2px solid ${activeJob.color}`, borderRadius: '20px', padding: '1.5rem', width: '100%', height: 'auto', minHeight: '390px', marginLeft: '25.5px', marginRight: '25.5px', marginTop: '25.5px', marginBottom: '25.5px' }}>
                            <div className="job-card-scrollable-content no-scrollbar">
                                 <div className="job-card-details-grid">
                                     <div>
@@ -410,7 +410,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                 </div>
                                
                                {activeJob.images && activeJob.images.length > 0 && (
-                                   <div className="job-image-slider-wrapper">
+                                   <div className="job-image-slider-wrapper" style={{ marginTop: '1rem' }}>
                                        <h5>{pageData.relatedImagesTitle}</h5>
                                        <JobImageSlider images={activeJob.images} />
                                    </div>
