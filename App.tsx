@@ -9,8 +9,6 @@ import { useI18n } from './contexts/i18n';
 import MobileHeader from './components/MobileHeader';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ClockWeatherWidget from './components/ClockWeatherWidget';
-import QuickContactButton from './components/QuickContactButton';
-import VisitorCounter from './components/VisitorCounter';
 
 // Lazy load page components to minimize initial bundle size and optimize website load speeds
 const SkillsPage = lazy(() => import('./components/SkillsPage'));
@@ -548,7 +546,6 @@ const App: React.FC = () => {
                                 </div>
                             </div>
                              <ClockWeatherWidget />
-                             <VisitorCounter />
                         </div>
 
                         <div className="right-panel-middle-controls">
@@ -577,8 +574,6 @@ const App: React.FC = () => {
                     <PageNavButtons />
                 </div>
             )}
-
-            <QuickContactButton />
 
             {isPrintViewOpen && document.getElementById('popup-root') && createPortal(
                 <div className="print-preview-overlay">
