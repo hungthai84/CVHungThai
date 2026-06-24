@@ -832,7 +832,7 @@ export const vi = {
       },
       {
           id: "5.1",
-          title: "Thành lập Trung tâm Hỗ trợ Khách hàng (Help Center & Self-Service Portal)",
+          title: "Thành lập Trung tâm Hỗ trợ Khách hàng",
           description: "Xây dựng Trung tâm Hỗ trợ Khách hàng theo mô hình tự phục vụ, cung cấp kho tri thức tập trung và cổng hỗ trợ trực tuyến 24/7.",
           group: "Trung tâm hỗ trợ & Tự phục vụ",
           stage: "2",
@@ -841,7 +841,7 @@ export const vi = {
       },
       {
           id: "6.1",
-          title: "Chiến lược Lấy Khách hàng làm Trung tâm (Customer-Centric Transformation)",
+          title: "Chiến lược Lấy Khách hàng làm Trung tâm",
           description: "Dẫn dắt chuyển đổi văn hóa dịch vụ lấy khách hàng làm trọng tâm, thiết lập các nguyên tắc vận hành dựa trên Trải nghiệm khách hàng (CX) và Tiếng nói khách hàng (VoC).",
           group: "Khách hàng là trung tâm",
           stage: "3",
@@ -1162,7 +1162,7 @@ export const vi = {
       }
     },
     "1.4": {
-      title: "Quản lý Dự án Chăm sóc Khách hàng (Customer Service Project Management)",
+      title: "Quản lý Dự án Chăm sóc Khách hàng",
       date: "Giai đoạn 3",
       tags: ["CS Strategy", "Quản lý Dự án", "Agile"],
       heroImage: "https://i.postimg.cc/66HMkYsF/12-Qu-n-l-d-n.jpg",
@@ -1187,7 +1187,7 @@ export const vi = {
       }
     },
     "1.5": {
-      title: "Cầu nối giữa Dịch vụ và Sản phẩm (Voice of Customer & Product Improvement Program)",
+      title: "Cầu nối giữa Dịch vụ và Sản phẩm",
       date: "Giai đoạn 3",
       tags: ["CS Strategy", "Tiếng nói Khách hàng", "Cải tiến sản phẩm"],
       heroImage: "https://i.postimg.cc/3xG9DhyH/15-C-i-thi-n-s-n-ph-m.jpg",
@@ -1212,7 +1212,7 @@ export const vi = {
       }
     },
     "2.1": {
-      title: "Chuẩn hóa Quy trình Vận hành (Standard Operating Procedures - SOP)",
+      title: "Chuẩn hóa Quy trình Vận hành",
       date: "Giai đoạn 1",
       tags: ["Vận hành CS", "SOP", "Quy trình"],
       heroImage: "https://i.postimg.cc/fW5PwMd2/3-X-y-d-ng-quy-tr-nh.jpg",
@@ -1237,7 +1237,7 @@ export const vi = {
       }
     },
     "2.2": {
-      title: "Tối ưu hóa Hỗ trợ Đa kênh (Omni-channel Customer Service Transformation)",
+      title: "Tối ưu hóa Hỗ trợ Đa kênh",
       date: "Giai đoạn 2",
       tags: ["Vận hành CS", "Đa kênh", "Hỗ trợ hợp nhất"],
       heroImage: "https://i.postimg.cc/sDN0hKw5/4-T-i-u-k-nh-h-tr.jpg",
@@ -1262,7 +1262,7 @@ export const vi = {
       }
     },
     "2.3": {
-      title: "Triển khai Tự động hóa Quy trình (Business Process Automation & RPA)",
+      title: "Triển khai Tự động hóa Quy trình",
       date: "Giai đoạn 3",
       tags: ["Vận hành CS", "Tự động hóa", "RPA"],
       heroImage: "https://i.postimg.cc/T1HQnYqT/9-T-ng-ho.png",
@@ -1288,7 +1288,7 @@ export const vi = {
       }
     },
     "2.4": {
-      title: "Quản lý các Chiến dịch Outbound chủ động (Proactive Customer Engagement & Outbound Operations)",
+      title: "Quản lý các Chiến dịch Outbound chủ động",
       date: "Giai đoạn 3",
       tags: ["Vận hành CS", "CS Chủ Động", "Chăm Sóc Chủ Động"],
       heroImage: "https://i.postimg.cc/BvGpTzDP/14-Qu-n-l-chi-n-d-ch-Outbound.jpg",
@@ -1313,7 +1313,7 @@ export const vi = {
       }
     },
     "3.1": {
-      title: "Xây dựng Hệ thống Quản lý Quan hệ Khách hàng (Customer Relationship Management - CRM)",
+      title: "Xây dựng Hệ thống Quản lý Quan hệ Khách hàng",
       date: "Giai đoạn 2",
       tags: ["Công nghệ & Dữ liệu", "CRM", "Dữ liệu khách hàng"],
       heroImage: "https://i.postimg.cc/PqG36JGx/5-X-y-d-ng-h-th-ng-CRM.jpg",
@@ -1339,7 +1339,7 @@ export const vi = {
       }
     },
     "3.2": {
-      title: "Phân tích và Báo cáo Chăm sóc Khách hàng (Customer Service Analytics & Business Intelligence)",
+      title: "Phân tích và Báo cáo Chăm sóc Khách hàng",
       date: "Giai đoạn 2",
       tags: ["Công nghệ & Dữ liệu", "Phân tích sâu", "Báo cáo nội bộ"],
       heroImage: "https://i.postimg.cc/LX2ypW8F/7-Ph-n-t-ch-b-o-c-o.jpg",
@@ -1365,7 +1365,7 @@ export const vi = {
       }
     },
     "3.3": {
-      title: "Khảo sát và Đánh giá Khách hàng (Customer Feedback & Voice of Customer Management)",
+      title: "Khảo sát và Đánh giá Khách hàng",
       date: "Giai đoạn 3",
       tags: ["Công nghệ & Dữ liệu", "Khảo sát", "Phản hồi"],
       heroImage: "https://i.postimg.cc/pX4qTrLZ/13-Kh-o-s-t-nh-gi.jpg",
@@ -1391,7 +1391,7 @@ export const vi = {
       }
     },
     "3.4": {
-      title: "Xây dựng Trợ lý ảo AI (AI Chatbot & Virtual Assistant Platform)",
+      title: "Xây dựng Trợ lý ảo AI",
       date: "Giai đoạn 3",
       tags: ["Công nghệ & Dữ liệu", "Chatbot", "Trí tuệ nhân tạo"],
       heroImage: "https://i.postimg.cc/pTCsXBmh/8-X-y-d-ng-Al-Bot.jpg",
@@ -1409,7 +1409,7 @@ export const vi = {
       }
     },
     "4.1": {
-      title: "Phát triển Hệ thống Đào tạo trực tuyến (E-learning & Learning Management System)",
+      title: "Phát triển Hệ thống Đào tạo trực tuyến",
       date: "Giai đoạn 3",
       tags: ["Đào tạo CS", "Học viện CS", "Kỹ năng"],
       heroImage: "https://i.postimg.cc/nrL0sQmd/10-o-t-o-online.jpg",
@@ -1435,7 +1435,7 @@ export const vi = {
       }
     },
     "5.1": {
-      title: "Thành lập Trung tâm Hỗ trợ Khách hàng (Help Center & Self-Service Portal)",
+      title: "Thành lập Trung tâm Hỗ trợ Khách hàng",
       date: "Giai đoạn 2",
       tags: ["Tự phục vụ", "Hỗ trợ", "Cơ sở kiến thức"],
       heroImage: "https://i.postimg.cc/65yMtntq/11-Trung-t-m-h-tr.png",
@@ -1462,7 +1462,7 @@ export const vi = {
       }
     },
     "6.1": {
-      title: "Chiến lược Lấy Khách hàng làm Trung tâm (Customer-Centric Transformation)",
+      title: "Chiến lược Lấy Khách hàng làm Trung tâm",
       date: "Giai đoạn 3",
       tags: ["Chiến lược CS", "Văn hóa doanh nghiệp", "Khách hàng là trung tâm"],
       heroImage: "https://i.postimg.cc/wT3hj1SF/Xay-dung-Van-hoa-Lay-khach-hang-lam-trung-tam.png",
