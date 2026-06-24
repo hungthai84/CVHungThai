@@ -330,6 +330,29 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                         <div className="setting-item flex-col items-start">
                                             <label htmlFor="ai-voice-select" className="mb-2 w-full">{settingsText.aiVoiceSelect}</label>
                                             <div className="flex items-center gap-3 w-full">
+                                                <div className="custom-select-wrapper flex-1">
+                                                <select 
+                                                    id="ai-voice-select"
+                                                    value={localVoiceName}
+                                                    onChange={(e) => setLocalVoiceName(e.target.value)}
+                                                    className="custom-select"
+                                                >
+                                                    {groupedVoices.vi.length > 0 ? (
+                                                        groupedVoices.vi.map(voice => (
+                                                            <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                {voice.name} ({voice.lang})
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option value="">Không tìm thấy giọng nói Tiếng Việt</option>
+                                                    )}
+                                                </select>
+                                                <div className="select-arrow">
+                                                    <Icons.ChevronDownIcon size={18} />
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-4 flex justify-end w-full">
                                                 <button
                                                     onClick={() => {
                                                         if (isSpeaking) {
@@ -343,7 +366,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                             let targetLang = voiceLang;
 
                                                             if (isVi) {
-                                                                text = "Xin chào, tôi là Nguyễn Hùng Thái.";
+                                                                const viPhrases = [
+                                                                    "Xin chào, tôi là Nguyễn Hùng Thái.",
+                                                                    "Trải nghiệm khách hàng là nền tảng của sự phát triển bền vững.",
+                                                                    "Một hệ thống tốt là một hệ thống không phụ thuộc vào cá nhân.",
+                                                                    "Người lãnh đạo giỏi tạo ra nhiều nhà lãnh đạo mới.",
+                                                                    "Sự hài lòng không đến từ hoàn hảo, mà từ sự đồng cảm kịp thời.",
+                                                                    "Dịch vụ khách hàng không phải là trả lời câu hỏi, mà là xây dựng niềm tin."
+                                                                ];
+                                                                text = viPhrases[Math.floor(Math.random() * viPhrases.length)];
                                                                 targetLang = 'vi';
                                                             } else if (isEn) {
                                                                 text = "Hello, this is a test voice.";
@@ -366,32 +397,22 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                             speak(text, { voiceName: localVoiceName, lang: targetLang, pitch: localVoicePitch, rate: localVoiceRate });
                                                         }
                                                     }}
-                                                    className="bg-primary text-white hover:bg-primary/90 p-1.5 rounded-full transition-colors flex items-center justify-center w-8 h-8 shadow-sm flex-shrink-0 focus:outline-none"
+                                                    className={`
+                                                        relative overflow-hidden group
+                                                        bg-primary text-primary-foreground
+                                                        px-5 py-2.5 transition-all duration-300 
+                                                        flex items-center justify-center gap-2 shadow-md hover:shadow-lg
+                                                        focus:outline-none whitespace-nowrap text-sm font-medium
+                                                        active:scale-95 w-full sm:w-auto
+                                                        ${isSpeaking ? 'ring-2 ring-primary/50 ring-offset-2 ring-offset-background' : ''}
+                                                    `}
+                                                    style={{ borderRadius: '100px', borderStyle: 'dashed', borderWidth: '2px', borderColor: 'currentColor' }}
                                                     title={isSpeaking ? "Pause Preview" : "Play Preview"}
                                                 >
-                                                    {isSpeaking ? <Icons.PauseIcon size={16} /> : <Icons.PlayIcon size={16} />}
+                                                    <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></span>
+                                                    {isSpeaking ? <Icons.PauseIcon size={18} className="animate-pulse" /> : <Icons.PlayIcon size={18} />}
+                                                    <span className="relative z-10">{isSpeaking ? 'Đang nói...' : 'Nghe thử giọng nói'}</span>
                                                 </button>
-                                                <div className="custom-select-wrapper flex-grow w-full">
-                                                <select 
-                                                    id="ai-voice-select"
-                                                    value={localVoiceName}
-                                                    onChange={(e) => setLocalVoiceName(e.target.value)}
-                                                    className="custom-select"
-                                                >
-                                                    {groupedVoices.vi.length > 0 ? (
-                                                        groupedVoices.vi.map(voice => (
-                                                            <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                {voice.name} ({voice.lang})
-                                                            </option>
-                                                        ))
-                                                    ) : (
-                                                        <option value="">Không tìm thấy giọng nói Tiếng Việt</option>
-                                                    )}
-                                                </select>
-                                                <div className="select-arrow">
-                                                    <Icons.ChevronDownIcon size={18} />
-                                                </div>
-                                            </div>
                                             </div>
                                         </div>
                                         <div className="setting-item flex-col items-start gap-2">

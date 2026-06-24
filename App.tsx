@@ -92,7 +92,6 @@ const App: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const pageContainerRef = useRef<HTMLDivElement>(null);
     const backgroundRef = useRef<HTMLDivElement>(null);
-    const [isSocialsOpen, setIsSocialsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [isPrintViewOpen, setIsPrintViewOpen] = useState(false);
@@ -100,7 +99,7 @@ const App: React.FC = () => {
     const [fallbackPdfUrl, setFallbackPdfUrl] = useState<string | undefined>(undefined);
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [scrollPercent, setScrollPercent] = useState(0);
-
+    const [isIdle, setIsIdle] = useState(false);
 
     const clickSound = useRef<HTMLAudioElement | null>(null);
 
@@ -173,19 +172,6 @@ const App: React.FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const socialLinks = React.useMemo(() => [
-        { title: "Cá nhân", icon: 'UserIcon', url: "https://www.nguyenhungthai.powerservice.one/" },
-        { title: "P.Dịch Vụ Khách Hàng", icon: 'LifebuoyIcon', url: "https://www.servicedesk.powerservice.one/" },
-        { title: "Hỗ trợ nội bộ", icon: 'WrenchScrewdriverIcon', url: "https://www.supportcenter.powerservice.one/" },
-        { title: "Hỗ trợ khách hàng", icon: 'UsersIcon', url: "https://www.helpcenter.powerservice.one/" },
-        { title: "Quản lý file văn phòng", icon: 'FolderIcon', url: "https://powerservice.sg.larksuite.com/next/messenger/" },
-        { title: "Hệ thống CRM Demo", icon: 'ServerIcon', url: "https://home.zoho.com/home#all" },
-        { title: "Linkedin", icon: 'LinkedinIcon', url: "https://www.linkedin.com/in/hungthai.1984/" },
-        { title: "Facebook", icon: 'FacebookIcon', url: "https://facebook.com/hungthai.1984" },
-        { title: "Website", icon: 'GlobeAltIcon', url: "https://www.nguyenhungthai.powerservice.one/" },
-        { title: "Blogspot", icon: 'BookOpenIcon', url: "https://chiasetrithucconhan.blogspot.com/" }
-    ], []);
-
     // Ensure the view starts at the top on initial load
     useEffect(() => {
         if (isMobile) {
@@ -194,6 +180,26 @@ const App: React.FC = () => {
             pageContainerRef.current?.scrollTo(0, 0);
         }
     }, [isMobile]);
+
+    // Idle tracker
+    useEffect(() => {
+        let idleTimer: ReturnType<typeof setTimeout>;
+        const resetIdle = () => {
+            setIsIdle(false);
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => setIsIdle(true), 5000); // 5 seconds of inactivity
+        };
+        resetIdle();
+        window.addEventListener('mousemove', resetIdle, { passive: true });
+        window.addEventListener('keydown', resetIdle, { passive: true });
+        window.addEventListener('touchstart', resetIdle, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', resetIdle);
+            window.removeEventListener('keydown', resetIdle);
+            window.removeEventListener('touchstart', resetIdle);
+            clearTimeout(idleTimer);
+        };
+    }, []);
     
     const navigateTo = useCallback((key: string) => {
         const newIndex = pageKeys.findIndex(pKey => pKey === key);
@@ -404,17 +410,17 @@ const App: React.FC = () => {
         <>
             {canGoPrev && (
                 <button onClick={handlePrevPage} className="header-icon-button page-nav-button" aria-label="Previous Page" title="Trang trước">
-                    <Icons.ChevronUpIcon size={22} />
+                    <Icons.ChevronUpIcon size={24} />
                 </button>
             )}
             {isOnMainPage && (
                 isLastMainPage ? (
                     <button onClick={handleGoToTop} className="header-icon-button page-nav-button" aria-label="Back to Top" title="Về đầu trang">
-                        <Icons.ArrowUpIcon size={22} />
+                        <Icons.ArrowUpIcon size={24} />
                     </button>
                 ) : (
                     <button onClick={handleNextPage} className="header-icon-button page-nav-button" aria-label="Next Page" title="Trang sau">
-                        <Icons.ChevronDownIcon size={22} />
+                        <Icons.ChevronDownIcon size={24} />
                     </button>
                 )
             )}
@@ -465,6 +471,8 @@ const App: React.FC = () => {
                             onOpenAiChat={() => handleSetPage('aiChat')}
                             onPrintClick={() => setIsPrintViewOpen(true)}
                             onSchedulerClick={() => handleSetPage('scheduler')}
+                            isIdle={isIdle}
+                            activePageKey={pageKeys[activeIndex]}
                         />
                         <div 
                             className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}
@@ -547,37 +555,25 @@ const App: React.FC = () => {
                 {!isMobile && (
                     <div className="right-panel">
                         <div className="right-panel-top-content">
-                            <div className={`avatar-social-container ${isSocialsOpen ? 'open' : ''}`}>
-                                <button className="right-panel-avatar-button" onClick={() => setIsSocialsOpen(!isSocialsOpen)} title="Social Links">
-                                    <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt="Avatar" className="right-panel-avatar" />
-                                </button>
-                                <div className="social-icons-ring" style={{ '--icon-count': socialLinks.length } as React.CSSProperties}>
-                                    {socialLinks.map((link: any, index: number) => {
-                                        const Icon = Icons[link.icon as keyof typeof Icons] || Icons.LinkIcon;
-                                        return (
-                                            <a href={link.url} target="_blank" rel="noopener noreferrer" key={link.title} className="social-icon-link" style={{ '--index': index } as React.CSSProperties} title={link.title}>
-                                                <Icon size={18}/>
-                                            </a>
-                                        );
-                                    })}
-                                </div>
-                            </div>
                              <ClockWeatherWidget />
                         </div>
 
                         <div className="right-panel-middle-controls">
                             <button onClick={() => setIsPrintViewOpen(true)} className="header-icon-button control-cv" aria-label="View or download CV" title="Xem & Tải CV">
-                                <Icons.PrinterIcon size={22} />
+                                <Icons.PrinterIcon size={24} />
                             </button>
                             <button onClick={() => handleSetPage('scheduler')} className={`header-icon-button control-scheduler ${pageKeys[activeIndex] === 'scheduler' ? 'active' : ''}`} aria-label="Lên lịch hẹn" title="Lên lịch hẹn">
-                                <Icons.CalendarDaysIcon size={22} />
+                                <Icons.CalendarDaysIcon size={24} />
                             </button>
                             <button onClick={() => handleSetPage('settings')} className={`header-icon-button control-settings ${pageKeys[activeIndex] === 'settings' ? 'active' : ''}`} aria-label="Settings">
-                                <Icons.SettingsIcon size={22} />
+                                <Icons.SettingsIcon size={24} />
                             </button>
-                            <button onClick={() => handleSetPage('aiChat')} className={`header-icon-button control-ai-chat ${pageKeys[activeIndex] === 'aiChat' ? 'active' : ''}`} aria-label={t.sidebar.nav.aiChat} title={t.sidebar.nav.aiChat}>
-                                <Icons.BotIcon size={22} />
+                            <button onClick={() => handleSetPage('aiChat')} className={`header-icon-button control-ai-chat ${pageKeys[activeIndex] === 'aiChat' ? 'active' : ''} ${isIdle && pageKeys[activeIndex] !== 'aiChat' ? 'ai-chat-pulse' : ''}`} aria-label={t.sidebar.nav.aiChat} title={t.sidebar.nav.aiChat}>
+                                <Icons.BotIcon size={24} />
                             </button>
+                            <a href="https://zalo.me/0909097882" target="_blank" rel="noopener noreferrer" className="header-icon-button control-zalo" title="Chat Zalo">
+                                <Icons.MessageCircleIcon size={24} />
+                            </a>
                         </div>
                         <div className="right-panel-bottom-controls">
                             <PageNavButtons />

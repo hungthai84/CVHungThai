@@ -103,8 +103,8 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                 /* Horoscope 3D Book Styles */
                 .horoscope-book-wrapper {
                     position: relative;
-                    width: 85px;
-                    height: 110px;
+                    width: 70px;
+                    height: 70px;
                     perspective: 400px;
                     cursor: pointer;
                     margin: 0 auto;
@@ -115,21 +115,20 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     position: relative;
                     transform-style: preserve-3d;
                     transition: transform 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
-                    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.5);
-                    border-radius: 4px 8px 8px 4px;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                    border-radius: 50%;
                 }
                 .horoscope-book-wrapper:hover .horoscope-book {
-                    transform: rotateY(-20deg) translateX(4px);
-                    box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.7);
+                    transform: scale(1.05);
+                    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
                 }
                 .horoscope-book-cover {
                     position: absolute;
                     width: 100%;
                     height: 100%;
-                    background: linear-gradient(135deg, #1e0f3c 0%, #0d061f 100%);
-                    border: 1.5px solid #d4af37;
-                    border-left: 5px solid #d4af37;
-                    border-radius: 4px 8px 8px 4px;
+                    background: #ffffff;
+                    border: 2px solid #d4af37;
+                    border-radius: 50%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -140,51 +139,30 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                 .horoscope-book-cover::before {
                     content: '';
                     position: absolute;
-                    inset: 3px;
+                    inset: 4px;
                     border: 1px dashed rgba(212, 175, 55, 0.4);
-                    border-radius: 2px 6px 6px 2px;
+                    border-radius: 50%;
                     pointer-events: none;
                 }
-                .horoscope-book-spine-lines {
-                    position: absolute;
-                    left: 1px;
-                    top: 10%;
-                    bottom: 10%;
-                    width: 1px;
-                    background: rgba(255, 255, 255, 0.15);
-                }
                 .yinyang-symbol {
-                    width: 42px;
-                    height: 42px;
-                    background: linear-gradient(to right, #000 50%, #fff 50%);
+                    width: 54px;
+                    height: 54px;
                     border-radius: 50%;
-                    position: relative;
-                    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5), inset 0 0 0 1.5px #d4af37;
-                    transition: transform 0.4s ease;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1.5px solid #d4af37;
+                    background: white;
+                    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
                 }
-                .yinyang-symbol::before {
-                    content: '';
-                    position: absolute;
-                    width: 21px;
-                    height: 21px;
-                    background: #000;
-                    border-radius: 50%;
-                    top: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background-image: radial-gradient(#fff 3px, transparent 3px);
+                .yinyang-symbol img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
                 }
-                .yinyang-symbol::after {
-                    content: '';
-                    position: absolute;
-                    width: 21px;
-                    height: 21px;
-                    background: #fff;
-                    border-radius: 50%;
-                    bottom: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background-image: radial-gradient(#000 3px, transparent 3px);
+                .horoscope-book-spine-lines {
+                    display: none;
                 }
                 .yinyang-spinning {
                     animation: yinyang-spin 8s infinite linear;
@@ -192,15 +170,6 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                 @keyframes yinyang-spin {
                     from { transform: rotate(0deg); }
                     to { transform: rotate(360deg); }
-                }
-                .book-title-viet {
-                    font-size: 10px;
-                    font-weight: 700;
-                    color: #d4af37;
-                    margin-top: 10px;
-                    letter-spacing: 1.5px;
-                    text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
-                    text-transform: uppercase;
                 }
                 .book-glow {
                     position: absolute;
@@ -291,10 +260,12 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                                 <div className="horoscope-book-spine-lines"></div>
                                 
                                 {/* Yin-Yang spinning center wheel */}
-                                <div className={`yinyang-symbol ${isPlaying ? 'yinyang-spinning' : ''}`}></div>
-                                
-                                {/* Elegant gold header text */}
-                                <span className="book-title-viet">Tử Vi</span>
+                                <div className={`yinyang-symbol ${isPlaying ? 'yinyang-spinning' : ''}`}>
+                                    <img 
+                                        src="https://i.ibb.co/nsKpgT8V/Yin-Yan.jpg" 
+                                        alt="Thái cực" 
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -309,7 +280,20 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     </div>
                     <button 
                         className="custom-play-button" 
-                        style={{ bottom: '-15px' }}
+                        style={{ 
+                            bottom: '-15px',
+                            background: 'rgba(212, 175, 55, 0.15)',
+                            border: '1.5px solid #d4af37',
+                            color: '#d4af37',
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+                        }}
                         onClick={handlePlayPause} 
                         aria-label={isPlaying ? "Tạm dừng" : "Phát"}
                     >

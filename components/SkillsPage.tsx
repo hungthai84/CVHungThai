@@ -56,7 +56,7 @@ const SkillItem: React.FC<{ skill: Skill; color: string; index: number }> = ({ s
             style={{ transitionDelay: `${index * 50}ms` }}
         >
             <div className="skill-info">
-                <h4>{skill.name}</h4>
+                <h4 className="whitespace-nowrap overflow-hidden text-ellipsis">{skill.name}</h4>
                 <span>{skill.level}%</span>
             </div>
             <div className="progress-bar-container">
@@ -110,7 +110,7 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ id }) => {
                     {categories.length > 0 ? (
                         categories.map((category) => (
                             <div key={category.key} className="resume-item-card">
-                                <h3 className="category-title" style={{ color: category.color || themeColor }}>
+                                <h3 className="category-title" style={{ color: category.color || themeColor, whiteSpace: 'nowrap' }}>
                                     {category.key === 'professional' && <Icons.WrenchScrewdriverIcon className="inline mr-2" size={20} />}
                                     {category.key === 'soft' && <Icons.UsersIcon className="inline mr-2" size={20} />}
                                     {category.key === 'interdisciplinary' && <Icons.LayersIcon className="inline mr-2" size={20} />}

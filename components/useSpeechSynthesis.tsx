@@ -211,7 +211,9 @@ export const useSpeechSynthesis = () => {
                             };
                             
                             audio.play().catch(err => {
-                                console.error('gTTS Audio Play Error:', err);
+                                if (err.name !== 'AbortError') {
+                                    console.error('gTTS Audio Play Error:', err);
+                                }
                                 if (activeSessionRef.current === sessionId) {
                                     setIsSpeaking(false);
                                     window.dispatchEvent(new Event('speech-synthesis-stopped'));

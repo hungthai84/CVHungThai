@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             {/* Search Bar at the top of Sidebar */}
             <div className="sidebar-search-container">
                 <div className="sidebar-search-inner" title={language === 'vi' ? 'Tìm kiếm danh mục' : 'Search categories'}>
-                    <Icons.SearchIcon className="sidebar-search-icon" size={16} aria-hidden="true" />
+                    <Icons.SearchIcon className="sidebar-search-icon" size={24} aria-hidden="true" />
                     <input 
                         type="text" 
                         value={searchQuery}

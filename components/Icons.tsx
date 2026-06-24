@@ -106,6 +106,7 @@ export const ChevronLeftIcon = ChevronLeft;
 export const ChevronRightIcon = ChevronRight;
 export const XMarkIcon = XIconLucide;
 export const ChatBubbleLeftRightIcon = MessageCircle;
+export const MessageCircleIcon = MessageCircle;
 export const ClipboardDocumentListIcon = ClipboardList;
 export const ChartBarIcon = BarChart2;
 export const SunIcon = Sun;

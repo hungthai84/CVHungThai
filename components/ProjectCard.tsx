@@ -2,24 +2,28 @@ import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import type { Project, ViewMode } from './ProjectsPage';
 import OptimizedImage from './OptimizedImage';
-import * as Icons from './Icons';
 
 interface ProjectCardProps {
     project: Project;
     viewMode: ViewMode;
     hasPost: boolean;
     onClick: () => void;
+    groupColor?: string;
 }
+
+const STAGE_COLORS: Record<string, string> = {
+    '1': '#3b82f6', // Blue
+    '2': '#10b981', // Green
+    '3': '#f59e0b', // Orange
+    '4': '#8b5cf6', // Purple
+    '5': '#ef4444', // Red
+};
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) => {
     const { t } = useI18n();
     const pageData = t.projectsPage;
 
-    const achievement = React.useMemo(() => {
-        const achs = t.achievementsPage?.achievements;
-        if (!Array.isArray(achs)) return null;
-        return achs.find((a: any) => a.id === project.id || a.title === project.title);
-    }, [project.id, project.title, t]);
+    const stageColor = STAGE_COLORS[project.stage] || '#3b82f6';
 
     return (
         <div
@@ -29,49 +33,32 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, hasPost, onClick }) 
             role={hasPost ? "button" : "article"}
             tabIndex={hasPost ? 0 : -1}
             aria-label={`Xem chi tiết dự án: ${project.title}`}
+            style={{
+                borderColor: stageColor,
+                borderWidth: '1.5px',
+                borderStyle: 'solid'
+            }}
         >
             <div className="project-card-new-image">
                 <OptimizedImage src={project.imageUrl} alt={project.title} optWidth={600} optQuality={70} hoverScale />
             </div>
-            <div className="project-card-new-content relative">
-                <div className="project-card-new-header flex justify-between items-start">
-                    <div className="flex gap-2 flex-wrap">
-                        <span className="project-card-new-tag group-tag" title={project.group}>{project.group}</span>
-                        <span className="project-card-new-tag">{pageData.stageLabel} {project.stage}</span>
-                        {achievement && (
-                            <span 
-                                className="project-card-new-tag font-semibold flex items-center gap-1 border"
-                                style={{ 
-                                    color: achievement.color, 
-                                    borderColor: achievement.color, 
-                                    backgroundColor: `${achievement.color}15`
-                                }}
-                            >
-                                <Icons.TrophyIcon size={11} style={{ color: achievement.color }} />
-                                <span>{achievement.rate}%</span>
-                            </span>
-                        )}
-                    </div>
-                </div>
-                <div className="flex justify-between items-start mt-2">
+            <div className="project-card-new-content relative flex flex-col flex-1 p-4">
+                <div className="flex flex-col gap-1 mb-2">
+                    <span 
+                        className="project-card-new-hashtag whitespace-nowrap text-[10px] px-1.5 py-0.5 leading-none w-fit font-semibold"
+                        style={{ backgroundColor: `${stageColor}15`, color: stageColor, borderColor: `${stageColor}40`, borderWidth: '1px', borderStyle: 'solid', borderRadius: '4px' }}
+                    >
+                        {pageData.stageLabel} {project.stage}
+                    </span>
                     <h4 className="project-card-new-title mb-0 pr-8">
                         <span className="project-card-new-id">{project.id}</span>. {project.title}
                     </h4>
                 </div>
-                <p className="project-card-new-description mt-3">{project.description}</p>
-                {hasPost && (
-                    <div className="project-card-action">
-                        <span className="view-details-btn">
-                            {(t as any).detailsButton || "Xem chi tiết"} 
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '4px' }}>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </span>
-                    </div>
-                )}
-                <div className="project-card-new-footer">
-                    {project.hashtags.map(tag => <span key={tag} className="project-card-new-hashtag">{tag}</span>)}
+                <p className="project-card-new-description mt-2">{project.description}</p>
+                <div className="project-card-new-footer flex flex-nowrap overflow-hidden gap-1 mt-auto pt-2">
+                    <span className="project-card-new-hashtag whitespace-nowrap text-[10px] px-1.5 py-0.5 leading-none">
+                        {project.group}
+                    </span>
                 </div>
             </div>
         </div>

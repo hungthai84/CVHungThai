@@ -41,7 +41,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                <div className="about-header">
+                <div className="about-header" style={{ marginBottom: '0px' }}>
                     <InfoBadge
                         icon={<Icons.DocumentTextIcon />}
                         text={pageData.badge}
@@ -84,7 +84,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                 </div>
                 
                 <div className="cover-letter-content no-scrollbar" ref={contentRef}>
-                    <div className="cover-letter-inner-card" style={{ lineHeight: '1.35' }}>
+                    <div className="cover-letter-inner-card" style={{ lineHeight: '1.35', padding: '0px' }}>
                         <p style={{ marginBottom: '0.4rem' }}>{pageData.greeting}</p>
                         {paragraphs.map((p, index) => {
                             const lines = p.split('\n').map((line, lineIndex) => (
@@ -93,7 +93,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                                     <br />
                                 </React.Fragment>
                             ));
-                            return <p key={index} style={{ marginBottom: '0.4rem' }}>{lines}</p>;
+                            return <p key={index} style={{ marginBottom: '0.4rem', marginTop: '0px' }}>{lines}</p>;
                         })}
                         <div className="cover-letter-signature-block" style={{ marginTop: '1rem' }}>
                             <p style={{marginBottom: 0, lineHeight: '1.2'}}>{pageData.closing}</p>

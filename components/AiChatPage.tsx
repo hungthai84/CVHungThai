@@ -255,12 +255,14 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                     }
                 }
             } catch (err: any) {
-                console.error("Error generating content:", err);
-                let displayError = pageData.errorMessage;
-                if (err?.message?.includes('429') && err?.message?.includes('RESOURCE_EXHAUSTED')) {
+                let displayError = err?.message || pageData.errorMessage;
+                if (displayError.includes('429') || displayError.includes('RESOURCE_EXHAUSTED') || displayError.includes('Too Many Requests')) {
                     displayError = language === 'vi' 
-                        ? 'Project AI Studio của bạn đã hết tín dụng API (Prepayment credits depleted). Vui lòng cấu hình billing tại https://ai.studio/projects để tiếp tục sử dụng.'
-                        : 'Your AI Studio API credits are depleted (Prepayment credits depleted). Please check your billing at https://ai.studio/projects to continue.';
+                        ? 'Hệ thống AI hiện đang hết hạn mức tín dụng (Error 429). Vui lòng nạp thêm tín dụng vào tài khoản Google Cloud của bạn hoặc thử lại sau.'
+                        : 'Your AI Studio API credits are depleted (Error 429). Please check your billing or try again later.';
+                    console.warn("AI Generation Error (429):", displayError);
+                } else {
+                    console.error("Error generating content:", err);
                 }
                 
                 setError(displayError);

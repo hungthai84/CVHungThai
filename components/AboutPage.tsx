@@ -12,7 +12,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ marginBottom: '20px' }}>
+            <div className="info-card" style={{ marginBottom: '0px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
                 <div className="about-header">
                     <InfoBadge
                         icon={<Icons.UserIcon />}
@@ -22,10 +22,10 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                     />
                 </div>
 
-                <div className="about-page-content-wrapper no-scrollbar">
+                <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%', minHeight: 0 }}>
+                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '615px', minHeight: 0 }}>
                             {/* Embedded Scena AI Banner */}
                             <div style={{ 
                                 width: '100%', 
@@ -41,17 +41,35 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
                             {/* Personal Info Card */}
                             {pageData.infoItems && pageData.infoItems.length > 0 && (
-                                <div className="about-personal-info-card" style={{ height: '200px', width: '557px', padding: '0px' }}>
-                                    <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
-                                    <div className="personal-info-grid no-scrollbar" style={{ height: '180px', paddingRight: '0px' }}>
-                                        {pageData.infoItems.map(item => {
+                                <div className="about-personal-info-card" style={{ height: '400px', width: '100%', padding: '0px' }}>
+                                    <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
+                                    <div className="personal-info-grid no-scrollbar" style={{ 
+                                        height: '360px', 
+                                        paddingRight: '0px', 
+                                        marginTop: '0px', 
+                                        marginBottom: '0px', 
+                                        paddingTop: '0px',
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'center',
+                                        alignContent: 'center',
+                                        gap: '1.5rem'
+                                    }}>
+                                        {pageData.infoItems.map((item) => {
                                             const Icon = Icons[item.icon as keyof typeof Icons] || Icons.UserIcon;
+                                            
                                             return (
-                                                <div key={item.key} className="personal-info-item">
+                                                <div key={item.key} className="personal-info-item" style={{ 
+                                                    width: 'calc(33.333% - 1.5rem)', 
+                                                    minWidth: '160px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.5rem'
+                                                }}>
                                                     <Icon className="info-item-icon" />
                                                     <div className="info-item-text">
                                                         <span className="info-item-label">{item.label}</span>
-                                                        <span className="info-item-value">
+                                                        <span className="info-item-value" style={{ fontSize: '0.85rem' }}>
                                                             {item.link ? (
                                                                 <a href={item.link} target="_blank" rel="noopener noreferrer">
                                                                     {item.key === 'website' ? (language === 'vi' ? 'Liên kết' : 'Link') : item.value}
@@ -73,7 +91,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%', minHeight: 0 }}>
                             {/* Bio Text Card */}
                             <div className="about-bio-text-card no-scrollbar" style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
-                                <h3 className="personal-info-title"><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>
+                                <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>
                                 <div className="about-bio-and-video-container m-0 p-0">
                                     {pageData.paragraphs.map((p, index) => (
                                         <p key={index} className="m-0 p-0" style={{ marginTop: '0px', marginBottom: '0px' }} dangerouslySetInnerHTML={{ __html: p }} />

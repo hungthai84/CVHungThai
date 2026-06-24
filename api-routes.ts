@@ -367,14 +367,14 @@ Your knowledge is strictly limited to the information provided in this portfolio
       });
     }
 
-    res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.setHeader("Transfer-Encoding", "chunked");
-
     const responseStream = await ai.models.generateContentStream({
       model: "gemini-3.5-flash",
       contents,
       config: { systemInstruction },
     });
+
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Transfer-Encoding", "chunked");
 
     for await (const chunk of responseStream) {
       const chunkText = chunk.text;
@@ -384,22 +384,30 @@ Your knowledge is strictly limited to the information provided in this portfolio
     }
     res.end();
   } catch (error: any) {
-    console.error("Gemini server error:", error);
+    console.warn("Gemini server API Error (handled):", error?.message || error);
     
+    let errorMessage = "Lỗi hệ thống khi gọi AI.";
+    let statusCode = 500;
+
     // Improved error handling for 429 (Quota/Billing) and 404 (Model availability)
     if (error?.status === 429 || error?.message?.includes("429") || error?.message?.includes("RESOURCE_EXHAUSTED")) {
-      return res.status(429).json({ 
-        error: "Hệ thống AI hiện đang hết hạn mức tín dụng (Error 429). Vui lòng kiểm tra tài khoản billing trong AI Studio hoặc thử lại sau." 
-      });
-    }
-    
-    if (error?.status === 404 || error?.message?.includes("404") || error?.message?.includes("not found")) {
-      return res.status(404).json({ 
-        error: "Mô hình AI hiện không khả dụng hoặc không được tìm thấy (Error 404). Đang kiểm tra cấu hình hệ thống, vui lòng thử lại sau." 
-      });
+      errorMessage = "Hệ thống AI hiện đang hết hạn mức tín dụng (Error 429). Vui lòng kiểm tra tài khoản billing trong AI Studio hoặc thử lại sau.";
+      statusCode = 429;
+    } else if (error?.status === 404 || error?.message?.includes("404") || error?.message?.includes("not found")) {
+      errorMessage = "Mô hình AI hiện không khả dụng hoặc không được tìm thấy (Error 404). Đang kiểm tra cấu hình hệ thống, vui lòng thử lại sau.";
+      statusCode = 404;
+    } else {
+      errorMessage = String(error);
     }
 
-    res.status(500).json({ error: String(error) });
+    if (!res.headersSent) {
+      return res.status(statusCode).json({ error: errorMessage });
+    } else {
+      // If headers are already sent, we can't send a JSON response or change status code.
+      // We'll write the error as text to the end of the chunked stream.
+      res.write(`\n\n[Lỗi: ${errorMessage}]`);
+      res.end();
+    }
   }
 });
 

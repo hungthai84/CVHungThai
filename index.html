@@ -143,19 +143,21 @@
       /* Glassmorphism Light Mode - Refined */
       --body-bg: #e0e7ed; /* A slightly cooler grey for a modern feel */
       --card-bg-rgb: 255, 255, 255;
-      --card-bg: rgba(var(--card-bg-rgb), 0.3);
+      --card-bg: rgba(var(--card-bg-rgb), 0.4);
       --sidebar-bg-rgb: 255, 255, 255;
-      --sidebar-bg: rgba(var(--sidebar-bg-rgb), 0.3);
-      --card-border: rgba(209, 213, 219, 0.3); /* Softer, more visible border */
-      --color-brand-text-primary: #111827; /* Slightly darker primary text */
-      --color-brand-text-secondary: #374151; /* Darker secondary for better contrast */
+      --sidebar-bg: rgba(var(--sidebar-bg-rgb), 0.4);
+      --card-border: rgba(255, 255, 255, 0.4); 
+      --color-brand-text-primary: #111827; 
+      --color-brand-text-secondary: #374151; 
       --color-brand-active-menu-bg: rgba(var(--accent-color-rgb), 0.1);
-      --color-brand-progress-bg: rgba(0, 0, 0, 0.07); /* A bit more defined */
+      --color-brand-progress-bg: rgba(0, 0, 0, 0.07); 
       --color-brand-orange: var(--accent-color);
       --color-brand-orange-rgb: var(--accent-color-rgb);
       --color-brand-glass-border: 1px solid var(--card-border);
-      --card-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06); /* Softer, more diffuse shadow */
+      --card-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
       --card-glow-shadow: 0 0 15px rgba(var(--accent-color-rgb), 0.3), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-color) 40%, transparent);
+      --glass-blur: blur(12px);
+      --glass-blur-webkit: blur(12px);
 
       /* Accent Color */
       --accent-color: #3b82f6;
@@ -176,16 +178,18 @@
       /* Glassmorphism Dark Mode - Refined for better contrast and readability */
       --body-bg: #0f172a; /* A sophisticated dark navy blue */
       --card-bg-rgb: 30, 41, 59; /* slate-800 */
-      --card-bg: rgba(var(--card-bg-rgb), 0.5); /* Increased opacity */
+      --card-bg: rgba(var(--card-bg-rgb), 0.6); 
       --sidebar-bg-rgb: 30, 41, 59; /* slate-800 */
-      --sidebar-bg: rgba(var(--sidebar-bg-rgb), 0.5); /* Increased opacity */
-      --card-border: rgba(255, 255, 255, 0.15); /* More visible border */
-      --color-brand-text-primary: #f1f5f9; /* slate-100, for titles */
-      --color-brand-text-secondary: #cbd5e1; /* slate-300, for body text */
-      --color-brand-active-menu-bg: rgba(var(--accent-color-rgb), 0.2); /* Slightly more prominent */
-      --color-brand-progress-bg: rgba(255, 255, 255, 0.1); /* More visible progress/input bg */
-      --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 1px 0 rgba(255,255,255,0.1); /* Adjusted inner shadow */
+      --sidebar-bg: rgba(var(--sidebar-bg-rgb), 0.6); 
+      --card-border: rgba(255, 255, 255, 0.1); 
+      --color-brand-text-primary: #f1f5f9; 
+      --color-brand-text-secondary: #cbd5e1; 
+      --color-brand-active-menu-bg: rgba(var(--accent-color-rgb), 0.2); 
+      --color-brand-progress-bg: rgba(255, 255, 255, 0.1); 
+      --card-box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       --card-glow-shadow: 0 0 20px rgba(var(--accent-color-rgb), 0.5), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-color) 50%, transparent);
+      --glass-blur: blur(16px);
+      --glass-blur-webkit: blur(16px);
 
       /* Achievements Page Colors (Dark Mode) - Adjusted for new theme */
       --ach-tag-bg: #334155; /* slate-700 */
@@ -858,8 +862,8 @@
 
     .main-menu li a svg {
       color: var(--color-brand-text-secondary);
-      width: 1.375rem; /* 22px */
-      height: 1.375rem; /* 22px */
+      width: 1.5rem; /* 24px */
+      height: 1.5rem; /* 24px */
       transition: color 0.3s ease;
       flex-shrink: 0;
     }
@@ -1160,6 +1164,11 @@
         color: #db2777;
     }
 
+    .header-icon-button.control-zalo,
+    .header-icon-button.control-zalo:hover {
+        color: #0068ff;
+    }
+
     @keyframes pageNavGlow {
       0%, 100% {
         box-shadow: 0 0 4px rgba(var(--accent-color-rgb), 0.3),
@@ -1198,6 +1207,27 @@
                     0 0 20px rgba(var(--accent-color-rgb), 0.4);
     }
     
+    @keyframes ai-chat-pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7);
+      }
+      50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(219, 39, 119, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(219, 39, 119, 0);
+      }
+    }
+
+    .ai-chat-pulse {
+      animation: ai-chat-pulse 2s infinite;
+      color: #db2777 !important;
+      border: 1px solid rgba(219, 39, 119, 0.5) !important;
+    }
+
     /* --- Generic Button --- */
     .btn {
         padding: 0.75rem 1.5rem;
@@ -1242,21 +1272,21 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        background: rgba(255, 255, 255, 0.78);
+        background: var(--card-bg);
         border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(15.9px);
-        -webkit-backdrop-filter: blur(15.9px);
-        border: 1px solid rgba(255, 255, 255, 1);
+        box-shadow: var(--card-box-shadow);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
+        border: var(--color-brand-glass-border);
         transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
         overflow: hidden;
     }
     
     
     html.dark .info-card {
-        background: rgba(30, 41, 59, 0.78);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        background: var(--card-bg);
+        border: var(--color-brand-glass-border);
+        box-shadow: var(--card-box-shadow);
     }
     
     .about-header {
@@ -1660,7 +1690,9 @@
     }
     .about-video-card,
     .about-bio-text-card {
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         border-radius: 15px;
         box-shadow: var(--card-box-shadow);
@@ -1704,7 +1736,9 @@
         text-align: center;
     }
     .about-personal-info-card {
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         border-radius: 15px;
         box-shadow: var(--card-box-shadow);
@@ -1789,7 +1823,9 @@
     .education-card {
         padding: 1.5rem;
         border-radius: 15px;
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         box-shadow: var(--card-box-shadow);
         transition: transform 0.3s, box-shadow 0.3s;
@@ -1855,7 +1891,9 @@
     .resume-item-card {
         padding: 1.5rem;
         border-radius: 15px;
-        background: var(--sidebar-bg);
+        background: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         box-shadow: var(--card-box-shadow);
         flex: 1;
@@ -2245,7 +2283,9 @@
     }
     
     .project-card-new {
-      background-color: var(--sidebar-bg);
+      background-color: var(--card-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur-webkit);
       border-radius: 15px;
       box-shadow: var(--card-box-shadow);
       overflow: hidden;
@@ -2613,7 +2653,9 @@
         flex-direction: column;
         gap: 1rem;
         padding: 1.25rem;
-        background: rgba(var(--sidebar-bg-rgb), 0.3);
+        background: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         border-radius: 18px;
         position: relative;
@@ -3135,7 +3177,9 @@
         padding: 0.75rem 1rem;
         border-radius: 15px;
         border: var(--color-brand-glass-border);
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         cursor: pointer;
         display: flex;
         flex-direction: row;
@@ -3221,7 +3265,9 @@
         padding: 0.85rem 1.25rem;
         border-radius: 15px;
         border: var(--color-brand-glass-border);
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         color: var(--color-brand-text-secondary);
         cursor: pointer;
         font-size: 0.95rem;
@@ -3308,7 +3354,9 @@
         max-width: 400px;
         margin-top: 2rem;
         padding: 1.5rem;
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         border: var(--color-brand-glass-border);
         border-radius: 15px;
         animation: fadeIn 0.5s ease-out;
@@ -4373,11 +4421,12 @@
     .permission-notice-card {
         width: 100%;
         max-width: 450px;
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
         border: var(--color-brand-glass-border);
         box-shadow: var(--card-box-shadow);
         border-radius: 15px;
-        backdrop-filter: blur(10px);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -4687,7 +4736,9 @@
         display: flex;
         align-items: center;
         gap: 1.5rem;
-        background-color: var(--sidebar-bg);
+        background-color: var(--card-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur-webkit);
         padding: 1.5rem;
         border-radius: 15px;
         border: var(--color-brand-glass-border);

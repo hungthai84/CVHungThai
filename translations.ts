@@ -77,8 +77,7 @@ export const vi = {
         { key: "tempResidence", label: "Tạm trú", value: "Q7, Hồ Chí Minh", icon: "MapPinIcon" },
         { key: "permResidence", label: "Cư trú", value: "Mỹ Tho, Tiền Giang", icon: "HomeIcon" },
         { key: "email", label: "Email", value: "hungthai84@gmail.com", link: "mailto:hungthai84@gmail.com", icon: "MailIcon" },
-        { key: "phone", label: "Điện thoại", value: "+84 0909097882", link: "tel:+84909097882", icon: "PhoneIcon" },
-        { key: "zalo", label: "Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "ChatBubbleLeftRightIcon" },
+        { key: "phoneZalo", label: "Điện thoại & Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "PhoneIcon" },
         { key: "website", label: "Website", value: "scena.link/nmxffobkkmcj", link: "https://scena.link/nmxffobkkmcj", icon: "LinkIcon" },
     ]
   },
@@ -941,11 +940,11 @@ export const vi = {
             icon: "UserIcon",
             action: "show_questions",
             questions: [
-                "Chào anh Nguyễn Hùng Thái, anh có thể giới thiệu ngắn gọn về bản thân cũng như hành trình 22 năm trong lĩnh vực chăm sóc khách hàng của mình không?",
-                "Điều gì khiến anh gắn bó lâu dài với lĩnh vực chăm sóc khách hàng đến vậy?",
-                "Thành tựu nào anh cảm thấy tự hào nhất trong sự nghiệp của mình?",
-                "Các lĩnh vực ngành nghề anh từng tham gia và trải nghiệm đa dạng như thế nào?",
-                "Nếu muốn tìm hiểu thêm về anh (CV/Hồ sơ năng lực), chúng tôi có thể xem ở đâu?"
+                "Anh Nguyễn Hùng Thái là ai và hành trình 22 năm trong lĩnh vực Chăm sóc Khách hàng như thế nào?",
+                "Điều gì khiến anh Thái gắn bó với lĩnh vực Chăm sóc Khách hàng suốt hơn hai thập kỷ?",
+                "Thành tựu nào đáng tự hào nhất trong sự nghiệp?",
+                "Những lĩnh vực nào đã góp phần hình thành nên kinh nghiệm đa ngành của anh?",
+                "Có thể tìm hiểu thêm về hồ sơ năng lực của anh Nguyễn Hùng Thái ở đâu?"
             ]
         },
         {
@@ -954,12 +953,12 @@ export const vi = {
             icon: "GlobeAltIcon",
             action: "show_questions",
             questions: [
-                "Anh hãy mô tả một chiến lược CSKH thành công mà anh từng triển khai (bối cảnh – giải pháp – kết quả)?",
-                "Theo anh, CSKH đóng vai trò gì trong toàn bộ vòng đời khách hàng?",
-                "Nếu được xây lại hệ thống CSKH từ đầu, anh sẽ bắt đầu từ đâu: con người, quy trình, công nghệ, hay dữ liệu?",
-                "Theo anh, yếu tố quan trọng nhất khi xây dựng phòng Chăm Sóc Khách Hàng là gì?",
-                "Những chỉ số thành công nào (NPS, CSAT, retention…) anh đặc biệt quan tâm trong các chiến lược của mình?",
-                "Anh hình dung thế nào về một “hệ sinh thái CSKH lý tưởng” trong 3–5 năm tới?"
+                "Đâu là một trong những chiến lược Chăm sóc Khách hàng thành công nhất mà anh Nguyễn Hùng Thái từng triển khai?",
+                "Theo Trí Nhân, anh Thái nhìn nhận vai trò của Chăm sóc Khách hàng trong vòng đời khách hàng như thế nào?",
+                "Nếu được xây dựng hệ thống Chăm sóc Khách hàng từ đầu, anh Thái sẽ bắt đầu từ đâu?",
+                "Yếu tố quan trọng nhất khi xây dựng một phòng Chăm sóc Khách hàng là gì?",
+                "Những chỉ số nào được anh Thái đặc biệt quan tâm?",
+                "Anh Thái hình dung như thế nào về hệ sinh thái Chăm sóc Khách hàng trong 3 - 5 năm tới?"
             ]
         },
         {
@@ -968,12 +967,14 @@ export const vi = {
             icon: "UsersIcon",
             action: "show_questions",
             questions: [
-                "Anh từng quản lý đội ngũ bao nhiêu nhân sự, với những cấp độ nào?",
-                "Phong cách lãnh đạo của anh trong vai trò trưởng phòng Chăm Sóc Khách Hàng là gì?",
-                "Khi xây dựng đội nhóm, anh thường ưu tiên điều gì trước: kỹ năng, thái độ hay văn hóa dịch vụ?",
-                "Anh xử lý ra sao khi nhân viên CSKH bị khách hàng phàn nàn?",
-                "Anh có kinh nghiệm thiết kế lộ trình thăng tiến hoặc khung năng lực cho phòng CSKH không?",
-                "Với vai trò lãnh đạo, anh thường truyền động lực cho đội ngũ bằng cách nào?"
+                "Theo Trí Nhân, triết lý quản lý đội ngũ của anh Nguyễn Hùng Thái là gì?",
+                "Đội ngũ lớn nhất mà anh Thái từng quản lý là bao nhiêu người?",
+                "Theo Trí Nhân, đâu là yếu tố quan trọng nhất khi xây dựng một đội ngũ Chăm sóc Khách hàng xuất sắc?",
+                "Anh Thái thường đào tạo nhân viên mới như thế nào?",
+                "Làm thế nào để duy trì động lực cho đội ngũ trong môi trường áp lực cao?",
+                "Anh Thái đánh giá hiệu quả làm việc của nhân viên dựa trên những tiêu chí nào?",
+                "Theo Trí Nhân, phong cách lãnh đạo của anh Thái thuộc nhóm nào?",
+                "Điều gì khiến anh Thái tự hào nhất khi nhìn lại những đội ngũ đã từng quản lý?"
             ]
         },
         {
@@ -982,12 +983,16 @@ export const vi = {
             icon: "ShieldCheckIcon",
             action: "show_questions",
             questions: [
-                "Anh có thể chia sẻ một tình huống khủng hoảng dịch vụ mà anh từng xử lý theo mô hình STAR (Situation – Task – Action – Result)?",
-                "Tình huống áp lực nhất anh từng xử lý trong Chăm Sóc Khách Hàng là gì?",
-                "Khi gặp khách hàng VIP tức giận và yêu cầu gặp cấp cao, anh thường giải quyết ra sao?",
-                "Trong trường hợp hệ thống lỗi diện rộng, anh sẽ truyền thông và giữ uy tín thế nào với khách hàng?",
-                "Nếu có mâu thuẫn gay gắt giữa CSKH và khách hàng, đâu là nguyên tắc “đỏ” anh luôn tuân thủ?",
-                "Bài học lớn nhất anh rút ra từ một sự cố khủng hoảng dịch vụ là gì?"
+                "Theo Trí Nhân, anh Nguyễn Hùng Thái nhìn nhận khủng hoảng dịch vụ khách hàng như thế nào?",
+                "Khi xảy ra sự cố ảnh hưởng đến số lượng lớn khách hàng, anh Thái sẽ ưu tiên điều gì đầu tiên?",
+                "Một trong những bài học lớn nhất mà anh Thái rút ra từ các sự cố vận hành là gì?",
+                "Anh Thái xử lý như thế nào với một khách hàng đang rất tức giận?",
+                "Nếu mạng xã hội xuất hiện làn sóng phản hồi tiêu cực về doanh nghiệp, anh Thái sẽ phản ứng ra sao?",
+                "Theo Trí Nhân, anh Thái có cách tiếp cận như thế nào đối với các khiếu nại phức tạp?",
+                "Điều gì quan trọng nhất khi điều hành đội ngũ trong giai đoạn khủng hoảng?",
+                "Theo Trí Nhân, năng lực nào giúp anh Thái xử lý tốt các tình huống áp lực cao?",
+                "Theo Trí Nhân, đâu là thước đo thành công sau một cuộc khủng hoảng?",
+                "Thông điệp mà anh Thái muốn gửi đến những nhà quản lý dịch vụ khách hàng trẻ tuổi là gì?"
             ]
         },
         {
@@ -996,12 +1001,14 @@ export const vi = {
             icon: "CpuIcon",
             action: "show_questions",
             questions: [
-                "Anh từng triển khai hoặc cải tiến hệ thống CRM/helpdesk nào (Zoho, Zendesk, Salesforce, Freshdesk…)?",
-                "Quan điểm của anh về ứng dụng chuyển đổi số trong Chăm Sóc Khách Hàng?",
-                "Với một hệ thống CSKH, theo anh đâu là “mảnh ghép công nghệ” quan trọng nhất?",
-                "Anh thường sử dụng các KPIs nào để đánh giá hiệu quả dịch vụ (FCR, NPS, CSAT, CES, SLA, AHT…)?",
-                "Khi mở rộng quy mô, làm sao để hệ thống CSKH vẫn cá nhân hóa và ổn định?",
-                "Anh có thể chia sẻ một ví dụ thực tế về việc dùng dữ liệu/AI để nâng trải nghiệm khách hàng?"
+                "Theo Trí Nhân, công nghệ đóng vai trò như thế nào trong chiến lược dịch vụ khách hàng của anh Nguyễn Hùng Thái?",
+                "Điều gì tạo nên lợi thế khác biệt của anh Thái trong lĩnh vực Chăm sóc Khách hàng?",
+                "Những hệ thống công nghệ nào anh Thái đã trực tiếp tham gia xây dựng hoặc triển khai?",
+                "Theo Trí Nhân, anh Thái tiếp cận việc xây dựng CRM như thế nào?",
+                "Vì sao anh Thái luôn chú trọng xây dựng Knowledge Base và Help Center?",
+                "Anh Thái nhìn nhận AI trong lĩnh vực dịch vụ khách hàng như thế nào?",
+                "Theo Trí Nhân, nguyên tắc quan trọng nhất khi thiết kế quy trình là gì?",
+                "Tầm nhìn công nghệ của anh Thái trong tương lai là gì?"
             ]
         },
         {
@@ -1010,11 +1017,14 @@ export const vi = {
             icon: "HeartIcon",
             action: "show_questions",
             questions: [
-                "Theo anh, thế nào là một “dịch vụ tuyệt hảo”?",
-                "Làm sao để đo lường được cảm xúc khách hàng ngoài những con số khảo sát?",
-                "Trong đội ngũ, anh nuôi dưỡng “tư duy dịch vụ” (service mindset) bằng cách nào?",
-                "Anh có câu chuyện nào đáng nhớ về việc thấu cảm với khách hàng một cách ngoài mong đợi không?",
-                "Nếu phải chọn một giá trị cốt lõi duy nhất cho văn hóa dịch vụ của phòng CSKH, anh sẽ chọn gì?"
+                "Theo Trí Nhân, đâu là giá trị cốt lõi xuyên suốt sự nghiệp của anh Nguyễn Hùng Thái?",
+                "Theo anh Thái, sự hài lòng của khách hàng đến từ đâu?",
+                "Vì sao anh Thái luôn nhấn mạnh yếu tố thấu cảm trong dịch vụ khách hàng?",
+                "Văn hóa dịch vụ khách hàng mà anh Thái mong muốn xây dựng là gì?",
+                "Theo Trí Nhân, anh Thái đánh giá thế nào về mối quan hệ giữa nhân viên và khách hàng?",
+                "Điều gì khiến khách hàng quay trở lại với một thương hiệu?",
+                "Theo Trí Nhân, anh Thái muốn để lại điều gì cho thế hệ sau?",
+                "Trí Nhân đánh giá như thế nào về chân dung nghề nghiệp của anh Nguyễn Hùng Thái?"
             ]
         },
         {
@@ -1023,11 +1033,13 @@ export const vi = {
             icon: "LayersIcon",
             action: "show_questions",
             questions: [
-                "Nếu chia phòng CSKH thành các nhóm nhỏ (Inbound, Outbound, Kỹ thuật…), anh sẽ tổ chức như thế nào?",
-                "CSKH nên phối hợp thế nào với Sales, Marketing, Sản phẩm để tạo trải nghiệm liền mạch?",
-                "Khi có mâu thuẫn giữa phòng CSKH và các phòng ban khác, anh thường xử lý thế nào?",
-                "Anh từng tham gia dự án liên phòng ban nào để cải thiện trải nghiệm khách hàng chưa?",
-                "Theo anh, đâu là cơ chế báo cáo – phối hợp hiệu quả nhất giữa CSKH và lãnh đạo cấp cao?"
+                "Theo Trí Nhân, anh Nguyễn Hùng Thái nhìn nhận vai trò của tổ chức như thế nào?",
+                "Vì sao anh Thái luôn nhấn mạnh sự phối hợp giữa các phòng ban?",
+                "Theo Trí Nhân, anh Thái xây dựng cơ chế phối hợp nội bộ như thế nào?",
+                "Theo Trí Nhân, đâu là thách thức lớn nhất trong quản lý liên phòng ban?",
+                "Vai trò của dữ liệu trong quản trị tổ chức được anh Thái đánh giá như thế nào?",
+                "Anh Thái xây dựng đội ngũ kế thừa như thế nào?",
+                "Theo Trí Nhân, dấu ấn lớn nhất của anh Thái trong xây dựng tổ chức là gì?"
             ]
         },
         {
@@ -1036,11 +1048,13 @@ export const vi = {
             icon: "SparklesIcon",
             action: "show_questions",
             questions: [
-                "Nếu nhận vai trò Trưởng phòng CSKH, 90 ngày đầu tiên anh sẽ tập trung làm gì?",
-                "Tư duy dịch vụ của anh khác gì so với thông thường?",
-                "Anh nhìn nhận thế nào về vai trò lãnh đạo: kiểm soát – đồng hành – hay dẫn dắt?",
-                "Theo anh, đâu là sự cân bằng giữa “chi tiết” và “tầm nhìn xa” trong lãnh đạo dịch vụ?",
-                "Trong bối cảnh chuyển đổi số, đâu là “điểm khác biệt” mà anh muốn để lại dấu ấn?"
+                "Theo Trí Nhân, điều gì tạo nên sự khác biệt của anh Nguyễn Hùng Thái?",
+                "Anh Thái định nghĩa thành công như thế nào?",
+                "Theo Trí Nhân, triết lý lãnh đạo của anh Thái là gì?",
+                "Theo Trí Nhân, đâu là tư duy quản trị xuyên suốt sự nghiệp của anh Thái?",
+                "Nếu phải chọn một vai trò duy nhất để mô tả anh Nguyễn Hùng Thái, Trí Nhân sẽ chọn điều gì?",
+                "Tầm nhìn nghề nghiệp của anh Thái trong tương lai là gì?",
+                "Thông điệp cuối cùng mà Trí Nhân muốn gửi về anh Nguyễn Hùng Thái là gì?"
             ]
         },
         { key: "viewTopics", title: "Xem lại các chủ đề", icon: "BookOpenIcon", action: "show_categories" },
@@ -1615,8 +1629,7 @@ export const en = {
         { key: "tempResidence", label: "Temporary Residence", value: "District 7, Ho Chi Minh City", icon: "MapPinIcon" },
         { key: "permResidence", label: "Permanent Residence", value: "My Tho, Tien Giang", icon: "HomeIcon" },
         { key: "email", label: "Email", value: "hungthai84@gmail.com", link: "mailto:hungthai84@gmail.com", icon: "MailIcon" },
-        { key: "phone", label: "Phone", value: "+84 0909097882", link: "tel:+84909097882", icon: "PhoneIcon" },
-        { key: "zalo", label: "Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "ChatBubbleLeftRightIcon" },
+        { key: "phoneZalo", label: "Phone & Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "PhoneIcon" },
         { key: "website", label: "Website", value: "scena.link/nmxffobkkmcj", link: "https://scena.link/nmxffobkkmcj", icon: "LinkIcon" },
     ]
   },
