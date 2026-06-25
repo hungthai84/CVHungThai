@@ -23,7 +23,7 @@ export const vi = {
       settings: "Cài đặt",
     },
     name: "Nguyễn Hùng Thái",
-    jobTitle: "Trưởng Phòng Dịch Vụ Khách Hàng",
+    jobTitle: "Trưởng Phòng Dịch vụ Khách hàng",
   },
   hero: {
     intro: "Tôi là,",
@@ -100,7 +100,7 @@ export const vi = {
             company: "Tổng Công ty Viễn thông Mobifone",
             logoUrl: "https://i.ibb.co/qYBWg57r/Mobifone.png",
             color: "#0078D4",
-            title: "Giao dịch viên (Trưởng nhóm từ 2007)",
+            title: "Tổng đài viên  (Trưởng nhóm từ 2007)",
             teamSize: "12 nhân viên",
             responsibilities: [
                 "Phụ trách tư vấn, hỗ trợ khách hàng qua tổng đài, xử lý khiếu nại và đào tạo nhân viên mới. Được bổ nhiệm Trưởng nhóm, quản lý 12 nhân sự và đảm bảo chất lượng dịch vụ khách hàng."
@@ -145,7 +145,7 @@ export const vi = {
             company: "Công ty Cổ Phần Thông Tin Băng Rộng Cuộc Sống (LBC)",
             logoUrl: "https://i.ibb.co/DDYsQ20B/LBC.png",
             color: "#F37021",
-            title: "Trưởng phòng Dịch vụ Khách hàng",
+            title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "12 nhân viên",
             responsibilities: [
                 "Điều hành hoạt động dịch vụ khách hàng, xây dựng quy trình, chương trình chăm sóc khách hàng và hệ thống đào tạo. Phối hợp các phòng ban để nâng cao trải nghiệm khách hàng và chất lượng dịch vụ."
@@ -169,7 +169,7 @@ export const vi = {
             company: "Công ty Cổ Phần Việt Nam eSport (VED",
             logoUrl: "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
             color: "#ED1B2F",
-            title: "Trưởng phòng Dịch vụ Khách hàng",
+            title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "130 nhân viên",
             responsibilities: [
                 "Quản lý hơn 150 nhân sự, xây dựng hệ thống CRM, Call Center và quy trình vận hành dịch vụ khách hàng. Tham gia phát triển sản phẩm, quản lý KPI và triển khai các dự án chuyển đổi số."
@@ -193,10 +193,10 @@ export const vi = {
             company: "Công ty Bảo hiểm nhân thọ Prudential Vietnam",
             logoUrl: "https://i.ibb.co/LThmXHs/Prudentinal.png",
             color: "#AE2070",
-            title: "Quản lý Trung tâm Cuộc gọi",
+            title: "Trưởng Phòng CallCenter",
             teamSize: "12 nhân viên",
             responsibilities: [
-                "Quản lý Trung tâm Cuộc gọi, tối ưu vận hành và triển khai các dự án tích hợp công nghệ, bao gồm Videocall, E-Commerce và hệ thống quản trị dịch vụ khách hàng."
+                "Trưởng Phòng CallCenter, tối ưu vận hành và triển khai các dự án tích hợp công nghệ, bao gồm Videocall, E-Commerce và hệ thống quản trị dịch vụ khách hàng."
             ],
             achievements: [
                 { label: "Quản lý Call Center", value: 90 },
@@ -219,7 +219,7 @@ export const vi = {
             company: "Công ty Cổ Phần Mservice (Ví điện tử MoMo)",
             logoUrl: "https://i.ibb.co/jXJXLvT/Momo.png",
             color: "#D82D8B",
-            title: "Trưởng phòng Dịch vụ Khách hàng",
+            title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "60 nhân viên",
             responsibilities: [
                 "Quản lý hoạt động chăm sóc khách hàng đa kênh, xây dựng CRM, tối ưu quy trình và hệ thống KPI. Tham gia xây dựng các giải pháp tự động hóa nhằm nâng cao trải nghiệm khách hàng và hiệu suất vận hành."
@@ -247,7 +247,7 @@ export const vi = {
             company: "Công ty Cổ Phần Công Nghệ Finviet",
             logoUrl: "https://i.ibb.co/mVfX9RkG/Finviet.png",
             color: "#49C16C",
-            title: "Trưởng phòng Dịch vụ Khách hàng",
+            title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "17 nhân viên",
             responsibilities: [
                 "Điều hành đội ngũ CSKH, chuẩn hóa quy trình, nâng cao chất lượng dịch vụ và triển khai các chương trình cải tiến trải nghiệm khách hàng trên toàn hệ thống."
@@ -268,7 +268,7 @@ export const vi = {
             company: "Tìm kiếm cơ hội mới",
             logoUrl: "https://i.ibb.co/FbGn75X1/T-m-ki-m.png",
             color: "#101733",
-            title: "Tìm kiếm vai trò Trưởng phòng Dịch vụ Khách hàng",
+            title: "Tìm kiếm vai trò Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "> 100 nhân viên",
             responsibilities: [
                 "Hơn 22 năm kinh nghiệm quản lý dịch vụ khách hàng trong các lĩnh vực Viễn thông, Bảo hiểm, Game, Thương mại điện tử và Fintech; chuyên sâu về xây dựng hệ thống CSKH, CRM, Call Center, quản trị vận hành và chuyển đổi số trải nghiệm khách hàng"
