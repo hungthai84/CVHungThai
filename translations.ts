@@ -23,7 +23,7 @@ export const vi = {
       settings: "Cài đặt",
     },
     name: "Nguyễn Hùng Thái",
-    jobTitle: "Giám đốc Dịch vụ Khách hàng",
+    jobTitle: "Trưởng Phòng Dịch Vụ Khách Hàng",
   },
   hero: {
     intro: "Tôi là,",
@@ -78,7 +78,7 @@ export const vi = {
         { key: "permResidence", label: "Cư trú", value: "Mỹ Tho, Tiền Giang", icon: "HomeIcon" },
         { key: "email", label: "Email", value: "hungthai84@gmail.com", link: "mailto:hungthai84@gmail.com", icon: "MailIcon" },
         { key: "phoneZalo", label: "Điện thoại & Zalo", value: "0909097882", link: "https://zalo.me/0909097882", icon: "PhoneIcon" },
-        { key: "website", label: "Website", value: "scena.link/nmxffobkkmcj", link: "https://scena.link/nmxffobkkmcj", icon: "LinkIcon" },
+        { key: "website", label: "Website", value: "www.nguyenhungthai.powerservice.one", link: "https://www.nguyenhungthai.powerservice.one", icon: "LinkIcon" },
     ]
   },
   workExperiencePage: {
@@ -103,11 +103,7 @@ export const vi = {
             title: "Giao dịch viên (Trưởng nhóm từ 2007)",
             teamSize: "12 nhân viên",
             responsibilities: [
-                "Tiếp nhận cuộc gọi của khách hàng để tư vấn và hỗ trợ.",
-                "Giải quyết các khiếu nại khó.",
-                "Thực hiện cuộc gọi theo dõi các ticket đã hoàn thành.",
-                "Hỗ trợ nhân viên mới trong quá trình đào tạo.",
-                "Xử lý các cuộc gọi quấy rối từ khách hàng."
+                "Phụ trách tư vấn, hỗ trợ khách hàng qua tổng đài, xử lý khiếu nại và đào tạo nhân viên mới. Được bổ nhiệm Trưởng nhóm, quản lý 12 nhân sự và đảm bảo chất lượng dịch vụ khách hàng."
             ],
             achievements: [
                 { label: "Hoàn thành nhiệm vụ", value: 100 },
@@ -128,17 +124,7 @@ export const vi = {
             title: "Trưởng nhóm CSKH",
             teamSize: "12 nhân viên",
             responsibilities: [
-                "Quản lý và giám sát đội ngũ dịch vụ khách hàng.",
-                "Theo dõi, phân bổ và điều phối các cuộc gọi đến cho thành viên trong nhóm.",
-                "Đánh giá và huấn luyện nhân viên dịch vụ khách hàng.",
-                "Lập kế hoạch và sắp xếp ca làm việc cho nhân viên vào buổi trưa và cuối tuần.",
-                "Xử lý các vướng mắc của nhân viên.",
-                "Giải quyết khiếu nại của khách hàng và quản lý việc trả hàng.",
-                "Quản lý và xử lý các yêu cầu của khách hàng từ mọi kênh (email, fax, điện thoại, chat).",
-                "Giải quyết khiếu nại của khách hàng và đề xuất giải pháp cho ban quản lý.",
-                "Thực hiện các cuộc khảo sát sự hài lòng của khách hàng.",
-                "Thực hiện các công việc do Ban Giám đốc giao.",
-                "Lập kế hoạch giám sát cuộc gọi và xem lại ghi âm. Cung cấp định hướng đào tạo chiến lược cho nhân viên."
+                "Quản lý vận hành đội ngũ CSKH đa kênh, giám sát chất lượng dịch vụ, đào tạo nhân viên và xử lý các vấn đề khiếu nại khách hàng nhằm nâng cao hiệu quả vận hành."
             ],
             achievements: [
                 { label: "Hướng dẫn nhân viên mới", value: 96 },
@@ -162,19 +148,7 @@ export const vi = {
             title: "Trưởng phòng Dịch vụ Khách hàng",
             teamSize: "12 nhân viên",
             responsibilities: [
-                 "Quản lý và giám sát phòng dịch vụ khách hàng.",
-                 "Xử lý khiếu nại của khách hàng và cải tiến sản phẩm.",
-                 "Lên kế hoạch đào tạo và huấn luyện.",
-                 "Thực hiện các cuộc khảo sát sự hài lòng của khách hàng.",
-                 "Phối hợp với các phòng ban liên quan cho các chương trình quảng cáo và khuyến mãi.",
-                 "Theo dõi, cập nhật và phân tích hoạt động dịch vụ khách hàng của đối thủ.",
-                 "Lên kế hoạch thăm hỏi khách hàng VIP, đại lý và khách hàng thân thiết.",
-                 "Chủ động lên kế hoạch tặng quà cho khách hàng vào các dịp lễ, sự kiện đặc biệt và kỷ niệm.",
-                 "Theo dõi kế hoạch Chăm Sóc Khách Hàng, kiểm tra chất lượng sản phẩm và hoạt động bảo trì.",
-                 "Tổ chức và đo lường mức độ hài lòng của khách hàng.",
-                 "Tất cả các hoạt động Chăm Sóc Khách Hàng được yêu cầu phải được thiết lập thành quy trình và cải tiến liên tục.",
-                 "Xây dựng kế hoạch ngân sách Chăm Sóc Khách Hàng hàng năm.",
-                 "Thực hiện các công việc do Ban Giám đốc giao."
+                "Điều hành hoạt động dịch vụ khách hàng, xây dựng quy trình, chương trình chăm sóc khách hàng và hệ thống đào tạo. Phối hợp các phòng ban để nâng cao trải nghiệm khách hàng và chất lượng dịch vụ."
             ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
@@ -198,15 +172,7 @@ export const vi = {
             title: "Trưởng phòng Dịch vụ Khách hàng",
             teamSize: "130 nhân viên",
             responsibilities: [
-                "Tham gia xây dựng các dự án và sản phẩm mới.",
-                "Quản lý và tổ chức Phòng Dịch vụ Khách hàng.",
-                "Xây dựng quy trình cho Phòng Dịch vụ Khách hàng.",
-                "Xây dựng hệ thống CRM cho các dòng sản phẩm của công ty.",
-                "Đào tạo đội ngũ CS và kỹ năng giao tiếp với khách hàng.",
-                "Báo cáo hàng tháng về tình hình của Phòng CS.",
-                "Giải quyết các khiếu nại về đơn hàng.",
-                "Đánh giá và tham gia các chương trình Marketing.",
-                "Kiểm tra và đánh giá sản phẩm trước khi cung cấp cho khách hàng."
+                "Quản lý hơn 150 nhân sự, xây dựng hệ thống CRM, Call Center và quy trình vận hành dịch vụ khách hàng. Tham gia phát triển sản phẩm, quản lý KPI và triển khai các dự án chuyển đổi số."
             ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
@@ -230,11 +196,7 @@ export const vi = {
             title: "Quản lý Trung tâm Cuộc gọi",
             teamSize: "12 nhân viên",
             responsibilities: [
-                "Quản lý hệ thống Call Center của Prudential.",
-                "Sắp xếp nhân sự cho hệ thống mới.",
-                "Xây dựng và điều phối việc tích hợp Thương mại điện tử với hệ thống Call Center.",
-                "Xây dựng quy trình quản lý tư vấn khách hàng qua Videocall.",
-                "Xây dựng và sửa đổi hệ thống Báo cáo."
+                "Quản lý Trung tâm Cuộc gọi, tối ưu vận hành và triển khai các dự án tích hợp công nghệ, bao gồm Videocall, E-Commerce và hệ thống quản trị dịch vụ khách hàng."
             ],
             achievements: [
                 { label: "Quản lý Call Center", value: 90 },
@@ -260,16 +222,7 @@ export const vi = {
             title: "Trưởng phòng Dịch vụ Khách hàng",
             teamSize: "60 nhân viên",
             responsibilities: [
-                "Quản lý phòng CS cho ví điện tử MoMo trên tất cả các kênh.",
-                "Xây dựng hệ thống CRM - Quan hệ khách hàng.",
-                "Xây dựng và cải tiến quy trình, phối hợp với bộ phận pháp lý.",
-                "Đào tạo và nâng cao kỹ năng Chăm Sóc Khách Hàng của nhân viên.",
-                "Chịu trách nhiệm về tất cả các KPI của phòng ban.",
-                "Đánh giá và nâng cấp trải nghiệm khách hàng.",
-                "Hỗ trợ đối tác và tham gia các dự án kết nối với Ví điện tử.",
-                "Cải thiện chất lượng ứng dụng với Phòng Sản phẩm.",
-                "Thành lập trung tâm hỗ trợ khách hàng.",
-                "Quản lý BPO – Mắt Bão."
+                "Quản lý hoạt động chăm sóc khách hàng đa kênh, xây dựng CRM, tối ưu quy trình và hệ thống KPI. Tham gia xây dựng các giải pháp tự động hóa nhằm nâng cao trải nghiệm khách hàng và hiệu suất vận hành."
             ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
@@ -297,17 +250,7 @@ export const vi = {
             title: "Trưởng phòng Dịch vụ Khách hàng",
             teamSize: "17 nhân viên",
             responsibilities: [
-                "Quản lý và giám sát đội ngũ dịch vụ khách hàng.",
-                "Theo dõi, phân bổ và điều phối các cuộc gọi đến.",
-                "Đánh giá và huấn luyện nhân viên.",
-                "Lập kế hoạch và sắp xếp ca làm việc Chăm Sóc Khách Hàng.",
-                "Xử lý các vướng mắc của nhân viên.",
-                "Giải quyết khiếu nại của khách hàng và quản lý việc trả hàng.",
-                "Quản lý các yêu cầu của khách hàng từ tất cả các kênh.",
-                "Đề xuất các giải pháp quản lý dịch vụ khách hàng.",
-                "Thực hiện các cuộc khảo sát sự hài lòng của khách hàng.",
-                "Thực hiện các công việc do Ban Giám đốc giao.",
-                "Lập kế hoạch giám sát cuộc gọi và xem lại ghi âm."
+                "Điều hành đội ngũ CSKH, chuẩn hóa quy trình, nâng cao chất lượng dịch vụ và triển khai các chương trình cải tiến trải nghiệm khách hàng trên toàn hệ thống."
             ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
@@ -328,10 +271,7 @@ export const vi = {
             title: "Tìm kiếm vai trò Trưởng phòng Dịch vụ Khách hàng",
             teamSize: "> 100 nhân viên",
             responsibilities: [
-                "Quản lý một Phòng Dịch vụ Khách hàng quy mô lớn.",
-                "Đặt ra định hướng chiến lược và phát triển đội ngũ.",
-                "Tối ưu hóa công nghệ và quy trình để nâng cao trải nghiệm khách hàng.",
-                "Đóng góp vào sự phát triển bền vững của công ty."
+                "Hơn 22 năm kinh nghiệm quản lý dịch vụ khách hàng trong các lĩnh vực Viễn thông, Bảo hiểm, Game, Thương mại điện tử và Fintech; chuyên sâu về xây dựng hệ thống CSKH, CRM, Call Center, quản trị vận hành và chuyển đổi số trải nghiệm khách hàng"
             ],
             achievements: [],
             images: []

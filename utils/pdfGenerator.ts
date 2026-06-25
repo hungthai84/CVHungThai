@@ -58,15 +58,18 @@ export async function generatePdfFromElement(elementId: string, fileName: string
                 });
                 const pageImgData = pageCanvas.toDataURL('image/png');
                 
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                
                 if (i > 0) {
                     pdf.addPage();
                 }
                 
-                pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdf.internal.pageSize.getHeight());
+                pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pageHeight);
             }
         } else {
             // Fallback to single image if structure is different
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pageHeight);
         }
 
         // Generate Blob URL

@@ -5347,13 +5347,15 @@
         color: #333;
     }
     #printable-content .print-page {
-        background: white;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        border: 1px solid #e5e7eb;
         margin: 1rem auto;
         width: 21cm;
-        min-height: 29.7cm;
+        height: 29.7cm;
         box-sizing: border-box;
-        padding: 1.5cm;
+        padding: 0.6cm;
         position: relative;
         overflow: hidden !important;
         display: flex;
@@ -5423,13 +5425,20 @@
       body #printable-content { display: block !important; }
       
       .print-page {
+        display: flex !important;
+        flex-direction: column !important;
         box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
         margin: 0 !important;
+        padding: 0.6cm !important;
         width: 21cm;
         height: 29.7cm;
         overflow: hidden !important;
         page-break-after: always;
         font-size: 10pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
       .print-page:last-child {
         page-break-after: avoid;
