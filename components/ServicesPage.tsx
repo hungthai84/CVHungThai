@@ -81,14 +81,13 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card is-services">
-                <div className="about-header">
-                     <InfoBadge
-                        icon={<Icons.LayersIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.LayersIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
 
                 <div className="services-grid no-scrollbar">
                      {services.length > 0 ? (

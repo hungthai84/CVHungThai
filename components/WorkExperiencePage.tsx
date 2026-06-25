@@ -307,14 +307,13 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
         return (
              <div className="print-page">
                 <div className="info-card is-for-print">
-                    <div className="about-header">
-                        <InfoBadge
-                            icon={<Icons.BriefcaseIcon />}
-                            text={pageData.title}
-                            tooltipTitle={pageData.tooltipTitle}
-                            tooltipText={pageData.tooltipText}
-                        />
-                    </div>
+                    <InfoBadge
+                        icon={<Icons.BriefcaseIcon />}
+                        text={pageData.title}
+                        tooltipTitle={pageData.tooltipTitle}
+                        tooltipText={pageData.tooltipText}
+                        style={{ marginBottom: '1.5rem' }}
+                    />
                     <div className="experience-layout no-scrollbar">
                         {jobs.map(job => (
                             <div key={job.key} className="print-job-item">
@@ -392,14 +391,13 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     return (
         <PageLayout id={id} className="work-experience-section">
             <div className="info-card work-experience-card flex flex-col h-full">
-                 <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.BriefcaseIcon />}
-                        text={pageData.title}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.BriefcaseIcon />}
+                    text={pageData.title}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
 
                 <div className="custom-video-player-wrapper" style={{ transform: 'scale(0.7)', transformOrigin: 'top right' }}>
                     <div 

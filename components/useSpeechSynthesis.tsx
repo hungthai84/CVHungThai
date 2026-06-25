@@ -101,6 +101,57 @@ export const useSpeechSynthesis = () => {
             const googleVoices = availableVoices.filter(v => v.name.includes('Google'));
             const otherVoices = availableVoices.filter(v => !v.name.includes('Google'));
             
+            const isEdge = typeof window !== 'undefined' && /Edg/.test(navigator.userAgent);
+            const isChrome = typeof window !== 'undefined' && /Chrome/.test(navigator.userAgent) && !isEdge;
+
+            const customVoices: SpeechSynthesisVoice[] = [];
+
+            if (isChrome) {
+                const chromeVoices = [
+                    {
+                        name: 'Google Tiếng Việt 5 (Natural)',
+                        lang: 'vi-VN',
+                        localService: false,
+                        default: false,
+                        voiceURI: 'chrome-vi-natural'
+                    },
+                    {
+                        name: 'Google UK English 5 (Natural)',
+                        lang: 'en-GB',
+                        localService: false,
+                        default: false,
+                        voiceURI: 'chrome-en-natural'
+                    }
+                ];
+                chromeVoices.forEach(cv => {
+                    if (!availableVoices.some(v => v.name.toLowerCase() === cv.name.toLowerCase())) {
+                        customVoices.push(cv as SpeechSynthesisVoice);
+                    }
+                });
+            } else if (isEdge) {
+                const edgeVoices = [
+                    {
+                        name: 'Microsoft Ada Multilingual Online (Natural)',
+                        lang: 'vi-VN',
+                        localService: false,
+                        default: false,
+                        voiceURI: 'edge-ada-natural'
+                    },
+                    {
+                        name: 'Microsoft Ollie Multilingual Online (Natural)',
+                        lang: 'vi-VN',
+                        localService: false,
+                        default: false,
+                        voiceURI: 'edge-ollie-natural'
+                    }
+                ];
+                edgeVoices.forEach(ev => {
+                    if (!availableVoices.some(v => v.name.toLowerCase() === ev.name.toLowerCase())) {
+                        customVoices.push(ev as SpeechSynthesisVoice);
+                    }
+                });
+            }
+            
             const mockGttsVoice: SpeechSynthesisVoice = {
                 name: 'Google Translate TTS (gTTS - Miễn phí)',
                 lang: 'vi-VN',
@@ -109,7 +160,7 @@ export const useSpeechSynthesis = () => {
                 voiceURI: 'gtts-vi'
             };
 
-            setVoices([mockGttsVoice, ...googleVoices, ...otherVoices]);
+            setVoices([mockGttsVoice, ...customVoices, ...googleVoices, ...otherVoices]);
         };
 
         // Load voices initially and on change
@@ -267,6 +318,9 @@ export const useSpeechSynthesis = () => {
                         return voiceNameClean.includes(searchNameClean);
                     });
                 }
+                if (selectedVoice) {
+                    targetLangCode = selectedVoice.lang;
+                }
             }
 
             // 2. If no specific voice or specific voice not found, apply smart fallback based on language
@@ -346,7 +400,10 @@ export const useSpeechSynthesis = () => {
                 if (retryWithBackup && backupVoice) {
                     utterance.voice = backupVoice;
                 } else if (selectedVoice) {
-                    utterance.voice = selectedVoice;
+                    const nativeVoice = window.speechSynthesis.getVoices().find(v => v.name === selectedVoice!.name);
+                    if (nativeVoice) {
+                        utterance.voice = nativeVoice;
+                    }
                 }
 
                 if (options.pitch !== undefined) utterance.pitch = options.pitch;
@@ -379,27 +436,24 @@ export const useSpeechSynthesis = () => {
                         cleanup();
                     } else if (event.error === 'interrupted') {
                         console.log('Speech synthesis chunk was interrupted.');
+                    } else if (event.error === 'synthesis-failed') {
+                        console.warn('Network voice synthesis-failed. Falling back to HTTP-based gTTS player.');
+                        const remainingText = chunks.slice(currentIndex).join('. ');
+                        
+                        if (keepAliveIntervalRef.current) {
+                            clearInterval(keepAliveIntervalRef.current);
+                            keepAliveIntervalRef.current = null;
+                        }
+                        
+                        // Direct transfer to gTTS mode which uses standard HTML5 Audio element and is unaffected by browser-specific speech issues
+                        speak(remainingText, {
+                            ...options,
+                            voiceName: 'Google Translate TTS (gTTS)'
+                        });
+                        return;
                     } else {
                         console.error('SpeechSynthesisUtterance error:', event.error);
                         
-                        // If selected voice fails with 'synthesis-failed', immediately fallback to gTTS (Google Translate TTS)
-                        if (event.error === 'synthesis-failed') {
-                            console.warn('Network voice synthesis-failed. Falling back to HTTP-based gTTS player.');
-                            const remainingText = chunks.slice(currentIndex).join('. ');
-                            
-                            if (keepAliveIntervalRef.current) {
-                                clearInterval(keepAliveIntervalRef.current);
-                                keepAliveIntervalRef.current = null;
-                            }
-                            
-                            // Direct transfer to gTTS mode which uses standard HTML5 Audio element and is unaffected by browser-specific speech issues
-                            speak(remainingText, {
-                                ...options,
-                                voiceName: 'Google Translate TTS (gTTS)'
-                            });
-                            return;
-                        }
-
                         // If selected voice fails with other error and we have local backup voice
                         if (!retryWithBackup && backupVoice) {
                             console.warn('Voice failed. Trying offline backup voice:', backupVoice.name);

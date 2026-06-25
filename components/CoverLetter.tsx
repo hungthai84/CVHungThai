@@ -41,14 +41,13 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                <div className="about-header" style={{ marginBottom: '0px' }}>
-                    <InfoBadge
-                        icon={<Icons.DocumentTextIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.DocumentTextIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
 
                 <div className="custom-video-player-wrapper" ref={videoWrapperRef}>
                     <div 

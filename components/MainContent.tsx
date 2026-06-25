@@ -119,18 +119,26 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                 />
                 <div className="home-hero-card-overlay" style={{ opacity: 0 }}></div>
                 <div className="home-hero-card-content-wrapper">
-                    <div className="about-header">
-                        <InfoBadge
-                            icon={<Icons.HomeIcon />}
-                            text={heroData.badge || t.sidebar.nav.home}
-                            tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
-                            tooltipText={heroData.tooltipText || "Chào mừng đến với hồ sơ cá nhân của tôi."}
-                        />
-                    </div>
+                    <InfoBadge
+                        icon={<Icons.HomeIcon />}
+                        text={heroData.badge || t.sidebar.nav.home}
+                        tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
+                        tooltipText={heroData.tooltipText || "Chào mừng đến với hồ sơ cá nhân của tôi."}
+                        style={{ marginBottom: '1.5rem' }}
+                    />
                     
                     <div className="home-hero-content">
                         {welcomeMessage && (
-                            <div className="text-xl md:text-2xl font-medium text-white/90 mb-3 drop-shadow-md tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                            <div 
+                                className="text-xl md:text-2xl font-medium text-white/90 mb-3 drop-shadow-md tracking-wide" 
+                                style={{ 
+                                    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                                    color: '#f9f9f9',
+                                    fontWeight: 'bold',
+                                    fontSize: '20px',
+                                    borderColor: '#000000'
+                                }}
+                            >
                                 {welcomeMessage}
                             </div>
                         )}

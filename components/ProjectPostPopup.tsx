@@ -339,7 +339,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                                      {achievement.id}. {achievement.title}
                                                                  </h4>
                                                              </div>
-                                                             <div className="achievement-card-tags">
+                                                             <div className="achievement-card-tags" style={{ marginLeft: '0px', marginTop: '15px' }}>
                                                                  <button style={{ cursor: 'default' }} onClick={(e) => e.stopPropagation()}>{achievement.hashtag}</button>
                                                              </div>
                                                         </div>

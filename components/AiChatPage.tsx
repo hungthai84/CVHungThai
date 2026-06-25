@@ -601,7 +601,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                <div className="about-header" style={{ justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexShrink: 0, gap: '1rem' }}>
                     <InfoBadge
                         icon={<Icons.BotIcon />}
                         text={pageData.badge}

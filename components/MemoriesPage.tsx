@@ -60,14 +60,13 @@ const MemoriesPage: React.FC<MemoriesPageProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                 <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.CameraIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.CameraIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
                 
                 <div className="memories-page-content">
                     <div className="memories-filters">

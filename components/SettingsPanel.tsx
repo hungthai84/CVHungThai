@@ -143,7 +143,7 @@ const specialAndVideoWallpapers = [
 ];
 
 const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
-    const { t } = useI18n();
+    const { t, language } = useI18n();
     const pageData = t.settingsPage;
     const settingsText = t.settings;
     const {
@@ -230,7 +230,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
 
     const availableVoices = useMemo(() => {
-        return voices.filter(v => v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt') || v.name.includes('gTTS'));
+        return voices.filter(v => {
+            const nameLower = v.name.toLowerCase();
+            const isCustomNatural = nameLower.includes('natural') || nameLower.includes('multilingual');
+            return v.lang.toLowerCase().startsWith('vi') || v.name.includes('tiếng Việt') || v.name.includes('gTTS') || isCustomNatural;
+        });
     }, [voices]);
 
     const groupedVoices = useMemo(() => {
@@ -274,6 +278,187 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     }, [localThemeMode]);
 
     const videoWallpapers = useMemo(() => specialAndVideoWallpapers.filter(w => w.type === 'video'), []);
+    
+    const isDemoEnvironment = useMemo(() => {
+        if (typeof window === 'undefined') return false;
+        const hostname = window.location.hostname;
+        return (
+            hostname.includes('ais-dev') || 
+            hostname.includes('ais-pre') || 
+            hostname.includes('localhost') || 
+            hostname.includes('127.0.0.1')
+        );
+    }, []);
+    
+    const exportToTxt = () => {
+        const d = t; // Entire translation object for current language
+        const pInfo = d.aboutPage || {};
+        const letter = d.coverLetterPage || {};
+        const work = d.workExperiencePage || {};
+        const edu = d.educationPage || {};
+        const srv = d.servicesPage || {};
+        const skl = d.skillsPage || {};
+        const prj = d.projectsPage || {};
+        
+        let content = "";
+        
+        // Helper: Section Separator
+        const addSeparator = (title: string) => {
+            const line = "============================================================";
+            return `\n${line}\n   ${title.toUpperCase()}\n${line}\n\n`;
+        };
+        
+        const addSubSeparator = (title: string) => {
+            const line = "----------------------------------------";
+            return `\n${title.toUpperCase()}\n${line}\n`;
+        };
+
+        // 1. HEADER
+        content += "============================================================\n";
+        content += `                  HỒ SƠ NĂNG LỰC / PORTFOLIO\n`;
+        content += `                     NĂNG LỰC THỰC CHIẾN\n`;
+        content += "============================================================\n\n";
+        
+        content += `${d.sidebar?.name || "Nguyễn Hùng Thái"}\n`;
+        content += `${d.sidebar?.jobTitle || "Giám đốc Dịch vụ Khách hàng"}\n\n`;
+        
+        // Taglines
+        if (d.hero?.taglines) {
+            content += `${d.hero.taglines.join(" | ")}\n\n`;
+        }
+        
+        // 2. PERSONAL INFO
+        content += addSeparator(pInfo.personalInfoTitle || "Thông tin cá nhân");
+        if (pInfo.infoItems) {
+            pInfo.infoItems.forEach((item: any) => {
+                content += `- ${item.label}: ${item.value}\n`;
+            });
+        }
+        content += "\n";
+        
+        // 3. COVER LETTER
+        content += addSeparator(letter.badge || "Thư ngỏ");
+        content += `${letter.greeting || "Kính gửi Quý Công ty,"}\n\n`;
+        if (letter.paragraphs) {
+            letter.paragraphs.forEach((p: string) => {
+                content += `${p.replace(/\n/g, "\n")}\n\n`;
+            });
+        }
+        content += `${letter.closing || "Trân trọng,"}\n`;
+        content += `${letter.signature || "Nguyễn Hùng Thái"}\n\n`;
+        
+        // 4. CORE VALUES
+        content += addSeparator(pInfo.title || "Giới thiệu bản thân");
+        if (pInfo.paragraphs) {
+            pInfo.paragraphs.forEach((p: string) => {
+                const cleanText = p.replace(/<\/?[^>]+(>|$)/g, "");
+                content += `${cleanText}\n\n`;
+            });
+        }
+        if (pInfo.coreValues) {
+            content += `${language === 'vi' ? 'Giá trị cốt lõi' : 'Core Values'}: ${pInfo.coreValues}\n\n`;
+        }
+        if (pInfo.concludingParagraph) {
+            const cleanText = pInfo.concludingParagraph.replace(/<\/?[^>]+(>|$)/g, "");
+            content += `${cleanText}\n\n`;
+        }
+        
+        // 5. WORK EXPERIENCE
+        content += addSeparator(work.title || "Kinh nghiệm làm việc");
+        if (work.jobs) {
+            work.jobs.forEach((job: any) => {
+                content += `💼 ${job.company}\n`;
+                content += `   ${work.positionTitle || 'Vị trí'}: ${job.title}\n`;
+                content += `   ${work.durationTitle || 'Thời gian'}: ${job.date}\n`;
+                if (job.teamSize) {
+                    content += `   ${work.managedTitle || 'Quản lý'}: ${job.teamSize}\n`;
+                }
+                
+                content += `\n   * ${work.descriptionTitle || 'Mô tả công việc'}:\n`;
+                if (job.responsibilities) {
+                    job.responsibilities.forEach((r: string) => {
+                        content += `     - ${r}\n`;
+                    });
+                }
+                
+                if (job.achievements && job.achievements.length > 0) {
+                    content += `\n   * ${work.achievementsTitle || 'Thành tựu chính'}:\n`;
+                    job.achievements.forEach((a: any) => {
+                        content += `     - ${a.label}: ${a.value}%\n`;
+                    });
+                }
+                content += `\n${"-".repeat(50)}\n\n`;
+            });
+        }
+        
+        // 6. EDUCATION
+        content += addSeparator(edu.title || "Học vấn");
+        if (edu.items) {
+            edu.items.forEach((item: any) => {
+                content += `🎓 [${item.year}] ${item.title}\n`;
+                content += `   ${item.institution}\n`;
+                if (item.description) {
+                    content += `   ${item.description}\n`;
+                }
+                content += "\n";
+            });
+        }
+        
+        // 7. SERVICES & DOMAINS
+        content += addSeparator(srv.title || "Lĩnh vực chuyên môn");
+        if (srv.services) {
+            srv.services.forEach((service: any) => {
+                content += `🌐 ${service.title}\n`;
+                content += `   ${service.description}\n\n`;
+            });
+        }
+        
+        // 8. PROFESSIONAL SKILLS
+        content += addSeparator(skl.title || "Kỹ năng & Năng lực");
+        if (skl.categories) {
+            skl.categories.forEach((cat: any) => {
+                content += addSubSeparator(cat.title);
+                if (cat.skills) {
+                    cat.skills.forEach((skill: any) => {
+                        content += `- ${skill.name} (${skill.level}%)\n`;
+                    });
+                }
+                content += "\n";
+            });
+        }
+        
+        // 9. KEY PROJECTS
+        content += addSeparator(prj.title || "Dự án tiêu biểu");
+        if (prj.projects) {
+            prj.projects.forEach((p: any) => {
+                content += `🚀 [Dự án ${p.id}] ${p.title}\n`;
+                content += `   ${language === 'vi' ? 'Nhóm' : 'Group'}: ${p.group}\n`;
+                if (p.stage) {
+                    content += `   ${prj.stageLabel || 'Giai đoạn'}: ${p.stage}\n`;
+                }
+                content += `   Mô tả: ${p.description}\n`;
+                if (p.hashtags) {
+                    content += `   Hashtags: ${p.hashtags.join(", ")}\n`;
+                }
+                content += "\n";
+            });
+        }
+        
+        // FOOTER
+        content += "============================================================\n";
+        content += `    Tập tin được xuất tự động từ hệ thống Portfolio Nguyễn Hùng Thái\n`;
+        content += `    Ngày xuất: ${new Date().toLocaleDateString('vi-VN')} - Trân trọng cảm ơn!\n`;
+        content += "============================================================\n";
+
+        // Create Blob and Download
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Nguyen_Hung_Thai_CV_Portfolio_${language}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+    };
     
     return (
         <PageLayout id={id}>
@@ -592,6 +777,27 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                     )}
                                 </div>
                             </div>
+                            
+                            {isDemoEnvironment && (
+                                <div className="settings-card mt-6">
+                                    <h4 className="settings-card-title">{settingsText.dataManagementTitle || 'Quản lý Dữ liệu'}</h4>
+                                    <div className="setting-item flex-col items-start gap-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.75rem', width: '100%' }}>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-2" style={{ textAlign: 'left', fontSize: '0.75rem', lineHeight: '1.4' }}>
+                                            {language === 'vi' 
+                                                ? 'Tải xuống toàn bộ thông tin cá nhân, hành trình sự nghiệp, học vấn, lĩnh vực chuyên môn và các dự án tiêu biểu dưới định dạng tệp văn bản (.txt) chất lượng cao.'
+                                                : 'Download all personal info, career journey, education, services, and key projects as a high-quality plain text file (.txt).'}
+                                        </p>
+                                        <button 
+                                            onClick={exportToTxt}
+                                            className="btn btn-primary w-full flex items-center justify-center gap-2 py-2.5 transition-all duration-300 hover:shadow-md"
+                                            style={{ backgroundColor: 'var(--accent-color)', color: '#fff', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '0.625rem 1rem' }}
+                                        >
+                                            <Icons.DownloadIcon size={18} />
+                                            <span>{settingsText.exportAsTXT || 'Xuất dạng TXT'}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

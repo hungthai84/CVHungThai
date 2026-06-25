@@ -13,14 +13,13 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card" style={{ marginBottom: '0px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
-                <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.UserIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.UserIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}
+                />
 
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">

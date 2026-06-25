@@ -24,7 +24,7 @@ const WorkVideoPage: React.FC<WorkVideoPageProps> = ({ id, onNavigate }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card" style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
-                <div className="about-header" style={{ padding: '1.5rem 1.5rem 0', flexShrink: 0, justifyContent: 'space-between' }}>
+                <div style={{ padding: '1.5rem 1.5rem 0', flexShrink: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
                     <InfoBadge
                         icon={<Icons.BriefcaseIcon />}
                         text={pageData.title}

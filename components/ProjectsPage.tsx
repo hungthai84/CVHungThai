@@ -103,14 +103,13 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     return (
         <PageLayout id={id}>
             <div className="info-card projects-page-container">
-                <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.CubeIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.CubeIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
                 
                 <ProjectFilters
                     viewMode={viewMode}

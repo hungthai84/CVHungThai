@@ -215,14 +215,13 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                 }
             `}</style>
             <div className="info-card">
-                <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.SparklesIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.SparklesIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
 
                 <div className="custom-video-player-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     <div 

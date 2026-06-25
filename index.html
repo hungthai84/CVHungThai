@@ -1843,14 +1843,14 @@
     }
     .education-title-wrapper {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: 1rem;
         margin-bottom: 1rem;
     }
     .education-title-left-group {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 1rem;
         flex-grow: 1;
         min-width: 0;
@@ -1859,15 +1859,19 @@
         width: 2rem;
         height: 2rem;
         flex-shrink: 0;
+        margin-top: 0.125rem;
     }
     .education-title-wrapper .title {
         font-size: 1.125rem;
         margin: 0;
         text-align: left;
-        white-space: nowrap;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
         color: var(--color-brand-text-primary);
+        line-height: 1.4;
     }
     .education-card .description {
       text-align: left;

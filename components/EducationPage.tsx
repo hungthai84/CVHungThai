@@ -82,14 +82,13 @@ const EducationPage: React.FC<EducationPageProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.AcademicCapIcon />}
-                        text={pageData.title}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.AcademicCapIcon />}
+                    text={pageData.title}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
                 <div className="education-grid no-scrollbar">
                     {items.length > 0 ? (
                         items.map((item, index) => (

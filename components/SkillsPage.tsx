@@ -98,14 +98,13 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card">
-                <div className="about-header">
-                    <InfoBadge
-                        icon={<Icons.WrenchScrewdriverIcon />}
-                        text={pageData.title}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
+                <InfoBadge
+                    icon={<Icons.WrenchScrewdriverIcon />}
+                    text={pageData.title}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
                 <div className="skills-categories-wrapper no-scrollbar">
                     {categories.length > 0 ? (
                         categories.map((category) => (

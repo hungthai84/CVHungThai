@@ -32,7 +32,7 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
         <PageLayout id={id}>
             <div className="info-card" style={{ display: 'flex', flexDirection: 'column', padding: 0 }}>
                 
-                <div className="about-header" style={{ flexShrink: 0, padding: '1.5rem 1.5rem 0' }}>
+                <div style={{ flexShrink: 0, padding: '1.5rem 1.5rem 0' }}>
                     <InfoBadge
                         icon={<Icons.PresentationIcon />}
                         text={pageData.badge}
