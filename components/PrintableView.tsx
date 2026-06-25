@@ -15,13 +15,10 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
     const allJobs = t.workExperiencePage.jobs.filter(job => job.key !== 'jobsearch');
     const projects = t.projectsPage.projects;
     const education = t.educationPage.items;
-    const achievements = t.achievementsPage.achievements;
-    const services = t.servicesPage.services;
 
     // Contact mapping helpers
     const phone = contactInfo.find(info => info.key === 'phoneZalo')?.value || '+84 0909097882';
     const email = contactInfo.find(info => info.key === 'email')?.value || 'hungthai84@gmail.com';
-    const website = contactInfo.find(info => info.key === 'website')?.value || 'www.nguyenhungthai.powerservice.one';
     const tempResidence = contactInfo.find(info => info.key === 'tempResidence')?.value || 'Q7, Hồ Chí Minh';
     const permResidence = contactInfo.find(info => info.key === 'permResidence')?.value || 'Mỹ Tho, Tiền Giang';
 

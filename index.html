@@ -198,7 +198,7 @@
     
     html {
       margin: 0 !important;
-      font-size: clamp(15px, 1.3vw, 17px);
+      font-size: clamp(14px, 0.35vw + 13.5px, 18px);
       scroll-behavior: smooth;
     }
 
@@ -338,10 +338,10 @@
       line-height: 1.2;
     }
 
-    h1 { font-size: 2.25rem; }
-    h2 { font-size: 1.75rem; }
-    h3 { font-size: 1.375rem; }
-    h4 { font-size: 1.125rem; }
+    h1 { font-size: clamp(1.65rem, 3.5vw, 2.25rem); }
+    h2 { font-size: clamp(1.35rem, 2.5vw, 1.75rem); }
+    h3 { font-size: clamp(1.15rem, 1.8vw, 1.375rem); }
+    h4 { font-size: clamp(1rem, 1.4vw, 1.125rem); }
     p { margin-bottom: 1.25rem; font-size: 1rem; line-height: 1.7; }
     
     a {
@@ -1472,7 +1472,7 @@
     }
 
     .hero-intro-text {
-      font-size: 1.5rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       font-weight: 500;
       margin-bottom: 0.5rem;
       color: #ffffff !important;
@@ -1480,7 +1480,7 @@
     }
 
     .home-hero-content h1.hero-name-text {
-      font-size: 1.75rem;
+      font-size: clamp(1.8rem, 4.5vw, 2.75rem);
       font-weight: 700;
       margin: 0 0 1rem 0;
       color: #ffffff !important;
@@ -1489,7 +1489,7 @@
     }
 
     .home-hero-content h2.hero-typed-text-container {
-      font-size: 1.75rem;
+      font-size: clamp(1.25rem, 3.5vw, 2rem);
       font-weight: 600;
       min-height: 40px; 
       text-align: left;
@@ -5031,6 +5031,54 @@
             width: 100% !important;
             max-width: 100% !important;
         }
+        
+        /* Home Page Mobile Optimization */
+        .home-hero-card-content-wrapper {
+            height: calc(100vh - var(--mobile-header-height)) !important;
+            min-height: 480px !important;
+            padding: 1.5rem 1rem 2.5rem 1rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+        .home-hero-content {
+            align-items: center !important;
+            text-align: center !important;
+            max-width: 100% !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+        }
+        .home-hero-content h2.hero-typed-text-container {
+            text-align: center !important;
+        }
+        .home-hero-buttons-container {
+            position: relative !important;
+            bottom: 0 !important;
+            right: auto !important;
+            left: auto !important;
+            transform: none !important;
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            margin-top: 1.5rem !important;
+        }
+        .magic-btn-wrapper {
+            margin-left: 0 !important;
+            width: 100% !important;
+            justify-content: center !important;
+        }
+        .magic-btn-main {
+            width: 100% !important;
+            max-width: 280px !important;
+            height: 50px !important;
+            font-size: 1.1rem !important;
+        }
+        .magic-btn-glass {
+            left: -15px !important;
+            width: 85px !important;
+        }
+        
         .about-bio-text-card, .about-personal-info-card, .achievement-card {
             height: auto;
             border-radius: 0 !important;
@@ -5193,10 +5241,10 @@
             column-count: 2;
         }
         .home-hero-content h1.hero-name-text {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.3rem);
         }
         .home-hero-content h2.hero-typed-text-container {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
         }
         .resume-header-new { flex-direction: column; }
         .resume-contact-grid { grid-template-columns: 1fr; }
@@ -5271,10 +5319,10 @@
             column-count: 1;
         }
         .home-hero-content h1.hero-name-text {
-            font-size: 2rem;
+            font-size: clamp(1.4rem, 6vw, 1.8rem);
         }
         .home-hero-content h2.hero-typed-text-container {
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 5vw, 1.35rem);
         }
         .resume-page { padding: 1.5rem; }
         .projects-grid.view-grid,

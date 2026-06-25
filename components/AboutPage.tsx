@@ -4,11 +4,27 @@ import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';
 
-const ScenaAiBanner = 'scena-ai-banner' as any;
-
 export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
     const pageData = t.aboutPage;
+
+    const DEFAULT_VIDEO = "https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4";
+    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/1dc04314870ccd1da345b28cb9a539bdb8af303524e169e67691ae3ac5b6e654.mp4";
+
+    const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
+    const [isMuted, setIsMuted] = React.useState(true);
+
+    const isIntroPlaying = videoUrl === INTRO_VIDEO;
+
+    const handleToggleIntro = () => {
+        if (isIntroPlaying) {
+            setVideoUrl(DEFAULT_VIDEO);
+            setIsMuted(true);
+        } else {
+            setVideoUrl(INTRO_VIDEO);
+            setIsMuted(false);
+        }
+    };
 
     return (
         <PageLayout id={id}>
@@ -25,17 +41,80 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
                         <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '615px', minHeight: 0 }}>
-                            {/* Embedded Scena AI Banner */}
+                            {/* HTML5 Video Player */}
                             <div style={{ 
                                 width: '100%', 
                                 borderRadius: '10px', 
                                 overflow: 'hidden', 
                                 background: 'rgba(var(--sidebar-bg-rgb), 0.1)',
                                 border: 'var(--color-brand-glass-border)',
-                                boxShadow: 'var(--card-box-shadow)'
+                                boxShadow: 'var(--card-box-shadow)',
+                                position: 'relative',
+                                aspectRatio: '16/9'
                             }}>
-                                <ScenaAiBanner key-id="nmxffobkkmcj" aspect-ratio="16/9" style={{ width: '100%', display: 'block', borderRadius: '10px' }}></ScenaAiBanner>
-                                <script src="https://scena.link/app.js"></script>
+                                <video 
+                                    key={videoUrl}
+                                    autoPlay 
+                                    muted={isMuted} 
+                                    loop={!isIntroPlaying} 
+                                    playsInline 
+                                    style={{ 
+                                        width: '100%', 
+                                        height: '100%', 
+                                        objectFit: 'cover',
+                                        borderRadius: '10px',
+                                        display: 'block'
+                                    }}
+                                    src={videoUrl}
+                                    poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
+                                    onEnded={() => {
+                                        if (isIntroPlaying) {
+                                            setVideoUrl(DEFAULT_VIDEO);
+                                            setIsMuted(true);
+                                        }
+                                    }}
+                                />
+                                {/* Introduction Overlay Button */}
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: '12px',
+                                    right: '12px',
+                                    zIndex: 10
+                                }}>
+                                    <button 
+                                        onClick={handleToggleIntro}
+                                        style={{
+                                            background: isIntroPlaying 
+                                                ? 'linear-gradient(90deg, #64748b, #334155, #0f172a)' 
+                                                : 'linear-gradient(90deg, #4361ff, #a541ff, #ff4aff)',
+                                            border: 'none',
+                                            borderRadius: '20px',
+                                            padding: '6px 16px',
+                                            color: 'white',
+                                            fontSize: '0.85rem',
+                                            fontWeight: 500,
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                        title={isIntroPlaying ? (language === 'vi' ? 'Hủy bỏ video giới thiệu' : 'Cancel introduction video') : (language === 'vi' ? 'Xem video giới thiệu' : 'View introduction video')}
+                                    >
+                                        {isIntroPlaying ? (
+                                            <>
+                                                <span>{language === 'vi' ? 'Hủy bỏ' : 'Cancel'}</span>
+                                                <Icons.XMarkIcon size={14} />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>{language === 'vi' ? 'Giới thiệu' : 'Intro'}</span>
+                                                <Icons.SparklesIcon size={14} />
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Personal Info Card */}

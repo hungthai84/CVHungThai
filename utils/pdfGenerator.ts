@@ -37,9 +37,7 @@ export async function generatePdfFromElement(elementId: string, fileName: string
             format: 'a4'
         });
 
-        const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
         // If content is longer than one page, we might need to handle paging
         // but for a resume, usually it's structured in pages within the element.
