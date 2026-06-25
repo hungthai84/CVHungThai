@@ -187,21 +187,6 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
                                 </div>
                             </div>
                         </section>
-
-                        <section className="p-section">
-                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
-                                {t.educationPage.title}
-                            </h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-                                {education.map((edu, index) => (
-                                    <div key={index} style={{ fontSize: '8pt', lineHeight: 1.3 }}>
-                                        <strong style={{ display: 'block', color: '#101733' }}>{edu.title}</strong>
-                                        <span style={{ color: '#4b5563' }}>{edu.institution}</span>
-                                        <span style={{ color: '#f97316', display: 'block', fontSize: '8pt', fontWeight: 700 }}>Năm tốt nghiệp: {edu.year}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
                     </div>
                 </div>
             </div>
@@ -258,7 +243,7 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
                     </div>
 
                     <div style={{ borderLeft: '1px solid #e5e7eb', paddingLeft: '1.2rem' }}>
-                        <section className="p-section">
+                        <section className="p-section" style={{ marginBottom: '1.5rem' }}>
                             <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
                                 {t.projectsPage.badge} (Dự án tiêu biểu)
                             </h3>
@@ -267,6 +252,21 @@ const PrintableView: React.FC<PrintableViewProps> = () => {
                                     <div key={proj.id} style={{ display: 'flex', gap: '0.35rem', borderBottom: '1px dashed rgba(0,0,0,0.06)', paddingBottom: '0.15rem', alignItems: 'flex-start' }}>
                                         <span style={{ color: '#f97316', fontWeight: 700, minWidth: '1.4rem' }}>{idx + 1}.</span>
                                         <span style={{ color: '#101733', fontWeight: 500 }}>{proj.title}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="p-section">
+                            <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
+                                {t.educationPage.title}
+                            </h3>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem 0.8rem' }}>
+                                {education.map((edu, index) => (
+                                    <div key={index} style={{ fontSize: '8pt', lineHeight: 1.3, borderBottom: '1px dashed rgba(0,0,0,0.06)', paddingBottom: '0.3rem' }}>
+                                        <strong style={{ display: 'block', color: '#101733' }}>{edu.title}</strong>
+                                        <span style={{ color: '#4b5563', display: 'block' }}>{edu.institution}</span>
+                                        <span style={{ color: '#f97316', display: 'block', fontSize: '7.5pt', fontWeight: 700 }}>Năm: {edu.year}</span>
                                     </div>
                                 ))}
                             </div>
