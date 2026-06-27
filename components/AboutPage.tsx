@@ -55,7 +55,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '562.67px', minHeight: 0 }}>
+                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610 px', minHeight: 0 }}>
                             {/* HTML5 Video Player */}
                             <div style={{ 
                                 width: '100%', 
@@ -134,8 +134,8 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
                             {/* Personal Info Card */}
                             {pageData.infoItems && pageData.infoItems.length > 0 && (
-                                <div className="about-personal-info-card" style={{ height: 'calc(50% - 0.75rem)', width: '100%', padding: '0px' }}>
-                                    <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
+                                <div className="about-personal-info-card" style={{ height: '290px', width: '100%', padding: '0px' }}>
+                                    <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '15px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
                                     <div className="personal-info-grid no-scrollbar" style={{ 
                                         height: 'calc(100% - 40px)', 
                                         padding: '1.5rem', 
@@ -190,7 +190,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         </div>
 
                         {/* Right Column: Bio Text Card (Swapped from Left) */}
-                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '562.67px', minHeight: 0 }}>
+                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610 px', minHeight: 0 }}>
                             {/* Bio Text Card */}
                             <div className="about-bio-text-card no-scrollbar" style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
                                 <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>

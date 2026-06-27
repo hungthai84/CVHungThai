@@ -20,14 +20,14 @@ export async function generatePdfFromElement(elementId: string, fileName: string
 
         // Use html2canvas to capture the element
         const canvas = await html2canvas(element, {
-            scale: 1.25,
+            scale: 2.0,
             useCORS: true,
             logging: false,
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.6);
+        const imgData = canvas.toDataURL('image/jpeg', 0.8);
         
         // Calculate dimensions to fit PDF page
         // Standard A4 is 210mm x 297mm
@@ -49,12 +49,12 @@ export async function generatePdfFromElement(elementId: string, fileName: string
             for (let i = 0; i < pages.length; i++) {
                 const pageElement = pages[i] as HTMLElement;
                 const pageCanvas = await html2canvas(pageElement, {
-                    scale: 1.25,
+                    scale: 2.0,
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#ffffff'
                 });
-                const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.6);
+                const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.8);
                 
                 const pageHeight = pdf.internal.pageSize.getHeight();
                 
