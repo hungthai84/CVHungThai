@@ -134,7 +134,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
                             {/* Personal Info Card */}
                             {pageData.infoItems && pageData.infoItems.length > 0 && (
-                                <div className="about-personal-info-card" style={{ height: '290px', width: '100%', padding: '0px' }}>
+                                <div className="about-personal-info-card" style={{ height: '300px', width: '100%', padding: '0px' }}>
                                     <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '15px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
                                     <div className="personal-info-grid no-scrollbar" style={{ 
                                         height: 'calc(100% - 40px)', 
