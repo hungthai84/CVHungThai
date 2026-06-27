@@ -108,7 +108,7 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                     playsInline 
                     className="home-hero-card-bg-video"
                     src={videoUrl}
-                    poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
+                    
                     style={{ opacity: 1 }}
                     onEnded={() => {
                         if (isIntroPlaying) {

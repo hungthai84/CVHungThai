@@ -8,6 +8,8 @@ import Lightbox from './Lightbox';
 
 import OptimizedImage from './OptimizedImage';
 
+import { motion, AnimatePresence } from 'motion/react';
+
 interface MemoryImage {
   src: string;
   alt: string;
@@ -82,13 +84,32 @@ const MemoriesPage: React.FC<MemoriesPageProps> = ({ id }) => {
                     </div>
                     <div className="memories-grid-container no-scrollbar">
                         {filteredImages.length > 0 ? (
-                            <div className="memories-grid">
-                                {filteredImages.map((image, index) => (
-                                    <button key={image.src} className="memories-grid-item" onClick={() => handleOpenLightbox(index)}>
-                                        <OptimizedImage src={image.src} alt={image.alt} optWidth={800} optQuality={70} />
-                                    </button>
-                                ))}
-                            </div>
+                            <motion.div 
+                                layout
+                                className="memories-grid"
+                            >
+                                <AnimatePresence mode="popLayout">
+                                    {filteredImages.map((image, index) => (
+                                        <motion.button 
+                                            layout
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            transition={{ duration: 0.3, delay: index * 0.03 }}
+                                            key={image.src} 
+                                            className="memories-grid-item" 
+                                            onClick={() => handleOpenLightbox(index)}
+                                        >
+                                            <OptimizedImage src={image.src} alt={image.alt} optWidth={800} optQuality={70} />
+                                            {image.company && (
+                                                <div className="memory-item-label">
+                                                    {pageData.companyLabels?.[image.company] || image.company}
+                                                </div>
+                                            )}
+                                        </motion.button>
+                                    ))}
+                                </AnimatePresence>
+                            </motion.div>
                         ) : (
                             <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--color-brand-text-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                 <Icons.CameraIcon size={48} style={{ marginBottom: '1rem', opacity: 0.5 }}/>

@@ -8,8 +8,8 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
     const pageData = t.aboutPage;
 
-    const DEFAULT_VIDEO = "https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4";
-    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/1dc04314870ccd1da345b28cb9a539bdb8af303524e169e67691ae3ac5b6e654.mp4";
+    const DEFAULT_VIDEO = "https://cdn.scena.ai/project/8606/9f949185c9ecaf86e263ec9eb69206a25c177599e95a8256e9452934a8f70eee.mp4";
+    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/43df6bdc5cfeccdd2cadf18dc244dfab494fa7dad953bc5588d897e5d16978ce.mp4";
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
     const [isMuted, setIsMuted] = React.useState(true);
@@ -55,17 +55,17 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '530px', minHeight: 0 }}>
+                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '562.67px', minHeight: 0 }}>
                             {/* HTML5 Video Player */}
                             <div style={{ 
                                 width: '100%', 
+                                height: 'calc(50% - 0.75rem)',
                                 borderRadius: '10px', 
                                 overflow: 'hidden', 
                                 background: 'rgba(var(--sidebar-bg-rgb), 0.1)',
                                 border: 'var(--color-brand-glass-border)',
                                 boxShadow: 'var(--card-box-shadow)',
-                                position: 'relative',
-                                aspectRatio: '32/9'
+                                position: 'relative'
                             }}>
                                 <video 
                                     key={videoUrl}
@@ -134,10 +134,10 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
                             {/* Personal Info Card */}
                             {pageData.infoItems && pageData.infoItems.length > 0 && (
-                                <div className="about-personal-info-card" style={{ height: '400px', width: '100%', padding: '0px' }}>
+                                <div className="about-personal-info-card" style={{ height: 'calc(50% - 0.75rem)', width: '100%', padding: '0px' }}>
                                     <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
                                     <div className="personal-info-grid no-scrollbar" style={{ 
-                                        height: '360px', 
+                                        height: 'calc(100% - 40px)', 
                                         padding: '1.5rem', 
                                         marginTop: '0px', 
                                         marginBottom: '0px', 
@@ -190,7 +190,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         </div>
 
                         {/* Right Column: Bio Text Card (Swapped from Left) */}
-                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%', minHeight: 0 }}>
+                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '562.67px', minHeight: 0 }}>
                             {/* Bio Text Card */}
                             <div className="about-bio-text-card no-scrollbar" style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
                                 <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>

@@ -5,6 +5,64 @@ interface PrintableViewProps {
     activePageKey?: string;
 }
 
+const PrintCoverLetter = ({ t }: { t: any }) => {
+    const pageData = t.coverLetterPage;
+    const paragraphs: string[] = pageData.paragraphs || [];
+
+    return (
+        <div className="print-page" style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 0, opacity: 0.85, backgroundImage: 'url("https://i.ibb.co/MkQT1Fpt/Chat-GPT-Image-13-10-30-27-thg-6-2026.png")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}></div>
+            
+            <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <header className="p-header" style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: '0.4rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <span style={{ fontSize: '9pt', fontWeight: 800, color: '#101733', textTransform: 'uppercase' }}>{t.sidebar.name}</span>
+                    <span style={{ fontSize: '8pt', color: '#9ca3af' }}>{t.sidebar.name} - Cover Letter</span>
+                </header>
+
+                <div style={{ flex: 1, padding: '0 1.5rem' }}>
+                    <div style={{ 
+                        background: 'rgba(255, 255, 255, 0.9)', 
+                        padding: '1.5rem 2rem', 
+                        borderRadius: '12px', 
+                        border: '1px solid rgba(255, 255, 255, 0.6)',
+                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                        lineHeight: '1.4'
+                    }}>
+                        <h2 style={{ fontSize: '15pt', color: '#101733', marginBottom: '1rem', fontWeight: 800, borderBottom: '2px solid #f97316', display: 'inline-block', paddingBottom: '0.2rem' }}>
+                            {pageData.badge.toUpperCase()}
+                        </h2>
+
+                        <p style={{ fontSize: '9pt', marginBottom: '0.6rem', color: '#101733', fontWeight: 600 }}>{pageData.greeting}</p>
+                        
+                        {paragraphs.map((p, index) => (
+                            <p key={index} style={{ fontSize: '8.5pt', marginBottom: '0.5rem', textAlign: 'justify', color: '#374151' }}>
+                                {p.split('\n').map((line, i) => (
+                                    <React.Fragment key={i}>
+                                        {line}
+                                        {i < p.split('\n').length - 1 && <br />}
+                                    </React.Fragment>
+                                ))}
+                            </p>
+                        ))}
+
+                        <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <p style={{ margin: 0, fontSize: '9pt', color: '#101733' }}>{pageData.closing}</p>
+                            {pageData.signatureImage && (
+                                <img src={pageData.signatureImage} alt="Signature" style={{ height: '35px', margin: '0.2rem 0' }} />
+                            )}
+                            <p style={{ margin: 0, fontSize: '9.5pt', fontWeight: 700, color: '#101733' }}>{pageData.signature}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer style={{ marginTop: 'auto', textAlign: 'center', padding: '1rem 0', borderTop: '1px solid #e5e7eb', fontSize: '8pt', color: '#6b7280' }}>
+                    Visit full interactive profile at: https://www.nguyenhungthai.powerservice.one/
+                </footer>
+            </div>
+        </div>
+    );
+};
+
 const PrintPageContent = ({ t }: { t: any }) => {
     // Contact mapping helpers
     const contactInfo = t.aboutPage.infoItems;
@@ -34,6 +92,9 @@ const PrintPageContent = ({ t }: { t: any }) => {
 
     return (
         <>
+            <PrintCoverLetter t={t} />
+            <div style={{ pageBreakBefore: 'always' }}></div>
+
             {/* PAGE 1: Profile Summary, Contact Side Panel, Skills, and Recent Top-Tier Careers */}
             <div className="print-page" style={{ position: 'relative' }}>
                 {/* Background image layer with 85% opacity */}
@@ -81,7 +142,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                                 <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt="Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e5e7eb' }} />
                                 <div>
                                     <h3 className="p-section-title" style={{ fontSize: '12pt', color: '#101733', margin: 0, paddingBottom: '0.2rem', textTransform: 'uppercase', fontWeight: 800 }}>
-                                        {t.aboutPage.badge}
+                                       Nguyễn Hùng Thái
                                     </h3>
                                     <h2 style={{ fontSize: '10pt', fontWeight: 600, color: '#f97316', margin: '0' }}>
                                         {t.sidebar.jobTitle}
