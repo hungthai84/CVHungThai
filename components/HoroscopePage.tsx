@@ -6,7 +6,7 @@ import * as Icons from './Icons';
 import InfoBadge from './InfoBadge';
 
 const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
-    const { t } = useI18n();
+    const { t, language } = useI18n();
     const pageData = t.horoscopePage;
     const info = pageData.personalInfo;
     const sections = pageData.sections;
@@ -14,11 +14,20 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isTogglingPlay, setIsTogglingPlay] = useState(false);
+    const [showHint, setShowHint] = useState(true);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowHint(false);
+        }, 10000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handlePlayPause = useCallback(async () => {
         const video = videoRef.current;
         if (!video || isTogglingPlay) return;
     
+        setShowHint(false);
         setIsTogglingPlay(true);
         try {
             if (video.paused || video.muted) {
@@ -108,6 +117,45 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     perspective: 400px;
                     cursor: pointer;
                     margin: 0 auto;
+                }
+                .horoscope-hint-bubble {
+                    position: absolute;
+                    bottom: 85px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: linear-gradient(135deg, #d4af37 0%, #aa8410 100%);
+                    color: white;
+                    padding: 8px 14px;
+                    border-radius: 20px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    white-space: nowrap;
+                    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+                    z-index: 50;
+                    pointer-events: auto;
+                    animation: hint-bounce 1.5s infinite ease-in-out;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    transition: opacity 0.3s ease;
+                }
+                .horoscope-hint-bubble::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -8px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border-width: 8px 8px 0;
+                    border-style: solid;
+                    border-color: #aa8410 transparent;
+                    display: block;
+                    width: 0;
+                }
+                @keyframes hint-bounce {
+                    0%, 100% { transform: translate(-50%, 0); }
+                    50% { transform: translate(-50%, -6px); }
                 }
                 .horoscope-book {
                     width: 100%;
@@ -201,7 +249,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     z-index: 2;
                 }
                 .magical-star {
-                    font-size: 12px;
+                    font-size: 14px;
                     color: #d4af37;
                     opacity: 0;
                 }
@@ -223,105 +271,104 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     style={{ marginBottom: '1.5rem' }}
                 />
 
-                <div className="custom-video-player-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <div 
-                        className="horoscope-book-wrapper" 
-                        title={isPlaying ? "Tạm dừng" : "Nghe tử vi"}
-                        onClick={handlePlayPause}
-                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePlayPause(); }}
-                        role="button"
-                        tabIndex={0}
-                        aria-label="Play or pause the horoscope audio"
-                    >
-                        {/* Magical glowing back aura */}
-                        <div className={`book-glow ${isPlaying ? 'book-glow-active' : ''}`}></div>
-                        
-                        {/* Audio track inside hidden video element to keep perfect API mapping */}
-                        <video
-                            ref={videoRef}
-                            src="https://cdn.scena.ai/project/9626/b40b848d5a2ad108760073e8c64bd80f963850ab7e79c19af228c82a83f6419d.mp3"
-                            playsInline
-                            autoPlay
-                            muted
-                            loop
-                            onPlay={() => setIsPlaying(true)}
-                            onPause={() => setIsPlaying(false)}
-                            onEnded={() => setIsPlaying(false)}
-                            style={{ display: 'none' }}
-                        >
-                            Trình duyệt của bạn không hỗ trợ thẻ media.
-                        </video>
-
-                        {/* Stitched 3D style book */}
-                        <div className="horoscope-book">
-                            <div className="horoscope-book-cover">
-                                {/* Spine detail */}
-                                <div className="horoscope-book-spine-lines"></div>
-                                
-                                {/* Yin-Yang spinning center wheel */}
-                                <div className={`yinyang-symbol ${isPlaying ? 'yinyang-spinning' : ''}`}>
-                                    <img 
-                                        src="https://i.ibb.co/nsKpgT8V/Yin-Yan.jpg" 
-                                        alt="Thái cực" 
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Ambient stars rising when playing */}
-                        {isPlaying && (
-                            <div className="magical-stars-container">
-                                <span className="magical-star magical-star-active" style={{ animationDelay: '0s' }}>✧</span>
-                                <span className="magical-star magical-star-active" style={{ animationDelay: '0.5s' }}>✦</span>
-                                <span className="magical-star magical-star-active" style={{ animationDelay: '1s' }}>✧</span>
-                            </div>
-                        )}
-                    </div>
-                    <button 
-                        className="custom-play-button" 
-                        style={{ 
-                            bottom: '-15px',
-                            background: 'rgba(212, 175, 55, 0.15)',
-                            border: '1.5px solid #d4af37',
-                            color: '#d4af37',
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
-                        }}
-                        onClick={handlePlayPause} 
-                        aria-label={isPlaying ? "Tạm dừng" : "Phát"}
-                    >
-                        {isPlaying ? <Icons.PauseIcon /> : <Icons.PlayIcon style={{ marginLeft: '2px' }}/>}
-                    </button>
-                </div>
-
                 <div className="horoscope-content no-scrollbar" style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
                     
-                    {/* Basic Info Banner */}
-                    <div className="horoscope-grid-banner">
-                        <div>
-                            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Họ Tên</h4>
-                            <p className="horoscope-banner-text" style={{ margin: 0, fontWeight: 700, fontSize: '1.2rem', color: 'var(--accent-color)' }}>{info.name}</p>
+                    {/* Unified Header with Basic Info and Audio Player */}
+                    <div className="horoscope-header-row" style={{ display: 'flex', alignItems: 'stretch', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+                        
+                        {/* Basic Info Banner */}
+                        <div className="horoscope-grid-banner" style={{ flex: 1, marginBottom: 0, minWidth: '280px' }}>
+                            <div>
+                                <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Họ Tên</h4>
+                                <p className="horoscope-banner-text" style={{ margin: 0, fontWeight: 700, fontSize: '1.2rem', color: 'var(--accent-color)' }}>{info.name}</p>
+                            </div>
+                            <div>
+                                <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Ngày Sinh</h4>
+                                <p style={{ margin: 0, fontWeight: 600 }}>{info.birthDate}</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.birthHour}</p>
+                            </div>
+                            <div>
+                                <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Mệnh / Cục</h4>
+                                <p style={{ margin: 0, fontWeight: 600 }}>{info.element}</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.destiny}</p>
+                            </div>
+                            <div>
+                                <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Năm / Chi</h4>
+                                <p style={{ margin: 0, fontWeight: 600 }}>{info.year}</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.gender}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Ngày Sinh</h4>
-                            <p style={{ margin: 0, fontWeight: 600 }}>{info.birthDate}</p>
-                            <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.birthHour}</p>
-                        </div>
-                        <div>
-                            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Mệnh / Cục</h4>
-                            <p style={{ margin: 0, fontWeight: 600 }}>{info.element}</p>
-                            <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.destiny}</p>
-                        </div>
-                        <div>
-                            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'var(--color-brand-text-secondary)', textTransform: 'uppercase' }}>Năm / Chi</h4>
-                            <p style={{ margin: 0, fontWeight: 600 }}>{info.year}</p>
-                            <p style={{ margin: 0, fontSize: '0.85rem' }}>{info.gender}</p>
+
+                        {/* Yin-Yang spinning coin player on the right side of the row */}
+                        <div className="horoscope-player-container animate-fade-in" style={{ position: 'relative', flexShrink: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(var(--accent-color-rgb), 0.08)', border: 'var(--color-brand-glass-border)', borderRadius: '15px', padding: '1rem 2.25rem', minWidth: '150px' }}>
+                            {showHint && (
+                                <div 
+                                    className="horoscope-hint-bubble"
+                                    onClick={() => {
+                                        setShowHint(false);
+                                        handlePlayPause();
+                                    }}
+                                    title={language === 'vi' ? 'Bấm vào để nghe audio' : 'Click to play audio'}
+                                >
+                                    <span>{language === 'vi' ? 'Bấm vào đây để nghe !' : 'Click here to listen !'}</span>
+                                    <span style={{ fontSize: '14px' }}>🎧</span>
+                                </div>
+                            )}
+
+                            <div 
+                                className="horoscope-book-wrapper" 
+                                title={isPlaying ? (language === 'vi' ? "Tạm dừng" : "Pause") : (language === 'vi' ? "Nghe tử vi" : "Listen")}
+                                onClick={handlePlayPause}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePlayPause(); }}
+                                role="button"
+                                tabIndex={0}
+                                aria-label="Play or pause the horoscope audio"
+                                style={{ margin: 0 }}
+                            >
+                                {/* Magical glowing back aura */}
+                                <div className={`book-glow ${isPlaying ? 'book-glow-active' : ''}`}></div>
+                                
+                                {/* Audio track inside hidden video element to keep perfect API mapping */}
+                                <video
+                                    ref={videoRef}
+                                    src="https://cdn.scena.ai/project/9626/b40b848d5a2ad108760073e8c64bd80f963850ab7e79c19af228c82a83f6419d.mp3"
+                                    playsInline
+                                    autoPlay
+                                    muted
+                                    loop
+                                    onPlay={() => setIsPlaying(true)}
+                                    onPause={() => setIsPlaying(false)}
+                                    onEnded={() => setIsPlaying(false)}
+                                    style={{ display: 'none' }}
+                                >
+                                    Trình duyệt của bạn không hỗ trợ thẻ media.
+                                </video>
+
+                                {/* Stitched 3D style book */}
+                                <div className="horoscope-book">
+                                    <div className="horoscope-book-cover">
+                                        {/* Spine detail */}
+                                        <div className="horoscope-book-spine-lines"></div>
+                                        
+                                        {/* Yin-Yang spinning center wheel */}
+                                        <div className={`yinyang-symbol ${isPlaying ? 'yinyang-spinning' : ''}`}>
+                                            <img 
+                                                src="https://i.ibb.co/nsKpgT8V/Yin-Yan.jpg" 
+                                                alt="Thái cực" 
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Ambient stars rising when playing */}
+                                {isPlaying && (
+                                    <div className="magical-stars-container">
+                                        <span className="magical-star magical-star-active" style={{ animationDelay: '0s' }}>✧</span>
+                                        <span className="magical-star magical-star-active" style={{ animationDelay: '0.5s' }}>✦</span>
+                                        <span className="magical-star magical-star-active" style={{ animationDelay: '1s' }}>✧</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 

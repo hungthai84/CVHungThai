@@ -83,8 +83,8 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                 </div>
                 
                 <div className="cover-letter-content no-scrollbar" ref={contentRef}>
-                    <div className="cover-letter-inner-card" style={{ lineHeight: '1.35', padding: '0px' }}>
-                        <p style={{ marginBottom: '0.4rem' }}>{pageData.greeting}</p>
+                    <div className="cover-letter-inner-card" style={{ lineHeight: '1.35', padding: '0px 0px 0px 20px', marginTop: '0px' }}>
+                        <p style={{ marginBottom: '0.4rem', marginTop: '0px' }}>{pageData.greeting}</p>
                         {paragraphs.map((p, index) => {
                             const lines = p.split('\n').map((line, lineIndex) => (
                                 <React.Fragment key={lineIndex}>
@@ -95,11 +95,11 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
                             return <p key={index} style={{ marginBottom: '0.4rem', marginTop: '0px' }}>{lines}</p>;
                         })}
                         <div className="cover-letter-signature-block" style={{ marginTop: '1rem' }}>
-                            <p style={{marginBottom: 0, lineHeight: '1.2'}}>{pageData.closing}</p>
+                            <p style={{marginBottom: 0, lineHeight: '1.2', marginTop: '0px'}}>{pageData.closing}</p>
                                 {pageData.signatureImage && (
                                 <img src={pageData.signatureImage} alt="Chữ ký" className="signature-image" style={{ margin: '0.25rem 0' }} />
                             )}
-                            <p style={{margin: 0, lineHeight: '1.2'}} className="signature-name">{pageData.signature}</p>
+                            <p style={{margin: 0, lineHeight: '1.2', marginTop: '0px'}} className="signature-name">{pageData.signature}</p>
                         </div>
                     </div>
                 </div>

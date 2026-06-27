@@ -6,6 +6,7 @@ import * as Icons from './Icons';
 import PageLayout from './PageLayout';
 import InfoBadge from './InfoBadge';
 import Lightbox from './Lightbox';
+import OptimizedImage from './OptimizedImage';
 
 interface Achievement {
     label: string;
@@ -13,14 +14,19 @@ interface Achievement {
 }
 
 interface Job {
+    id?: number;
     key: string;
-    date: string;
     company: string;
     logoUrl: string;
+    logos?: string[];
+    date: string;
+    period?: string;
     color: string;
     title: string;
     teamSize: string;
     responsibilities: string[];
+    tasks?: string[];
+    projects?: string[];
     achievements: Achievement[];
     images?: string[];
 }
@@ -37,35 +43,9 @@ interface WorkExperiencePageProps {
     isForPrint?: boolean;
 }
 
-// This helper function maps keywords in the achievement label to specific icons.
-const getAchievementIcon = (label: string): React.FC<any> => {
-    const lowerLabel = label.toLowerCase();
-    // English keywords
-    if (lowerLabel.includes('process')) return Icons.ClipboardDocumentListIcon;
-    if (lowerLabel.includes('support') || lowerLabel.includes('response')) return Icons.LifebuoyIcon;
-    if (lowerLabel.includes('community')) return Icons.UsersIcon;
-    if (lowerLabel.includes('event')) return Icons.SparklesIcon;
-    if (lowerLabel.includes('project')) return Icons.FolderIcon;
-    if (lowerLabel.includes('call center') || lowerLabel.includes('call')) return Icons.PhoneIcon;
-    if (lowerLabel.includes('commerce')) return Icons.CubeIcon;
-    if (lowerLabel.includes('insurance')) return Icons.ShieldCheckIcon;
-    if (lowerLabel.includes('completion')) return Icons.CheckIcon;
-    // Vietnamese keywords
-    if (lowerLabel.includes('quy trình')) return Icons.ClipboardDocumentListIcon;
-    if (lowerLabel.includes('hỗ trợ')) return Icons.LifebuoyIcon;
-    if (lowerLabel.includes('cộng đồng')) return Icons.UsersIcon;
-    if (lowerLabel.includes('sự kiện')) return Icons.SparklesIcon;
-    if (lowerLabel.includes('dự án')) return Icons.FolderIcon;
-    if (lowerLabel.includes('tổng đài') || lowerLabel.includes('cuộc gọi')) return Icons.PhoneIcon;
-    if (lowerLabel.includes('thương mại')) return Icons.CubeIcon;
-    if (lowerLabel.includes('bảo hiểm')) return Icons.ShieldCheckIcon;
-    if (lowerLabel.includes('hoàn tất')) return Icons.CheckIcon;
 
-    return Icons.TrophyIcon; // Default icon
-};
 
 const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, color, isForPrint = false }) => {
-    const Icon = getAchievementIcon(achievement.label);
     const cardRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -97,20 +77,18 @@ const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, co
             className={`job-achievement-card fade-in-up-on-scroll ${isForPrint ? 'is-visible' : ''}`}
             style={{ '--achievement-color': color } as React.CSSProperties}
         >
-            <div className="job-achievement-card-header">
-                <div className="job-achievement-card-icon" style={{ backgroundColor: color }}>
-                    <Icon />
-                </div>
-                <span className="job-achievement-card-label">{achievement.label}</span>
-                <span className="job-achievement-card-value">{achievement.value}%</span>
+            <div className="job-achievement-card-header" style={{ padding: '0 0.5rem', height: '18px', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span className="job-achievement-card-label" style={{ fontSize: '13.8924px', lineHeight: '1' }}>{achievement.label}</span>
+                <span className="job-achievement-card-value" style={{ fontSize: '13.8924px', lineHeight: '1' }}>{achievement.value}%</span>
             </div>
-            <div className="progress-bar-container">
-                <div className="progress-bar-bg">
+            <div className="progress-bar-container" style={{ height: '12px', marginBottom: '0', padding: '0 0.5rem', display: 'flex', alignItems: 'center' }}>
+                <div className="progress-bar-bg" style={{ height: '3px', width: '100%' }}>
                     <div
                         className="progress-bar-fill"
                         style={{
                             '--level': `${achievement.value}%`,
                             backgroundColor: color,
+                            height: '3px'
                         } as React.CSSProperties}
                     />
                 </div>
@@ -118,53 +96,20 @@ const JobAchievementCard: React.FC<JobAchievementCardProps> = ({ achievement, co
         </div>
     );
 };
-
-
-import OptimizedImage from './OptimizedImage';
-
-interface JobImageSliderProps {
-    images: string[];
-    onImageClick?: (index: number) => void;
-}
-
-const JobImageSlider: React.FC<JobImageSliderProps> = ({ images, onImageClick }) => {
-    if (!images || images.length === 0) {
-        return null;
-    }
-
-    // Duplicate images for a seamless loop
-    const doubledImages = [...images, ...images];
-
-    return (
-        <div className="job-image-slider-container">
-            <div className="job-image-slider-track">
-                {doubledImages.map((src, index) => {
-                    const originalIndex = index % images.length;
-                    return (
-                        <div 
-                            className="job-image-slider-slide cursor-pointer" 
-                            key={index}
-                            onClick={() => onImageClick?.(originalIndex)}
-                        >
-                            <div className="job-image-slide transform hover:scale-[1.06] active:scale-95 transition-all duration-300">
-                               <OptimizedImage src={src} alt={`Work sample ${originalIndex + 1}`} loading="lazy" />
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
-
-const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint = false }) => {
+const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate, isForPrint = false }) => {
     const { t, language } = useI18n();
     const pageData = t.workExperiencePage;
     const jobs: Job[] = useMemo(() => [...(pageData.jobs || [])], [pageData.jobs]);
     
-    // Always start from 0 as requested
-    const [activeJobIndex, setActiveJobIndex] = useState(0);
-    const [isAutoPlaying, setIsAutoPlaying] = useState(true); 
+    // Always start from 0 as requested, unless we have a referrer
+    const [activeJobIndex, setActiveJobIndex] = useState(() => {
+        const savedIndex = sessionStorage.getItem('referrer_job_index');
+        return savedIndex ? parseInt(savedIndex, 10) : 0;
+    });
+    const [isAutoPlaying, setIsAutoPlaying] = useState(() => {
+        const savedIndex = sessionStorage.getItem('referrer_job_index');
+        return savedIndex ? false : true;
+    }); 
     const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     // Function to play a gentle click sound
@@ -217,8 +162,15 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setActiveJobIndex(0);
-                    setIsAutoPlaying(true);
+                    const isReferrer = sessionStorage.getItem('referrer_experience') === 'true';
+                    if (isReferrer) {
+                        // Clear referrers so subsequent scrolls behave normally
+                        sessionStorage.removeItem('referrer_experience');
+                        sessionStorage.removeItem('referrer_job_index');
+                    } else {
+                        setActiveJobIndex(0);
+                        setIsAutoPlaying(true);
+                    }
                 }
             },
             { threshold: 0.2 } // Trigger when 20% of the section is visible
@@ -346,9 +298,57 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
         );
     }
 
+    const getAchievementIcon = (label: string) => {
+        const l = label.toLowerCase();
+        
+        // Process/Standardization -> ClipboardDocumentListIcon
+        if (l.includes('chuẩn hóa') || l.includes('process') || l.includes('standard')) {
+            return <Icons.ClipboardDocumentListIcon size={12} />;
+        }
+        // Task/Completion -> CheckIcon
+        if (l.includes('nhiệm vụ') || l.includes('task') || l.includes('hoàn thành')) {
+            return <Icons.CheckIcon size={12} />;
+        }
+        // Guidance/New employees -> UsersIcon
+        if (l.includes('nhân viên mới') || l.includes('employee guidance') || l.includes('hướng dẫn')) {
+            return <Icons.UsersIcon size={12} />;
+        }
+        // Document Compilation/Biên soạn tài liệu -> DocumentTextIcon
+        if (l.includes('tài liệu') || l.includes('document') || l.includes('biên soạn')) {
+            return <Icons.DocumentTextIcon size={12} />;
+        }
+        // Events -> SparklesIcon
+        if (l.includes('sự kiện') || l.includes('event')) {
+            return <Icons.SparklesIcon size={12} />;
+        }
+        // Community -> UsersIcon
+        if (l.includes('cộng đồng') || l.includes('community')) {
+            return <Icons.UsersIcon size={12} />;
+        }
+        // Response/Support/Call Center -> PhoneIcon or ChatBubbleLeftRightIcon
+        if (l.includes('phản hồi') || l.includes('response') || l.includes('call center') || l.includes('hỗ trợ')) {
+            return <Icons.PhoneIcon size={12} />;
+        }
+        // E-commerce/TMĐT -> GlobeAltIcon
+        if (l.includes('tmđt') || l.includes('e-commerce')) {
+            return <Icons.GlobeAltIcon size={12} />;
+        }
+        // Project -> FolderIcon
+        if (l.includes('dự án') || l.includes('project')) {
+            return <Icons.FolderIcon size={12} />;
+        }
+        // Insurance/Online management -> ShieldCheckIcon
+        if (l.includes('bảo hiểm') || l.includes('insurance') || l.includes('ra mắt')) {
+            return <Icons.ShieldCheckIcon size={12} />;
+        }
+        
+        // Default fallback
+        return <Icons.TrophyIcon size={12} />;
+    };
+
     const activeJob = jobs[activeJobIndex];
     const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 767 : false);
-    const [showDetailPopup, setShowDetailPopup] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
     const lightboxImages = useMemo(() => {
@@ -383,20 +383,19 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
     const handleMilestoneClick = (index: number) => {
         setIsAutoPlaying(false);
         setActiveJobIndex(index);
+        setIsExpanded(false);
         playClickSound(); // Play sound on manual click
-        if (isMobile) {
-            setShowDetailPopup(true);
-        }
     };
     return (
         <PageLayout id={id} className="work-experience-section">
-            <div className="info-card work-experience-card flex flex-col h-full">
+            <div className="info-card work-experience-card flex flex-col h-full" style={{ position: 'relative' }}>
                 <InfoBadge
                     icon={<Icons.BriefcaseIcon />}
                     text={pageData.title}
                     tooltipTitle={pageData.tooltipTitle}
                     tooltipText={pageData.tooltipText}
                     style={{ marginBottom: '1.5rem' }}
+                    containerStyle={{ height: '50px' }}
                 />
 
                 <div className="custom-video-player-wrapper" style={{ transform: 'scale(0.7)', transformOrigin: 'top right' }}>
@@ -473,39 +472,78 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                     </div>
                     {activeJob && !isMobile && (
                         <div 
-                            className="job-card flex flex-col justify-between" 
+                            className={`job-card flex flex-col justify-between ${isExpanded ? 'is-expanded' : ''}`}
                             key={activeJob.key} 
+                            onDoubleClick={() => setIsExpanded(!isExpanded)}
                             style={{ 
                                 border: `2px solid ${activeJob.color}`, 
-                                borderRadius: '24px', 
+                                borderRadius: isExpanded ? '16px' : '24px', 
                                 padding: '1.75rem', 
-                                width: 'calc(100% - 51px)', 
+                                width: isExpanded ? '100%' : 'calc(100% - 51px)', 
                                 flex: 1, 
                                 minHeight: 0, 
-                                marginLeft: '25.5px', 
-                                marginRight: '25.5px', 
-                                marginTop: '10px', 
+                                marginLeft: isExpanded ? '0px' : '25.5px', 
+                                marginRight: isExpanded ? '0px' : '25.5px', 
+                                marginTop: isExpanded ? '0px' : '10px', 
                                 marginBottom: '0px',
-                                background: 'rgba(var(--card-bg-rgb), 0.55)',
+                                background: 'rgba(var(--card-bg-rgb), 0.95)',
                                 backdropFilter: 'blur(16px)',
                                 WebkitBackdropFilter: 'blur(16px)',
-                                boxShadow: `0 12px 40px -8px rgba(0, 0, 0, 0.4), 0 0 15px -3px ${activeJob.color}33`,
-                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                                boxShadow: isExpanded 
+                                    ? `0 24px 60px -12px rgba(0, 0, 0, 0.55), 0 0 25px -3px ${activeJob.color}44` 
+                                    : `0 12px 40px -8px rgba(0, 0, 0, 0.4), 0 0 15px -3px ${activeJob.color}33`,
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                zIndex: isExpanded ? 50 : 1,
+                                position: isExpanded ? 'absolute' : 'relative',
+                                top: isExpanded ? 0 : undefined,
+                                left: isExpanded ? 0 : undefined,
+                                right: isExpanded ? 0 : undefined,
+                                bottom: isExpanded ? 0 : undefined,
+                                cursor: 'default'
                             }}
                         >
                            <div className="job-card-scrollable-content no-scrollbar">
-                                <div className="job-card-details-grid">
-                                    <div>
-                                        <div className="job-header-info">
-                                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                                                <Icons.CalendarDaysIcon size={14} className="text-slate-400 shrink-0" />
-                                                {formatJobDate(activeJob.date)}
+                                {/* Row 1: Date Range & Logo/Company */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '50px', marginBottom: '0px', fontWeight: 'bold', textAlign: 'left' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                        <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-400" style={{ height: '20px' }}>
+                                            <Icons.CalendarDaysIcon size={14} className="text-slate-400 shrink-0" />
+                                            {formatJobDate(activeJob.date)}
+                                        </span>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsExpanded(!isExpanded);
+                                            }}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                color: activeJob.color,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                padding: '4px 8px',
+                                                borderRadius: '6px',
+                                                backgroundColor: 'rgba(255,255,255,0.06)',
+                                                transition: 'all 0.2s',
+                                            }}
+                                            className="hover:scale-105 active:scale-95"
+                                            title={isExpanded ? "Thu nhỏ (Double click)" : "Phóng to (Double click)"}
+                                        >
+                                            {isExpanded ? <Icons.MinimizeIcon size={12} /> : <Icons.MaximizeIcon size={12} />}
+                                            <span style={{ fontSize: '10px', marginLeft: '4px', opacity: 0.8, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                                                {isExpanded ? "Thu nhỏ" : "Phóng to"}
                                             </span>
-                                            
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
-                                                <div style={{ 
-                                                    width: '50px', 
-                                                    height: '50px', 
+                                        </button>
+                                    </div>
+
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', height: '50px', marginBottom: '0px' }}>
+                                        {activeJob.logos ? (
+                                            activeJob.logos.map((logo, idx) => (
+                                                <div key={idx} style={{ 
+                                                    width: '32px', 
+                                                    height: '32px', 
                                                     borderRadius: '100px', 
                                                     backgroundColor: 'white', 
                                                     padding: '2px', 
@@ -514,119 +552,192 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, isForPrint 
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     flexShrink: 0,
-                                                    border: `2px solid ${activeJob.color}`
+                                                    border: `1.5px solid ${activeJob.color}`,
+                                                    textAlign: 'right'
                                                 }}>
-                                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '50px', height: '50px', borderRadius: '100px' }} className="object-contain" referrerPolicy="no-referrer" />
+                                                    <img src={logo} alt={`${activeJob.company} logo ${idx}`} style={{ width: '32px', height: '32px', borderRadius: '100px' }} className="object-contain" referrerPolicy="no-referrer" />
                                                 </div>
-                                                <h4 className="text-lg font-bold m-0 tracking-tight" style={{ color: activeJob.color }}>{activeJob.company}</h4>
+                                            ))
+                                        ) : (
+                                            <div style={{ 
+                                                width: '32px', 
+                                                height: '32px', 
+                                                borderRadius: '100px', 
+                                                backgroundColor: 'white', 
+                                                padding: '2px', 
+                                                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                flexShrink: 0,
+                                                border: `1.5px solid ${activeJob.color}`,
+                                                textAlign: 'right'
+                                            }}>
+                                                <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '32px', height: '32px', borderRadius: '100px' }} className="object-contain" referrerPolicy="no-referrer" />
                                             </div>
- 
-                                            <h3 className="text-xl font-extrabold tracking-tight text-[var(--color-brand-text-primary)] mt-1.5 mb-2 leading-snug">{activeJob.title}</h3>
- 
-                                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 mt-2 text-slate-300">
-                                               <Icons.UsersIcon size={12} className="text-slate-400 shrink-0" />
-                                               <span>{pageData.managedTitle}: </span>
-                                               <strong className="text-white font-semibold">{activeJob.teamSize}</strong>
-                                            </div>
+                                        )}
+                                        <h4 className="text-lg font-bold m-0 tracking-tight" style={{ color: activeJob.color, height: '32px' }}>{activeJob.company}</h4>
+                                    </div>
+                                </div>
+
+                                {/* Row 2: Position and Management */}
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', height: '32px', marginBottom: '0px', alignItems: 'center' }}>
+                                    <h3 className="text-xl font-extrabold tracking-tight text-[var(--color-brand-text-primary)] leading-snug m-0" style={{ height: '27.7857px', marginTop: '0px', marginBottom: '0px', fontSize: '18.888px' }}>{activeJob.title}</h3>
+                                    <div className="justify-self-end">
+                                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-slate-300" style={{ textAlign: 'right' }}>
+                                            <Icons.UsersIcon size={17} className="text-slate-400 shrink-0" style={{ fontWeight: 'bold' }} />
+                                            <span style={{ fontWeight: 'bold' }}>{pageData.managedTitle}: </span>
+                                            <strong className="text-white font-semibold">{activeJob.teamSize}</strong>
                                         </div>
-                                        <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400" style={{marginTop: '1.75rem', marginBottom: '0.75rem'}}>{pageData.descriptionTitle}</h5>
-                                        <ul className="popup-responsibilities" style={{ borderTop: 'none', paddingTop: 0 }}>
-                                           {activeJob.responsibilities.map((item, index) => (
-                                               <li key={index} style={{ marginBottom: '0.625rem', fontSize: '0.925rem', lineHeight: '1.5', color: 'var(--color-brand-text-secondary)' }}>
-                                                   {item}
-                                               </li>
-                                           ))}
+                                    </div>
+                                </div>
+
+                                {/* Row 3: Tasks, Projects, and Achievements */}
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                    <div style={{ gridRow: '1 / span 2' }}>
+                                        <h5 className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2" style={{ marginBottom: '0.75rem', color: activeJob.color, fontSize: '16px' }}>
+                                            <Icons.ClipboardDocumentListIcon size={16} style={{ paddingRight: '10px' }} />
+                                            {pageData.tasksTitle || pageData.descriptionTitle}
+                                        </h5>
+                                        <ul className="popup-responsibilities" style={{ borderTop: 'none', paddingTop: 0, listStyleType: 'decimal', paddingLeft: '1.5rem' }}>
+                                            {(activeJob.tasks || activeJob.responsibilities).map((item, index) => (
+                                                <li key={index} style={{ marginBottom: '0.4rem', fontSize: '0.85rem', lineHeight: '1.4', color: 'var(--color-brand-text-secondary)' }}>
+                                                    {item}
+                                                </li>
+                                            ))}
                                         </ul>
                                     </div>
                                     <div>
-                                        {activeJob.achievements.length > 0 && (
-                                           <>
-                                           <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400" style={{marginBottom: '1rem'}}>{pageData.achievementsTitle}</h5>
-                                           <div className="achievements-grid">
-                                               {activeJob.achievements.map((ach, index) => (
-                                                   <JobAchievementCard key={index} achievement={ach} color={activeJob.color} />
-                                               ))}
-                                           </div>
-                                           </>
+                                        {activeJob.projects && activeJob.projects.length > 0 && (
+                                            <div>
+                                                <h5 className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2" style={{ marginBottom: '0.75rem', color: activeJob.color, fontSize: '16px' }}>
+                                                    <Icons.FolderIcon size={16} style={{ marginLeft: '0px', paddingTop: '0px', marginRight: '10px' }} />
+                                                    {pageData.projectsTitle}
+                                                </h5>
+                                                <ul className="popup-responsibilities" style={{ borderTop: 'none', paddingTop: 0, listStyleType: 'disc', paddingLeft: '1.5rem' }}>
+                                                    {activeJob.projects.map((item, index) => {
+                                                        const cleanItemName = item.replace(/^\d+\./, '').trim();
+                                                        const vietnameseToEnglishProjectTitleMap: Record<string, string> = {
+                                                            "Xây dựng Phòng Dịch vụ Khách hàng": "Building a Customer Service Department",
+                                                            "Thiết lập mục tiêu phòng ban": "Setting Departmental Goals",
+                                                            "Thúc đẩy cải tiến sản phẩm": "Driving Product Improvement",
+                                                            "Chuẩn hóa quy trình CSKH": "Standardizing CS Processes",
+                                                            "Quản lý chiến dịch Outbound": "Managing Outbound Campaigns",
+                                                            "Phân tích & Báo cáo": "Analysis & Reporting",
+                                                            "Quản lý dự án CSKH": "CS Project Management",
+                                                            "Xây dựng hệ thống CRM": "Building a CRM System",
+                                                            "Phát triển đào tạo trực tuyến": "Developing Online Training",
+                                                            "Thành lập Trung tâm Hỗ trợ Khách hàng": "Establishing a Help Center",
+                                                            "Tối ưu hóa kênh hỗ trợ": "Optimizing Support Channels",
+                                                            "Triển khai tự động hóa": "Implementing Automation",
+                                                            "Xây dựng AI Bot": "Building an AI Bot",
+                                                            "Khảo sát & Đánh giá khách hàng": "Customer Surveys & Assessment",
+                                                            "Nâng cao trải nghiệm khách hàng": "Enhancing Customer Experience",
+                                                        };
+                                                        
+                                                        const englishTitle = vietnameseToEnglishProjectTitleMap[cleanItemName] || cleanItemName;
+                                                        const project = t.projectsPage.projects.find(p => p.title === englishTitle || p.title === cleanItemName);
+                                                        const projectKey = project ? `project-${project.id}` : null;
+                                                        return (
+                                                            <li key={index} style={{ marginBottom: '0.4rem', fontSize: '0.85rem', lineHeight: '1.4' }}>
+                                                                {projectKey && onNavigate ? (
+                                                                    <button 
+                                                                        onClick={() => {
+                                                                            sessionStorage.setItem('referrer_experience', 'true');
+                                                                            sessionStorage.setItem('referrer_job_index', activeJobIndex.toString());
+                                                                            onNavigate(projectKey);
+                                                                        }} 
+                                                                        style={{ color: activeJob.color, textDecoration: 'underline', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textAlign: 'left' }}
+                                                                    >
+                                                                        {item}
+                                                                    </button>
+                                                                ) : (
+                                                                    <span style={{ color: activeJob.color }}>{item}</span>
+                                                                )}
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </div>
                                         )}
-                                        
                                     </div>
+                                    <div>
+                                        {activeJob.achievements.length > 0 && (
+                                            <div className="achievements-vertical-list">
+                                                <h5 className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2" style={{ marginBottom: '0.75rem', color: activeJob.color, fontSize: '16px' }}>
+                                                    <Icons.TrophyIcon size={16} style={{ marginLeft: '0px', paddingTop: '0px', marginRight: '10px' }} />
+                                                    {pageData.achievementsTitle}
+                                                </h5>
+                                                <ul className="popup-responsibilities" style={{ borderTop: 'none', paddingTop: 0, listStyle: 'none', paddingLeft: '0px' }}>
+                                                    {activeJob.achievements.map((ach, index) => (
+                                                        <li key={index} style={{ marginBottom: '0.4rem', fontSize: '0.85rem', lineHeight: '1.4', color: 'var(--color-brand-text-secondary)', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                                                            <span style={{ color: activeJob.color, flexShrink: 0, marginTop: '2px' }}>
+                                                                {getAchievementIcon(ach.label)}
+                                                            </span>
+                                                            <div>
+                                                                {ach.label}
+                                                                <span className="font-bold ml-2 whitespace-nowrap" style={{ color: activeJob.color, paddingTop: '0px', marginLeft: '10px' }}>{ach.value}%</span>
+                                                            </div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {activeJob.images && activeJob.images.length > 0 && (
+                                        <div className="job-image-slider-wrapper" style={{ gridColumn: '2 / span 2', gridRow: '2', marginTop: '0px', borderTop: '1px solid var(--color-brand-glass-border)', paddingTop: '0px', width: '100%', height: '100px', overflow: 'hidden' }}>
+                                            <style>{`
+                                                @keyframes marquee-l2r {
+                                                    0% { transform: translateX(-50%); }
+                                                    100% { transform: translateX(0%); }
+                                                }
+                                                .marquee-track {
+                                                    display: flex;
+                                                    width: max-content;
+                                                    animation: marquee-l2r 20s linear infinite;
+                                                    gap: 0.75rem;
+                                                }
+                                                .marquee-track:hover {
+                                                    animation-play-state: paused;
+                                                }
+                                            `}</style>
+                                            <h5 className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2" style={{ color: activeJob.color, marginTop: '0px', marginBottom: '8px' }}>
+                                                <Icons.PhotoIcon size={16} />
+                                                {pageData.relatedImagesTitle}
+                                            </h5>
+                                            <div style={{ overflow: 'hidden', width: '100%' }}>
+                                                <div className="marquee-track">
+                                                    {[...activeJob.images, ...activeJob.images, ...activeJob.images, ...activeJob.images].map((src, index) => {
+                                                        const originalIndex = index % activeJob.images.length;
+                                                        return (
+                                                            <div 
+                                                                key={index} 
+                                                                className="transform hover:scale-[1.05] transition-all duration-300 cursor-pointer shrink-0" 
+                                                                onClick={() => handleOpenLightbox(originalIndex)} 
+                                                                style={{ width: '110px', height: '60px' }}
+                                                            >
+                                                                <OptimizedImage 
+                                                                    src={src} 
+                                                                    alt={`Work sample ${originalIndex + 1}`} 
+                                                                    loading="lazy" 
+                                                                    style={{ width: '110px', height: '60px', borderRadius: '8px', objectFit: 'cover' }} 
+                                                                />
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                               
-                               {activeJob.images && activeJob.images.length > 0 && (
-                                   <div className="job-image-slider-wrapper" style={{ marginTop: '1.5rem', borderTop: '1px solid var(--color-brand-glass-border)', paddingTop: '1.5rem' }}>
-                                       <h5 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">{pageData.relatedImagesTitle}</h5>
-                                       <JobImageSlider images={activeJob.images} onImageClick={handleOpenLightbox} />
-                                   </div>
-                               )}
+
+
                            </div>
                         </div>
+
                     )}
                 </div>
             </div>
-            {showDetailPopup && activeJob && document.getElementById('popup-root') && createPortal(
-                <div className="video-popup-overlay" onClick={() => setShowDetailPopup(false)}>
-                    <div className="video-popup-content experience-popup-content no-scrollbar" onClick={e => e.stopPropagation()} style={{ padding: '1.5rem', overflowY: 'auto', border: `2px solid ${activeJob.color}` }}>
-                        <button className="video-popup-close-btn" onClick={() => setShowDetailPopup(false)} aria-label="Close details">
-                            <Icons.XMarkIcon />
-                        </button>
-                        
-                        <div className="job-header-info">
-                            <span className="job-date">{formatJobDate(activeJob.date)}</span>
-                            
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
-                                <div style={{ 
-                                    width: '50px', 
-                                    height: '50px', 
-                                    borderRadius: '100px', 
-                                    backgroundColor: 'white', 
-                                    padding: '2px', 
-                                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexShrink: 0,
-                                    border: `2px solid ${activeJob.color}`
-                                }}>
-                                    <img src={activeJob.logoUrl} alt={activeJob.company} style={{ width: '50px', height: '50px', borderRadius: '100px', objectFit: 'contain' }} referrerPolicy="no-referrer" />
-                                </div>
-                                <h4 style={{ margin: 0, color: activeJob.color }}>{activeJob.company}</h4>
-                            </div>
-
-                            <h3 style={{ marginTop: '0.25rem', marginBottom: '0.5rem', lineHeight: 1.3, fontSize: '1.1rem' }}>{activeJob.title}</h3>
-
-                            <div className="job-team-size" style={{marginTop: '0.5rem'}}>
-                                <span>{pageData.managedTitle}: </span>
-                                <strong>{activeJob.teamSize}</strong>
-                            </div>
-                        </div>
-
-                        <h5 style={{marginTop: '1.5rem', borderTop: '1px solid var(--color-brand-glass-border)', paddingTop: '1rem'}}>{pageData.descriptionTitle}</h5>
-                        <ul className="popup-responsibilities">
-                            {activeJob.responsibilities.map((item, index) => <li key={index} style={{ marginBottom: '0.5rem', fontSize: '0.95rem' }}>{item}</li>)}
-                        </ul>
-
-                        {activeJob.achievements.length > 0 && (
-                            <div style={{ marginTop: '1.5rem' }}>
-                                <h5 style={{ marginBottom: '1rem' }}>{pageData.achievementsTitle}</h5>
-                                <div className="achievements-grid" style={{ gridTemplateColumns: '1fr' }}>
-                                    {activeJob.achievements.map((ach, index) => (
-                                        <JobAchievementCard key={index} achievement={ach} color={activeJob.color} />
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {activeJob.images && activeJob.images.length > 0 && (
-                            <div className="job-image-slider-wrapper" style={{ marginTop: '1.5rem' }}>
-                                <h5>{pageData.relatedImagesTitle}</h5>
-                                <JobImageSlider images={activeJob.images} onImageClick={handleOpenLightbox} />
-                            </div>
-                        )}
-                    </div>
-                </div>,
-                document.getElementById('popup-root')!
-            )}
             {showVideoPopup && document.getElementById('popup-root') && createPortal(
                 <div className="video-popup-overlay" onClick={() => setShowVideoPopup(false)}>
                     <div className="video-popup-content" onClick={e => e.stopPropagation()}>

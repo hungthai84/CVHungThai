@@ -89,6 +89,8 @@ export const vi = {
     positionTitle: "Vị trí",
     managedTitle: "Quản lý",
     descriptionTitle: "Mô tả công việc",
+    tasksTitle: "Danh sách công việc",
+    projectsTitle: "Dự án",
     achievementsTitle: "Thành tựu chính",
     detailsButton: "Xem chi tiết",
     hideButton: "Ẩn chi tiết",
@@ -105,14 +107,23 @@ export const vi = {
             responsibilities: [
                 "Phụ trách tư vấn, hỗ trợ khách hàng qua tổng đài, xử lý khiếu nại và đào tạo nhân viên mới. Được bổ nhiệm Trưởng nhóm, quản lý 12 nhân sự và đảm bảo chất lượng dịch vụ khách hàng."
             ],
+            tasks: [
+                "Nghe điện thoại tư vấn trả lời khách hàng.",
+                "Giải quyết khiếu nại trường hợp khó.",
+                "Gọi điện tư vấn những phiếu đã hoàn thành xong.",
+                "Hỗ trợ các nhân viên mới nghiệp vụ.",
+                "Xử lý các cuộc gọi quấy rối từ khách hàng.",
+                "Quản lý đội ngũ 12 nhân viên CSKH."
+            ],
+            projects: [],
             achievements: [
                 { label: "Hoàn thành nhiệm vụ", value: 100 },
                 { label: "Phản hồi & Hỗ trợ", value: 90 }
             ],
             images: [
-                "https://i.ibb.co/6Rp6rqXt/Mobifone-1.webp",
-                "https://i.ibb.co/0HHrmyz/Mobifone-2.webp",
-                "https://i.ibb.co/TDgZqxG9/Mobifone-3.webp"
+                "https://i.ibb.co/1fpH74zX/Mobifone-1.webp",
+                "https://i.ibb.co/XcctjxG/Mobifone-2.webp",
+                "https://i.ibb.co/1Ym3JtNF/Mobifone-3.webp"
             ]
         },
         {
@@ -126,17 +137,28 @@ export const vi = {
             responsibilities: [
                 "Quản lý vận hành đội ngũ CSKH đa kênh, giám sát chất lượng dịch vụ, đào tạo nhân viên và xử lý các vấn đề khiếu nại khách hàng nhằm nâng cao hiệu quả vận hành."
             ],
+            tasks: [
+                "Quản lý và giám sát đội ngũ chăm sóc khách hàng.",
+                "Theo dõi, phân bổ và phân phối cuộc gọi đến cho các thành viên.",
+                "Đánh giá và huấn luyện nhân viên chăm sóc khách hàng.",
+                "Lập kế hoạch và lịch trình chăm sóc khách hàng (giờ ăn trưa, cuối tuần).",
+                "Xử lý những trở ngại của nhân viên.",
+                "Quản lý và xử lý yêu cầu khách hàng từ đa kênh (Email, Fax, Phone, Chat).",
+                "Khảo sát sự hài lòng của khách hàng.",
+                "Nghe ghi âm cuộc gọi và định hướng đào tạo."
+            ],
+            projects: [],
             achievements: [
                 { label: "Hướng dẫn nhân viên mới", value: 96 },
                 { label: "Biên soạn tài liệu", value: 100 },
                 { label: "Phản hồi & Hỗ trợ", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/gM7nPptY/V247-3.jpg",
-                "https://i.ibb.co/vr4hB1m/V247-2.jpg",
-                "https://i.ibb.co/s9gsmSHs/V247-4.jpg",
-                "https://i.ibb.co/WNQkxzYQ/V247-5.jpg",
-                "https://i.ibb.co/9HwPTKGg/V247-1.jpg"
+                "https://i.ibb.co/YBDgknbQ/V247-1.jpg",
+                "https://i.ibb.co/mY50BJt/V247-2.jpg",
+                "https://i.ibb.co/8DBhdpPk/V247-3.jpg",
+                "https://i.ibb.co/Ld09kw59/V247-4.jpg",
+                "https://i.ibb.co/Fk95xYj9/V247-5.jpg"
             ]
         },
         {
@@ -150,6 +172,24 @@ export const vi = {
             responsibilities: [
                 "Điều hành hoạt động dịch vụ khách hàng, xây dựng quy trình, chương trình chăm sóc khách hàng và hệ thống đào tạo. Phối hợp các phòng ban để nâng cao trải nghiệm khách hàng và chất lượng dịch vụ."
             ],
+            tasks: [
+                "Quản lý và giám sát Phòng chăm sóc khách hàng.",
+                "Xử lý khiếu nại của khách hàng và cải thiện sản phẩm.",
+                "Đào tạo và huấn luyện Nhân Viên.",
+                "Khảo sát sự hài lòng của khách hàng.",
+                "Phối hợp các phòng ban thực hiện chương trình quảng cáo, khuyến mãi.",
+                "Theo dõi và phân tích hoạt động CSKH của đối thủ cạnh tranh.",
+                "Lập kế hoạch thăm hỏi khách hàng VIP, đại lý.",
+                "Ghi nhận ý kiến khách hàng để cải tiến công việc."
+            ],
+            projects: [
+                "1.Xây dựng Phòng Dịch vụ Khách hàng",
+                "2.Thiết lập mục tiêu phòng ban",
+                "5.Thúc đẩy cải tiến sản phẩm",
+                "6.Chuẩn hóa quy trình CSKH",
+                "9.Quản lý chiến dịch Outbound",
+                "11.Phân tích & Báo cáo"
+            ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
                 { label: "Phản hồi & Hỗ trợ", value: 80 },
@@ -157,23 +197,49 @@ export const vi = {
                 { label: "Tham gia & Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/ZzjXpjsX/HTVC-1.webp",
-                "https://i.ibb.co/BKjZQfY5/HTVC-2.webp",
-                "https://i.ibb.co/357kHb63/HTVC-3.webp",
-                "https://i.ibb.co/39Sjm7S0/HTVC-4.webp"
+                "https://i.ibb.co/RTFbkFnb/HTVC-1.webp",
+                "https://i.ibb.co/3YWNjTP9/HTVC-2.webp",
+                "https://i.ibb.co/Y43bGSnC/HTVC-3.webp",
+                "https://i.ibb.co/dwkV4rkQ/HTVC-4.webp"
             ]
         },
         {
             key: "ved",
             date: "2013 - 2016",
-            company: "Công ty Cổ Phần Việt Nam eSport (VED",
+            company: "Công ty Cổ Phần Việt Nam eSport (VED, Shopee, Garena, ShopeePay)",
             logoUrl: "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
+            logos: [
+                "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
+                "https://i.ibb.co/YTBx30Qr/Shoppe.png",
+                "https://i.ibb.co/Kj8Jf4mj/Garena.png",
+                "https://i.ibb.co/7tthy1Qb/Airpay.png"
+            ],
             color: "#ED1B2F",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "130 nhân viên",
             responsibilities: [
                 "Quản lý hơn 150 nhân sự, xây dựng hệ thống CRM, Call Center và quy trình vận hành dịch vụ khách hàng. Tham gia phát triển sản phẩm, quản lý KPI và triển khai các dự án chuyển đổi số."
             ],
+            tasks: [
+                "Tham gia xây dựng các dự án Sản phẩm mới.",
+                "Quản lý Đội ngũ và tổ chức P. Chăm Sóc Khách Hàng.",
+                "Xây dựng Quy trình tại Phòng Chăm Sóc Khách Hàng.",
+                "Xây dựng hệ thống CRM cho các dòng sản phẩm của Cty.",
+                "Đào tạo đội ngũ CSKH và Giao tiếp với khách hàng.",
+                "Báo cáo tình hình P.CSKH hàng tháng.",
+                "Giải quyết Khiếu nại đơn hàng.",
+                "Đánh giá và tham gia các chương trình MKT.",
+                "Kiểm tra và đánh giá sản phẩm trước khi cung cấp."
+            ],
+            projects: [
+                "1.Xây dựng Phòng Dịch vụ Khách hàng",
+                "2.Thiết lập mục tiêu phòng ban",
+                "4.Quản lý dự án CSKH",
+                "6.Chuẩn hóa quy trình CSKH",
+                "10.Xây dựng hệ thống CRM",
+                "14.Phát triển đào tạo trực tuyến",
+                "15.Thành lập Trung tâm Hỗ trợ Khách hàng"
+            ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
                 { label: "Phản hồi & Hỗ trợ", value: 80 },
@@ -181,10 +247,10 @@ export const vi = {
                 { label: "Tham gia & Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/ds1qm1WD/VED-1.webp",
-                "https://i.ibb.co/7d9BFsS6/VED-2.webp",
-                "https://i.ibb.co/1f4dHTyV/VED-3.webp",
-                "https://i.ibb.co/7xNbsP5j/VED-4.webp"
+                "https://i.ibb.co/SDW8fWsB/VED-1.webp",
+                "https://i.ibb.co/5g7CVb1f/VED-2.webp",
+                "https://i.ibb.co/3yPMtc6X/VED-3.webp",
+                "https://i.ibb.co/CpsWRgZm/VED-4.webp"
             ]
         },
         {
@@ -198,19 +264,33 @@ export const vi = {
             responsibilities: [
                 "Trưởng Phòng CallCenter, tối ưu vận hành và triển khai các dự án tích hợp công nghệ, bao gồm Videocall, E-Commerce và hệ thống quản trị dịch vụ khách hàng."
             ],
+            tasks: [
+                "Quản lý hệ thống Callcenter của Prudential.",
+                "Sắp xếp nhân sự cho hệ thống mới.",
+                "Xây dựng và phối hợp đưa E-commerce kết nối hệ thống Callcenter.",
+                "Xây dựng quy trình quản trị tư vấn qua kênh Videocall.",
+                "Xây dựng và chỉnh sửa lại hệ thống BCP.",
+                "Phối hợp giải quyết quyền lợi đáo hạn và bảo hiểm khách hàng."
+            ],
+            projects: [
+                "4.Quản lý dự án CSKH",
+                "5.Thúc đẩy cải tiến sản phẩm",
+                "7.Tối ưu hóa kênh hỗ trợ",
+                "8.Triển khai tự động hóa"
+            ],
             achievements: [
                 { label: "Quản lý Call Center", value: 90 },
                 { label: "Hoàn thành TMĐT Bảo hiểm", value: 80 },
                 { label: "Ra mắt Quản lý Bảo hiểm Trực tuyến", value: 75 }
             ],
             images: [
-                "https://i.ibb.co/CK2Y62Zy/Prudential-1.webp",
-                "https://i.ibb.co/HD71024V/Prudential-2.webp",
-                "https://i.ibb.co/TM32Dg85/Prudential-3.webp",
-                "https://i.ibb.co/sd8bZfsk/Prudential-4.webp",
-                "https://i.ibb.co/XZXnp2Dw/Prudential-5.webp",
-                "https://i.ibb.co/1t8kkHGm/Prudential-6.webp",
-                "https://i.ibb.co/Mk5S8vYR/Prudential-7.webp"
+                "https://i.ibb.co/zVJBFJYg/Prudential-1.webp",
+                "https://i.ibb.co/bg1qx3mP/Prudential-2.webp",
+                "https://i.ibb.co/CKG8pH7F/Prudential-3.webp",
+                "https://i.ibb.co/xtxXNkzP/Prudential-4.webp",
+                "https://i.ibb.co/VWVFDjxK/Prudential-5.webp",
+                "https://i.ibb.co/0RhxxPyG/Prudential-6.webp",
+                "https://i.ibb.co/Zz1XHjnh/Prudential-7.webp"
             ]
         },
         {
@@ -224,6 +304,29 @@ export const vi = {
             responsibilities: [
                 "Quản lý hoạt động chăm sóc khách hàng đa kênh, xây dựng CRM, tối ưu quy trình và hệ thống KPI. Tham gia xây dựng các giải pháp tự động hóa nhằm nâng cao trải nghiệm khách hàng và hiệu suất vận hành."
             ],
+            tasks: [
+                "Quản lý phòng CSKH đa kênh (Ví điện tử MoMo).",
+                "Xây dựng hệ thống CRM - Quan hệ khách hàng.",
+                "Xây dựng và cải thiện quy trình phối hợp cùng pháp lý.",
+                "Đào tạo và cải thiện khả năng CSKH của nhân viên.",
+                "Chịu trách nhiệm toàn bộ KPIs của phòng.",
+                "Đánh giá và nâng cấp trải nghiệm khách hàng.",
+                "Hỗ trợ đối tác và tham gia dự án kết nối Ví điện tử.",
+                "Thành lập trung tâm hỗ trợ khách hàng.",
+                "Quản lý BPO – Mắt Bảo."
+            ],
+            projects: [
+                "1.Xây dựng Phòng Dịch vụ Khách hàng",
+                "2.Thiết lập mục tiêu phòng ban",
+                "4.Quản lý dự án CSKH",
+                "5.Thúc đẩy cải tiến sản phẩm",
+                "6.Chuẩn hóa quy trình CSKH",
+                "8.Triển khai tự động hóa",
+                "10.Xây dựng hệ thống CRM",
+                "11.Phân tích & Báo cáo",
+                "12.Khảo sát & Đánh giá khách hàng",
+                "15.Thành lập Trung tâm Hỗ trợ Khách hàng"
+            ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
                 { label: "Hỗ trợ cộng đồng", value: 80 },
@@ -231,14 +334,14 @@ export const vi = {
                 { label: "Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/S7ySGnvC/Momo-1.webp",
-                "https://i.ibb.co/v6K5jLsQ/Momo-2.webp",
-                "https://i.ibb.co/DsvVt9C/Momo-3.webp",
-                "https://i.ibb.co/gLdK4ss8/Momo-4.webp",
-                "https://i.ibb.co/svYWnsHK/Momo-5.webp",
-                "https://i.ibb.co/BVH5GdtT/Momo-6.webp",
-                "https://i.ibb.co/G3MgYJp3/Momo-7.webp",
-                "https://i.ibb.co/398WZf65/Momo-8.webp"
+                "https://i.ibb.co/M5SdQVN0/Momo-1.webp",
+                "https://i.ibb.co/TxFXgPKb/Momo-2.webp",
+                "https://i.ibb.co/SWMsPtn/Momo-3.webp",
+                "https://i.ibb.co/ksJCmYYT/Momo-4.webp",
+                "https://i.ibb.co/bg9bTNJs/Momo-5.webp",
+                "https://i.ibb.co/rGKR3Tm5/Momo-6.webp",
+                "https://i.ibb.co/YTdvnWQT/Momo-7.webp",
+                "https://i.ibb.co/jPxGXV09/Momo-8.webp"
             ]
         },
         {
@@ -252,6 +355,31 @@ export const vi = {
             responsibilities: [
                 "Điều hành đội ngũ CSKH, chuẩn hóa quy trình, nâng cao chất lượng dịch vụ và triển khai các chương trình cải tiến trải nghiệm khách hàng trên toàn hệ thống."
             ],
+            tasks: [
+                "Quản lý và giám sát đội ngũ chăm sóc khách hàng.",
+                "Theo dõi, phân bổ cuộc gọi đến cho các thành viên.",
+                "Đánh giá và huấn luyện nhân viên CSKH.",
+                "Lập kế hoạch và lịch trình chăm sóc khách hàng.",
+                "Xử lý những trở ngại của nhân viên.",
+                "Xử lý khiếu nại của khách hàng và trao đổi sản phẩm.",
+                "Quản lý yêu cầu khách hàng đa kênh (Email, Fax, Phone, Chat).",
+                "Khảo sát sự hài lòng của khách hàng.",
+                "Thực hiện nhiệm vụ từ Ban Giám Đốc.",
+                "Nghe ghi âm và định hướng chiến lược đào tạo."
+            ],
+            projects: [
+                "1.Xây dựng Phòng Dịch vụ Khách hàng",
+                "2.Thiết lập mục tiêu phòng ban",
+                "6.Chuẩn hóa quy trình CSKH",
+                "7.Tối ưu hóa kênh hỗ trợ",
+                "8.Triển khai tự động hóa",
+                "9.Quản lý chiến dịch Outbound",
+                "10.Xây dựng hệ thống CRM",
+                "11.Phân tích & Báo cáo",
+                "12.Khảo sát & Đánh giá khách hàng",
+                "13.Xây dựng AI Bot",
+                "14.Phát triển đào tạo trực tuyến"
+            ],
             achievements: [
                 { label: "Chuẩn hóa quy trình", value: 100 },
                 { label: "Hỗ trợ cộng đồng", value: 80 },
@@ -259,7 +387,7 @@ export const vi = {
                 { label: "Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/Rp4jmTWF/Finviet-1.webp"
+                "https://i.ibb.co/kg6mf2F7/Finviet-1.webp"
             ]
         },
         {
@@ -292,7 +420,7 @@ export const vi = {
           { name: "Phân tích dữ liệu khách hàng", level: 90 },
           { name: "Xây dựng quy trình dịch vụ", level: 90 },
           { name: "Tự động hóa & Công nghệ CSKH", level: 85 },
-          { name: "Phân tích Tiếng nói Khách hàng", level: 85 },
+          { name: "Phân tích dữ liệu Khách hàng", level: 85 },
           { name: "Tư duy lấy khách hàng làm trung tâm", level: 90 },
           { name: "Quản lý dự án & thời gian", level: 80 }
         ]
@@ -444,7 +572,7 @@ export const vi = {
       {
         year: "2006",
         title: "Quản trị hệ thống CCNA",
-        institution: "Tự học & Phát triển",
+        institution: "Trường Nghề Nhất Nghệ",
         description: "Học phần quản lý mạng.",
         icon: "ServerIcon",
         color: "#1E90FF"
@@ -452,7 +580,7 @@ export const vi = {
       {
         year: "2005",
         title: "Quản trị hệ thống MCSA",
-        institution: "Tự học & Phát triển",
+        institution: "Trường Nghề Nhất Nghệ",
         description: "Học phần quản trị hệ thống máy chủ.",
         icon: "ServerIcon",
         color: "#1E90FF"
@@ -1581,6 +1709,7 @@ export const en = {
     positionTitle: "Position",
     managedTitle: "Managed",
     descriptionTitle: "Job Description",
+    tasksTitle: "Job List",
     achievementsTitle: "Key Achievements",
     detailsButton: "View Details",
     hideButton: "Hide Details",
@@ -1595,20 +1724,24 @@ export const en = {
             title: "Agent (Team Leader from 2007)",
             teamSize: "12 staff",
             responsibilities: [
+                "Responsible for customer consultation, support via call center, complaint handling, and training new staff. Appointed Team Leader, managing 12 staff and ensuring customer service quality."
+            ],
+            tasks: [
                 "Answered customer calls for consultation and support.",
                 "Resolved difficult complaints.",
                 "Made follow-up calls on completed tickets.",
                 "Assisted new employees with training.",
-                "Handled harassment calls from customers."
+                "Handled harassment calls from customers.",
+                "Managed a team of 12 CS staff."
             ],
             achievements: [
                 { label: "Task Completion", value: 100 },
                 { label: "Response & Support", value: 90 }
             ],
             images: [
-                "https://i.ibb.co/6Rp6rqXt/Mobifone-1.webp",
-                "https://i.ibb.co/0HHrmyz/Mobifone-2.webp",
-                "https://i.ibb.co/TDgZqxG9/Mobifone-3.webp"
+                "https://i.ibb.co/1fpH74zX/Mobifone-1.webp",
+                "https://i.ibb.co/XcctjxG/Mobifone-2.webp",
+                "https://i.ibb.co/1Ym3JtNF/Mobifone-3.webp"
             ]
         },
         {
@@ -1620,17 +1753,17 @@ export const en = {
             title: "CS Team Leader",
             teamSize: "12 staff",
             responsibilities: [
+                "Managed the customer service team, tracked call allocation, and evaluated staff performance. Handled customer requests and complaints across multiple channels."
+            ],
+            tasks: [
                 "Managed and supervised the customer service team.",
                 "Tracked, allocated, and dispatched incoming calls to team members.",
                 "Evaluated and coached customer service staff.",
-                "Planned and scheduled shifts for customer service during lunch and weekends.",
+                "Planned and scheduled shifts for customer service (lunch, weekends).",
                 "Handled employee obstacles.",
-                "Resolved customer complaints and managed product returns.",
-                "Managed and handled customer requests from all channels (email, fax, phone, chat).",
-                "Resolved customer complaints and proposed solutions to customer service management.",
+                "Managed customer requests from all channels (Email, Fax, Phone, Chat).",
                 "Conducted customer satisfaction surveys.",
-                "Performed tasks assigned by the Board of Directors.",
-                "Planned call monitoring and reviewed recordings. Provided strategic training direction for staff."
+                "Planned call monitoring and reviewed recordings for training."
             ],
             achievements: [
                 { label: "New Employee Guidance", value: 96 },
@@ -1638,11 +1771,11 @@ export const en = {
                 { label: "Response & Support", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/gM7nPptY/V247-3.jpg",
-                "https://i.ibb.co/vr4hB1m/V247-2.jpg",
-                "https://i.ibb.co/s9gsmSHs/V247-4.jpg",
-                "https://i.ibb.co/WNQkxzYQ/V247-5.jpg",
-                "https://i.ibb.co/9HwPTKGg/V247-1.jpg"
+                "https://i.ibb.co/YBDgknbQ/V247-1.jpg",
+                "https://i.ibb.co/mY50BJt/V247-2.jpg",
+                "https://i.ibb.co/8DBhdpPk/V247-3.jpg",
+                "https://i.ibb.co/Ld09kw59/V247-4.jpg",
+                "https://i.ibb.co/Fk95xYj9/V247-5.jpg"
             ]
         },
         {
@@ -1654,19 +1787,17 @@ export const en = {
             title: "Head of Customer Service",
             teamSize: "12 staff",
             responsibilities: [
-                 "Managed and supervised the customer service department.",
-                 "Handled customer complaints and improved products.",
-                 "Planned training and coaching.",
-                 "Conducted customer satisfaction surveys.",
-                 "Coordinated with related departments for advertising and promotion programs.",
-                 "Monitored, updated, and analyzed competitors' customer service activities.",
-                 "Planned visits to VIP customers, agents, and regular customers.",
-                 "Proactively planned gifts for customers on holidays, special occasions, and anniversaries.",
-                 "Monitored customer care plans, checked product quality, and maintenance activities.",
-                 "Organized and measured customer satisfaction levels.",
-                 "All required customer care activities were established as processes and continuously improved.",
-                 "Developed an annual customer care budget plan.",
-                 "Performed tasks assigned by the Board of Directors."
+                "Managed and supervised the customer service department. Handled customer complaints, improved products, and planned training and coaching programs."
+            ],
+            tasks: [
+                "Managed and supervised the Customer Service Department.",
+                "Handled customer complaints and product improvement.",
+                "Planned training and coaching for staff.",
+                "Conducted customer satisfaction surveys.",
+                "Coordinated with departments for promotions and advertising.",
+                "Monitored and analyzed competitors' CS activities.",
+                "Planned visits for VIP customers and agents.",
+                "Gathered customer feedback for work improvement."
             ],
             achievements: [
                 { label: "Process Standardization", value: 100 },
@@ -1675,21 +1806,30 @@ export const en = {
                 { label: "Project Participation & Completion", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/ZzjXpjsX/HTVC-1.webp",
-                "https://i.ibb.co/BKjZQfY5/HTVC-2.webp",
-                "https://i.ibb.co/357kHb63/HTVC-3.webp",
-                "https://i.ibb.co/39Sjm7S0/HTVC-4.webp"
+                "https://i.ibb.co/RTFbkFnb/HTVC-1.webp",
+                "https://i.ibb.co/3YWNjTP9/HTVC-2.webp",
+                "https://i.ibb.co/Y43bGSnC/HTVC-3.webp",
+                "https://i.ibb.co/dwkV4rkQ/HTVC-4.webp"
             ]
         },
         {
             key: "ved",
             date: "2013 - 2016",
-            company: "Vietnam eSport (VED)",
+            company: "Vietnam eSport (VED) - (Shopee, Garena, ShopeePay)",
             logoUrl: "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
+            logos: [
+                "https://i.ibb.co/BKHcWL5R/-Logo-VED.gif",
+                "https://i.ibb.co/YTBx30Qr/Shoppe.png",
+                "https://i.ibb.co/Kj8Jf4mj/Garena.png",
+                "https://i.ibb.co/7tthy1Qb/Airpay.png"
+            ],
             color: "#ED1B2F",
             title: "Head of Customer Service",
             teamSize: "130 staff",
             responsibilities: [
+                "Participated in building new projects and products. Managed and organized the Customer Service Department, built CRM systems and operational processes."
+            ],
+            tasks: [
                 "Participated in building new projects and products.",
                 "Managed and organized the Customer Service Department.",
                 "Built processes for the Customer Service Department.",
@@ -1698,7 +1838,7 @@ export const en = {
                 "Provided monthly reports on the CS Department's situation.",
                 "Resolved order complaints.",
                 "Evaluated and participated in Marketing programs.",
-                "Tested and evaluated products before providing them to customers."
+                "Tested and evaluated products before providing them."
             ],
             achievements: [
                 { label: "Process Standardization", value: 100 },
@@ -1707,10 +1847,10 @@ export const en = {
                 { label: "Project Participation & Completion", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/ds1qm1WD/VED-1.webp",
-                "https://i.ibb.co/7d9BFsS6/VED-2.webp",
-                "https://i.ibb.co/1f4dHTyV/VED-3.webp",
-                "https://i.ibb.co/7xNbsP5j/VED-4.webp"
+                "https://i.ibb.co/SDW8fWsB/VED-1.webp",
+                "https://i.ibb.co/5g7CVb1f/VED-2.webp",
+                "https://i.ibb.co/3yPMtc6X/VED-3.webp",
+                "https://i.ibb.co/CpsWRgZm/VED-4.webp"
             ]
         },
         {
@@ -1722,11 +1862,15 @@ export const en = {
             title: "Call Center Manager",
             teamSize: "12 staff",
             responsibilities: [
+                "Managed the Call Center system, arranged personnel for the new system, and integrated E-commerce with the Call Center. Implemented Videocall consultations."
+            ],
+            tasks: [
                 "Managed the Call Center system of Prudential.",
                 "Arranged personnel for the new system.",
-                "Built and coordinated the integration of E-commerce with the Call Center system.",
-                "Built a process for managing customer consultations via Videocall.",
-                "Built and modified the Reporting system."
+                "Built and coordinated integration of E-commerce with Call Center.",
+                "Built process for managing consultations via Videocall.",
+                "Built and modified the BCP system.",
+                "Coordinated maturity benefits and insurance claims resolution."
             ],
             achievements: [
                 { label: "Call Center Management", value: 90 },
@@ -1734,13 +1878,13 @@ export const en = {
                 { label: "Launch Online Insurance Management", value: 75 }
             ],
             images: [
-                "https://i.ibb.co/CK2Y62Zy/Prudential-1.webp",
-                "https://i.ibb.co/HD71024V/Prudential-2.webp",
-                "https://i.ibb.co/TM32Dg85/Prudential-3.webp",
-                "https://i.ibb.co/sd8bZfsk/Prudential-4.webp",
-                "https://i.ibb.co/XZXnp2Dw/Prudential-5.webp",
-                "https://i.ibb.co/1t8kkHGm/Prudential-6.webp",
-                "https://i.ibb.co/Mk5S8vYR/Prudential-7.webp"
+                "https://i.ibb.co/zVJBFJYg/Prudential-1.webp",
+                "https://i.ibb.co/bg1qx3mP/Prudential-2.webp",
+                "https://i.ibb.co/CKG8pH7F/Prudential-3.webp",
+                "https://i.ibb.co/xtxXNkzP/Prudential-4.webp",
+                "https://i.ibb.co/VWVFDjxK/Prudential-5.webp",
+                "https://i.ibb.co/0RhxxPyG/Prudential-6.webp",
+                "https://i.ibb.co/Zz1XHjnh/Prudential-7.webp"
             ]
         },
         {
@@ -1752,14 +1896,16 @@ export const en = {
             title: "Head of Customer Service",
             teamSize: "60 staff",
             responsibilities: [
-                "Managed the CS department for MoMo e-wallet across all channels.",
-                "Built a CRM - Customer Relationship system.",
-                "Built and improved processes, coordinating with legal.",
-                "Trained and enhanced the customer care skills of staff.",
-                "Was responsible for all department KPIs.",
+                "Managed the CS department for MoMo e-wallet across all channels. Built CRM systems, improved processes, and enhanced customer experience through automation."
+            ],
+            tasks: [
+                "Managed CS department for MoMo e-wallet across all channels.",
+                "Built CRM - Customer Relationship system.",
+                "Built and improved processes with legal coordination.",
+                "Trained and enhanced customer care skills of staff.",
+                "Responsible for all department KPIs.",
                 "Evaluated and upgraded the customer experience.",
-                "Supported partners and participated in projects connecting with the E-wallet.",
-                "Improved application quality with the Product Department.",
+                "Supported partners and participated in E-wallet projects.",
                 "Established a customer support center.",
                 "Managed BPO – Mat Bao."
             ],
@@ -1770,14 +1916,14 @@ export const en = {
                 { label: "Project Completion", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/S7ySGnvC/Momo-1.webp",
-                "https://i.ibb.co/v6K5jLsQ/Momo-2.webp",
-                "https://i.ibb.co/DsvVt9C/Momo-3.webp",
-                "https://i.ibb.co/gLdK4ss8/Momo-4.webp",
-                "https://i.ibb.co/svYWnsHK/Momo-5.webp",
-                "https://i.ibb.co/BVH5GdtT/Momo-6.webp",
-                "https://i.ibb.co/G3MgYJp3/Momo-7.webp",
-                "https://i.ibb.co/398WZf65/Momo-8.webp"
+                "https://i.ibb.co/M5SdQVN0/Momo-1.webp",
+                "https://i.ibb.co/TxFXgPKb/Momo-2.webp",
+                "https://i.ibb.co/SWMsPtn/Momo-3.webp",
+                "https://i.ibb.co/ksJCmYYT/Momo-4.webp",
+                "https://i.ibb.co/bg9bTNJs/Momo-5.webp",
+                "https://i.ibb.co/rGKR3Tm5/Momo-6.webp",
+                "https://i.ibb.co/YTdvnWQT/Momo-7.webp",
+                "https://i.ibb.co/jPxGXV09/Momo-8.webp"
             ]
         },
         {
@@ -1789,6 +1935,9 @@ export const en = {
             title: "Head of Customer Service",
             teamSize: "17 staff",
             responsibilities: [
+                "Managed and supervised the customer service team, tracked call allocation, and evaluated staff performance. Conducted training and improved customer satisfaction."
+            ],
+            tasks: [
                 "Managed and supervised the customer service team.",
                 "Tracked, allocated, and dispatched incoming calls.",
                 "Evaluated and coached staff.",
@@ -1796,7 +1945,6 @@ export const en = {
                 "Handled employee obstacles.",
                 "Resolved customer complaints and managed product returns.",
                 "Managed customer requests from all channels.",
-                "Proposed customer service management solutions.",
                 "Conducted customer satisfaction surveys.",
                 "Performed tasks assigned by the Board of Directors.",
                 "Planned call monitoring and reviewed recordings."
@@ -1808,7 +1956,7 @@ export const en = {
                 { label: "Project Completion", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/Rp4jmTWF/Finviet-1.webp"
+                "https://i.ibb.co/kg6mf2F7/Finviet-1.webp"
             ]
         },
         {

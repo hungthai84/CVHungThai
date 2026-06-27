@@ -256,8 +256,25 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
     useEffect(() => {
         if (groupedVoices.vi.length > 0) {
-            const hasVoice = groupedVoices.vi.some(v => v.name === localVoiceName);
-            if (!hasVoice) {
+            const matchedVoice = groupedVoices.vi.find(v => v.name === localVoiceName) || 
+                                 groupedVoices.vi.find(v => {
+                                     const searchClean = localVoiceName.toLowerCase().replace(/\s+/g, '');
+                                     const voiceClean = v.name.toLowerCase().replace(/\s+/g, '');
+                                     return voiceClean.includes(searchClean) || searchClean.includes(voiceClean);
+                                 });
+
+            if (matchedVoice) {
+                if (matchedVoice.name !== localVoiceName) {
+                    setLocalVoiceName(matchedVoice.name);
+                }
+            } else {
+                // If we are still in the initial state with only the mock gTTS voice,
+                // and localVoiceName equals the actual saved selectedAiVoiceName,
+                // do NOT reset yet because real system voices are likely still loading in the background.
+                if (groupedVoices.vi.length === 1 && groupedVoices.vi[0].name.includes('gTTS') && localVoiceName === selectedAiVoiceName) {
+                    return;
+                }
+
                 const defaultVi = groupedVoices.vi.find(v => v.name.includes('gTTS')) || 
                                   groupedVoices.vi.find(v => v.name.includes('Google tiếng Việt') || v.lang.startsWith('vi')) || 
                                   groupedVoices.vi[0];
@@ -266,7 +283,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                 }
             }
         }
-    }, [groupedVoices.vi, localVoiceName]);
+    }, [groupedVoices.vi, localVoiceName, selectedAiVoiceName]);
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
     
@@ -471,10 +488,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                         tooltipText={pageData.tooltipText}
                     />
                     <div className="settings-actions">
-                        <button className="btn btn-secondary" onClick={handleResetChanges}>
+                        <button className="btn btn-secondary" onClick={handleResetChanges} style={{ borderRadius: '999px' }}>
                             {settingsText.resetButton}
                         </button>
-                        <button className="btn btn-primary" onClick={handleSaveChanges}>
+                        <button className="btn btn-primary" onClick={handleSaveChanges} style={{ borderRadius: '999px' }}>
                             {settingsText.saveButton}
                         </button>
                     </div>
@@ -521,6 +538,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                     value={localVoiceName}
                                                     onChange={(e) => setLocalVoiceName(e.target.value)}
                                                     className="custom-select"
+                                                    style={{ borderRadius: '999px' }}
                                                 >
                                                     {groupedVoices.vi.length > 0 ? (
                                                         groupedVoices.vi.map(voice => (
@@ -543,10 +561,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                         if (isSpeaking) {
                                                             cancel();
                                                         } else {
-                                                            const selectedVoice = voices.find(v => v.name === localVoiceName);
+                                                            const selectedVoice = voices.find(v => v.name === localVoiceName) || 
+                                                                                  voices.find(v => {
+                                                                                      const searchClean = localVoiceName.toLowerCase().replace(/\s+/g, '');
+                                                                                      const voiceClean = v.name.toLowerCase().replace(/\s+/g, '');
+                                                                                      return voiceClean.includes(searchClean) || searchClean.includes(voiceClean);
+                                                                                  });
                                                             const voiceLang = selectedVoice?.lang?.toLowerCase() || '';
-                                                            const isVi = voiceLang.startsWith('vi') || localVoiceName.includes('tiếng Việt');
-                                                            const isEn = voiceLang.startsWith('en');
+                                                            const isVi = voiceLang.startsWith('vi') || localVoiceName.toLowerCase().includes('tiếng việt') || localVoiceName.toLowerCase().includes('vi-') || localVoiceName.toLowerCase().includes('gtts');
+                                                            const isEn = voiceLang.startsWith('en') || localVoiceName.toLowerCase().includes('english') || localVoiceName.toLowerCase().includes('en-');
                                                             let text = "Hello, this is a test voice.";
                                                             let targetLang = voiceLang;
 
@@ -591,12 +614,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                         active:scale-95 w-full sm:w-auto
                                                         ${isSpeaking ? 'ring-2 ring-primary/50 ring-offset-2 ring-offset-background' : ''}
                                                     `}
-                                                    style={{ borderRadius: '100px', borderStyle: 'dashed', borderWidth: '2px', borderColor: 'currentColor' }}
+                                                    style={{ borderRadius: '100px', borderStyle: 'dashed', borderWidth: '2px', borderColor: 'currentColor', marginTop: '0px', paddingTop: '6px', paddingBottom: '7px' }}
                                                     title={isSpeaking ? "Pause Preview" : "Play Preview"}
                                                 >
                                                     <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></span>
                                                     {isSpeaking ? <Icons.PauseIcon size={18} className="animate-pulse" /> : <Icons.PlayIcon size={18} />}
-                                                    <span className="relative z-10">{isSpeaking ? 'Đang nói...' : 'Nghe thử giọng nói'}</span>
+                                                    <span className="relative z-10" style={{ marginTop: '0px', textAlign: 'left', fontWeight: 'bold', fontSize: '14.333300000000001px', marginLeft: '0px', marginBottom: '0px', paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px', paddingLeft: '10px', marginRight: '0px' }}>{isSpeaking ? 'Đang nói...' : 'Nghe thử giọng nói'}</span>
                                                 </button>
                                             </div>
                                         </div>

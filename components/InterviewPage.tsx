@@ -30,9 +30,10 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ display: 'flex', flexDirection: 'column', padding: 0 }}>
+            <div className="info-card" style={{ position: 'relative', height: '100%', width: '100%', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 
-                <div style={{ flexShrink: 0, padding: '1.5rem 1.5rem 0' }}>
+                {/* Floating InfoBadge */}
+                <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', zIndex: 20 }}>
                     <InfoBadge
                         icon={<Icons.PresentationIcon />}
                         text={pageData.badge}
@@ -41,31 +42,31 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
                     />
                 </div>
 
-                <div style={{ flex: 1, minHeight: 0, padding: '1.5rem', paddingTop: '1rem', position: 'relative' }}>
-                    <div style={{ width: '100%', height: '100%', borderRadius: '15px', overflow: 'hidden', background: '#000', position: 'relative' }}>
-                        <video
-                            ref={videoRef}
-                            src="https://cdn.scena.ai/project/9626/87afcc11b91fa7e15873f067d16bf91f0575f92b90f03caa08359a6be05771de.mp4"
-                            controls
-                            loop
-                            playsInline
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                        />
+                {/* Full-bleed Video Container */}
+                <div style={{ flex: 1, minHeight: 0, position: 'relative', width: '100%', height: '100%' }}>
+                    <video
+                        ref={videoRef}
+                        src="https://cdn.scena.ai/project/9626/87afcc11b91fa7e15873f067d16bf91f0575f92b90f03caa08359a6be05771de.mp4"
+                        controls
+                        loop
+                        playsInline
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
 
-                        {showPrompt && (
-                            <div style={{
-                                position: 'absolute',
-                                inset: 0,
-                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                                backdropFilter: 'blur(8px)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                zIndex: 10,
-                                padding: '1.5rem',
-                                color: '#fff',
-                                textAlign: 'center'
-                            }}>
+                    {showPrompt && (
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            backdropFilter: 'blur(8px)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 10,
+                            padding: '1.5rem',
+                            color: '#fff',
+                            textAlign: 'center'
+                        }}>
                                 <div style={{
                                     maxWidth: '400px',
                                     backgroundColor: 'var(--color-card-bg, #1a2035)',
@@ -156,9 +157,7 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
                                 </div>
                             </div>
                         )}
-                    </div>
                 </div>
-                
             </div>
         </PageLayout>
     );

@@ -64,7 +64,7 @@ const ServiceCard: React.FC<{ service: Service, index: number }> = ({ service, i
             {service.logos && service.logos.length > 0 && (
                 <div className="service-logos-container">
                     {service.logos.map((logoUrl, logoIndex) => (
-                        <img key={logoIndex} src={logoUrl} alt={`Logo ${logoIndex + 1}`} className="service-logo-item-new" />
+                        <img key={logoIndex} src={logoUrl} alt={`Logo ${logoIndex + 1}`} className="service-logo-item-new" style={{ border: `1.5px solid ${service.color}` }} />
                     ))}
                 </div>
             )}

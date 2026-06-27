@@ -48,6 +48,13 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const pageData = t.projectPostPopup;
     const post = useMemo(() => (t.projectPosts as any)[projectId] || (t.projectPosts as any).default, [projectId, t]);
     
+    const [fromExperience, setFromExperience] = useState(false);
+
+    useEffect(() => {
+        const isFromExp = sessionStorage.getItem('referrer_experience') === 'true';
+        setFromExperience(isFromExp);
+    }, []);
+
     const achievement = useMemo(() => {
         const achList = t.achievementsPage?.achievements;
         if (!Array.isArray(achList)) return null;
@@ -93,7 +100,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             ].join('. ');
 
             const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
-            const voiceToUse = language === 'vi' ? 'Nam Minh' : (selectedAiVoiceName || defaultAiVoiceName);
+            const voiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
             speak(fullSpeechText, {
                 voiceName: voiceToUse,
@@ -255,13 +262,42 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                             }}
                         />
                     </div>
-                    <button
-                        onClick={() => onNavigate?.('projects')}
-                        className="btn btn-secondary z-10"
-                    >
-                        <Icons.ChevronLeftIcon size={18} />
-                        <span>{pageData.backToProjects}</span>
-                    </button>
+                    <div className="flex gap-2">
+                        {fromExperience ? (
+                            <button
+                                onClick={() => {
+                                    sessionStorage.removeItem('referrer_experience');
+                                    // Keep referrer_job_index so WorkExperiencePage knows which job to show
+                                    onNavigate?.('experience');
+                                }}
+                                className="btn btn-secondary z-10 flex items-center gap-1.5"
+                                style={{ 
+                                    borderColor: 'var(--color-brand-accent, #3b82f6)', 
+                                    color: 'var(--color-brand-accent, #3b82f6)',
+                                    fontWeight: '600',
+                                    borderRadius: '999px'
+                                }}
+                            >
+                                <Icons.ChevronLeftIcon size={18} />
+                                <span>{language === 'vi' ? 'Quay lại thẻ Công ty' : 'Back to Company'}</span>
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    sessionStorage.removeItem('referrer_experience');
+                                    sessionStorage.removeItem('referrer_job_index');
+                                    onNavigate?.('projects');
+                                }}
+                                className="btn btn-secondary z-10"
+                                style={{
+                                    borderRadius: '999px'
+                                }}
+                            >
+                                <Icons.ChevronLeftIcon size={18} />
+                                <span>{pageData.backToProjects}</span>
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                  <div className="project-post-scroll-content no-scrollbar" ref={scrollRef}>

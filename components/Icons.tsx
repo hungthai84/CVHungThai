@@ -72,6 +72,8 @@ import {
     RefreshCw,
     X as XIconLucide,
     ExternalLink,
+    Maximize,
+    Minimize,
 } from 'lucide-react';
 
 // Re-exporting with the original names used in the app
@@ -153,3 +155,5 @@ export const UploadIcon = FileUp;
 export const ArrowPathIcon = RefreshCw;
 export const XIcon = XIconLucide;
 export const ExternalLinkIcon = ExternalLink;
+export const MaximizeIcon = Maximize;
+export const MinimizeIcon = Minimize;

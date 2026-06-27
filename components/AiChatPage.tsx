@@ -55,7 +55,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     }, [language, userGender]);
 
     const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
-    const aiVoiceToUse = language === 'vi' ? 'Nam Minh' : (selectedAiVoiceName || defaultAiVoiceName);
+    const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
 

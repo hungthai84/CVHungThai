@@ -6,11 +6,12 @@ interface InfoBadgeProps {
     tooltipTitle: string;
     tooltipText: string;
     style?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
 }
 
-const InfoBadge: React.FC<InfoBadgeProps> = ({ icon, text, tooltipTitle, tooltipText, style }) => {
+const InfoBadge: React.FC<InfoBadgeProps> = ({ icon, text, tooltipTitle, tooltipText, style, containerStyle }) => {
     return (
-        <div className="about-badge-container">
+        <div className="about-badge-container" style={containerStyle}>
             <div className="info-badge" style={style}>
                 <div className="badge-glow"></div>
                 <span className="badge-content">

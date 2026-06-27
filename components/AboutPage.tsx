@@ -29,18 +29,33 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     return (
         <PageLayout id={id}>
             <div className="info-card" style={{ marginBottom: '0px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
-                <InfoBadge
-                    icon={<Icons.UserIcon />}
-                    text={pageData.badge}
-                    tooltipTitle={pageData.tooltipTitle}
-                    tooltipText={pageData.tooltipText}
-                    style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}
-                />
+                <div 
+                    onClick={handleToggleIntro} 
+                    style={{ 
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, opacity 0.2s ease',
+                        height: '50px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px'
+                    }}
+                    className="hover:scale-[1.03] active:scale-[0.98] hover:opacity-90"
+                    title={isIntroPlaying ? (language === 'vi' ? 'Hủy bỏ video giới thiệu' : 'Cancel introduction video') : (language === 'vi' ? 'Xem video giới thiệu' : 'View introduction video')}
+                >
+                    <InfoBadge
+                        icon={<Icons.UserIcon />}
+                        text={pageData.badge}
+                        tooltipTitle={pageData.tooltipTitle}
+                        tooltipText={pageData.tooltipText}
+                        style={{ marginTop: '0px', marginBottom: '0px' }}
+                    />
+                </div>
 
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '615px', minHeight: 0 }}>
+                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '530px', minHeight: 0 }}>
                             {/* HTML5 Video Player */}
                             <div style={{ 
                                 width: '100%', 
@@ -50,7 +65,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                                 border: 'var(--color-brand-glass-border)',
                                 boxShadow: 'var(--card-box-shadow)',
                                 position: 'relative',
-                                aspectRatio: '16/9'
+                                aspectRatio: '32/9'
                             }}>
                                 <video 
                                     key={videoUrl}
@@ -123,13 +138,11 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                                     <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
                                     <div className="personal-info-grid no-scrollbar" style={{ 
                                         height: '360px', 
-                                        paddingRight: '0px', 
+                                        padding: '1.5rem', 
                                         marginTop: '0px', 
                                         marginBottom: '0px', 
-                                        paddingTop: '0px',
-                                        display: 'flex',
-                                        flexWrap: 'wrap',
-                                        justifyContent: 'center',
+                                        display: 'grid',
+                                        gridTemplateColumns: '1fr 1fr',
                                         alignContent: 'center',
                                         gap: '1.5rem'
                                     }}>
@@ -138,13 +151,24 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                                             
                                             return (
                                                 <div key={item.key} className="personal-info-item" style={{ 
-                                                    width: 'calc(33.333% - 1.5rem)', 
-                                                    minWidth: '160px',
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: '0.5rem'
+                                                    gap: '1rem'
                                                 }}>
-                                                    <Icon className="info-item-icon" />
+                                                    <div style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '12px',
+                                                        background: 'rgba(255, 255, 255, 0.08)',
+                                                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                                                        boxShadow: '0 8px 16px -4px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        flexShrink: 0
+                                                    }}>
+                                                        <Icon className="info-item-icon" style={{ width: '22px', height: '22px' }} />
+                                                    </div>
                                                     <div className="info-item-text">
                                                         <span className="info-item-label">{item.label}</span>
                                                         <span className="info-item-value" style={{ fontSize: '0.85rem' }}>
