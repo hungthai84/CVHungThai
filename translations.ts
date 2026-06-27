@@ -164,7 +164,7 @@ export const vi = {
         {
             key: "lbc",
             date: "2011 - 2013",
-            company: "Công ty Cổ Phần Thông Tin Băng Rộng Cuộc Sống (LBC)",
+            company: "Công ty CPTT Băng Rộng Cuộc Sống (LBC)",
             logoUrl: "https://i.ibb.co/DDYsQ20B/LBC.png",
             color: "#F37021",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
