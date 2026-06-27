@@ -81,7 +81,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                                         display: 'block'
                                     }}
                                     src={videoUrl}
-                                    poster="https://i.postimg.cc/kX4B2FAS/hero-bg-fallback.jpg"
+                                    poster=""
                                     onEnded={() => {
                                         if (isIntroPlaying) {
                                             setVideoUrl(DEFAULT_VIDEO);

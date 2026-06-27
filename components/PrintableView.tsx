@@ -70,7 +70,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
 
                 <div style={{ marginBottom: '1.5rem', textAlign: 'center', backgroundColor: 'rgba(255, 247, 237, 0.9)', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ffedd5', zIndex: 2, position: 'relative', backdropFilter: 'blur(8px)' }}>
                     <p style={{ margin: 0, fontSize: '9pt', color: '#c2410c', fontWeight: 600 }}>
-                        {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Click anywhere to view full website or visit:' : 'Hãy truy cập Website để xem thông tin và click vào sẽ vào trang website:'} <span style={{ color: '#ea580c', textDecoration: 'underline' }}>https://www.nguyenhungthai.powerservice.one/</span>
+                        {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Click anywhere to view full website or visit:' : 'Xem thông tin chi tiết và đầy đủ tại Website :'} <span style={{ color: '#ea580c', textDecoration: 'underline' }}>https://www.nguyenhungthai.powerservice.one/</span>
                     </p>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1.9fr 1.1fr', gap: '1.5rem', flex: 1 }}>

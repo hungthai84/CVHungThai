@@ -20,14 +20,14 @@ export async function generatePdfFromElement(elementId: string, fileName: string
 
         // Use html2canvas to capture the element
         const canvas = await html2canvas(element, {
-            scale: 2,
+            scale: 1.5,
             useCORS: true,
             logging: false,
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
 
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/jpeg', 0.75);
         
         // Calculate dimensions to fit PDF page
         // Standard A4 is 210mm x 297mm
@@ -49,12 +49,12 @@ export async function generatePdfFromElement(elementId: string, fileName: string
             for (let i = 0; i < pages.length; i++) {
                 const pageElement = pages[i] as HTMLElement;
                 const pageCanvas = await html2canvas(pageElement, {
-                    scale: 2,
+                    scale: 1.5,
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#ffffff'
                 });
-                const pageImgData = pageCanvas.toDataURL('image/png');
+                const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.75);
                 
                 const pageHeight = pdf.internal.pageSize.getHeight();
                 
@@ -62,12 +62,12 @@ export async function generatePdfFromElement(elementId: string, fileName: string
                     pdf.addPage();
                 }
                 
-                pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pageHeight);
+                pdf.addImage(pageImgData, 'JPEG', 0, 0, pdfWidth, pageHeight, undefined, 'FAST');
             }
         } else {
             // Fallback to single image if structure is different
             const pageHeight = pdf.internal.pageSize.getHeight();
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pageHeight);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pageHeight, undefined, 'FAST');
         }
 
         // Generate Blob URL
