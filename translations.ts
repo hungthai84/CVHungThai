@@ -121,9 +121,9 @@ export const vi = {
                 { label: "Phản hồi & Hỗ trợ", value: 90 }
             ],
             images: [
-                "https://i.ibb.co/1fpH74zX/Mobifone-1.webp",
-                "https://i.ibb.co/XcctjxG/Mobifone-2.webp",
-                "https://i.ibb.co/1Ym3JtNF/Mobifone-3.webp"
+                "https://i.ibb.co/6Rp6rqXt/Mobifone-1.webp",
+                "https://i.ibb.co/0HHrmyz/Mobifone-2.webp",
+                "https://i.ibb.co/TDgZqxG9/Mobifone-3.webp"
             ]
         },
         {
@@ -154,11 +154,11 @@ export const vi = {
                 { label: "Phản hồi & Hỗ trợ", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/YBDgknbQ/V247-1.jpg",
-                "https://i.ibb.co/mY50BJt/V247-2.jpg",
                 "https://i.ibb.co/8DBhdpPk/V247-3.jpg",
-                "https://i.ibb.co/Ld09kw59/V247-4.jpg",
-                "https://i.ibb.co/Fk95xYj9/V247-5.jpg"
+                "https://i.ibb.co/vr4hB1m/V247-2.jpg",
+                "https://i.ibb.co/s9gsmSHs/V247-4.jpg",
+                "https://i.ibb.co/WNQkxzYQ/V247-5.jpg",
+                "https://i.ibb.co/9HwPTKGg/V247-1.jpg"
             ]
         },
         {
@@ -197,10 +197,10 @@ export const vi = {
                 { label: "Tham gia & Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/RTFbkFnb/HTVC-1.webp",
-                "https://i.ibb.co/3YWNjTP9/HTVC-2.webp",
-                "https://i.ibb.co/Y43bGSnC/HTVC-3.webp",
-                "https://i.ibb.co/dwkV4rkQ/HTVC-4.webp"
+                "https://i.ibb.co/ZzjXpjsX/HTVC-1.webp",
+                "https://i.ibb.co/BKjZQfY5/HTVC-2.webp",
+                "https://i.ibb.co/357kHb63/HTVC-3.webp",
+                "https://i.ibb.co/39Sjm7S0/HTVC-4.webp"
             ]
         },
         {
@@ -247,10 +247,10 @@ export const vi = {
                 { label: "Tham gia & Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/SDW8fWsB/VED-1.webp",
-                "https://i.ibb.co/5g7CVb1f/VED-2.webp",
-                "https://i.ibb.co/3yPMtc6X/VED-3.webp",
-                "https://i.ibb.co/CpsWRgZm/VED-4.webp"
+                "https://i.ibb.co/ds1qm1WD/VED-1.webp",
+                "https://i.ibb.co/7d9BFsS6/VED-2.webp",
+                "https://i.ibb.co/1f4dHTyV/VED-3.webp",
+                "https://i.ibb.co/7xNbsP5j/VED-4.webp"
             ]
         },
         {
@@ -284,13 +284,13 @@ export const vi = {
                 { label: "Ra mắt Quản lý Bảo hiểm Trực tuyến", value: 75 }
             ],
             images: [
-                "https://i.ibb.co/zVJBFJYg/Prudential-1.webp",
-                "https://i.ibb.co/bg1qx3mP/Prudential-2.webp",
-                "https://i.ibb.co/CKG8pH7F/Prudential-3.webp",
-                "https://i.ibb.co/xtxXNkzP/Prudential-4.webp",
-                "https://i.ibb.co/VWVFDjxK/Prudential-5.webp",
-                "https://i.ibb.co/0RhxxPyG/Prudential-6.webp",
-                "https://i.ibb.co/Zz1XHjnh/Prudential-7.webp"
+                "https://i.ibb.co/CK2Y62Zy/Prudential-1.webp",
+                "https://i.ibb.co/HD71024V/Prudential-2.webp",
+                "https://i.ibb.co/TM32Dg85/Prudential-3.webp",
+                "https://i.ibb.co/sd8bZfsk/Prudential-4.webp",
+                "https://i.ibb.co/XZXnp2Dw/Prudential-5.webp",
+                "https://i.ibb.co/1t8kkHGm/Prudential-6.webp",
+                "https://i.ibb.co/Mk5S8vYR/Prudential-7.webp"
             ]
         },
         {
@@ -334,14 +334,14 @@ export const vi = {
                 { label: "Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/M5SdQVN0/Momo-1.webp",
-                "https://i.ibb.co/TxFXgPKb/Momo-2.webp",
-                "https://i.ibb.co/SWMsPtn/Momo-3.webp",
-                "https://i.ibb.co/ksJCmYYT/Momo-4.webp",
-                "https://i.ibb.co/bg9bTNJs/Momo-5.webp",
-                "https://i.ibb.co/rGKR3Tm5/Momo-6.webp",
-                "https://i.ibb.co/YTdvnWQT/Momo-7.webp",
-                "https://i.ibb.co/jPxGXV09/Momo-8.webp"
+                "https://i.ibb.co/S7ySGnvC/Momo-1.webp",
+                "https://i.ibb.co/v6K5jLsQ/Momo-2.webp",
+                "https://i.ibb.co/DsvVt9C/Momo-3.webp",
+                "https://i.ibb.co/gLdK4ss8/Momo-4.webp",
+                "https://i.ibb.co/svYWnsHK/Momo-5.webp",
+                "https://i.ibb.co/BVH5GdtT/Momo-6.webp",
+                "https://i.ibb.co/G3MgYJp3/Momo-7.webp",
+                "https://i.ibb.co/398WZf65/Momo-8.webp"
             ]
         },
         {
@@ -387,7 +387,7 @@ export const vi = {
                 { label: "Hoàn thành dự án", value: 80 }
             ],
             images: [
-                "https://i.ibb.co/kg6mf2F7/Finviet-1.webp"
+                "https://i.ibb.co/Rp4jmTWF/Finviet-1.webp"
             ]
         },
         {
@@ -941,33 +941,33 @@ export const vi = {
       finviet: "Finviet"
     },
     memories: [
-      { src: "https://i.ibb.co/1fpH74zX/Mobifone-1.webp", alt: "Mobifone-1", company: "mobifone" },
-      { src: "https://i.ibb.co/XcctjxG/Mobifone-2.webp", alt: "Mobifone-2", company: "mobifone" },
-      { src: "https://i.ibb.co/1Ym3JtNF/Mobifone-3.webp", alt: "Mobifone-3", company: "mobifone" },
-      { src: "https://i.ibb.co/RTFbkFnb/HTVC-1.webp", alt: "HTVC-1", company: "lbc" },
-      { src: "https://i.ibb.co/3YWNjTP9/HTVC-2.webp", alt: "HTVC-2", company: "lbc" },
-      { src: "https://i.ibb.co/Y43bGSnC/HTVC-3.webp", alt: "HTVC-3", company: "lbc" },
-      { src: "https://i.ibb.co/dwkV4rkQ/HTVC-4.webp", alt: "HTVC-4", company: "lbc" },
-      { src: "https://i.ibb.co/SDW8fWsB/VED-1.webp", alt: "VED-1", company: "ved" },
-      { src: "https://i.ibb.co/5g7CVb1f/VED-2.webp", alt: "VED-2", company: "ved" },
-      { src: "https://i.ibb.co/3yPMtc6X/VED-3.webp", alt: "VED-3", company: "ved" },
-      { src: "https://i.ibb.co/CpsWRgZm/VED-4.webp", alt: "VED-4", company: "ved" },
-      { src: "https://i.ibb.co/zVJBFJYg/Prudential-1.webp", alt: "Prudential-1", company: "prudential" },
-      { src: "https://i.ibb.co/bg1qx3mP/Prudential-2.webp", alt: "Prudential-2", company: "prudential" },
-      { src: "https://i.ibb.co/CKG8pH7F/Prudential-3.webp", alt: "Prudential-3", company: "prudential" },
-      { src: "https://i.ibb.co/xtxXNkzP/Prudential-4.webp", alt: "Prudential-4", company: "prudential" },
-      { src: "https://i.ibb.co/VWVFDjxK/Prudential-5.webp", alt: "Prudential-5", company: "prudential" },
-      { src: "https://i.ibb.co/0RhxxPyG/Prudential-6.webp", alt: "Prudential-6", company: "prudential" },
-      { src: "https://i.ibb.co/Zz1XHjnh/Prudential-7.webp", alt: "Prudential-7", company: "prudential" },
-      { src: "https://i.ibb.co/M5SdQVN0/Momo-1.webp", alt: "Momo-1", company: "mservice" },
-      { src: "https://i.ibb.co/TxFXgPKb/Momo-2.webp", alt: "Momo-2", company: "mservice" },
-      { src: "https://i.ibb.co/SWMsPtn/Momo-3.webp", alt: "Momo-3", company: "mservice" },
-      { src: "https://i.ibb.co/ksJCmYYT/Momo-4.webp", alt: "Momo-4", company: "mservice" },
-      { src: "https://i.ibb.co/bg9bTNJs/Momo-5.webp", alt: "Momo-5", company: "mservice" },
-      { src: "https://i.ibb.co/rGKR3Tm5/Momo-6.webp", alt: "Momo-6", company: "mservice" },
-      { src: "https://i.ibb.co/YTdvnWQT/Momo-7.webp", alt: "Momo-7", company: "mservice" },
-      { src: "https://i.ibb.co/jPxGXV09/Momo-8.webp", alt: "Momo-8", company: "mservice" },
-      { src: "https://i.ibb.co/kg6mf2F7/Finviet-1.webp", alt: "Finviet-1", company: "finviet" },
+      { src: "https://i.ibb.co/6Rp6rqXt/Mobifone-1.webp", alt: "Mobifone-1", company: "mobifone" },
+      { src: "https://i.ibb.co/0HHrmyz/Mobifone-2.webp", alt: "Mobifone-2", company: "mobifone" },
+      { src: "https://i.ibb.co/TDgZqxG9/Mobifone-3.webp", alt: "Mobifone-3", company: "mobifone" },
+      { src: "https://i.ibb.co/ZzjXpjsX/HTVC-1.webp", alt: "HTVC-1", company: "lbc" },
+      { src: "https://i.ibb.co/BKjZQfY5/HTVC-2.webp", alt: "HTVC-2", company: "lbc" },
+      { src: "https://i.ibb.co/357kHb63/HTVC-3.webp", alt: "HTVC-3", company: "lbc" },
+      { src: "https://i.ibb.co/39Sjm7S0/HTVC-4.webp", alt: "HTVC-4", company: "lbc" },
+      { src: "https://i.ibb.co/ds1qm1WD/VED-1.webp", alt: "VED-1", company: "ved" },
+      { src: "https://i.ibb.co/7d9BFsS6/VED-2.webp", alt: "VED-2", company: "ved" },
+      { src: "https://i.ibb.co/1f4dHTyV/VED-3.webp", alt: "VED-3", company: "ved" },
+      { src: "https://i.ibb.co/7xNbsP5j/VED-4.webp", alt: "VED-4", company: "ved" },
+      { src: "https://i.ibb.co/CK2Y62Zy/Prudential-1.webp", alt: "Prudential-1", company: "prudential" },
+      { src: "https://i.ibb.co/HD71024V/Prudential-2.webp", alt: "Prudential-2", company: "prudential" },
+      { src: "https://i.ibb.co/TM32Dg85/Prudential-3.webp", alt: "Prudential-3", company: "prudential" },
+      { src: "https://i.ibb.co/sd8bZfsk/Prudential-4.webp", alt: "Prudential-4", company: "prudential" },
+      { src: "https://i.ibb.co/XZXnp2Dw/Prudential-5.webp", alt: "Prudential-5", company: "prudential" },
+      { src: "https://i.ibb.co/1t8kkHGm/Prudential-6.webp", alt: "Prudential-6", company: "prudential" },
+      { src: "https://i.ibb.co/Mk5S8vYR/Prudential-7.webp", alt: "Prudential-7", company: "prudential" },
+      { src: "https://i.ibb.co/S7ySGnvC/Momo-1.webp", alt: "Momo-1", company: "mservice" },
+      { src: "https://i.ibb.co/v6K5jLsQ/Momo-2.webp", alt: "Momo-2", company: "mservice" },
+      { src: "https://i.ibb.co/DsvVt9C/Momo-3.webp", alt: "Momo-3", company: "mservice" },
+      { src: "https://i.ibb.co/gLdK4ss8/Momo-4.webp", alt: "Momo-4", company: "mservice" },
+      { src: "https://i.ibb.co/svYWnsHK/Momo-5.webp", alt: "Momo-5", company: "mservice" },
+      { src: "https://i.ibb.co/BVH5GdtT/Momo-6.webp", alt: "Momo-6", company: "mservice" },
+      { src: "https://i.ibb.co/G3MgYJp3/Momo-7.webp", alt: "Momo-7", company: "mservice" },
+      { src: "https://i.ibb.co/398WZf65/Momo-8.webp", alt: "Momo-8", company: "mservice" },
+      { src: "https://i.ibb.co/Rp4jmTWF/Finviet-1.webp", alt: "Finviet-1", company: "finviet" },
       { src: "https://i.ibb.co/8DBhdpPk/V247-3.jpg", alt: "V247-3", company: "v247" },
       { src: "https://i.ibb.co/mY50BJt/V247-2.jpg", alt: "V247-2", company: "v247" },
       { src: "https://i.ibb.co/Ld09kw59/V247-4.jpg", alt: "V247-4", company: "v247" },

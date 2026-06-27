@@ -389,45 +389,48 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
     return (
         <PageLayout id={id} className="work-experience-section">
             <div className="info-card work-experience-card flex flex-col h-full" style={{ position: 'relative' }}>
-                <InfoBadge
-                    icon={<Icons.BriefcaseIcon />}
-                    text={pageData.title}
-                    tooltipTitle={pageData.tooltipTitle}
-                    tooltipText={pageData.tooltipText}
-                    style={{ marginBottom: '1.5rem' }}
-                    containerStyle={{ height: '50px' }}
-                />
-
-                <div className="custom-video-player-wrapper" style={{ transform: 'scale(0.7)', transformOrigin: 'top right' }}>
-                    <div 
-                        className="cover-letter-video-container" 
-                        title="Xem video giới thiệu"
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <InfoBadge
+                        icon={<Icons.BriefcaseIcon />}
+                        text={pageData.title}
+                        tooltipTitle={pageData.tooltipTitle}
+                        tooltipText={pageData.tooltipText}
+                        containerStyle={{ height: '50px' }}
+                    />
+                    <motion.div
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         onClick={() => setShowVideoPopup(true)}
-                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowVideoPopup(true); }}
-                        role="button"
-                        tabIndex={0}
-                        aria-label="Play introduction video"
+                        style={{ cursor: 'pointer', position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10 }}
+                        className="glow-badge-wrapper"
                     >
-                        <video
-                            src={videoUrl}
-                            playsInline
-                            autoPlay
-                            muted
-                            loop
-                            className="cover-letter-video-element"
-                            poster="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif"
-                        >
-                            Trình duyệt của bạn không hỗ trợ thẻ video.
-                        </video>
-                    </div>
-                    <button 
-                        className="custom-play-button" 
-                        onClick={() => setShowVideoPopup(true)} 
-                        aria-label="Play video"
-                    >
-                        <Icons.PlayIcon style={{ marginLeft: '2px' }}/>
-                    </button>
+                        <style>{`
+                            .glow-badge-wrapper {
+                                border-radius: 999px;
+                                border-width: 2px;
+                                border-style: solid;
+                                border-color: #e21800;
+                                animation: persistent-glow 2s infinite alternate;
+                            }
+                            @keyframes persistent-glow {
+                                from { box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.3); }
+                                to { box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.6); }
+                            }
+                            .glow-badge-wrapper:hover {
+                                box-shadow: 0 0 30px 8px rgba(255, 255, 255, 0.9) !important;
+                            }
+                        `}</style>
+                        <InfoBadge
+                            icon={<Icons.PlayIcon style={{ color: 'red' }} />}
+                            text="Hành trình sáng tạo"
+                            tooltipTitle="Thông tin"
+                            tooltipText="Xem video giới thiệu và lịch sử làm việc"
+                            style={{ color: 'red', borderRadius: '999px', borderColor: '#d41010' }}
+                        />
+                    </motion.div>
                 </div>
+
+               
 
                 <div className="work-experience-info">
                     <div className="timeline-navigation-wrapper no-scrollbar" style={{ height: '130px' }}>
@@ -503,6 +506,36 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                             }}
                         >
                            <div className="job-card-scrollable-content no-scrollbar">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setIsExpanded(!isExpanded);
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '1.5rem',
+                                        right: '1.5rem',
+                                        background: 'none',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        color: activeJob.color,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '4px 8px',
+                                        borderRadius: '6px',
+                                        backgroundColor: 'rgba(255,255,255,0.06)',
+                                        transition: 'all 0.2s',
+                                        zIndex: 20
+                                    }}
+                                    className="hover:scale-105 active:scale-95"
+                                    title={isExpanded ? "Thu nhỏ (Double click)" : "Phóng to (Double click)"}
+                                >
+                                    {isExpanded ? <Icons.MinimizeIcon size={12} /> : <Icons.MaximizeIcon size={12} />}
+                                    <span style={{ fontSize: '10px', marginLeft: '4px', opacity: 0.8, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                                        {isExpanded ? "Thu nhỏ" : "Phóng to"}
+                                    </span>
+                                </button>
                                 {/* Row 1: Date Range & Logo/Company */}
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '50px', marginBottom: '0px', fontWeight: 'bold', textAlign: 'left' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -510,32 +543,6 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                                             <Icons.CalendarDaysIcon size={14} className="text-slate-400 shrink-0" />
                                             {formatJobDate(activeJob.date)}
                                         </span>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setIsExpanded(!isExpanded);
-                                            }}
-                                            style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                cursor: 'pointer',
-                                                color: activeJob.color,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                padding: '4px 8px',
-                                                borderRadius: '6px',
-                                                backgroundColor: 'rgba(255,255,255,0.06)',
-                                                transition: 'all 0.2s',
-                                            }}
-                                            className="hover:scale-105 active:scale-95"
-                                            title={isExpanded ? "Thu nhỏ (Double click)" : "Phóng to (Double click)"}
-                                        >
-                                            {isExpanded ? <Icons.MinimizeIcon size={12} /> : <Icons.MaximizeIcon size={12} />}
-                                            <span style={{ fontSize: '10px', marginLeft: '4px', opacity: 0.8, textTransform: 'uppercase', fontWeight: 'bold' }}>
-                                                {isExpanded ? "Thu nhỏ" : "Phóng to"}
-                                            </span>
-                                        </button>
                                     </div>
 
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', height: '50px', marginBottom: '0px' }}>
