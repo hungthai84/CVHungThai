@@ -9,6 +9,7 @@ declare var Typed: any; // Let TypeScript know Typed exists on the global scope
 
 interface MainContentProps {
     id?: string;
+    onIntroToggle?: (isPlaying: boolean) => void;
 }
 
 const getRandomVibrantColor = () => {
@@ -18,19 +19,23 @@ const getRandomVibrantColor = () => {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 };
 
-const MainContent: React.FC<MainContentProps> = ({ id }) => {
+const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
     const { t, language } = useI18n();
     const heroData = t.hero;
     const typedEl = useRef(null);
     const typedInstance = useRef<any>(null);
-    const DEFAULT_VIDEO = "https://cdn.scena.ai/project/8606/95727de5df7ead1b58f6438ffcd683078804d9f125467ad97c7ae3c6a581512e.mp4";
-    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/1dc04314870ccd1da345b28cb9a539bdb8af303524e169e67691ae3ac5b6e654.mp4";
+    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/9626/e2fdfea91518d3a58e5e96359d9ddd036c5de13e0be9d4f7659cfef84c4989dc.mp4";
+    const INTRO_VIDEO = "  https://cdn.scena.ai/project/9306/f80e70607089e15ca53fc5706e2f642d134b9d5f6bf2721f575ee575e268386e.mp4";
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
     const [isMuted, setIsMuted] = React.useState(true);
     const [welcomeMessage, setWelcomeMessage] = React.useState('');
 
     const isIntroPlaying = videoUrl === INTRO_VIDEO;
+
+    useEffect(() => {
+        onIntroToggle?.(isIntroPlaying);
+    }, [isIntroPlaying, onIntroToggle]);
 
     useEffect(() => {
         const hour = new Date().getHours();
@@ -109,7 +114,7 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                     className="home-hero-card-bg-video"
                     src={videoUrl}
                     
-                    style={{ opacity: 1 }}
+                    style={{ opacity: 1, objectFit: 'cover', width: '100%', height: '100%' }}
                     onEnded={() => {
                         if (isIntroPlaying) {
                             setVideoUrl(DEFAULT_VIDEO);
@@ -119,35 +124,39 @@ const MainContent: React.FC<MainContentProps> = ({ id }) => {
                 />
                 <div className="home-hero-card-overlay" style={{ opacity: 0 }}></div>
                 <div className="home-hero-card-content-wrapper">
-                    <InfoBadge
-                        icon={<Icons.HomeIcon />}
-                        text={heroData.badge || t.sidebar.nav.home}
-                        tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
-                        tooltipText={heroData.tooltipText || "Chào mừng đến với hồ sơ cá nhân của tôi."}
-                        style={{ marginBottom: '1.5rem' }}
-                    />
-                    
-                    <div className="home-hero-content">
-                        {welcomeMessage && (
-                            <div 
-                                className="text-xl md:text-2xl font-medium text-white/90 mb-3 drop-shadow-md tracking-wide" 
-                                style={{ 
-                                    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
-                                    color: '#f9f9f9',
-                                    fontWeight: 'bold',
-                                    fontSize: '20px',
-                                    borderColor: '#000000'
-                                }}
-                            >
-                                {welcomeMessage}
+                    {!isIntroPlaying && (
+                        <>
+                            <InfoBadge
+                                icon={<Icons.HomeIcon />}
+                                text={heroData.badge || t.sidebar.nav.home}
+                                tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
+                                tooltipText={heroData.tooltipText || "Chào mừng đến with hồ sơ cá nhân của tôi."}
+                                style={{ marginBottom: '1.5rem' }}
+                            />
+                            
+                            <div className="home-hero-content">
+                                {welcomeMessage && (
+                                    <div 
+                                        className="text-xl md:text-2xl font-medium text-white/90 mb-3 drop-shadow-md tracking-wide" 
+                                        style={{ 
+                                            textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                                            color: '#f9f9f9',
+                                            fontWeight: 'bold',
+                                            fontSize: '20px',
+                                            borderColor: '#000000'
+                                        }}
+                                    >
+                                        {welcomeMessage}
+                                    </div>
+                                )}
+                                <p className="hero-intro-text">{heroData.intro}</p>
+                                <h1 className="hero-name-text">{heroData.name}</h1>
+                                <h2 className="hero-typed-text-container">
+                                    <span ref={typedEl}></span>
+                                </h2>
                             </div>
-                        )}
-                        <p className="hero-intro-text">{heroData.intro}</p>
-                        <h1 className="hero-name-text">{heroData.name}</h1>
-                        <h2 className="hero-typed-text-container">
-                            <span ref={typedEl}></span>
-                        </h2>
-                    </div>
+                        </>
+                    )}
 
                     <div className="home-hero-buttons-container" style={{ position: 'absolute', bottom: '30px', right: '30px', zIndex: 10 }}>
                         <style>{`

@@ -51,7 +51,12 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     const allProjects: Project[] = pageData.projects || [];
 
     // --- State Management ---
-    const [viewMode, setViewMode] = useState<ViewMode>('masonry');
+    const [viewMode, setViewMode] = useState<ViewMode>(() => {
+        if (typeof window !== 'undefined' && window.innerWidth <= 767) {
+            return 'grid';
+        }
+        return 'masonry';
+    });
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);

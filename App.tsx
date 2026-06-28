@@ -100,6 +100,7 @@ const App: React.FC = () => {
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [scrollPercent, setScrollPercent] = useState(0);
     const [isIdle, setIsIdle] = useState(false);
+    const [isIntroPlaying, setIsIntroPlaying] = useState(false);
 
     const clickSound = useRef<HTMLAudioElement | null>(null);
 
@@ -295,6 +296,7 @@ const App: React.FC = () => {
         const props: any = {
             id: activePageKey,
             onNavigate: handleSetPage,
+            onIntroToggle: setIsIntroPlaying,
         };
         if (activePageKey && activePageKey.startsWith('project-')) {
             props.projectId = activePageKey.replace('project-', '');
@@ -524,7 +526,7 @@ const App: React.FC = () => {
                         ></div>
                     </div>
 
-                    {!isMobile && activePageKey === 'home' && (
+                    {!isMobile && activePageKey === 'home' && !isIntroPlaying && (
                         <div className="top-right-actions">
                             <button
                                 onClick={() => {

@@ -55,9 +55,9 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610 px', minHeight: 0 }}>
+                        <div className="about-left-column scena-banner-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610px', minHeight: 0 }}>
                             {/* HTML5 Video Player */}
-                            <div style={{ 
+                            <div className="scena-banner-video-container" style={{ 
                                 width: '100%', 
                                 height: 'calc(50% - 0.75rem)',
                                 borderRadius: '10px', 
@@ -190,7 +190,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         </div>
 
                         {/* Right Column: Bio Text Card (Swapped from Left) */}
-                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610 px', minHeight: 0 }}>
+                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610px', minHeight: 0 }}>
                             {/* Bio Text Card */}
                             <div className="about-bio-text-card no-scrollbar" style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
                                 <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>

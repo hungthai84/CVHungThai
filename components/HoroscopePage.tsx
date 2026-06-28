@@ -63,15 +63,30 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                     gap: 1.5rem;
                 }
+                .horoscope-portrait-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 1.25rem;
+                }
+                .horoscope-compat-grid-main {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2rem;
+                }
                 .horoscope-compat-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    grid-template-columns: 1fr;
                     gap: 1rem;
                 }
                 .horoscope-roles-grid {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                     gap: 1rem;
+                }
+                @media (max-width: 900px) {
+                    .horoscope-portrait-grid, .horoscope-compat-grid-main {
+                        grid-template-columns: 1fr !important;
+                    }
                 }
                 @media (max-width: 600px) {
                     .horoscope-grid-banner {
@@ -375,7 +390,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     {/* I. Portrait */}
                     <section style={{ marginBottom: '2.5rem' }}>
                         <h3 style={{ borderLeft: '4px solid var(--accent-color)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>{sections.portrait.title}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+                        <div className="horoscope-portrait-grid">
                             {sections.portrait.points.map((pt, i) => (
                                 <div key={i} style={{ padding: '1.25rem', background: 'var(--color-brand-progress-bg)', borderRadius: '12px', border: 'var(--color-brand-glass-border)' }}>
                                     <h4 style={{ margin: '0 0 0.75rem 0', fontSize: '1.05rem', color: 'var(--accent-color)' }}>{pt.header}</h4>
@@ -422,14 +437,14 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     {/* III. Compatibility */}
                     <section style={{ marginBottom: '2.5rem' }}>
                         <h3 style={{ borderLeft: '4px solid var(--accent-color)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>{sections.compatibility.title}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+                        <div className="horoscope-compat-grid-main">
                             {sections.compatibility.groups.map((group, i) => (
                                 <div key={i}>
                                     <div style={{ marginBottom: '1rem' }}>
                                         <h4 style={{ margin: 0, color: group.color, fontSize: '1.1rem' }}>{group.title}</h4>
                                         <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-brand-text-secondary)' }}>{group.subtitle}</p>
                                     </div>
-                                    <div className="horoscope-compat-grid" style={{ gridTemplateColumns: '1fr' }}>
+                                    <div className="horoscope-compat-grid">
                                         {group.items.map((item, j) => (
                                             <div key={j} style={{ 
                                                 padding: '1rem', 

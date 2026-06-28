@@ -1453,13 +1453,41 @@
         position: relative;
         z-index: 3;
         width: 100%;
-        height: 100vh; /* Changed */
+        height: 100vh; /* Default desktop */
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-start;
         padding: 2.5rem;
         box-sizing: border-box;
+    }
+
+    @media (max-width: 767px) {
+        .home-hero-card-content-wrapper {
+            height: auto !important;
+            min-height: 50vh !important;
+            padding: 1.5rem !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        .home-hero-content {
+            max-width: 100% !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        .hero-intro-text {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .home-hero-content h1.hero-name-text {
+            font-size: 2.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .home-hero-content h2.hero-typed-text-container {
+            font-size: 1.25rem !important;
+            min-height: 30px !important;
+        }
     }
     .home-hero-content {
         max-width: 90%;
@@ -1921,6 +1949,15 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 2rem 1.5rem;
+    }
+    @media (max-width: 500px) {
+        .skills-grid-v2 {
+            grid-template-columns: 1fr !important;
+            gap: 1.25rem !important;
+        }
+        .resume-item-card {
+            padding: 1.25rem 1rem !important;
+        }
     }
     .skill-item-v2 .skill-info {
         display: flex;
@@ -5013,6 +5050,13 @@
       .about-page-grid {
         grid-template-columns: 1fr;
         height: auto;
+      }
+      .scena-banner-column, .about-right-column {
+        height: auto !important;
+      }
+      .scena-banner-video-container {
+        height: auto !important;
+        aspect-ratio: 16 / 9;
       }
       .about-video-card {
         order: -1; /* Move video to top on mobile */
