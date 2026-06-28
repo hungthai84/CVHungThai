@@ -141,14 +141,6 @@ const App: React.FC = () => {
             }
         }
     }, [isMobile, activeIndex, handleScroll]);
-    
-    // Parallax effect removed to prevent scroll lag and CPU usage on every render frame
-    useEffect(() => {
-        const background = backgroundRef.current;
-        if (background) {
-            background.style.transform = 'translateY(0px)';
-        }
-    }, [activeIndex]);
 
     const playClickSound = useCallback(() => {
         if (isSoundOn) {

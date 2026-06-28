@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
-import InfoBadge from './InfoBadge';
 
 declare var Typed: any; // Let TypeScript know Typed exists on the global scope
 
@@ -24,7 +23,7 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
     const heroData = t.hero;
     const typedEl = useRef(null);
     const typedInstance = useRef<any>(null);
-    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/9626/e2fdfea91518d3a58e5e96359d9ddd036c5de13e0be9d4f7659cfef84c4989dc.mp4";
+    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/9626/1205f7fefeff2bc883db0ad83f10e906d812765580450ec3894dc2640592dc5a.mp4 ";
     const INTRO_VIDEO = "  https://cdn.scena.ai/project/9306/f80e70607089e15ca53fc5706e2f642d134b9d5f6bf2721f575ee575e268386e.mp4";
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
@@ -126,14 +125,6 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
                 <div className="home-hero-card-content-wrapper">
                     {!isIntroPlaying && (
                         <>
-                            <InfoBadge
-                                icon={<Icons.HomeIcon />}
-                                text={heroData.badge || t.sidebar.nav.home}
-                                tooltipTitle={heroData.tooltipTitle || "Chào mừng"}
-                                tooltipText={heroData.tooltipText || "Chào mừng đến with hồ sơ cá nhân của tôi."}
-                                style={{ marginBottom: '1.5rem' }}
-                            />
-                            
                             <div className="home-hero-content">
                                 {welcomeMessage && (
                                     <div 

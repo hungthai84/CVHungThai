@@ -368,7 +368,7 @@ Your knowledge is strictly limited to the information provided in this portfolio
     }
 
     const responseStream = await ai.models.generateContentStream({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents,
       config: { systemInstruction },
     });

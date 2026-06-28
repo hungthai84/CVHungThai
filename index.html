@@ -1950,7 +1950,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 2rem 1.5rem;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 767px) {
         .skills-grid-v2 {
             grid-template-columns: 1fr !important;
             gap: 1.25rem !important;
@@ -5058,6 +5058,10 @@
         height: auto !important;
         aspect-ratio: 16 / 9;
       }
+      .personal-info-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
       .about-video-card {
         order: -1; /* Move video to top on mobile */
       }
@@ -5065,9 +5069,6 @@
         min-height: 300px;
         aspect-ratio: 16 / 9;
         height: auto;
-      }
-      .personal-info-grid {
-        grid-template-columns: repeat(3, 1fr);
       }
     }
     @media (max-width: 767px) {
@@ -5124,7 +5125,7 @@
         }
         .info-card, .project-card-new {
             height: auto;
-            border-radius: 0 !important;
+            border-radius: 10px !important;
             border-left: none !important;
             border-right: none !important;
             margin-left: 0 !important;
@@ -5132,9 +5133,40 @@
             width: 100% !important;
             max-width: 100% !important;
         }
+        .is-chat-container, .is-scheduler-container {
+            height: calc(100vh - var(--mobile-header-height)) !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .chat-interface-wrapper {
+            flex: 1 !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .chatbot-messages {
+            flex: 1 !important;
+            padding: 1rem !important;
+        }
+        .chatbot-input-area {
+            padding: 0.75rem !important;
+            background: var(--sidebar-bg) !important;
+            border-top: 1px solid var(--color-brand-glass-border) !important;
+        }
+        .interview-prompt-overlay > div {
+            width: 90% !important;
+            padding: 1.5rem !important;
+        }
+        .interview-prompt-overlay h3 {
+            font-size: 1.2rem !important;
+        }
+        .interview-prompt-overlay p {
+            font-size: 0.9rem !important;
+        }
         .about-bio-text-card, .about-personal-info-card, .achievement-card {
             height: auto;
-            border-radius: 0 !important;
+            border-radius: 10px !important;
             border-left: none !important;
             border-right: none !important;
             box-shadow: none !important;

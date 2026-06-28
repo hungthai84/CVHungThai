@@ -54,7 +54,7 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
                     />
 
                     {showPrompt && (
-                        <div style={{
+                        <div className="interview-prompt-overlay" style={{
                             position: 'absolute',
                             inset: 0,
                             backgroundColor: 'rgba(15, 23, 42, 0.9)',

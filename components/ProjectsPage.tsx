@@ -142,7 +142,6 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                                 >
                                     <ProjectCard
                                         project={project}
-                                        viewMode={viewMode}
                                         hasPost={!!(t.projectPosts as any)[project.id]}
                                         onClick={() => handleCardClick(project.id)}
                                     />

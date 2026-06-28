@@ -1,11 +1,10 @@
 import React from 'react';
 import { useI18n } from '../contexts/i18n';
-import type { Project, ViewMode } from './ProjectsPage';
+import type { Project } from './ProjectsPage';
 import OptimizedImage from './OptimizedImage';
 
 interface ProjectCardProps {
     project: Project;
-    viewMode: ViewMode;
     hasPost: boolean;
     onClick: () => void;
     groupColor?: string;
