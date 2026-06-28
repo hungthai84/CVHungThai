@@ -278,7 +278,12 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                                </div>
                                <h5>{pageData.descriptionTitle}</h5>
                                <ul>
-                                   {job.responsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                                    {job.responsibilities.map((item, index) => (
+                                        <div key={index} className="flex items-start gap-2">
+                                            <Icons.CheckIcon size={16} className="text-blue-500 mt-1 shrink-0" />
+                                            <span className="text-sm text-slate-600 dark:text-slate-300">{item}</span>
+                                        </div>
+                                    ))}
                                </ul>
                                {job.achievements.length > 0 && (
                                    <>

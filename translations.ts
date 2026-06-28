@@ -392,14 +392,14 @@ export const vi = {
         },
         {
             key: "jobsearch",
-            date: "2025",
+            date: "2026",
             company: "Tìm kiếm cơ hội mới",
             logoUrl: "https://i.ibb.co/FbGn75X1/T-m-ki-m.png",
             color: "#101733",
-            title: "Tìm kiếm vai trò Trưởng Phòng Dịch vụ Khách hàng",
-            teamSize: "> 100 nhân viên",
+            title: "Tìm kiếm công việc mới",
+            teamSize: "  ",
             responsibilities: [
-                "Hơn 22 năm kinh nghiệm quản lý dịch vụ khách hàng trong các lĩnh vực Viễn thông, Bảo hiểm, Game, Thương mại điện tử và Fintech; chuyên sâu về xây dựng hệ thống CSKH, CRM, Call Center, quản trị vận hành và chuyển đổi số trải nghiệm khách hàng"
+                " "
             ],
             achievements: [],
             images: []

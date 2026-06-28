@@ -391,12 +391,17 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                 return <p key={index} dangerouslySetInnerHTML={{ __html: formattedText }} />;
                                             })}
                                             {post.content.list && (
-                                                <ol style={{ listStyleType: 'decimal', paddingLeft: '1.5rem', marginTop: '1rem', marginBottom: '1rem' }}>
+                                                <div className="flex flex-col gap-2 mt-4 mb-4">
                                                     {post.content.list.map((item: string, index: number) => {
                                                          const formattedText = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                                                         return <li key={index} dangerouslySetInnerHTML={{ __html: formattedText }} style={{ listStyleType: 'decimal', marginBottom: '0.75rem' }} />;
+                                                         return (
+                                                            <div key={index} className="flex items-start gap-2">
+                                                                <Icons.CheckIcon size={16} className="text-blue-500 mt-1 shrink-0" />
+                                                                <span className="text-sm text-slate-600 dark:text-slate-300" dangerouslySetInnerHTML={{ __html: formattedText }} />
+                                                            </div>
+                                                         );
                                                     })}
-                                                </ol>
+                                                </div>
                                             )}
                                             {PROJECT_IMAGES[projectId] && (
                                                 <div className="project-detail-image-wrapper mt-6 pt-6 border-t border-dashed border-gray-200 dark:border-gray-700 flex flex-col items-center">
