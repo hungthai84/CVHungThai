@@ -427,14 +427,22 @@ const App: React.FC = () => {
         </>
     );
 
-    const isVideo = wallpaper.startsWith('https');
+    const isVideo = wallpaper.startsWith('https') && wallpaper.toLowerCase().includes('.mp4');
+    const isImage = wallpaper.startsWith('https') && !wallpaper.toLowerCase().includes('.mp4');
     const isCustomOrbiting = wallpaper === 'orbiting-planets';
     const isCustomDotted = wallpaper === 'dotted-pattern';
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
 
     return (
         <>
-            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}>
+            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}
+                style={isImage ? { 
+                    backgroundImage: `url(${wallpaper})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat'
+                } : {}}
+            >
                 {isVideo ? (
                     <video 
                         key={wallpaper}
@@ -449,6 +457,8 @@ const App: React.FC = () => {
                             opacity: 1
                         }}
                     />
+                ) : isImage ? (
+                    null
                 ) : isCustomOrbiting ? (
                     <div className="holder"></div>
                 ) : isCustomDotted || isCustomDarkDotted ? (

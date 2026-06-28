@@ -354,6 +354,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
     const activeJob = jobs[activeJobIndex];
     const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 767 : false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isCreativeJourneyPlaying, setIsCreativeJourneyPlaying] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
     const lightboxImages = useMemo(() => {
@@ -478,7 +479,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                             ))}
                         </div>
                     </div>
-                    {activeJob && !isMobile && (
+                    {activeJob && (!isMobile || activeJob.key === 'jobsearch') && (
                         <div 
                             className={`job-card flex flex-col justify-between ${isExpanded ? 'is-expanded' : ''}`}
                             key={activeJob.key} 
@@ -486,10 +487,10 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                             style={{ 
                                 border: `2px solid ${activeJob.color}`, 
                                 borderRadius: isExpanded ? '16px' : '24px', 
-                                padding: '1.75rem', 
+                                padding: activeJob.key === 'jobsearch' ? '0' : '1.75rem', 
                                 width: isExpanded ? '100%' : 'calc(100% - 51px)', 
                                 flex: 1, 
-                                minHeight: 0, 
+                                minHeight: activeJob.key === 'jobsearch' ? '200px' : 0, 
                                 marginLeft: isExpanded ? '0px' : '25.5px', 
                                 marginRight: isExpanded ? '0px' : '25.5px', 
                                 marginTop: isExpanded ? '0px' : '10px', 
@@ -507,11 +508,104 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
                                 left: isExpanded ? 0 : undefined,
                                 right: isExpanded ? 0 : undefined,
                                 bottom: isExpanded ? 0 : undefined,
-                                cursor: 'default'
+                                cursor: 'default',
+                                overflow: 'hidden'
                             }}
                         >
-                           <div className="job-card-scrollable-content no-scrollbar">
-                                <button
+                           {activeJob.key === 'jobsearch' ? (
+                               <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                   <video 
+                                       id="job-search-video"
+                                       src="https://cdn.scena.ai/project/9626/a5b5bdf1659991c0c74510ddfc59b9d27a3c7478f17c711b0fc39c5e51cf43d2.mp4"
+                                       autoPlay
+                                       loop={!isCreativeJourneyPlaying}
+                                       muted={!isCreativeJourneyPlaying}
+                                       playsInline
+                                       onEnded={() => setIsCreativeJourneyPlaying(false)}
+                                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                   />
+                                   {!isCreativeJourneyPlaying ? (
+                                       <button
+                                           onClick={(e) => {
+                                               e.stopPropagation();
+                                               const video = document.getElementById('job-search-video') as HTMLVideoElement;
+                                               if (video) {
+                                                   video.muted = false;
+                                                   video.loop = false;
+                                                   video.currentTime = 0;
+                                                   video.play();
+                                                   setIsCreativeJourneyPlaying(true);
+                                               }
+                                           }}
+                                           style={{
+                                               position: 'absolute',
+                                               bottom: '16px',
+                                               left: '16px',
+                                               backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                               backdropFilter: 'blur(10px)',
+                                               color: 'white',
+                                               border: `1.5px solid ${activeJob.color}88`,
+                                               borderRadius: '50px',
+                                               padding: '10px 20px',
+                                               display: 'flex',
+                                               alignItems: 'center',
+                                               gap: '10px',
+                                               cursor: 'pointer',
+                                               fontWeight: 'bold',
+                                               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                               boxShadow: `0 8px 24px -4px ${activeJob.color}44`,
+                                               zIndex: 10,
+                                               fontSize: '14px',
+                                               textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                                           }}
+                                           className="creative-journey-btn hover:scale-105 active:scale-95"
+                                       >
+                                           <Icons.PlayIcon size={20} fill="currentColor" />
+                                           <span>Hành trình sáng tạo</span>
+                                       </button>
+                                   ) : (
+                                       <button
+                                           onClick={(e) => {
+                                               e.stopPropagation();
+                                               const video = document.getElementById('job-search-video') as HTMLVideoElement;
+                                               if (video) {
+                                                   video.muted = true;
+                                                   video.loop = true;
+                                                   video.play();
+                                                   setIsCreativeJourneyPlaying(false);
+                                               }
+                                           }}
+                                           style={{
+                                               position: 'absolute',
+                                               bottom: '16px',
+                                               right: '16px',
+                                               backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                                               backdropFilter: 'blur(10px)',
+                                               color: 'white',
+                                               border: '1.5px solid rgba(255, 255, 255, 0.3)',
+                                               borderRadius: '50px',
+                                               padding: '10px 20px',
+                                               display: 'flex',
+                                               alignItems: 'center',
+                                               gap: '10px',
+                                               cursor: 'pointer',
+                                               fontWeight: 'bold',
+                                               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                               boxShadow: '0 8px 24px -4px rgba(239, 68, 68, 0.4)',
+                                               zIndex: 10,
+                                               fontSize: '14px',
+                                               textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                                           }}
+                                           className="cancel-journey-btn hover:scale-105 active:scale-95"
+                                       >
+                                           <Icons.XMarkIcon size={20} />
+                                           <span>Hủy</span>
+                                       </button>
+                                   )}
+                               </div>
+                           ) : (
+                               <div className="job-card-scrollable-content no-scrollbar">
+                                    <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setIsExpanded(!isExpanded);
@@ -745,6 +839,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({ id, onNavigate,
 
 
                            </div>
+                           )}
                         </div>
 
                     )}

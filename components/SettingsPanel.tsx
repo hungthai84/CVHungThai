@@ -142,6 +142,22 @@ const specialAndVideoWallpapers = [
     },
 ];
 
+const videoWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'video');
+
+const imageWallpapers = [
+    { id: 'https://i.ibb.co/rKL4ffH2/2.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/rKL4ffH2/2.jpg' },
+    { id: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg' },
+    { id: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg' },
+    { id: 'https://i.ibb.co/Fc1dczn/Wallpaper.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/Fc1dczn/Wallpaper.jpg' },
+    { id: 'https://i.ibb.co/DDCj9TBk/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/DDCj9TBk/ta-i-xu-ng-15.jpg' },
+    { id: 'https://i.ibb.co/jPN1bS9c/Pastel-Minimal-Wallpaper-Clean-Aesthetic-for-Mac-Book.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/jPN1bS9c/Pastel-Minimal-Wallpaper-Clean-Aesthetic-for-Mac-Book.jpg' },
+    { id: 'https://i.ibb.co/chRZYCFs/ta-i-xu-ng-14.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/chRZYCFs/ta-i-xu-ng-14.jpg' },
+    { id: 'https://i.ibb.co/k2jTwnTp/ta-i-xu-ng-13.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/k2jTwnTp/ta-i-xu-ng-13.jpg' },
+    { id: 'https://i.ibb.co/G4tGQZbB/ta-i-xu-ng-16.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/G4tGQZbB/ta-i-xu-ng-16.jpg' },
+    { id: 'https://i.ibb.co/r2w5qZCT/Download-Abstract-Gradient-Circle-Background-for-free.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/r2w5qZCT/Download-Abstract-Gradient-Circle-Background-for-free.jpg' },
+    { id: 'https://i.ibb.co/zhc5bK7G/Ton-mental-a-aussi-besoin-de-repos.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/zhc5bK7G/Ton-mental-a-aussi-besoin-de-repos.jpg' },
+];
+
 const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const { t, language } = useI18n();
     const pageData = t.settingsPage;
@@ -171,7 +187,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const [localVoicePitch, setLocalVoicePitch] = useState(aiVoicePitch);
     const [localVoiceRate, setLocalVoiceRate] = useState(aiVoiceRate);
     const [localWallpaper, setLocalWallpaper] = useState(wallpaper);
-    const [activeTab, setActiveTab] = useState<'gradient' | 'video'>('gradient');
+    const [activeTab, setActiveTab] = useState<'gradient' | 'video' | 'image'>(() => {
+        if (videoWallpapers.some(w => w.id === wallpaper)) return 'video';
+        if (imageWallpapers.some(w => w.id === wallpaper)) return 'image';
+        return 'gradient';
+    });
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
     // This is derived state for the UI to use for the color picker
@@ -294,8 +314,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         return [animatedGradient, ...themeGradients, ...customWallpapers].filter(Boolean);
     }, [localThemeMode]);
 
-    const videoWallpapers = useMemo(() => specialAndVideoWallpapers.filter(w => w.type === 'video'), []);
-    
     const isDemoEnvironment = useMemo(() => {
         if (typeof window === 'undefined') return false;
         const hostname = window.location.hostname;
@@ -701,6 +719,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                         >
                                             {settingsText.video}
                                         </button>
+                                        <button 
+                                            className={`wallpaper-tab-btn ${activeTab === 'image' ? 'active' : ''}`} 
+                                            onClick={() => setActiveTab('image')}
+                                        >
+                                            {settingsText.image}
+                                        </button>
                                     </div>
 
                                     {activeTab === 'gradient' && (
@@ -794,6 +818,45 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                               </div>
                                                          </>
                                                      </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {activeTab === 'image' && (
+                                        <div className="wallpaper-tab-content">
+                                             <div className="wallpaper-selector">
+                                                {imageWallpapers.map((option, index) => (
+                                                    <button
+                                                         key={option.id}
+                                                         className={`wallpaper-thumbnail ${localWallpaper === option.id ? 'active' : ''}`}
+                                                         onClick={() => setLocalWallpaper(option.id)}
+                                                         aria-label={`Wallpaper option ${index + 1}`}
+                                                         title={`Wallpaper option ${index + 1}`}
+                                                         style={{ overflow: 'hidden', position: 'relative' }}
+                                                     >
+                                                         <img 
+                                                              src={option.thumbnail} 
+                                                              alt={`Wallpaper ${index + 1}`}
+                                                              className="wallpaper-image-preview-img" 
+                                                              style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
+                                                          />
+                                                          <div style={{
+                                                              position: 'absolute',
+                                                              bottom: '3px',
+                                                              right: '3px',
+                                                              backgroundColor: 'rgba(0,0,0,0.6)',
+                                                              color: '#fff',
+                                                              fontSize: '6.5pt',
+                                                              padding: '1.5px 3.5px',
+                                                              borderRadius: '3px',
+                                                              pointerEvents: 'none',
+                                                              lineHeight: '1',
+                                                              fontWeight: '700'
+                                                          }}>
+                                                              IMAGE
+                                                          </div>
+                                                    </button>
                                                 ))}
                                             </div>
                                         </div>
