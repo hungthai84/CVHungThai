@@ -5,8 +5,6 @@ import type { ViewMode } from './ProjectsPage';
 interface ProjectFiltersProps {
     viewMode: ViewMode;
     setViewMode: (mode: ViewMode) => void;
-    searchTerm: string;
-    setSearchTerm: (term: string) => void;
     allGroups: string[];
     selectedGroups: string[];
     setSelectedGroups: (groups: string[]) => void;
@@ -68,8 +66,6 @@ const FilterDropdown: React.FC<{
 const ProjectFilters: React.FC<ProjectFiltersProps> = ({
     viewMode,
     setViewMode,
-    searchTerm,
-    setSearchTerm,
     allGroups,
     selectedGroups,
     setSelectedGroups,
@@ -95,17 +91,6 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({
     return (
         <div className="projects-controls-wrapper">
             <div className="projects-main-controls">
-                <div className="project-search-bar">
-                    <Icons.SearchIcon size={18} />
-                    <input
-                        type="search"
-                        className="project-search-input"
-                        placeholder="Tìm kiếm dự án..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-
                 <div className="project-filters-group">
                     <FilterDropdown
                         title="Phân nhánh"

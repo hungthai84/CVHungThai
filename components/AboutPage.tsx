@@ -2,7 +2,6 @@ import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
-import InfoBadge from './InfoBadge';
 
 export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
@@ -28,30 +27,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ marginBottom: '0px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
-                <div 
-                    onClick={handleToggleIntro} 
-                    style={{ 
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s ease, opacity 0.2s ease',
-                        height: '50px',
-                        paddingTop: '10px',
-                        paddingBottom: '10px'
-                    }}
-                    className="hover:scale-[1.03] active:scale-[0.98] hover:opacity-90"
-                    title={isIntroPlaying ? (language === 'vi' ? 'Hủy bỏ video giới thiệu' : 'Cancel introduction video') : (language === 'vi' ? 'Xem video giới thiệu' : 'View introduction video')}
-                >
-                    <InfoBadge
-                        icon={<Icons.UserIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                        style={{ marginTop: '0px', marginBottom: '0px' }}
-                    />
-                </div>
-
+            <div className="info-card" style={{ marginBottom: '20.721px', borderRadius: '10px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
                 <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
                     <div className="about-page-grid">
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}

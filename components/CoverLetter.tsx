@@ -40,7 +40,7 @@ const CoverLetter: React.FC<CoverLetterProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card">
+            <div className="info-card" style={{ borderRadius: '10px' }}>
                 <InfoBadge
                     icon={<Icons.DocumentTextIcon />}
                     text={pageData.badge}

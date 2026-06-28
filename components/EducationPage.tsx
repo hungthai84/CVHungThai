@@ -81,7 +81,7 @@ const EducationPage: React.FC<EducationPageProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card">
+            <div className="info-card" style={{ borderRadius: '10px' }}>
                 <InfoBadge
                     icon={<Icons.AcademicCapIcon />}
                     text={pageData.title}

@@ -80,7 +80,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card is-services">
+            <div className="info-card is-services" style={{ borderRadius: '10px' }}>
                 <InfoBadge
                     icon={<Icons.LayersIcon />}
                     text={pageData.badge}

@@ -277,7 +277,7 @@ const HoroscopePage: React.FC<{ id?: string }> = ({ id }) => {
                     100% { transform: translateY(-15px) scale(1.1); opacity: 0; }
                 }
             `}</style>
-            <div className="info-card">
+            <div className="info-card" style={{ borderRadius: '10px' }}>
                 <InfoBadge
                     icon={<Icons.SparklesIcon />}
                     text={pageData.badge}

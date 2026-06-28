@@ -30,7 +30,7 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ position: 'relative', height: '100%', width: '100%', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div className="info-card" style={{ position: 'relative', height: '100%', width: '100%', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRadius: '10px' }}>
                 
                 {/* Floating InfoBadge */}
                 <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', zIndex: 20 }}>

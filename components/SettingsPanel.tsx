@@ -145,6 +145,12 @@ const specialAndVideoWallpapers = [
 const videoWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'video');
 
 const imageWallpapers = [
+    { id: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg' },
+    { id: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg' },
+    { id: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg' },
+    { id: 'https://i.ibb.co/04qypw8/ta-i-xu-ng-12.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/04qypw8/ta-i-xu-ng-12.jpg' },
+    { id: 'https://i.ibb.co/ch1yf4Dz/AVv-Xs-Egn6ve-Lq-M6aj-Fr-XO6-YYuy-NTs-Wt-x9-qxb2w-O8-Xt-OWdn-JECETXTri7-Ps-rnb2-Td-Jnln6xu-kddyc-Yisi1xf.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/ch1yf4Dz/AVv-Xs-Egn6ve-Lq-M6aj-Fr-XO6-YYuy-NTs-Wt-x9-qxb2w-O8-Xt-OWdn-JECETXTri7-Ps-rnb2-Td-Jnln6xu-kddyc-Yisi1xf.jpg' },
+    { id: 'https://i.ibb.co/d0Fw0xdW/Best-wallpaper-1.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/d0Fw0xdW/Best-wallpaper-1.jpg' },
     { id: 'https://i.ibb.co/rKL4ffH2/2.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/rKL4ffH2/2.jpg' },
     { id: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg' },
     { id: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg' },

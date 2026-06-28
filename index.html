@@ -2564,13 +2564,10 @@
     
     /* Work Experience Page */
     .work-experience-section {
-        height: 100%;
     }
     .work-experience-section .section-inner {
-        height: 100%;
     }
     .work-experience-card {
-        height: 100%;
         overflow: hidden !important;
         display: flex !important;
         flex-direction: column;
@@ -2711,9 +2708,9 @@
         border-color: transparent;
     }
     .job-card-scrollable-content {
-        overflow-y: auto;
+        overflow: visible;
         flex: 1;
-        min-height: 0;
+        height: auto;
         padding-right: 0.5rem;
     }
     .job-card-details-grid {
@@ -4588,23 +4585,24 @@
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: #ffffff !important;
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
-      color: #101733 !important;
+      background: var(--card-bg) !important;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur-webkit);
+      border: 1px solid var(--card-border) !important;
+      color: var(--color-brand-text-primary) !important;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+      box-shadow: var(--card-box-shadow) !important;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .top-theme-toggle-btn:hover {
       border-color: var(--accent-color) !important;
       color: var(--accent-color) !important;
-      background-color: #ffffff !important;
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      box-shadow: var(--card-glow-shadow) !important;
     }
     
     .language-switcher-dropdown {
@@ -5123,9 +5121,24 @@
         .section-inner {
             padding: 0;
         }
+        .job-card:not(.is-expanded) {
+            height: 3.5rem !important;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .job-card.is-expanded {
+            height: auto !important;
+            max-height: none !important;
+        }
+        .job-card-scrollable-content {
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+        }
         .info-card, .project-card-new {
             height: auto;
-            border-radius: 10px !important;
+            border-radius: 0 !important;
             border-left: none !important;
             border-right: none !important;
             margin-left: 0 !important;
@@ -5166,7 +5179,7 @@
         }
         .about-bio-text-card, .about-personal-info-card, .achievement-card {
             height: auto;
-            border-radius: 10px !important;
+            border-radius: 0 !important;
             border-left: none !important;
             border-right: none !important;
             box-shadow: none !important;
@@ -5177,40 +5190,8 @@
             margin-bottom: 0 !important;
             border-bottom: var(--color-brand-glass-border) !important;
         }
-        
-        .timeline-navigation-wrapper {
-            overflow-x: visible;
-            padding: 0;
-        }
-        .timeline-container {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 2rem;
-            width: 100%;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            min-width: auto;
-        }
-        .timeline-container .timeline-milestone {
-            flex-direction: row;
-            align-items: center;
-            gap: 1.5rem;
-            width: 100%;
-        }
-        .timeline-container .year-text {
-            order: 2;
-            margin-bottom: 0;
-            text-align: left;
-            flex-grow: 1;
-        }
-        .timeline-container .timeline-dot-container {
-            order: 1;
-        }
-        #timeline-segments-container,
-        #timeline-progress-bar {
-            display: none;
-        }
-        
+
+
         .work-experience-card .custom-video-player-wrapper {
             transform: scale(0.5) !important;
         }
@@ -5232,13 +5213,17 @@
             border-bottom: var(--color-brand-glass-border);
         }
         .mobile-header-title {
-          flex-grow: 1;
-          text-align: left;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
           font-size: 1.25rem;
           margin: 0;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          max-width: 50vw;
+          pointer-events: none;
         }
         .mobile-header-controls {
             display: flex;

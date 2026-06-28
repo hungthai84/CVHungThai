@@ -21,6 +21,7 @@ export const vi = {
       aiChat: "Trợ lý AI",
       transcribe: "Dịch giọng nói",
       settings: "Cài đặt",
+      print: "Máy in",
     },
     name: "Nguyễn Hùng Thái",
     jobTitle: "Trưởng Phòng Dịch vụ Khách hàng",

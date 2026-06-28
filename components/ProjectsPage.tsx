@@ -57,7 +57,6 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
         }
         return 'masonry';
     });
-    const [searchTerm, setSearchTerm] = useState('');
     const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
     
@@ -86,17 +85,13 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
 
     // --- Filtering logic ---
     const filteredProjects = useMemo(() => {
-        const lowercasedSearchTerm = searchTerm.toLowerCase();
         return allProjects.filter(project => {
             const groupMatch = selectedGroups.length === 0 || selectedGroups.includes(project.group);
             const stageMatch = selectedStages.length === 0 || selectedStages.includes(project.stage);
             const hashtagMatch = projectFilter.length === 0 || project.hashtags.some(tag => projectFilter.includes(tag));
-            const searchMatch = searchTerm.trim() === '' ||
-                project.title.toLowerCase().includes(lowercasedSearchTerm) ||
-                project.description.toLowerCase().includes(lowercasedSearchTerm);
-            return groupMatch && stageMatch && hashtagMatch && searchMatch;
+            return groupMatch && stageMatch && hashtagMatch;
         });
-    }, [allProjects, selectedGroups, selectedStages, projectFilter, searchTerm]);
+    }, [allProjects, selectedGroups, selectedStages, projectFilter]);
     
     const handleCardClick = (projectId: string) => {
         if (onNavigate && (t.projectPosts as any)[projectId]) {
@@ -107,7 +102,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     // --- Render ---
     return (
         <PageLayout id={id}>
-            <div className="info-card projects-page-container">
+            <div className="info-card projects-page-container" style={{ borderRadius: '10px' }}>
                 <InfoBadge
                     icon={<Icons.CubeIcon />}
                     text={pageData.badge}
@@ -119,8 +114,6 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                 <ProjectFilters
                     viewMode={viewMode}
                     setViewMode={setViewMode}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
                     allGroups={allGroups}
                     selectedGroups={selectedGroups}
                     setSelectedGroups={setSelectedGroups}
@@ -142,6 +135,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
                                 >
                                     <ProjectCard
                                         project={project}
+                                        viewMode={viewMode}
                                         hasPost={!!(t.projectPosts as any)[project.id]}
                                         onClick={() => handleCardClick(project.id)}
                                     />

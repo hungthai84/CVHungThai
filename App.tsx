@@ -59,13 +59,14 @@ const baseNavStructure: {
         icon: 'CubeIcon', 
         component: ProjectsPage,
     },
+    { key: 'interview', tKey: 'interview', icon: 'PresentationIcon', component: InterviewPage },
     { key: 'horoscope', tKey: 'horoscope', icon: 'SparklesIcon', component: HoroscopePage },
     { key: 'memories', tKey: 'memories', icon: 'CameraIcon', component: MemoriesPage },
-    { key: 'interview', tKey: 'interview', icon: 'PresentationIcon', component: InterviewPage },
     { key: 'workVideo', tKey: 'experience', icon: 'BriefcaseIcon', component: WorkVideoPage, showInMenu: false },
     { key: 'scheduler', tKey: 'scheduler', icon: 'CalendarDaysIcon', component: SchedulerPage, showInMenu: false },
     { key: 'aiChat', tKey: 'aiChat', icon: 'BotIcon', component: AiChatPage, showInMenu: false },
     { key: 'settings', tKey: 'settings', icon: 'SettingsIcon', component: SettingsPage, showInMenu: false },
+    { key: 'print', tKey: 'print', icon: 'PrinterIcon', component: () => null, showInMenu: false }, // Special item for mobile menu
 ];
 
 const App: React.FC = () => {
@@ -141,6 +142,14 @@ const App: React.FC = () => {
             }
         }
     }, [isMobile, activeIndex, handleScroll]);
+    
+    // Parallax effect removed to prevent scroll lag and CPU usage on every render frame
+    useEffect(() => {
+        const background = backgroundRef.current;
+        if (background) {
+            background.style.transform = 'translateY(0px)';
+        }
+    }, [activeIndex]);
 
     const playClickSound = useCallback(() => {
         if (isSoundOn) {
@@ -218,6 +227,10 @@ const App: React.FC = () => {
     }, [isMobile, pageKeys, activeIndex]);
 
     const handleSetPage = useCallback((key: string) => {
+        if (key === 'print') {
+            setIsPrintViewOpen(true);
+            return;
+        }
         navigateTo(key);
     }, [navigateTo]);
 
@@ -276,12 +289,19 @@ const App: React.FC = () => {
         setIsMobileMenuOpen(false);
     }, [handleSetPage]);
 
-    const sidebarProps = React.useMemo(() => ({
-        navStructure: baseNavStructure,
-        activeItemKey: pageKeys[activeIndex],
-        setActiveItemKey: isMobile ? handleSetPageAndCloseMenu : handleSetPage,
-        isMobile,
-    }), [activeIndex, isMobile, handleSetPageAndCloseMenu, handleSetPage, pageKeys]);
+    const sidebarProps = React.useMemo(() => {
+        const navWithMobileItems = baseNavStructure.map(item => {
+            if ((item.key === 'scheduler' || item.key === 'print') && isMobile) {
+                return { ...item, showInMenu: true };
+            }
+            return item;
+        });
+        return {
+            navStructure: navWithMobileItems,
+            activeItemKey: pageKeys[activeIndex],
+            setActiveItemKey: isMobile ? handleSetPageAndCloseMenu : handleSetPage,
+        };
+    }, [activeIndex, isMobile, handleSetPageAndCloseMenu, handleSetPage, pageKeys]);
     
     const ActivePageComponent = allPages[activeIndex]?.component;
     const componentProps = React.useMemo(() => {
@@ -426,6 +446,16 @@ const App: React.FC = () => {
     const isCustomOrbiting = wallpaper === 'orbiting-planets';
     const isCustomDotted = wallpaper === 'dotted-pattern';
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
+    const isDemoEnvironment = React.useMemo(() => {
+        if (typeof window === 'undefined') return false;
+        const hostname = window.location.hostname;
+        return (
+            hostname.includes('ais-dev') || 
+            hostname.includes('ais-pre') || 
+            hostname.includes('localhost') || 
+            hostname.includes('127.0.0.1')
+        );
+    }, []);
 
     return (
         <>
@@ -471,10 +501,7 @@ const App: React.FC = () => {
                         <MobileHeader
                             title={activePageTitle}
                             onMenuClick={() => setIsMobileMenuOpen(true)}
-                            onOpenSettings={() => handleSetPage('settings')}
                             onOpenAiChat={() => handleSetPage('aiChat')}
-                            onPrintClick={() => setIsPrintViewOpen(true)}
-                            onSchedulerClick={() => handleSetPage('scheduler')}
                             isIdle={isIdle}
                             activePageKey={pageKeys[activeIndex]}
                         />
@@ -525,10 +552,14 @@ const App: React.FC = () => {
                                     setThemeMode(themeMode === 'light' ? 'dark' : 'light');
                                 }}
                                 className="top-theme-toggle-btn"
-                                title={themeMode === 'light' ? (language === 'vi' ? 'Chuyển sang chế độ tối' : 'Switch to dark mode') : (language === 'vi' ? 'Chuyển sang chế độ sáng' : 'Switch to light mode')}
+                                title={themeMode === 'dark' ? (language === 'vi' ? 'Chế độ tối' : 'Dark mode') : (language === 'vi' ? 'Chế độ sáng' : 'Light mode')}
                                 aria-label="Toggle theme"
                             >
-                                {themeMode === 'light' ? <Icons.MoonIcon size={18} /> : <Icons.SunIcon size={18} />}
+                                {themeMode === 'dark' ? (
+                                    <Icons.MoonIcon size={18} style={{ color: 'var(--accent-color)' }} />
+                                ) : (
+                                    <Icons.SunIcon size={18} style={{ color: '#f59e0b' }} />
+                                )}
                             </button>
                             <LanguageSwitcher />
                         </div>
@@ -542,7 +573,7 @@ const App: React.FC = () => {
                                         <React.Fragment key={page.key}>
                                             <PageComp id={page.key} onNavigate={handleSetPage} />
                                             {index < mainPages.length - 1 && (
-                                                <div className="section-divider py-8 px-6 flex items-center justify-center">
+                                                <div className="section-divider py-[5px] px-6 flex items-center justify-center">
                                                     <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--accent-color)] to-transparent opacity-40"></div>
                                                 </div>
                                             )}
@@ -568,9 +599,6 @@ const App: React.FC = () => {
                             </button>
                             <button onClick={() => handleSetPage('scheduler')} className={`header-icon-button control-scheduler ${pageKeys[activeIndex] === 'scheduler' ? 'active' : ''}`} aria-label="Lên lịch hẹn" title="Lên lịch hẹn">
                                 <Icons.CalendarDaysIcon size={24} />
-                            </button>
-                            <button onClick={() => handleSetPage('settings')} className={`header-icon-button control-settings ${pageKeys[activeIndex] === 'settings' ? 'active' : ''}`} aria-label="Settings">
-                                <Icons.SettingsIcon size={24} />
                             </button>
                             <button onClick={() => handleSetPage('aiChat')} className={`header-icon-button control-ai-chat ${pageKeys[activeIndex] === 'aiChat' ? 'active' : ''} ${isIdle && pageKeys[activeIndex] !== 'aiChat' ? 'ai-chat-pulse' : ''}`} aria-label={t.sidebar.nav.aiChat} title={t.sidebar.nav.aiChat}>
                                 <Icons.BotIcon size={24} />
@@ -622,6 +650,41 @@ const App: React.FC = () => {
                     </div>
                 </div>,
                 document.getElementById('popup-root')!
+            )}
+
+            {isDemoEnvironment && (
+                <button
+                    onClick={() => handleSetPage('settings')}
+                    className="floating-settings-btn"
+                    title="Cài đặt (Demo Mode)"
+                    aria-label="Settings"
+                    style={{
+                        position: 'fixed',
+                        bottom: '20px',
+                        right: '20px',
+                        zIndex: 1000,
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--accent-color)',
+                        color: 'white',
+                        border: 'none',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'rotate(45deg) scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
+                    }}
+                >
+                    <Icons.SettingsIcon size={28} />
+                </button>
             )}
         </>
     );

@@ -1,14 +1,12 @@
 import React from 'react';
 import * as Icons from './Icons';
 import { useI18n } from '../contexts/i18n';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface MobileHeaderProps {
     title: string;
     onMenuClick: () => void;
-    onOpenSettings: () => void;
     onOpenAiChat: () => void;
-    onPrintClick: () => void;
-    onSchedulerClick: () => void;
     isIdle?: boolean;
     activePageKey?: string;
 }
@@ -16,26 +14,37 @@ interface MobileHeaderProps {
 const MobileHeader: React.FC<MobileHeaderProps> = ({ 
     title, 
     onMenuClick,
-    onOpenSettings,
     onOpenAiChat,
-    onPrintClick,
-    onSchedulerClick,
     isIdle,
     activePageKey,
 }) => {
-    const { t } = useI18n();
+    const { t, language } = useI18n();
+    const { themeMode, setThemeMode } = useTheme();
+
     return (
         <header className="mobile-header">
-            <h1 className="mobile-header-title">{title}</h1>
+            <button
+                className="header-icon-button menu-toggle-btn"
+                onClick={onMenuClick}
+                aria-label="Open menu"
+            >
+                <Icons.MenuIcon size={24} />
+            </button>
+            {activePageKey !== 'home' && <h1 className="mobile-header-title">{title}</h1>}
             <div className="mobile-header-controls">
-                <button onClick={onPrintClick} className="header-icon-button" aria-label="View or download CV" title="Xem & Tải CV">
-                    <Icons.PrinterIcon size={24} />
-                </button>
-                <button onClick={onOpenSettings} className="header-icon-button" aria-label="Settings" title="Cài đặt">
-                    <Icons.SettingsIcon size={24} />
-                </button>
-                <button onClick={onSchedulerClick} className="header-icon-button" aria-label="Lên lịch hẹn" title="Lên lịch hẹn">
-                    <Icons.CalendarDaysIcon size={24} />
+                <button
+                    onClick={() => {
+                        setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+                    }}
+                    className="header-icon-button theme-toggle-btn"
+                    title={themeMode === 'dark' ? (language === 'vi' ? 'Chế độ tối' : 'Dark mode') : (language === 'vi' ? 'Chế độ sáng' : 'Light mode')}
+                    aria-label="Toggle theme"
+                >
+                    {themeMode === 'dark' ? (
+                        <Icons.MoonIcon size={24} style={{ color: 'var(--accent-color)' }} />
+                    ) : (
+                        <Icons.SunIcon size={24} style={{ color: '#f59e0b' }} />
+                    )}
                 </button>
                 <button onClick={onOpenAiChat} className={`header-icon-button ${isIdle && activePageKey !== 'aiChat' ? 'ai-chat-pulse' : ''}`} aria-label={t.sidebar.nav.aiChat} title={t.sidebar.nav.aiChat}>
                     <Icons.BotIcon size={24} />
@@ -43,13 +52,6 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
                 <a href="https://zalo.me/0909097882" target="_blank" rel="noopener noreferrer" className="header-icon-button control-zalo" title="Chat Zalo">
                     <Icons.MessageCircleIcon size={24} />
                 </a>
-                <button
-                    className="header-icon-button menu-toggle-btn"
-                    onClick={onMenuClick}
-                    aria-label="Open menu"
-                >
-                    <Icons.MenuIcon size={24} />
-                </button>
             </div>
         </header>
     );

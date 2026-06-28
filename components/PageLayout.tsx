@@ -5,9 +5,10 @@ interface PageLayoutProps {
     children: ReactNode;
     id?: string;
     className?: string;
+    innerStyle?: React.CSSProperties;
 }
 
-const PageLayout: React.FC<PageLayoutProps> = ({ children, id, className }) => {
+const PageLayout: React.FC<PageLayoutProps> = ({ children, id, className, innerStyle }) => {
 
     return (
         <motion.section 
@@ -17,7 +18,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, id, className }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
         >
-            <div className="section-inner">
+            <div className="section-inner" style={innerStyle}>
                 {children}
             </div>
         </motion.section>

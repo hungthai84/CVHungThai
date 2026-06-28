@@ -102,8 +102,8 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
     }, [heroData.taglines]); // Re-run when language (and thus taglines) changes
 
     return (
-        <PageLayout id={id}>
-            <div className="info-card home-hero-card">
+        <PageLayout id={id} innerStyle={{ borderRadius: '10px', marginBottom: '21px' }}>
+            <div className="info-card home-hero-card" style={{ borderRadius: '10px' }}>
                  <video 
                     key={videoUrl}
                     autoPlay 
@@ -125,6 +125,7 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
                 <div className="home-hero-card-content-wrapper">
                     {!isIntroPlaying && (
                         <>
+                            
                             <div className="home-hero-content">
                                 {welcomeMessage && (
                                     <div 
@@ -149,8 +150,14 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
                         </>
                     )}
 
-                    <div className="home-hero-buttons-container" style={{ position: 'absolute', bottom: '30px', right: '30px', zIndex: 10 }}>
+                    <div className="home-hero-buttons-container">
                         <style>{`
+                            .home-hero-buttons-container {
+                                position: absolute;
+                                bottom: 30px;
+                                right: 30px;
+                                z-index: 10;
+                            }
                             .magic-btn-wrapper {
                                 display: flex;
                                 margin-left: 25px; /* for the glass overflow */
@@ -224,10 +231,16 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
                             }
                             @media (max-width: 768px) {
                                 .home-hero-buttons-container {
-                                    bottom: 20px;
-                                    right: 50%;
-                                    transform: translateX(50%);
-                                    width: max-content;
+                                    position: relative;
+                                    bottom: auto;
+                                    right: auto;
+                                    margin-top: 30px;
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                                .magic-btn-wrapper {
+                                    margin-left: 0;
                                 }
                             }
                         `}</style>

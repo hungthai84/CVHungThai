@@ -473,6 +473,10 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
   const [isCreativeJourneyPlaying, setIsCreativeJourneyPlaying] =
     useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [showCompanyPopup, setShowCompanyPopup] = useState(false);
+  const [selectedJobForPopup, setSelectedJobForPopup] = useState<Job | null>(
+    null,
+  );
 
   const lightboxImages = useMemo(() => {
     if (!activeJob?.images) return [];
@@ -511,12 +515,24 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
     setActiveJobIndex(index);
     setIsExpanded(false);
     playClickSound(); // Play sound on manual click
+    if (isMobile) {
+      if (jobs[index].key !== "jobsearch") {
+        setSelectedJobForPopup(jobs[index]);
+        setShowCompanyPopup(true);
+      }
+    }
   };
   return (
-    <PageLayout id={id} className="work-experience-section">
+    <PageLayout 
+        id={id} 
+        className="work-experience-section"
+    >
       <div
         className="info-card work-experience-card flex flex-col h-full"
-        style={{ position: "relative" }}
+        style={{ 
+            position: "relative",
+            borderRadius: "10px"
+        }}
       >
         <div
           style={{
@@ -538,13 +554,18 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
 
         <div className="work-experience-info">
           <div
-            className="timeline-navigation-wrapper no-scrollbar"
-            style={{ height: "130px" }}
+            className={`timeline-navigation-wrapper no-scrollbar ${isMobile ? "vertical" : ""}`}
+            style={{ 
+              height: isMobile ? "100%" : "130px", 
+              maxHeight: isMobile ? "100%" : undefined, 
+              overflowY: isMobile ? "auto" : undefined,
+              flex: isMobile ? 1 : undefined
+            }}
           >
             <div
-              className="timeline-container"
+              className={`timeline-container ${isMobile ? "vertical" : ""}`}
               ref={timelineContainerRef}
-              style={{ height: "120px" }}
+              style={{ height: isMobile ? "auto" : "120px" }}
             >
               <div id="timeline-segments-container"></div>
               <div id="timeline-progress-bar"></div>
@@ -1305,6 +1326,161 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                 autoPlay
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
+            </div>
+          </div>,
+          document.getElementById("popup-root")!,
+        )}
+      {showCompanyPopup &&
+        selectedJobForPopup &&
+        document.getElementById("popup-root") &&
+        createPortal(
+          <div
+            className="video-popup-overlay"
+            style={{ zIndex: 9999 }}
+            onClick={() => setShowCompanyPopup(false)}
+          >
+            <div
+              className="experience-popup-content"
+              style={{
+                maxHeight: "90vh",
+                overflowY: "auto",
+                padding: "1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.5rem",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="video-popup-close-btn"
+                onClick={() => setShowCompanyPopup(false)}
+                style={{ top: "1rem", right: "1rem" }}
+              >
+                <Icons.XMarkIcon />
+              </button>
+
+              <div className="flex items-center gap-4">
+                <div
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "12px",
+                    backgroundColor: "white",
+                    padding: "8px",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={selectedJobForPopup.logoUrl}
+                    alt={selectedJobForPopup.company}
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: "1.25rem" }}>
+                    {selectedJobForPopup.company}
+                  </h3>
+                  <p
+                    style={{
+                      margin: 0,
+                      color: selectedJobForPopup.color,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {selectedJobForPopup.date}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6">
+                <div>
+                  <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                    {pageData.positionTitle}
+                  </h5>
+                  <p className="font-bold text-lg">
+                    {selectedJobForPopup.title}
+                  </p>
+                </div>
+
+                {selectedJobForPopup.teamSize && (
+                  <div>
+                    <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                      {pageData.managedTitle}
+                    </h5>
+                    <p>{selectedJobForPopup.teamSize}</p>
+                  </div>
+                )}
+
+                <div>
+                  <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                    {pageData.descriptionTitle}
+                  </h5>
+                  {selectedJobForPopup.responsibilities.map((resp, idx) => (
+                    <p key={idx} className="mb-2 leading-relaxed">
+                      {resp}
+                    </p>
+                  ))}
+                </div>
+
+                {selectedJobForPopup.tasks &&
+                  selectedJobForPopup.tasks.length > 0 && (
+                    <div>
+                      <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                        {pageData.tasksTitle}
+                      </h5>
+                      <ul className="popup-responsibilities">
+                        {selectedJobForPopup.tasks.map((task, idx) => (
+                          <li key={idx} className="mb-1">
+                            {task}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                {selectedJobForPopup.projects &&
+                  selectedJobForPopup.projects.length > 0 && (
+                    <div>
+                      <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                        {pageData.projectsTitle}
+                      </h5>
+                      <ul className="popup-responsibilities">
+                        {selectedJobForPopup.projects.map((project, idx) => (
+                          <li key={idx} className="mb-1">
+                            {project}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                {selectedJobForPopup.achievements &&
+                  selectedJobForPopup.achievements.length > 0 && (
+                    <div>
+                      <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                        {pageData.achievementsTitle}
+                      </h5>
+                      <div className="achievements-grid mt-2">
+                        {selectedJobForPopup.achievements.map(
+                          (achievement, idx) => (
+                            <JobAchievementCard
+                              key={idx}
+                              achievement={achievement}
+                              color={selectedJobForPopup.color}
+                            />
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+              </div>
             </div>
           </div>,
           document.getElementById("popup-root")!,
