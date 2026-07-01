@@ -54,7 +54,7 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
         return 'Google US English';
     }, [language, userGender]);
 
-    const defaultAiVoiceName = 'Gemini TTS (Puck)';
+    const defaultAiVoiceName = language === 'vi' ? 'Nam Minh' : 'Google US English';
     const aiVoiceToUse = selectedAiVoiceName || defaultAiVoiceName;
 
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
@@ -62,53 +62,6 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const [isListening, setIsListening] = useState(false);
-    const recognitionRef = useRef<any>(null);
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-            if (SpeechRecognition) {
-                recognitionRef.current = new SpeechRecognition();
-                recognitionRef.current.continuous = true;
-                recognitionRef.current.interimResults = true;
-                
-                recognitionRef.current.onresult = (event: any) => {
-                    let transcript = '';
-                    for (let i = 0; i < event.results.length; ++i) {
-                        transcript += event.results[i][0].transcript;
-                    }
-                    setInput(transcript);
-                };
-
-                recognitionRef.current.onerror = (event: any) => {
-                    console.error('Speech recognition error', event.error);
-                    setIsListening(false);
-                };
-
-                recognitionRef.current.onend = () => {
-                    setIsListening(false);
-                };
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (recognitionRef.current) {
-            recognitionRef.current.lang = language === 'vi' ? 'vi-VN' : 'en-US';
-        }
-    }, [language]);
-
-    const toggleListening = () => {
-        if (isListening) {
-            recognitionRef.current?.stop();
-        } else {
-            setInput('');
-            recognitionRef.current?.start();
-            setIsListening(true);
-        }
-    };
 
     const { userSalutation, genderDescription } = useMemo(() => {
         if (language === 'vi') {
@@ -701,15 +654,6 @@ const AiChatPage: React.FC<{ id?: string }> = ({ id }) => {
                                     <input type="file" accept="image/*" ref={fileInputRef} onChange={handleAttachmentChange} style={{ display: 'none' }} />
                                     <button type="button" className="chatbot-attach-btn" title={pageData.attachFile} onClick={() => fileInputRef.current?.click()}>
                                         <Icons.AttachmentIcon />
-                                    </button>
-                                    <button 
-                                        type="button" 
-                                        className="chatbot-attach-btn" 
-                                        title={isListening ? "Ngừng ghi âm" : "Nói để nhập"} 
-                                        onClick={toggleListening}
-                                        style={{ color: isListening ? 'var(--color-brand-orange)' : undefined }}
-                                    >
-                                        <Icons.MicrophoneIcon />
                                     </button>
                                     <textarea
                                         ref={textareaRef}

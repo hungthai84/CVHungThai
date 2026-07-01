@@ -565,24 +565,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                                     style={{ borderRadius: '999px' }}
                                                 >
                                                     {groupedVoices.vi.length > 0 ? (
-                                                        <>
-                                                            {groupedVoices.vi.some(v => v.name.includes('Gemini TTS')) && (
-                                                                <optgroup label="Gemini TTS (gemini-1.5-flash-preview-tts)">
-                                                                    {groupedVoices.vi.filter(v => v.name.includes('Gemini TTS')).map(voice => (
-                                                                        <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                            {voice.name.replace('Gemini TTS ', '')} ({voice.lang})
-                                                                        </option>
-                                                                    ))}
-                                                                </optgroup>
-                                                            )}
-                                                            <optgroup label="Hệ thống / Khác">
-                                                                {groupedVoices.vi.filter(v => !v.name.includes('Gemini TTS')).map(voice => (
-                                                                    <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
-                                                                        {voice.name} ({voice.lang})
-                                                                    </option>
-                                                                ))}
-                                                            </optgroup>
-                                                        </>
+                                                        groupedVoices.vi.map(voice => (
+                                                            <option key={`${voice.name}_${voice.lang}`} value={voice.name}>
+                                                                {voice.name} ({voice.lang})
+                                                            </option>
+                                                        ))
                                                     ) : (
                                                         <option value="">Không tìm thấy giọng nói Tiếng Việt</option>
                                                     )}
