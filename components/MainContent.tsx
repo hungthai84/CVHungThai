@@ -23,7 +23,7 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
     const heroData = t.hero;
     const typedEl = useRef(null);
     const typedInstance = useRef<any>(null);
-    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/9626/1205f7fefeff2bc883db0ad83f10e906d812765580450ec3894dc2640592dc5a.mp4 ";
+    const DEFAULT_VIDEO = "  https://cdn.scena.ai/project/9626/f2fee93b4e329d1ef2db9d309bcc136a4e7bcdcc94bedcac5aa122b7c9b6ab7a.mp4 ";
     const INTRO_VIDEO = "  https://cdn.scena.ai/project/9306/f80e70607089e15ca53fc5706e2f642d134b9d5f6bf2721f575ee575e268386e.mp4";
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
