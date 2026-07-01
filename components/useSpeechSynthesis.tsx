@@ -152,6 +152,14 @@ export const useSpeechSynthesis = () => {
                 });
             }
             
+            const mockGeminiVoices: SpeechSynthesisVoice[] = [
+                { name: 'Gemini TTS (Puck)', lang: 'vi-VN', localService: false, default: true, voiceURI: 'gemini-tts-Puck' },
+                { name: 'Gemini TTS (Charon)', lang: 'vi-VN', localService: false, default: false, voiceURI: 'gemini-tts-Charon' },
+                { name: 'Gemini TTS (Kore)', lang: 'vi-VN', localService: false, default: false, voiceURI: 'gemini-tts-Kore' },
+                { name: 'Gemini TTS (Fenrir)', lang: 'vi-VN', localService: false, default: false, voiceURI: 'gemini-tts-Fenrir' },
+                { name: 'Gemini TTS (Aoede)', lang: 'vi-VN', localService: false, default: false, voiceURI: 'gemini-tts-Aoede' }
+            ];
+
             const mockGttsVoice: SpeechSynthesisVoice = {
                 name: 'Google Translate TTS (gTTS - Miễn phí)',
                 lang: 'vi-VN',
@@ -160,7 +168,7 @@ export const useSpeechSynthesis = () => {
                 voiceURI: 'gtts-vi'
             };
 
-            setVoices([mockGttsVoice, ...customVoices, ...googleVoices, ...otherVoices]);
+            setVoices([...mockGeminiVoices, mockGttsVoice, ...customVoices, ...googleVoices, ...otherVoices]);
         };
 
         // Load voices initially and on change
@@ -211,15 +219,18 @@ export const useSpeechSynthesis = () => {
             activeSessionRef.current = sessionId;
 
             const isGttsVoice = options.voiceName && options.voiceName.includes('gTTS');
+            const isGeminiVoice = options.voiceName && options.voiceName.includes('Gemini TTS');
 
-            if (isGttsVoice) {
+            if (isGttsVoice || isGeminiVoice) {
                 try {
                     setIsSpeaking(true);
                     const targetLangCode = options.lang === 'en' ? 'en' : 'vi';
-                    const chunks = splitTextIntoSentences(text, 160);
+                    const chunks = splitTextIntoSentences(text, isGeminiVoice ? 500 : 160);
                     const isSlow = options.rate !== undefined && options.rate < 0.8;
                     const urls = chunks.map(chunk => ({
-                        url: `/api/tts?text=${encodeURIComponent(chunk)}&lang=${targetLangCode}&slow=${isSlow}`
+                        url: isGeminiVoice 
+                            ? `/api/gemini-tts?text=${encodeURIComponent(chunk)}&voice=${encodeURIComponent(options.voiceName?.replace('Gemini TTS (', '').replace(')', '') || 'Puck')}`
+                            : `/api/tts?text=${encodeURIComponent(chunk)}&lang=${targetLangCode}&slow=${isSlow}`
                     }));
                     
                     if (urls.length > 0) {
@@ -292,8 +303,8 @@ export const useSpeechSynthesis = () => {
                 return;
             }
 
-            // Filter out mock gTTS voices to prevent assigning fake objects to speechSynthesis utterance.voice
-            const realVoices = voices.filter(v => v.voiceURI !== 'gtts-vi');
+            // Filter out mock voices to prevent assigning fake objects to speechSynthesis utterance.voice
+            const realVoices = voices.filter(v => v.voiceURI !== 'gtts-vi' && v.voiceURI !== 'gemini-tts');
 
             let targetLangCode = 'vi-VN';
             if (options.lang === 'en') {

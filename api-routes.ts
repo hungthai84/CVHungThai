@@ -24,6 +24,40 @@ function getGeminiClient(): GoogleGenAI {
   return aiInstance;
 }
 
+// Helper to add WAV header to raw 16-bit PCM little-endian data
+function encodeWAV(pcmBuffer: Buffer, sampleRate: number): Buffer {
+  const numChannels = 1;
+  const byteRate = sampleRate * numChannels * 2;
+  const blockAlign = numChannels * 2;
+  const dataSize = pcmBuffer.length;
+  
+  const buffer = Buffer.alloc(44 + dataSize);
+  
+  // RIFF chunk descriptor
+  buffer.write('RIFF', 0);
+  buffer.writeUInt32LE(36 + dataSize, 4);
+  buffer.write('WAVE', 8);
+  
+  // fmt sub-chunk
+  buffer.write('fmt ', 12);
+  buffer.writeUInt32LE(16, 16); // Subchunk1Size (16 for PCM)
+  buffer.writeUInt16LE(1, 20); // AudioFormat (1 for PCM)
+  buffer.writeUInt16LE(numChannels, 22);
+  buffer.writeUInt32LE(sampleRate, 24);
+  buffer.writeUInt32LE(byteRate, 28);
+  buffer.writeUInt16LE(blockAlign, 32);
+  buffer.writeUInt16LE(16, 34); // BitsPerSample
+  
+  // data sub-chunk
+  buffer.write('data', 36);
+  buffer.writeUInt32LE(dataSize, 40);
+  
+  // Write PCM data
+  pcmBuffer.copy(buffer, 44);
+  
+  return buffer;
+}
+
 // API route for secure server-side TTS proxy bypassing browser CAPTCHAs and CORS
 router.get("/tts", async (req, res) => {
   const text = req.query.text as string;
@@ -48,6 +82,44 @@ router.get("/tts", async (req, res) => {
     res.send(buffer);
   } catch (error) {
     console.error("gTTS server-side proxy error:", error);
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+// API route for Gemini TTS
+router.get("/gemini-tts", async (req, res) => {
+  const text = req.query.text as string;
+  const voice = req.query.voice as string || 'Puck';
+  try {
+    if (!text) {
+      return res.status(400).send("No text provided");
+    }
+    const ai = getGeminiClient();
+    const response = await ai.models.generateContent({
+      model: "gemini-3.1-flash-tts-preview",
+      contents: [{ parts: [{ text: text }] }],
+      config: {
+        responseModalities: ["AUDIO"],
+        speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: voice },
+            },
+        },
+      },
+    });
+
+    const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+    if (base64Audio) {
+      const rawPcm = Buffer.from(base64Audio, 'base64');
+      const wavBuffer = encodeWAV(rawPcm, 24000); // sample rate 24000
+      res.setHeader('Content-Type', 'audio/wav');
+      res.setHeader('Content-Length', wavBuffer.length);
+      res.send(wavBuffer);
+    } else {
+      res.status(500).json({ error: "Failed to generate audio" });
+    }
+  } catch (error) {
+    console.error("Gemini TTS error:", error);
     res.status(500).json({ error: String(error) });
   }
 });
