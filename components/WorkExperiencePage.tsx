@@ -526,6 +526,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
     <PageLayout 
         id={id} 
         className="work-experience-section"
+        innerStyle={{ borderRadius: "10px" }}
     >
       <div
         className="info-card work-experience-card flex flex-col h-full"

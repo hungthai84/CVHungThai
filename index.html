@@ -5059,6 +5059,7 @@
       .personal-info-grid {
         grid-template-columns: 1fr !important;
         gap: 1rem !important;
+        height: auto !important;
       }
       .about-video-card {
         order: -1; /* Move video to top on mobile */
@@ -5138,13 +5139,16 @@
         }
         .info-card, .project-card-new {
             height: auto;
-            border-radius: 0 !important;
+            border-radius: 10px !important;
             border-left: none !important;
             border-right: none !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             width: 100% !important;
             max-width: 100% !important;
+        }
+        .work-experience-card {
+            border-radius: 10px !important;
         }
         .is-chat-container, .is-scheduler-container {
             height: calc(100vh - var(--mobile-header-height)) !important;
@@ -5178,8 +5182,8 @@
             font-size: 0.9rem !important;
         }
         .about-bio-text-card, .about-personal-info-card, .achievement-card {
-            height: auto;
-            border-radius: 0 !important;
+            height: auto !important;
+            border-radius: 10px !important;
             border-left: none !important;
             border-right: none !important;
             box-shadow: none !important;
@@ -5254,7 +5258,9 @@
             transition: transform 0.3s ease-in-out;
             overflow-y: auto;
             width: var(--sidebar-expanded-width);
-            background-color: var(--sidebar-bg); /* Use sidebar-bg for mobile menu */
+            background-color: rgba(var(--sidebar-bg-rgb), 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .mobile-menu-overlay.open .left-sidebar {
             transform: translateX(0);
