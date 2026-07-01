@@ -2,6 +2,7 @@ import React from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
+import InfoBadge from './InfoBadge';
 
 export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
@@ -27,15 +28,23 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ marginBottom: '20.721px', borderRadius: '10px', paddingBottom: '0px', paddingTop: '0px', paddingLeft: '25.5px' }}>
-                <div className="about-page-content-wrapper no-scrollbar" style={{ marginBottom: '10px' }}>
-                    <div className="about-page-grid">
+            <div className="info-card" style={{ height: '100%', borderRadius: '10px', padding: '1.5rem' }}>
+                <InfoBadge
+                    icon={<Icons.UserIcon />}
+                    text={pageData.badge}
+                    tooltipTitle={pageData.tooltipTitle}
+                    tooltipText={pageData.tooltipText}
+                    style={{ marginBottom: '1.5rem' }}
+                />
+                <div className="about-page-content-wrapper no-scrollbar" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                    <div className="about-page-grid" style={{ flex: 1, minHeight: 0 }}>
                         {/* Left Column: Scena Banner and Personal Info Card (Swapped from Right) */}
-                        <div className="about-left-column scena-banner-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610px', minHeight: 0 }}>
+                        <div className="about-left-column scena-banner-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%', minHeight: 0 }}>
                             {/* HTML5 Video Player */}
                             <div className="scena-banner-video-container" style={{ 
                                 width: '100%', 
-                                height: 'calc(50% - 0.75rem)',
+                                flex: 1,
+                                minHeight: 0,
                                 borderRadius: '10px', 
                                 overflow: 'hidden', 
                                 background: 'rgba(var(--sidebar-bg-rgb), 0.1)',
@@ -110,7 +119,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
                             {/* Personal Info Card */}
                             {pageData.infoItems && pageData.infoItems.length > 0 && (
-                                <div className="about-personal-info-card" style={{ height: '300px', width: '100%', padding: '0px' }}>
+                                <div className="about-personal-info-card" style={{ flex: 1, width: '100%', padding: '0px', display: 'flex', flexDirection: 'column' }}>
                                     <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingTop: '10px', paddingBottom: '15px', paddingLeft: '10px', paddingRight: '10px' }}><Icons.UserIcon className="inline mr-2" size={18} />{pageData.personalInfoTitle}</h3>
                                     <div className="personal-info-grid no-scrollbar" style={{ 
                                         height: 'calc(100% - 40px)', 
@@ -166,7 +175,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
                         </div>
 
                         {/* Right Column: Bio Text Card (Swapped from Left) */}
-                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '610px', minHeight: 0 }}>
+                        <div className="about-right-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%', minHeight: 0 }}>
                             {/* Bio Text Card */}
                             <div className="about-bio-text-card no-scrollbar" style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
                                 <h3 className="personal-info-title" style={{ marginBottom: '0px', paddingBottom: '0px' }}><Icons.SparklesIcon className="inline mr-2" size={20} />{pageData.tooltipTitle}</h3>
