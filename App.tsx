@@ -29,7 +29,7 @@ const InterviewPage = lazy(() => import('./components/InterviewPage'));
 const HoroscopePage = lazy(() => import('./components/HoroscopePage'));
 
 // Lazy load heavy components
-const ProjectsPage = lazy(() => import('./components/ProjectsPage').then(module => ({ default: module.ProjectsPage })));
+const ProjectsPage = lazy(() => import('./components/ProjectsPage'));
 const MemoriesPage = lazy(() => import('./components/MemoriesPage'));
 
 const LoadingFallback: React.FC = () => (
@@ -99,6 +99,8 @@ const App: React.FC = () => {
     const [isPdfFallbackOpen, setIsPdfFallbackOpen] = useState(false);
     const [fallbackPdfUrl, setFallbackPdfUrl] = useState<string | undefined>(undefined);
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+    const [pdfProgress, setPdfProgress] = useState(0);
+    const [pdfStatus, setPdfStatus] = useState('');
     const [scrollPercent, setScrollPercent] = useState(0);
     const [isIdle, setIsIdle] = useState(false);
     const [isIntroPlaying, setIsIntroPlaying] = useState(false);
@@ -399,8 +401,17 @@ const App: React.FC = () => {
 
     const handleDownloadPdf = async () => {
         setIsGeneratingPdf(true);
+        setPdfProgress(0);
+        setPdfStatus('Starting...');
         try {
-            const result = await generatePdfFromElement('printable-content', `CV_Nguyen_Hung_Thai_${language.toUpperCase()}.pdf`);
+            const result = await generatePdfFromElement(
+                'printable-content', 
+                `CV_Nguyen_Hung_Thai_${language.toUpperCase()}.pdf`,
+                (progress, status) => {
+                    setPdfProgress(progress);
+                    setPdfStatus(status);
+                }
+            );
             if (!result.success) {
                 console.error("PDF generation failed:", result.error);
                 setFallbackPdfUrl(result.blobUrl);
@@ -446,6 +457,7 @@ const App: React.FC = () => {
     const isCustomOrbiting = wallpaper === 'orbiting-planets';
     const isCustomDotted = wallpaper === 'dotted-pattern';
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
+    const isGeminiAi = wallpaper === 'gemini-ai';
     const isDemoEnvironment = React.useMemo(() => {
         if (typeof window === 'undefined') return false;
         const hostname = window.location.hostname;
@@ -459,7 +471,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''}`}
+            <div ref={backgroundRef} className={`app-background ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''} ${isGeminiAi ? 'wallpaper-gemini-ai' : ''}`}
                 style={isImage ? { 
                     backgroundImage: `url(${wallpaper})`,
                     backgroundSize: 'cover',
@@ -487,6 +499,17 @@ const App: React.FC = () => {
                     <div className="holder"></div>
                 ) : isCustomDotted || isCustomDarkDotted ? (
                     null
+                ) : isGeminiAi ? (
+                    <div className="gemini-ai-background">
+                        <div className="glow-blob blob-1"></div>
+                        <div className="glow-blob blob-2"></div>
+                        <div className="glow-blob blob-3"></div>
+                        
+                        <div className="gemini-content">
+                            <h1>{language === 'vi' ? 'Trải nghiệm tương lai' : 'Experience the Future'}</h1>
+                            <p>{language === 'vi' ? 'Giao diện được lấy cảm hứng từ AI' : 'AI-Inspired Interface'}</p>
+                        </div>
+                    </div>
                 ) : (
                      <div 
                         className="background-gradient"
@@ -643,6 +666,36 @@ const App: React.FC = () => {
                             <Icons.XMarkIcon />
                         </button>
                     </div>
+                    {isGeneratingPdf && (
+                        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">
+                            <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-2xl p-6 shadow-2xl max-w-sm w-full mx-4 flex flex-col items-center text-center">
+                                <div className="relative w-16 h-16 mb-6">
+                                    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <path
+                                            className="text-[var(--border-color)] stroke-current"
+                                            strokeWidth="3"
+                                            fill="none"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        />
+                                        <path
+                                            className="text-[var(--accent-color)] stroke-current"
+                                            strokeWidth="3"
+                                            strokeDasharray={`${pdfProgress}, 100`}
+                                            strokeLinecap="round"
+                                            fill="none"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                            style={{ transition: 'stroke-dasharray 0.3s ease' }}
+                                        />
+                                    </svg>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-sm font-semibold text-[var(--text-primary)]">{pdfProgress}%</span>
+                                    </div>
+                                </div>
+                                <h3 className="text-lg font-semibold mb-2 text-[var(--text-primary)]">Generating PDF</h3>
+                                <p className="text-sm text-[var(--text-secondary)]">{pdfStatus}</p>
+                            </div>
+                        </div>
+                    )}
                     <div className="print-preview-content">
                         <Suspense fallback={<LoadingFallback />}>
                             <PrintableView activePageKey={activePageKey} />

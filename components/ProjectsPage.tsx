@@ -6,24 +6,12 @@ import InfoBadge from './InfoBadge';
 import { useTheme } from '../contexts/ThemeContext';
 import ProjectCard from './ProjectCard';
 import ProjectFilters from './ProjectFilters';
-
-// --- Type definitions ---
-export interface Project {
-    id: string;
-    title: string;
-    description: string;
-    group: string;
-    stage: string;
-    hashtags: string[];
-    imageUrl: string;
-}
+import { Project, ViewMode } from './project-types';
 
 interface ProjectsPageProps {
     id?: string;
     onNavigate?: (key: string) => void;
 }
-
-export type ViewMode = 'grid' | 'list' | 'masonry';
 
 // Helper to safely parse JSON from localStorage
 function safeJSONParse<T>(item: string | null, fallback: T): T {
@@ -51,12 +39,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     const allProjects: Project[] = pageData.projects || [];
 
     // --- State Management ---
-    const [viewMode, setViewMode] = useState<ViewMode>(() => {
-        if (typeof window !== 'undefined' && window.innerWidth <= 767) {
-            return 'grid';
-        }
-        return 'masonry';
-    });
+    const [viewMode, setViewMode] = useState<ViewMode>('grid');
     const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
     
@@ -153,3 +136,5 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
         </PageLayout>
     );
 };
+
+export default ProjectsPage;

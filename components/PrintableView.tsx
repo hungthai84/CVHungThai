@@ -131,7 +131,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
 
                 <div style={{ marginBottom: '1.5rem', textAlign: 'center', backgroundColor: 'rgba(255, 247, 237, 0.9)', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ffedd5', zIndex: 2, position: 'relative', backdropFilter: 'blur(8px)' }}>
                     <p style={{ margin: 0, fontSize: '9pt', color: '#c2410c', fontWeight: 600 }}>
-                        {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Click anywhere to view full website or visit:' : 'Xem thông tin chi tiết và đầy đủ tại Website :'} <span style={{ color: '#ea580c', textDecoration: 'underline' }}>https://www.nguyenhungthai.powerservice.one/</span>
+                        {t.sidebar.name === 'Nguyen Hung Thai' ? 'Click anywhere to view full website or visit:' : 'Xem thông tin chi tiết và đầy đủ tại Website :'} <span style={{ color: '#ea580c', textDecoration: 'underline' }}>https://www.nguyenhungthai.powerservice.one/</span>
                     </p>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1.9fr 1.1fr', gap: '1.5rem', flex: 1 }}>
@@ -142,7 +142,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                                 <img src="https://i.ibb.co/7tnk3NTY/H-ng-Th-i-Avata-Gif.gif" alt="Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e5e7eb' }} />
                                 <div>
                                     <h3 className="p-section-title" style={{ fontSize: '12pt', color: '#101733', margin: 0, paddingBottom: '0.2rem', textTransform: 'uppercase', fontWeight: 800 }}>
-                                       Nguyễn Hùng Thái
+                                       {t.sidebar.name}
                                     </h3>
                                     <h2 style={{ fontSize: '10pt', fontWeight: 600, color: '#f97316', margin: '0' }}>
                                         {t.sidebar.jobTitle}
@@ -153,7 +153,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                             <p style={{ margin: '0 0 1rem 0', fontSize: '8.5pt', textAlign: 'justify', lineHeight: '1.4' }} dangerouslySetInnerHTML={{ __html: t.aboutPage.paragraphs[1] }} />
                             
                             <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
-                                {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'CORE PHILOSOPHY' : 'TRIẾT LÝ HÀNH ĐỘNG'}
+                                {t.sidebar.name === 'Nguyen Hung Thai' ? 'CORE PHILOSOPHY' : 'TRIẾT LÝ HÀNH ĐỘNG'}
                             </h3>
                             <div style={{ backgroundColor: '#f9fafb', borderLeft: '3px solid #f97316', padding: '0.5rem', borderRadius: '0 4px 4px 0' }}>
                                 <blockquote style={{ margin: 0, fontSize: '7.5pt', fontStyle: 'italic', color: '#4b5563', lineHeight: 1.4 }}>
@@ -190,7 +190,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9pt', color: '#4b5563', fontStyle: 'italic', margin: '0.1rem 0 0.3rem 0' }}>
                                             <span style={{ fontWeight: 600 }}>{job.title}</span>
-                                            {job.teamSize && <span>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Managed:' : 'Quản lý:'} {job.teamSize}</span>}
+                                            {job.teamSize && <span>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Managed:' : 'Quản lý:'} {job.teamSize}</span>}
                                         </div>
                                         <ul style={{ margin: '0', paddingLeft: '1.1rem', fontSize: '8.5pt', color: '#374151', listStyleType: 'square' }}>
                                             {job.responsibilities.slice(0, 4).map((res: string, idx: number) => (
@@ -207,32 +207,32 @@ const PrintPageContent = ({ t }: { t: any }) => {
                     <div>
                         <section className="p-section" style={glassCardStyle}>
                             <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '0.5rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
-                                {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'PERSONAL INFO' : 'THÔNG TIN CÁ NHÂN'}
+                                {t.sidebar.name === 'Nguyen Hung Thai' ? 'PERSONAL INFO' : 'THÔNG TIN CÁ NHÂN'}
                             </h3>
                             <table style={{ width: '100%', fontSize: '8.5pt', borderCollapse: 'collapse', color: '#374151', lineHeight: '1.6' }}>
                                 <tbody>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'DOB:' : 'Sinh nhật:'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'DOB:' : 'Sinh nhật:'}</td>
                                         <td style={{ textAlign: 'right' }}>22/06/1984</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Gender:' : 'Giới tính:'}</td>
-                                        <td style={{ textAlign: 'right' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Male' : 'Nam giới'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Gender:' : 'Giới tính:'}</td>
+                                        <td style={{ textAlign: 'right' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Male' : 'Nam giới'}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Status:' : 'Tình trạng:'}</td>
-                                        <td style={{ textAlign: 'right' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Single' : 'Độc thân'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Status:' : 'Tình trạng:'}</td>
+                                        <td style={{ textAlign: 'right' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Single' : 'Độc thân'}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Address:' : 'Tạm trú:'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Address:' : 'Tạm trú:'}</td>
                                         <td style={{ textAlign: 'right' }}>{tempResidence}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Hometown:' : 'Cư trú:'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Hometown:' : 'Cư trú:'}</td>
                                         <td style={{ textAlign: 'right' }}>{permResidence}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Phone:' : 'Điện thoại:'}</td>
+                                        <td style={{ fontWeight: 600, color: '#4b5563', padding: '1px 0' }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Phone:' : 'Điện thoại:'}</td>
                                         <td style={{ textAlign: 'right' }}>{phone}</td>
                                     </tr>
                                     <tr>
@@ -249,7 +249,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                             </h3>
                             <div style={{ marginBottom: '1rem' }}>
                                 <h4 style={{ fontSize: '8.5pt', fontWeight: 700, margin: '0 0 0.5rem 0', color: '#4b5563', textTransform: 'uppercase' }}>
-                                    {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Professional Skills' : 'Kỹ năng chuyên môn'}
+                                    {t.sidebar.name === 'Nguyen Hung Thai' ? 'Professional Skills' : 'Kỹ năng chuyên môn'}
                                 </h4>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     {professionalSkills.map((skill: any) => (
@@ -267,7 +267,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                             </div>
                             <div>
                                 <h4 style={{ fontSize: '8.5pt', fontWeight: 700, margin: '0 0 0.5rem 0', color: '#4b5563', textTransform: 'uppercase' }}>
-                                    {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Soft Skills' : 'Kỹ năng mềm'}
+                                    {t.sidebar.name === 'Nguyen Hung Thai' ? 'Soft Skills' : 'Kỹ năng mềm'}
                                 </h4>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     {softSkills.map((skill: any) => (
@@ -327,7 +327,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                     <div>
                         <section className="p-section" style={glassCardStyle}>
                             <h3 className="p-section-title" style={{ fontSize: '10.5pt', borderBottom: '1px solid #f97316', color: '#101733', marginBottom: '1rem', paddingBottom: '0.2rem', textTransform: 'uppercase' }}>
-                                {t.sidebar.name === 'NGUYEN HUNG THAI' ? 'EXPERIENCE HISTORY' : 'LỊCH SỬ KINH NGHIỆM'}
+                                {t.sidebar.name === 'Nguyen Hung Thai' ? 'EXPERIENCE HISTORY' : 'LỊCH SỬ KINH NGHIỆM'}
                             </h3>
                             <div style={{ position: 'relative', borderLeft: '2px solid #e5e7eb', marginLeft: '5.5rem', paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                                 {allJobs.slice(3).map((job: any) => (
@@ -353,7 +353,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9pt', color: '#4b5563', fontStyle: 'italic', margin: '0.1rem 0 0.3rem 0' }}>
                                             <span style={{ fontWeight: 600 }}>{job.title}</span>
-                                            {job.teamSize && <span>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Managed:' : 'Quản lý:'} {job.teamSize}</span>}
+                                            {job.teamSize && <span>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Managed:' : 'Quản lý:'} {job.teamSize}</span>}
                                         </div>
                                         <ul style={{ margin: '0', paddingLeft: '1.1rem', fontSize: '8.5pt', color: '#374151', listStyleType: 'square' }}>
                                             {job.responsibilities.slice(0, 3).map((res: string, idx: number) => (
@@ -390,7 +390,7 @@ const PrintPageContent = ({ t }: { t: any }) => {
                                     <div key={index} style={{ fontSize: '8pt', lineHeight: 1.3, borderBottom: '1px dashed rgba(0,0,0,0.06)', paddingBottom: '0.3rem' }}>
                                         <strong style={{ display: 'block', color: '#101733' }}>{edu.title}</strong>
                                         <span style={{ color: '#4b5563', display: 'block' }}>{edu.institution}</span>
-                                        <span style={{ color: '#f97316', display: 'block', fontSize: '7.5pt', fontWeight: 700 }}>{t.sidebar.name === 'NGUYEN HUNG THAI' ? 'Year:' : 'Năm:'} {edu.year}</span>
+                                        <span style={{ color: '#f97316', display: 'block', fontSize: '7.5pt', fontWeight: 700 }}>{t.sidebar.name === 'Nguyen Hung Thai' ? 'Year:' : 'Năm:'} {edu.year}</span>
                                     </div>
                                 ))}
                             </div>

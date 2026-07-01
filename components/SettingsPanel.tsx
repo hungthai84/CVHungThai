@@ -52,6 +52,36 @@ const specialAndVideoWallpapers = [
         thumbnail: '',
     },
     {
+        id: 'https://cdn.dribbble.com/userupload/9438742/file/original-9334dd4051bb585cc561e8be06870b39.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/4241992/file/original-1fcb82b5ace105f3ec88a2deb08e842d.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/34993295/file/original-2ea4b30fcd7c6eac3ca0f4d5bfd3d67b.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/32536603/file/original-db8060ba2540c3bf1cd2f30b4984cd51.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/32480516/file/original-f4a88d4031fee315e3175bf1834c24b4.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
+        id: 'https://cdn.dribbble.com/userupload/32404914/file/original-57644971c47c0d16f90a68404a5e65c1.mp4',
+        type: 'video' as const,
+        thumbnail: '',
+    },
+    {
         id: 'https://cdn.dribbble.com/userupload/16365481/file/original-527fee647d12f31fce8a309ad136c4bb.mp4',
         type: 'video' as const,
         thumbnail: '',
@@ -145,6 +175,8 @@ const specialAndVideoWallpapers = [
 const videoWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'video');
 
 const imageWallpapers = [
+    { id: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg' },
+    { id: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg' },
     { id: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg' },
     { id: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg' },
     { id: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg' },

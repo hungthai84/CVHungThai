@@ -1,6 +1,6 @@
 import React from 'react';
 import { useI18n } from '../contexts/i18n';
-import type { Project, ViewMode } from './ProjectsPage';
+import type { Project, ViewMode } from './project-types';
 import OptimizedImage from './OptimizedImage';
 
 interface ProjectCardProps {

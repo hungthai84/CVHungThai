@@ -53,7 +53,8 @@ service cloud.firestore {
     match /comments/{commentId} {
       allow read, list: if true;
       allow create: if isValidComment(request.resource.data);
-      allow update, delete: if false; // Feedback comments are immutable after submission
+      allow update: if false; // Feedback comments are immutable after submission
+      allow delete: if true; // Create delete permissions in the demo
     }
 
     match /messages/{messageId} {

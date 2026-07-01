@@ -5,7 +5,7 @@ import { apiRouter } from "./api-routes"; // ESM extension compatibility
 
 async function startServer() {
   const app = express();
-  const PORT = Number(process.env.PORT) || 3000;
+  const PORT = 3000;
 
   // Let Express parse JSON payloads up to 50MB
   app.use(express.json({ limit: "50mb" }));
@@ -22,7 +22,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), "dist", "client");
+    const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*all", (_req, res) => {
       res.sendFile(path.join(distPath, "index.html"));

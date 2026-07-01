@@ -74,9 +74,11 @@ import {
     ExternalLink,
     Maximize,
     Minimize,
+    Trash2,
 } from 'lucide-react';
 
 // Re-exporting with the original names used in the app
+export const TrashIcon = Trash2;
 export const FileTextIcon = FileText;
 export const FileIcon = Folder; // Folder is sometimes used for projects, but I'll add File later if needed.
 export const ArrowUpIcon = ArrowUp;

@@ -1191,7 +1191,6 @@ export const vi = {
       mindMapUrl: "https://i.postimg.cc/J0vJ0V3D/mindmap-1-1.png",
       content: {
         paragraphs: [
-          "**Vai trò:** Trưởng dự án / Quản lý Chăm sóc Khách hàng",
           "**Mục tiêu dự án:** Xây dựng hoàn chỉnh mô hình Phòng Chăm sóc Khách hàng từ giai đoạn khởi tạo, tạo nền tảng vận hành chuyên nghiệp, lấy khách hàng làm trung tâm, đảm bảo khả năng mở rộng theo tốc độ phát triển của doanh nghiệp và nâng cao chất lượng trải nghiệm khách hàng trên toàn bộ hành trình dịch vụ.",
           "**Nội dung triển khai:**"
         ],
@@ -1214,7 +1213,6 @@ export const vi = {
       mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
       content: {
         paragraphs: [
-          "**Vai trò:** Trưởng dự án / Quản lý Chăm sóc Khách hàng",
           "**Mục tiêu dự án:** Xây dựng hệ thống quản trị hiệu suất toàn diện cho Phòng Chăm sóc Khách hàng dựa trên dữ liệu thực tế, chuyển đổi phương thức quản lý từ cảm tính sang quản trị bằng chỉ số, đồng thời liên kết trực tiếp giữa hiệu quả công việc của nhân viên với mục tiêu chiến lược của doanh nghiệp.",
           "**Nội dung triển khai:**"
         ],
@@ -2758,7 +2756,6 @@ export const en = {
       mindMapUrl: "https://i.postimg.cc/J0vJ0V3D/mindmap-1-1.png",
       content: {
         paragraphs: [
-          "**Role:** Project Lead / Customer Service Manager",
           "**Project Goal:** To build a comprehensive Customer Service Department model from the ground up, establishing a professional operational foundation that is customer-centric, ensuring scalability in line with the business's growth rate, and enhancing the customer experience across the entire service journey.",
           "**Implementation Scope:**"
         ],
@@ -2781,7 +2778,6 @@ export const en = {
       mindMapUrl: "https://i.postimg.cc/8P2gV3sZ/mindmap-1-2.png",
       content: {
         paragraphs: [
-          "**Role:** Project Lead / Customer Service Manager",
           "**Project Goal:** To build a comprehensive performance management system for the Customer Service Department based on actual data, transitioning management from intuitive estimation to metrics-driven governance, while directly linking employees' performance with the business's strategic objectives.",
           "**Implementation Scope:**"
         ],

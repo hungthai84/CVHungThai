@@ -163,7 +163,13 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
   // Always start from 0 as requested, unless we have a referrer
   const [activeJobIndex, setActiveJobIndex] = useState(() => {
     const savedIndex = sessionStorage.getItem("referrer_job_index");
-    return savedIndex ? parseInt(savedIndex, 10) : 0;
+    if (savedIndex) {
+      const parsed = parseInt(savedIndex, 10);
+      if (!isNaN(parsed) && parsed >= 0 && parsed < jobs.length) {
+        return parsed;
+      }
+    }
+    return 0;
   });
   const [isAutoPlaying, setIsAutoPlaying] = useState(() => {
     const savedIndex = sessionStorage.getItem("referrer_job_index");
@@ -468,7 +474,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
     return <Icons.TrophyIcon size={12} />;
   };
 
-  const activeJob = jobs[activeJobIndex];
+  const activeJob = jobs[activeJobIndex] || jobs[0];
   const [isExpanded, setIsExpanded] = useState(false);
   const [isCreativeJourneyPlaying, setIsCreativeJourneyPlaying] =
     useState(false);

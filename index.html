@@ -783,9 +783,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.2rem;
+      gap: 0;
       border-radius: 0.625rem;
-      transition: background-color 0.2s ease, color 0.2s ease, padding 0.3s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+      transition: background-color 0.2s ease, color 0.2s ease, padding 0.3s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, gap 0.3s ease;
       overflow: hidden;
       width: 100%;
       text-decoration: none !important;
@@ -794,6 +794,7 @@
     aside.left-sidebar:hover .main-menu li a {
         justify-content: flex-start;
         padding-left: 0.9rem;
+        gap: 1.2rem;
     }
     
     .main-menu li a.active {
@@ -876,13 +877,14 @@
       opacity: 0; 
       width: 0; 
       visibility: hidden;
-      flex-grow: 1;
+      flex-grow: 0;
     }
 
     aside.left-sidebar:hover .main-menu li a span { 
         opacity: 1; 
         width: auto; 
         visibility: visible; 
+        flex-grow: 1;
     }
 
     .submenu-indicator {
@@ -5738,6 +5740,129 @@
     * {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
+    }
+
+    /* Gemini AI Background Option Styles */
+    :root {
+      --gemini-bg: #131314;
+      --gemini-blue: #4285f4;
+      --gemini-purple: #9b72cb;
+      --gemini-pink: #d96570;
+    }
+
+    .app-background.wallpaper-gemini-ai {
+      background-color: var(--gemini-bg) !important;
+    }
+
+    .gemini-ai-background {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Kỹ thuật tạo khối màu và làm nhòe */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: float-around-gemini 15s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    /* Định vị và đổi màu từng khối */
+    .blob-1 {
+      width: 50vw;
+      height: 50vw;
+      background: var(--gemini-blue);
+      top: -10%;
+      left: -10%;
+      animation-duration: 12s;
+    }
+
+    .blob-2 {
+      width: 45vw;
+      height: 45vw;
+      background: var(--gemini-purple);
+      bottom: -20%;
+      right: -10%;
+      animation-duration: 18s;
+    }
+
+    .blob-3 {
+      width: 40vw;
+      height: 40vw;
+      background: var(--gemini-pink);
+      top: 30%;
+      left: 40%;
+      animation-duration: 20s;
+      animation-direction: alternate-reverse;
+    }
+
+    /* Hiệu ứng chuyển động tối ưu bằng GPU */
+    @keyframes float-around-gemini {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(10vw, 5vh) scale(1.1);
+      }
+      66% {
+        transform: translate(-5vw, 15vh) scale(0.9);
+      }
+      100% {
+        transform: translate(-10vw, -5vh) scale(1.05);
+      }
+    }
+
+    /* Tinh chỉnh phần nội dung đè lên trên */
+    .app-background .gemini-content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem 5rem;
+      border-radius: 20px;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .app-background .gemini-content h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #a8c0ff, #fbc2eb, #ffd1ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .app-background .gemini-content p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+    }
+
+    /* Ensure background text content scales down beautifully on mobile devices */
+    @media (max-width: 768px) {
+      .app-background .gemini-content {
+        padding: 2rem 3rem;
+      }
+      .app-background .gemini-content h1 {
+        font-size: 1.75rem;
+      }
+      .app-background .gemini-content p {
+        font-size: 0.95rem;
+      }
     }
   </style>
   <script src="https://scena.link/app.js" async defer></script>

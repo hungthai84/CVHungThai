@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Icons from './Icons';
-import type { ViewMode } from './ProjectsPage';
+import type { ViewMode } from './project-types';
 
 interface ProjectFiltersProps {
     viewMode: ViewMode;
