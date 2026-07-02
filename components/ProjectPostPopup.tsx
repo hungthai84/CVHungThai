@@ -87,15 +87,22 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                     .trim();
             };
 
-            const plainParagraphs = post.content.paragraphs.map((p: string) => getPlainText(p));
+            const plainParagraphs = post.content.paragraphs
+                .filter((p: string) => !p.trim().startsWith('**Vai trò:**') && !p.trim().startsWith('**Role:**'))
+                .map((p: string) => getPlainText(p));
             const plainList = post.content.list ? post.content.list.map((item: string) => getPlainText(item)) : [];
             
             const intro = language === 'vi' 
                 ? `Sau đây là nội dung chi tiết bài viết dự án mang tên: ${post.title}.`
                 : `The following is the detailed article for the project of: ${post.title}.`;
                 
+            const phaseText = language === 'vi'
+                ? `Giai đoạn hành động: ${post.date}`
+                : `Action Phase: ${post.date}`;
+                
             const fullSpeechText = [
                 intro,
+                phaseText,
                 ...plainParagraphs,
                 ...plainList
             ].join('. ');
@@ -123,7 +130,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
-    
     const allProjects = t.projectsPage.projects;
     const relatedPosts = useMemo(() => {
         if (!post) return [];
@@ -134,6 +140,12 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
             .slice(0, 4); 
     }, [projectId, post, allProjects]);
 
+    const handleRelatedPostClick = (newProjectId: string) => {
+        if (onNavigate) {
+            onNavigate(`project-${newProjectId}`);
+        }
+    };
+
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
     }, [projectId]);
@@ -142,11 +154,6 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
         return <PageLayout id={id}><div className="info-card">Loading project...</div></PageLayout>;
     }
 
-    const handleRelatedPostClick = (newProjectId: string) => {
-        if (onNavigate) {
-            onNavigate(`project-${newProjectId}`);
-        }
-    };
 
     // Subscribing to feedback comments for the specific project post
     useEffect(() => {
@@ -405,8 +412,7 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                     <main className="project-post-main">
                         <div className="project-post-content-wrapper">
                             <div className="project-post-layout-grid">
-                                <div className="project-post-main-content">
-                                    <div className="project-article-card">
+                                <div className="project-article-card">
                                         <div className="project-hero-container">
                                             {post.heroImage && <img src={post.heroImage} alt={post.title} className="project-post-hero-image-bg" />}
                                             <div className="project-hero-container-inner">
@@ -450,20 +456,18 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     </span>
                                                 </span>
                                             </button>
-                                        </div>
-                                        
-                                        <div className="project-post-body" style={{ backgroundColor: '#ffffff' }}>
-
-
+                                         </div>
+                                         
+                                         <div className="project-post-body">
                                              {achievement && (
-                                                 <div className="project-post-achievement-card-wrapper mb-6 animate-fadeIn" style={{ width: '50%', minWidth: '280px', maxWidth: '100%' }}>
-                                                     <div className="text-xs uppercase tracking-wider font-semibold opacity-60 mb-2.5 flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
-                                                         <Icons.TrophyIcon size={14} className="text-amber-500" />
+                                                 <div className="project-kpi-card-container animate-fadeIn">
+                                                     <div className="kpi-card-section-label">
+                                                         <Icons.TrophyIcon size={14} className="kpi-label-icon" />
                                                          <span>{language === 'vi' ? 'Chỉ số hiệu quả đạt được:' : 'Key Achievement / KPI Rating:'}</span>
                                                      </div>
                                                      <div 
                                                          className="achievement-card" 
-                                                         style={{ '--item-color': achievement.color, border: '1.5px solid var(--item-color)', cursor: 'default', marginLeft: '0px', marginTop: '24.867px', marginBottom: '24.867px', width: '100%', breakInside: 'avoid' } as React.CSSProperties}
+                                                         style={{ '--item-color': achievement.color, border: '1.5px solid var(--item-color)' } as React.CSSProperties}
                                                      >
                                                          <div className="achievement-card-main-content">
                                                               <div className="achievement-card-title-group">
@@ -471,39 +475,47 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                                       const IconComp = Icons[achievement.icon as keyof typeof Icons] || Icons.TrophyIcon;
                                                                       return <IconComp />;
                                                                   })()}
-                                                                  <h4 className="font-semibold text-lg" style={{ color: achievement.color, fontSize: '1.1rem', margin: 0 }} title={achievement.title}>
+                                                                  <h4 className="font-semibold text-lg" style={{ color: achievement.color, fontSize: '1rem', margin: 0 }} title={achievement.title}>
                                                                       {achievement.id}. {achievement.title}
                                                                   </h4>
                                                               </div>
-                                                              <div className="achievement-card-tags" style={{ marginLeft: '0px', marginTop: '15px' }}>
+                                                              <div className="achievement-card-tags">
                                                                   <button style={{ cursor: 'default' }} onClick={(e) => e.stopPropagation()}>{achievement.hashtag}</button>
                                                               </div>
                                                          </div>
                                                          <div className="achievement-card-rate transition-transform duration-300 hover:scale-105" style={{ color: achievement.color }}>
                                                               {achievement.rate}
-                                                              <span className="achievement-card-percent-sign" style={{ color: achievement.color }}>%</span>
+                                                              <span className="achievement-card-percent-sign">%</span>
                                                          </div>
                                                      </div>
                                                  </div>
                                              )}
                                          
-                                         {/* Role & Goal Summary Box */}
-                                               <div className="mb-6 flex flex-col gap-4">
-                                                   {parsedContent.goal && (
-                                                       <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/40 border border-slate-100/80 dark:border-slate-800/60">
-                                                           <div className="text-sm font-medium text-slate-700 dark:text-slate-200 leading-relaxed">
-                                                               <div className="flex flex-col gap-2">
-                                                                   <span className="inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider text-[11px] select-none" style={{ fontSize: '20px', fontWeight: 'bold', paddingLeft: '5px' }}>
-                                                                       <Icons.LightBulbIcon size={16} className="shrink-0" style={{ fontWeight: 'bold' }} />
-                                                                       <span style={{ fontSize: '20px', fontWeight: 'bold', paddingLeft: '5px' }}>{language === 'vi' ? 'Mục tiêu dự án:' : 'Project Goal:'}</span>
-                                                                   </span>
-                                                                   <div className="pl-1.5 text-slate-600 dark:text-slate-300">{parsedContent.goal}</div>
-                                                               </div>
-                                                           </div>
-                                                       </div>
-                                                   )}
-                                               </div>
-                                                  {/* Other introductory text */}
+                                             {/* Phase & Goal Summary Box */}
+                                             {(parsedContent.goal || post.date) && (
+                                                 <div className="project-post-meta-summary-grid mb-6 animate-fadeIn">
+                                                     {post.date && (
+                                                         <div className="meta-summary-card role-card">
+                                                             <div className="meta-summary-header">
+                                                                 <Icons.CalendarDaysIcon className="meta-summary-icon" />
+                                                                 <span>{language === 'vi' ? 'Giai đoạn hành động' : 'Action Phase'}</span>
+                                                             </div>
+                                                             <div className="meta-summary-body">{post.date}</div>
+                                                         </div>
+                                                     )}
+                                                     {parsedContent.goal && (
+                                                         <div className="meta-summary-card goal-card">
+                                                             <div className="meta-summary-header">
+                                                                 <Icons.LightBulbIcon className="meta-summary-icon" />
+                                                                 <span>{language === 'vi' ? 'Mục tiêu dự án' : 'Project Goal'}</span>
+                                                             </div>
+                                                             <div className="meta-summary-body">{parsedContent.goal}</div>
+                                                         </div>
+                                                     )}
+                                                 </div>
+                                             )}
+
+                                             {/* Other introductory text */}
                                              {parsedContent.otherParagraphs.map((p, index) => {
                                                  const formattedText = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                                                  return <p key={index} className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formattedText }} />;
@@ -511,41 +523,32 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
 
                                              {/* Section Title for Steps */}
                                              {parsedContent.steps.length > 0 && (
-                                                 <div className="mt-6 mb-4 border-b border-dashed border-slate-200 dark:border-slate-800 pb-2" style={{ paddingTop: '10px', paddingBottom: '0px' }}>
-                                                     <div className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 whitespace-nowrap" style={{ paddingTop: '10px', paddingBottom: '0px', fontWeight: 'bold', fontSize: '20px' }}>
-                                                         <span className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider select-none text-blue-500">
-                                                             <Icons.LayersIcon size={16} className="text-blue-500 shrink-0" style={{ fontWeight: 'bold' }} />
-                                                             <span style={{ paddingLeft: '5px', fontSize: '20.9726px', lineHeight: '25.1671px' }}>{language === 'vi' ? 'Nội dung triển khai:' : 'Implementation Scope:'}</span>
-                                                         </span>
-                                                     </div>
+                                                 <div className="project-section-title">
+                                                     <Icons.LayersIcon size={18} className="shrink-0 text-[var(--accent-color)]" />
+                                                     <span>{language === 'vi' ? 'Nội dung triển khai' : 'Implementation Scope'}</span>
                                                  </div>
                                              )}
 
                                              {/* Steps list with sequential numbers */}
                                              {parsedContent.steps.map((step, index) => (
-                                                 <div key={index} className="mb-5 p-4 rounded-xl bg-white dark:bg-slate-900/20 border border-slate-100 dark:border-slate-800/50 hover:border-blue-200 dark:hover:border-blue-900/30 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
-                                                     <div className="mb-3 border-b border-slate-50 dark:border-slate-800/30 pb-2">
-                                                         <h3 className="font-semibold text-[14px] text-slate-800 dark:text-slate-100 leading-tight" style={{ marginBottom: '16.578px' }}>
-                                                             <span className="text-blue-600 dark:text-blue-400 font-bold mr-1.5">{index + 1}.</span>
-                                                             {step.title}
-                                                         </h3>
+                                                 <div key={index} className="project-step-card animate-fadeIn">
+                                                     <div className="project-step-header">
+                                                         <div className="project-step-number">{String(index + 1).padStart(2, '0')}</div>
+                                                         <h3 className="project-step-title">{step.title}</h3>
                                                      </div>
                                                      
                                                      {step.bullets.length > 0 && (
-                                                         <div className="flex flex-col gap-2">
+                                                         <div className="project-step-bullets">
                                                              {step.bullets.map((bullet, bIdx) => {
                                                                  const formattedText = bullet.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                                                                  return (
                                                                      <div 
                                                                          key={bIdx} 
-                                                                         className={bullet.isNested ? "pl-6 text-xs text-slate-500 dark:text-slate-400 border-l-2 border-slate-100 dark:border-slate-800 ml-2 py-0.5 flex items-start gap-2" : "text-[13px] text-slate-600 dark:text-slate-300 flex items-start gap-2"}
+                                                                         className={`project-step-bullet-item ${bullet.isNested ? 'is-nested' : ''}`}
                                                                      >
-                                                                         {bullet.isNested ? (
-                                                                             <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 shrink-0 select-none">◆</span>
-                                                                         ) : (
-                                                                             <span className="text-blue-500 font-bold text-xs mt-0.5 shrink-0 select-none">➔</span>
-                                                                         )}
-                                                                         <span dangerouslySetInnerHTML={{ __html: formattedText }} className="leading-relaxed" />
+                                                                         {!bullet.isNested && <Icons.ChevronRightIcon className="bullet-icon-main" size={14} />}
+                                                                         {bullet.isNested && <span className="bullet-icon-nested">◆</span>}
+                                                                         <span dangerouslySetInnerHTML={{ __html: formattedText }} className="bullet-text" />
                                                                      </div>
                                                                  );
                                                              })}
@@ -556,27 +559,20 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
 
                                              {/* Achievements / Kết quả đạt được card */}
                                              {parsedContent.achievements && (
-                                                 <div className="mt-8 p-5 rounded-xl bg-amber-50/40 dark:bg-amber-950/10 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
-                                                     <div className="mb-3.5 border-b border-amber-100/60 dark:border-amber-900/20 pb-2" style={{ paddingTop: '10px', paddingBottom: '0px' }}>
-                                                          <div className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-amber-800 dark:text-amber-300 whitespace-nowrap" style={{ paddingTop: '0px', paddingBottom: '0px', marginTop: '24.867px', marginBottom: '16.578px', fontWeight: 'bold', fontSize: '20px' }}>
-                                                              <span className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider select-none text-amber-600">
-                                                                  <Icons.TrophyIcon size={16} className="text-amber-600 dark:text-amber-400 shrink-0" style={{ fontWeight: 'bold' }} />
-                                                                  <span style={{ paddingLeft: '5px' }}>{parsedContent.achievements.title}</span>
-                                                              </span>
-                                                          </div>
+                                                 <div className="project-achievements-showcase animate-fadeIn">
+                                                     <div className="achievements-showcase-header">
+                                                         <Icons.TrophyIcon className="achievements-showcase-icon" />
+                                                         <h3>{parsedContent.achievements.title}</h3>
                                                      </div>
                                                      
                                                      {parsedContent.achievements.bullets.length > 0 && (
-                                                         <div className="flex flex-col gap-2">
+                                                         <div className="achievements-showcase-list">
                                                              {parsedContent.achievements.bullets.map((bullet, bIdx) => {
                                                                  const formattedText = bullet.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                                                                  return (
-                                                                     <div 
-                                                                         key={bIdx} 
-                                                                         className="flex items-start gap-2 text-[13px] text-amber-900/80 dark:text-amber-200/80"
-                                                                     >
-                                                                         <Icons.SparklesIcon size={12} className="text-amber-500 mt-1 shrink-0" />
-                                                                         <span dangerouslySetInnerHTML={{ __html: formattedText }} className="leading-relaxed" />
+                                                                     <div key={bIdx} className="achievements-showcase-item">
+                                                                         <Icons.SparklesIcon className="showcase-spark-icon" size={14} />
+                                                                         <span dangerouslySetInnerHTML={{ __html: formattedText }} />
                                                                      </div>
                                                                  );
                                                              })}
@@ -599,9 +595,9 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                         </div>
                                     </div>
                                 
-                                    {relatedPosts.length > 0 && (
-                                        <div className="project-post-sidebar">
-                                            <div className="sidebar-widget">
+                                    <div className="project-post-sidebar animate-fadeIn">
+                                        {relatedPosts.length > 0 && (
+                                            <div className="sidebar-widget related-posts-widget">
                                                 <h4 className="sidebar-widget-title">{pageData.relatedPosts}</h4>
                                                 <div className="related-posts-list">
                                                     {relatedPosts.map(related => (
@@ -622,10 +618,25 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                                     ))}
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
 
-                                    <div className="sidebar-widget comments-widget">
+                                        {pageData.referenceLinks && pageData.referenceLinks.length > 0 && (
+                                            <div className="sidebar-widget reference-links-widget">
+                                                <h4 className="sidebar-widget-title">{pageData.referenceLinksTitle || 'Tài liệu tham khảo'}</h4>
+                                                <ul className="reference-links-list">
+                                                    {pageData.referenceLinks.map((link: any, index: number) => (
+                                                        <li key={index}>
+                                                            <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                                                <Icons.DocumentTextIcon size={14} className="shrink-0 text-[var(--accent-color)]" />
+                                                                <span>{link.title}</span>
+                                                            </a>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        <div className="sidebar-widget comments-widget">
                                             <h4 className="sidebar-widget-title">{pageData.comments} ({comments.length})</h4>
                                             
                                             <form className="comment-form" onSubmit={handleSubmitComment}>
@@ -712,8 +723,8 @@ const ProjectPostPage: React.FC<ProjectPostPageProps> = ({ id, projectId, onNavi
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </main>
+                                </div>
+                            </main>
                     </div>
                 </div>
             {embeddingUrl && document.getElementById('popup-root') && createPortal(
