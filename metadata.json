@@ -1,7 +1,7 @@
 {
   "requestFramePermissions": [],
-  "name": "Remix: Nguyễn Hùng Thái",
-  "description": "",
+  "name": "Remix: NguyenHungThai",
+  "description": "Interactive personal portfolio for Nguyễn Hùng Thái featuring AI chat, project showcases, and professional experience.",
   "prompt": "",
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

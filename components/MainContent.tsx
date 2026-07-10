@@ -27,12 +27,12 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
     
     const VIDEO_SETS = [
         {
-            idle: "https://cdn.scena.ai/project/9741/7eb433ad4ed6c912a3874c99ee7c61e30bbeb6a51870488080315c5c5329bb06.mp4",
-            intro: "https://cdn.scena.ai/project/9306/5901614553846063fcf6793bf778f9417734b63134d159739ac7767329e02348.mp4"
+            idle: " https://cdn.scena.ai/project/9741/73e39b037268a364ed0bac9563119e5c5ea6d6294e8b4a50052653303b75c52f.mp4",
+            intro: " https://cdn.scena.ai/project/9306/95e20a75c4af34a76d83b97ffc7ddc0b099bd815eebaad65a9ceef3c73fa19dd.mp4"
         },
        {
-            idle: "https://cdn.scena.ai/project/9741/d0933164069dd1f6542e92f8f8adc582ef41c49e84c3f8c3c3e96fdd971235d0.mp4",
-            intro: "https://cdn.scena.ai/project/8606/7c2f9f600021205c66811b27056b8bf9b1bf4f98d7a49369c5bb6b2a2441eca4.mp4 "
+            idle: "https://cdn.scena.ai/project/9741/2a39ca2d544de96eb461b9e895a283060fd87031bee393b94f68d2fbab586371.mp4",
+            intro: "https://cdn.scena.ai/project/8606/2e7340744cbfe1651694fbd190c1b3e6f1c1960ba73310d7c5759d96f1449e91.mp4 "
         }
     ];
 
