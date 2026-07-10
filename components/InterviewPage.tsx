@@ -4,8 +4,8 @@ import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import CardTitle from './CardTitle';
 
-const DEFAULT_VIDEO_URL = "https://cdn.scena.ai/project/9741/a5c3dae9a7911b77acee79f91a1c33bfa49c0f329f63f71cc22f9a224738f091.mp4";
-const INTERVIEW_VIDEO_URL = " https://cdn.scena.ai/project/9741/8e359f7d80ed61ab0bb3e01d8e8c0bfad6a1d94681084ff483a5d0fb6aa55aed.mp4";
+const DEFAULT_VIDEO_URL = " https://cdn.scena.ai/project/9741/6add28d1439e654c67a3b293b98c88cc3b251be53cd4e58bac4cceb1798aca8d.mp4";
+const INTERVIEW_VIDEO_URL = "  https://cdn.scena.ai/project/9741/021c21b2f677c4341e06c62c9432d06d251e22c83716e55b927633e254a67730.mp4";
 
 const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t } = useI18n();
