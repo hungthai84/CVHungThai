@@ -43,6 +43,11 @@ const darkGradientWallpapers = [
 
 const specialAndVideoWallpapers = [
     {
+        id: 'glassmorphism-effect',
+        type: 'custom' as const,
+        thumbnail: 'linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%)',
+    },
+    {
         id: 'gradient',
         type: 'gradient' as const,
         thumbnail: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
@@ -176,6 +181,11 @@ const specialAndVideoWallpapers = [
 const videoWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'video');
 
 const imageWallpapers = [
+    { id: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop' },
+    { id: 'https://images.unsplash.com/photo-1633534571871-36baac48a8eb?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1633534571871-36baac48a8eb?q=80&w=600&auto=format&fit=crop' },
+    { id: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=600&auto=format&fit=crop' },
+    { id: 'https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=2758&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=600&auto=format&fit=crop' },
+    { id: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=600&auto=format&fit=crop' },
     { id: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg' },
     { id: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg' },
     { id: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg' },
@@ -386,7 +396,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
         }
     }, [groupedVoices.vi, localVoiceName, selectedAiVoiceName]);
 
-    const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF'];
+    const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF', '#001D39', '#0A4174', '#49769F', '#4E8EA2', '#6EA2B3', '#7BBDE8', '#BDD8E9'];
     
     const gradientWallpapers = useMemo(() => {
         const themeGradients = resolvedMode === 'light' ? lightGradientWallpapers : darkGradientWallpapers;
@@ -772,7 +782,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
                                 <div className="setting-item flex justify-between items-center">
                                     <label className="font-medium text-sm">{settingsText.accentColor}</label>
-                                    <div className="color-pallet flex gap-2">
+                                    <div className="color-pallet flex flex-wrap gap-2">
                                         {accentColors.map(color => (
                                             <button
                                                 key={color}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useI18n } from '../contexts/i18n';
 
 const CustomWeatherIcon = () => (
     <div className="weather-icon-wrapper-animated" aria-label="Animated weather illustration">
@@ -59,6 +60,7 @@ const CustomWeatherIcon = () => (
 
 
 const ClockWeatherWidget: React.FC = () => {
+    const { language } = useI18n();
     const [time, setTime] = useState(new Date());
 
     useEffect(() => {
@@ -80,15 +82,16 @@ const ClockWeatherWidget: React.FC = () => {
     };
 
     const getDayOfWeek = (date: Date) => {
-        const days = ["Chúa Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
-        return days[date.getDay()];
+        const daysVi = ["Chúa Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+        const daysEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return language === 'vi' ? daysVi[date.getDay()] : daysEn[date.getDay()];
     };
 
     const dayOfWeek = getDayOfWeek(time);
     const dateString = formatDate(time);
     const temperature = "28"; 
-    const city = "Thành phố Hồ Chí Minh";
-    const country = "Việt Nam";
+    const city = language === 'vi' ? "Thành phố Hồ Chí Minh" : "Ho Chi Minh City";
+    const country = language === 'vi' ? "Việt Nam" : "Vietnam";
 
     return (
         <div className="clock-weather-widget">

@@ -712,7 +712,7 @@ export const vi = {
         },
         {
             key: "ecommerce",
-            title: "TMĐT & Thanh toán điện tử",
+            title: "Thương mại điện tử  ",
             description: "Tham gia giai đoạn bùng nổ của thương mại điện tử và ví điện tử, xây dựng nền tảng vận hành, xử lý khiếu nại, gian lận và chăm sóc khách hàng đa kênh.",
             icon: "CubeIcon",
             color: "#F37021",

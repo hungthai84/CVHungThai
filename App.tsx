@@ -475,6 +475,7 @@ const App: React.FC = () => {
     const isCustomDotted = wallpaper === 'dotted-pattern';
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
     const isGeminiAi = wallpaper === 'gemini-ai';
+    const isGlassmorphismEffect = wallpaper === 'glassmorphism-effect';
     const isDemoEnvironment = React.useMemo(() => {
         if (typeof window === 'undefined') return false;
         const hostname = window.location.hostname;
@@ -488,7 +489,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div ref={backgroundRef} className={`app-background fixed inset-0 z-[-1] ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''} ${isGeminiAi ? 'wallpaper-gemini-ai' : ''}`}
+            <div ref={backgroundRef} className={`app-background fixed inset-0 z-[-1] ${isCustomOrbiting ? 'wallpaper-orbiting-planets' : ''} ${isCustomDotted ? 'wallpaper-dotted-pattern' : ''} ${isCustomDarkDotted ? 'wallpaper-dark-dotted-pattern' : ''} ${isGeminiAi ? 'wallpaper-gemini-ai' : ''} ${isGlassmorphismEffect ? 'wallpaper-glassmorphism' : ''}`}
                 style={isImage ? { 
                     backgroundImage: `url(${wallpaper})`,
                     backgroundSize: 'cover',
@@ -511,6 +512,13 @@ const App: React.FC = () => {
                     <div className="holder"></div>
                 ) : isCustomDotted || isCustomDarkDotted ? (
                     null
+                                ) : isGlassmorphismEffect ? (
+                    <div className="glassmorphism-background">
+                        <div className="glass-blob glass-blob-1"></div>
+                        <div className="glass-blob glass-blob-2"></div>
+                        <div className="glass-blob glass-blob-3"></div>
+                        <div className="glass-blob glass-blob-4"></div>
+                    </div>
                 ) : isGeminiAi ? (
                     <div className="gemini-ai-background">
                         <div className="glow-blob blob-1"></div>

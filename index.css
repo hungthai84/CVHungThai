@@ -148,3 +148,85 @@ div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-
     background-color: #ffffff !important;
 }
 
+
+    /* Glassmorphism Background Effect */
+    .app-background.wallpaper-glassmorphism {
+      background-color: var(--body-bg) !important;
+    }
+    
+    .glassmorphism-background {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 0;
+    }
+
+    .glass-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.7;
+      animation: glassFloat 25s infinite ease-in-out alternate;
+    }
+
+    .glass-blob-1 {
+      width: 40vw;
+      height: 40vw;
+      background: rgba(59, 130, 246, 0.6); /* Blue */
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .glass-blob-2 {
+      width: 35vw;
+      height: 35vw;
+      background: rgba(139, 92, 246, 0.6); /* Purple */
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -5s;
+    }
+
+    .glass-blob-3 {
+      width: 30vw;
+      height: 30vw;
+      background: rgba(16, 185, 129, 0.5); /* Emerald */
+      top: 40%;
+      left: 60%;
+      animation-delay: -10s;
+    }
+
+    .glass-blob-4 {
+      width: 25vw;
+      height: 25vw;
+      background: rgba(236, 72, 153, 0.5); /* Pink */
+      top: 60%;
+      left: 10%;
+      animation-delay: -15s;
+    }
+
+    @keyframes glassFloat {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      33% {
+        transform: translate(15%, 15%) scale(1.1) rotate(45deg);
+      }
+      66% {
+        transform: translate(-10%, 20%) scale(0.9) rotate(90deg);
+      }
+      100% {
+        transform: translate(0, 0) scale(1) rotate(135deg);
+      }
+    }
+    
+    /* Global class for strong blur when this is active */
+    body.on-page-glassmorphism-effect .site-wrapper {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }

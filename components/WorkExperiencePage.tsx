@@ -1228,6 +1228,77 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                       </ul>
                     </div>
                     <div>
+                      {activeJob.achievements.length > 0 && (
+                        <div className="achievements-vertical-list">
+                          <h5
+                            className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2"
+                            style={{
+                              marginBottom: "0.75rem",
+                              color: activeJob.color,
+                              fontSize: "16px",
+                            }}
+                          >
+                            <Icons.TrophyIcon
+                              size={16}
+                              style={{
+                                marginLeft: "0px",
+                                paddingTop: "0px",
+                                marginRight: "10px",
+                              }}
+                            />
+                            {pageData.achievementsTitle}
+                          </h5>
+                          <ul
+                            className="popup-responsibilities"
+                            style={{
+                              borderTop: "none",
+                              paddingTop: 0,
+                              listStyle: "none",
+                              paddingLeft: "0px",
+                            }}
+                          >
+                            {activeJob.achievements.map((ach, index) => (
+                              <li
+                                key={index}
+                                style={{
+                                  marginBottom: "0.4rem",
+                                  fontSize: "0.85rem",
+                                  lineHeight: "1.4",
+                                  color: "var(--color-brand-text-secondary)",
+                                  display: "flex",
+                                  alignItems: "flex-start",
+                                  gap: "0.5rem",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    color: activeJob.color,
+                                    flexShrink: 0,
+                                    marginTop: "2px",
+                                  }}
+                                >
+                                  {getAchievementIcon(ach.label)}
+                                </span>
+                                <div>
+                                  {ach.label}
+                                  <span
+                                    className="font-bold ml-2 whitespace-nowrap"
+                                    style={{
+                                      color: activeJob.color,
+                                      paddingTop: "0px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {ach.value}%
+                                  </span>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                    <div>
                       {activeJob.projects && activeJob.projects.length > 0 && (
                         <div>
                           <h5
@@ -1348,77 +1419,6 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                                 </li>
                               );
                             })}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      {activeJob.achievements.length > 0 && (
-                        <div className="achievements-vertical-list">
-                          <h5
-                            className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2"
-                            style={{
-                              marginBottom: "0.75rem",
-                              color: activeJob.color,
-                              fontSize: "16px",
-                            }}
-                          >
-                            <Icons.TrophyIcon
-                              size={16}
-                              style={{
-                                marginLeft: "0px",
-                                paddingTop: "0px",
-                                marginRight: "10px",
-                              }}
-                            />
-                            {pageData.achievementsTitle}
-                          </h5>
-                          <ul
-                            className="popup-responsibilities"
-                            style={{
-                              borderTop: "none",
-                              paddingTop: 0,
-                              listStyle: "none",
-                              paddingLeft: "0px",
-                            }}
-                          >
-                            {activeJob.achievements.map((ach, index) => (
-                              <li
-                                key={index}
-                                style={{
-                                  marginBottom: "0.4rem",
-                                  fontSize: "0.85rem",
-                                  lineHeight: "1.4",
-                                  color: "var(--color-brand-text-secondary)",
-                                  display: "flex",
-                                  alignItems: "flex-start",
-                                  gap: "0.5rem",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    color: activeJob.color,
-                                    flexShrink: 0,
-                                    marginTop: "2px",
-                                  }}
-                                >
-                                  {getAchievementIcon(ach.label)}
-                                </span>
-                                <div>
-                                  {ach.label}
-                                  <span
-                                    className="font-bold ml-2 whitespace-nowrap"
-                                    style={{
-                                      color: activeJob.color,
-                                      paddingTop: "0px",
-                                      marginLeft: "10px",
-                                    }}
-                                  >
-                                    {ach.value}%
-                                  </span>
-                                </div>
-                              </li>
-                            ))}
                           </ul>
                         </div>
                       )}
@@ -1651,22 +1651,6 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                     </div>
                   )}
 
-                {selectedJobForPopup.projects &&
-                  selectedJobForPopup.projects.length > 0 && (
-                    <div>
-                      <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
-                        {pageData.projectsTitle}
-                      </h5>
-                      <ul className="popup-responsibilities">
-                        {selectedJobForPopup.projects.map((project, idx) => (
-                          <li key={idx} className="mb-1">
-                            {project}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
                 {selectedJobForPopup.achievements &&
                   selectedJobForPopup.achievements.length > 0 && (
                     <div>
@@ -1684,6 +1668,22 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                           ),
                         )}
                       </div>
+                    </div>
+                  )}
+
+                {selectedJobForPopup.projects &&
+                  selectedJobForPopup.projects.length > 0 && (
+                    <div>
+                      <h5 className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-70">
+                        {pageData.projectsTitle}
+                      </h5>
+                      <ul className="popup-responsibilities">
+                        {selectedJobForPopup.projects.map((project, idx) => (
+                          <li key={idx} className="mb-1">
+                            {project}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
               </div>
