@@ -107,26 +107,6 @@ div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-
     overflow-y: hidden !important;
 }
 
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(10),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(11),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(12),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(13),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(14),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(15),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(16),
-div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#experience:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(17) {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 5px !important;
-    margin-left: 0px !important;
-    overflow-y: hidden !important;
-}
-
 .timeline-milestone {
     background: transparent !important;
     background-color: transparent !important;
@@ -134,6 +114,9 @@ div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-
     backdrop-filter: none !important;
     box-shadow: none !important;
     border: none !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    margin-left: 0px !important;
 }
 
 .timeline-dot {
@@ -162,6 +145,6 @@ div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-
 }
 
 div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-type(2) > section#scheduler:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > iframe:nth-of-type(1) {
-    background-color: transparent !important;
+    background-color: #ffffff !important;
 }
 

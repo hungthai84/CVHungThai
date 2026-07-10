@@ -1356,7 +1356,7 @@
     .job-achievement-card, .chatbot-input-area, .questions-popup-content, .ai-media-prompt-btn, .suggested-prompt-btn, .question-item, .category-item,
     .horoscope-banner-card, .horoscope-summary-card, .horoscope-player-card, .compat-item-card, .role-pill, .conclusion-card, .memories-grid-item, .filter-btn,
     .system-card-front, .system-card-back, .scena-banner-video-container,
-    .job-card, .experience-item, .timeline-milestone, .experience-popup-content, .timeline-dot,
+    .job-card, .experience-item, .experience-popup-content,
     .education-card-front, .education-card-back {
         background-color: rgba(var(--card-bg-rgb), var(--card-opacity, 0.45)) !important;
         backdrop-filter: blur(8px);
@@ -2150,8 +2150,7 @@
     }
     .service-box:hover {
         transform: translate3d(0, -8px, 15px) scale(1.02) !important;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px color-mix(in srgb, var(--item-color) 35%, transparent) !important;
-        border-color: var(--item-color) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
     }
     .service-card-glow {
         position: absolute;
@@ -2160,27 +2159,20 @@
         transition: opacity 0.5s ease;
         pointer-events: none;
         z-index: 1;
+        display: none;
     }
     .service-box:hover .service-card-glow {
-        opacity: 1;
+        opacity: 0;
     }
     .service-card-content {
         position: relative;
         z-index: 2;
     }
     .service-card-indicator {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        transform: scaleX(0);
-        transform-origin: left center;
-        transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        z-index: 3;
+        display: none;
     }
     .service-box:hover .service-card-indicator {
-        transform: scaleX(1);
+        transform: scaleX(0);
     }
     .service-title-wrapper {
         display: flex;

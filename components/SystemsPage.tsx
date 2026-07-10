@@ -434,7 +434,7 @@ const SystemsPage: React.FC<{ id?: string }> = ({ id }) => {
         if (!video) return;
 
         if (isPlaying) {
-            video.src = "https://cdn.scena.ai/project/9741/c88ce94c71a3792b2eeeb6c20bb3d0601fe070f1bb667dce246551896e79b0ce.mp4";
+            video.src = " https://cdn.scena.ai/project/8606/ac120a105730c378447fd67f5e8b6aeb9557b5e4e8854ac2e21148d5316f780b.mp4";
             video.muted = false;
             video.loop = true;
             video.play().catch(err => {

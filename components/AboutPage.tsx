@@ -8,8 +8,8 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t, language } = useI18n();
     const pageData = t.aboutPage;
 
-    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/9741/6a62abb47b287f1f1573998b767c35aa33f2c9d7adfe24b9a84c9459a02c3c38.mp4";
-    const INTRO_VIDEO = "https://cdn.scena.ai/project/9626/42eba857297b415c8be72327102671129b5ebbdbaab55ac9eb6897411b4bdeda.mp4";
+    const DEFAULT_VIDEO = " https://cdn.scena.ai/project/8606/e48a67884f3a52e8a68cf06b97979f3b22835ec92bf466a058c0d78da97c83b0.mp4";
+    const INTRO_VIDEO = "https://cdn.scena.ai/project/8606/5f84521bf5c51ff234fb0f4029fb9fba29e7e386f13912a56bc7ee25aebcbc10.mp4";
 
     const [videoUrl, setVideoUrl] = React.useState(DEFAULT_VIDEO);
     const [isMuted, setIsMuted] = React.useState(true);

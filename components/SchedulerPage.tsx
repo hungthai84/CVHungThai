@@ -15,7 +15,7 @@ const SchedulerPage: React.FC<SchedulerPageProps> = ({ id }) => {
         width: '100%',
         height: '100%',
         borderRadius: '16px',
-        backgroundColor: 'var(--card-bg)'
+        backgroundColor: '#ffffff'
     };
 
     return (
