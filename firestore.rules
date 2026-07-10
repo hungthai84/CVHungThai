@@ -1,0 +1,78 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Validation helper for User
+    function isValidUser(data) {
+      return data.keys().hasAll(['createdAt']) &&
+             data.keys().size() <= 2 &&
+             (data.keys().hasAny(['email']) ? data.email is string && data.email.size() <= 100 : true) &&
+             data.createdAt == request.time;
+    }
+
+    // Validation helper for Comment (Denial of Wallet guards on sizes)
+    function isValidComment(data) {
+      return data.keys().hasAll(['projectId', 'author', 'email', 'text', 'createdAt']) &&
+             data.keys().size() == 5 &&
+             data.projectId is string && data.projectId.size() <= 64 &&
+             data.author is string && data.author.size() <= 100 &&
+             data.email is string && data.email.size() <= 120 &&
+             data.text is string && data.text.size() <= 2000 &&
+             data.createdAt == request.time;
+    }
+
+    // Validation helper for Message
+    function isValidMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+             data.keys().size() == 4 &&
+             data.name is string && data.name.size() <= 120 &&
+             data.email is string && data.email.size() <= 150 &&
+             data.message is string && data.message.size() <= 3000 &&
+             data.createdAt == request.time;
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(request.resource.data);
+      allow update: if false; // Immutable for now
+      allow delete: if false;
+    }
+
+    match /comments/{commentId} {
+      allow read, list: if true;
+      allow create: if isValidComment(request.resource.data);
+      allow update: if false; // Feedback comments are immutable after submission
+      allow delete: if true; // Create delete permissions in the demo
+    }
+
+    match /messages/{messageId} {
+      allow create: if isValidMessage(request.resource.data);
+      allow read, update, delete: if false; // Private messages, write-only
+    }
+
+    match /stats/{statId} {
+      allow read: if true;
+      allow create: if statId == 'visitor_counter' && 
+                      request.resource.data.keys().hasAll(['count']) && 
+                      request.resource.data.keys().size() == 1 && 
+                      request.resource.data.count == 1;
+      allow update: if statId == 'visitor_counter' && 
+                      request.resource.data.keys().hasAll(['count']) && 
+                      request.resource.data.keys().size() == 1 && 
+                      request.resource.data.count is int && 
+                      request.resource.data.count == resource.data.count + 1;
+    }
+  }
+}

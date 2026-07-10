@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "timestamp"
+        }
+      },
+      "required": ["createdAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Project comment feedback",
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "timestamp"
+        }
+      },
+      "required": ["projectId", "author", "email", "text", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Quick contact message",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "timestamp"
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    },
+    "Stat": {
+      "title": "Stat",
+      "description": "Persistent stats like visitor counter",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer"
+        }
+      },
+      "required": ["count"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Feedback comments on projects"
+    },
+    "messages/{messageId}": {
+      "schema": "Message",
+      "description": "Quick contact messages"
+    },
+    "stats/{statId}": {
+      "schema": "Stat",
+      "description": "Visitor and other app statistics"
+    }
+  }
+}
