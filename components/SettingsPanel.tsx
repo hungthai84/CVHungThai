@@ -14,198 +14,13 @@ interface SettingsPageProps {
 // Removed data management helpers
 
 
-const lightGradientWallpapers = [
-    'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%)',
-    'linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%)',
-    'linear-gradient(45deg, #fad0c4 0%, #ffd1ff 100%)',
-    'linear-gradient(45deg, #f6d365 0%, #fda085 100%)',
-    'linear-gradient(45deg, #c1dfc4 0%, #deecdd 100%)',
-    'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
-    'linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%)',
-    'linear-gradient(45deg, #fa709a 0%, #fee140 100%)',
-    'linear-gradient(45deg, #dfe9f3 0%, #ffffff 100%)',
-    'linear-gradient(45deg, #5ee7df 0%, #b490ca 100%)',
-    'linear-gradient(45deg, #dff4e4 0%, #f0ddee 24%, #dee7f5 49%, #e9dae4 73%, #cbffff 100%)',
-].map(grad => ({ id: grad, type: 'gradient' as const, thumbnail: grad }));
 
-const darkGradientWallpapers = [
-    'linear-gradient(45deg, #6a11cb 0%, #2575fc 100%)',
-    'linear-gradient(45deg, #13547a 0%, #80d0c7 100%)',
-    'linear-gradient(45deg, #ed6ea0 0%, #ec8c69 100%)',
-    'linear-gradient(45deg, #000428 0%, #004e92 100%)',
-    'linear-gradient(45deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-    'linear-gradient(45deg, #373b44 0%, #4286f4 100%)',
-    'linear-gradient(45deg, #7028e4 0%, #e5b2ca 100%)',
-    'linear-gradient(45deg, #1e3c72 0%, #2a5298 100%)',
-    'linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)',
-    'linear-gradient(45deg, #0250c5 0%, #d43f8d 100%)',
-].map(grad => ({ id: grad, type: 'gradient' as const, thumbnail: grad }));
 
-const specialAndVideoWallpapers = [
-    {
-        id: 'glassmorphism-effect',
-        type: 'custom' as const,
-        thumbnail: 'linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%)',
-    },
-    {
-        id: 'gradient',
-        type: 'gradient' as const,
-        thumbnail: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/18230475/file/original-d7ab36998c2277e97c1996d837a4673c.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/9438742/file/original-9334dd4051bb585cc561e8be06870b39.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/4241992/file/original-1fcb82b5ace105f3ec88a2deb08e842d.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/34993295/file/original-2ea4b30fcd7c6eac3ca0f4d5bfd3d67b.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/32536603/file/original-db8060ba2540c3bf1cd2f30b4984cd51.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/32480516/file/original-f4a88d4031fee315e3175bf1834c24b4.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/32404914/file/original-57644971c47c0d16f90a68404a5e65c1.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/16365481/file/original-527fee647d12f31fce8a309ad136c4bb.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/15594644/file/original-6008d4b0ddcff73c116cb7989a144a71.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/14779635/file/original-1aca59fc5dc52bee9dcd291a27effcbf.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/10782874/file/original-06f7280dda982b62cd9452b0da032598.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/32524948/file/original-3c68e4ad227ae70e1875ef71289be2b0.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/jS3rSGdF/videoframe-8901.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/13498087/file/original-b120f6a1a15d71e493f8d4b2d13b0296.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/BnmJ1jNN/videoframe-3046.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/16718734/file/original-f2df9314dbf922d5452d7a8a5885d744.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/NfYtJ6zp/videoframe-1990.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/43797830/file/original-b9bafe56dd75a7ae175f827cfc662738.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/yNJW1hB0/videoframe-3097.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/16365364/file/original-dcc3ad4c0f5802c6670d36fcca720e5e.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/vBgPtKyD/videoframe-4678.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/43797856/file/original-46c91cbdf46a3cbc3f30a85f061ed817.mp4',
-        type: 'video' as const,
-        thumbnail: 'https://i.postimg.cc/L6TVLSPN/videoframe-3537.png',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/12532568/file/original-816b8af88c5a4336e9f0467a7848033e.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/9535990/file/original-3a87c5fdf2433287d096795a11fa9ee4.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/13253460/file/original-85659da2508a303a516780470e3ae354.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'https://cdn.dribbble.com/userupload/9783516/file/original-47f57ffecea5c7874ff6d6c2f0ce42bf.mp4',
-        type: 'video' as const,
-        thumbnail: '',
-    },
-    {
-        id: 'orbiting-planets',
-        type: 'custom' as const,
-        thumbnail: 'https://images.pexels.com/photos/1655166/pexels-photo-1655166.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-    },
-    {
-        id: 'dotted-pattern',
-        type: 'custom' as const,
-        thumbnail: `radial-gradient(circle at 25% 25%, #a3b1c6 15%, transparent 15%), radial-gradient(circle at 75% 75%, #a3b1c6 15%, transparent 15%)`,
-        thumbnailBgColor: '#e0e7ed',
-        thumbnailBgSize: '10px 10px',
-    },
-    {
-        id: 'dark-dotted-pattern',
-        type: 'custom' as const,
-        thumbnail: `radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)`,
-        thumbnailBgColor: '#1d1f20',
-        thumbnailBgSize: '11px 11px',
-    },
-];
 
-const videoWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'video');
 
-const imageWallpapers = [
-    { id: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop' },
-    { id: 'https://images.unsplash.com/photo-1633534571871-36baac48a8eb?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1633534571871-36baac48a8eb?q=80&w=600&auto=format&fit=crop' },
-    { id: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=600&auto=format&fit=crop' },
-    { id: 'https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=2758&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=600&auto=format&fit=crop' },
-    { id: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop', type: 'image' as const, thumbnail: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=600&auto=format&fit=crop' },
-    { id: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/G47jTb1g/minimalist-white-background-3840x2160-bright-space-clean-aesthetic-27644.jpg' },
-    { id: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/q2X19rq/geometric-mountain-wallpaper-3840x2160-calming-visuals-simple-patterns-26760.jpg' },
-    { id: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/R4P1zff0/ta-i-xu-ng-15.jpg' },
-    { id: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/TDnD5NB1/ta-i-xu-ng-14.jpg' },
-    { id: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/S49fBKcv/ta-i-xu-ng-13.jpg' },
-    { id: 'https://i.ibb.co/04qypw8/ta-i-xu-ng-12.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/04qypw8/ta-i-xu-ng-12.jpg' },
-    { id: 'https://i.ibb.co/ch1yf4Dz/AVv-Xs-Egn6ve-Lq-M6aj-Fr-XO6-YYuy-NTs-Wt-x9-qxb2w-O8-Xt-OWdn-JECETXTri7-Ps-rnb2-Td-Jnln6xu-kddyc-Yisi1xf.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/ch1yf4Dz/AVv-Xs-Egn6ve-Lq-M6aj-Fr-XO6-YYuy-NTs-Wt-x9-qxb2w-O8-Xt-OWdn-JECETXTri7-Ps-rnb2-Td-Jnln6xu-kddyc-Yisi1xf.jpg' },
-    { id: 'https://i.ibb.co/d0Fw0xdW/Best-wallpaper-1.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/d0Fw0xdW/Best-wallpaper-1.jpg' },
-    { id: 'https://i.ibb.co/rKL4ffH2/2.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/rKL4ffH2/2.jpg' },
-    { id: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/nq9GHB11/ta-i-xu-ng-12.jpg' },
-    { id: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/PZhKjDjP/Abstract-minimalistic-background-image-with-minimal-details-in-silvery-pearlescent-hues-subtle-tex.jpg' },
-    { id: 'https://i.ibb.co/Fc1dczn/Wallpaper.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/Fc1dczn/Wallpaper.jpg' },
-    { id: 'https://i.ibb.co/DDCj9TBk/ta-i-xu-ng-15.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/DDCj9TBk/ta-i-xu-ng-15.jpg' },
-    { id: 'https://i.ibb.co/jPN1bS9c/Pastel-Minimal-Wallpaper-Clean-Aesthetic-for-Mac-Book.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/jPN1bS9c/Pastel-Minimal-Wallpaper-Clean-Aesthetic-for-Mac-Book.jpg' },
-    { id: 'https://i.ibb.co/chRZYCFs/ta-i-xu-ng-14.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/chRZYCFs/ta-i-xu-ng-14.jpg' },
-    { id: 'https://i.ibb.co/k2jTwnTp/ta-i-xu-ng-13.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/k2jTwnTp/ta-i-xu-ng-13.jpg' },
-    { id: 'https://i.ibb.co/G4tGQZbB/ta-i-xu-ng-16.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/G4tGQZbB/ta-i-xu-ng-16.jpg' },
-    { id: 'https://i.ibb.co/r2w5qZCT/Download-Abstract-Gradient-Circle-Background-for-free.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/r2w5qZCT/Download-Abstract-Gradient-Circle-Background-for-free.jpg' },
-    { id: 'https://i.ibb.co/zhc5bK7G/Ton-mental-a-aussi-besoin-de-repos.jpg', type: 'image' as const, thumbnail: 'https://i.ibb.co/zhc5bK7G/Ton-mental-a-aussi-besoin-de-repos.jpg' },
-];
+
+
+
 
 const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const { t, language } = useI18n();
@@ -250,12 +65,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
     const [localLayoutOpacity, setLocalLayoutOpacity] = useState(layoutOpacity);
     const [localSubComponentOpacity, setLocalSubComponentOpacity] = useState(subComponentOpacity);
     const [localMirrorOn, setLocalMirrorOn] = useState(isMirrorOn);
-    const [settingsTab, setSettingsTab] = useState<'giao-dien' | 'hinh-nen' | 'voice' | 'data'>('giao-dien');
-    const [activeTab, setActiveTab] = useState<'gradient' | 'video' | 'image'>(() => {
-        if (videoWallpapers.some(w => w.id === wallpaper)) return 'video';
-        if (imageWallpapers.some(w => w.id === wallpaper)) return 'image';
-        return 'gradient';
-    });
+    const [settingsTab, setSettingsTab] = useState<'giao-dien' | 'voice' | 'data'>('giao-dien');
     const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
     // This is derived state for the UI to use for the color picker
@@ -398,12 +208,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
 
     const accentColors = ['#101733', '#ED1B2F', '#AE2070', '#FF6525', '#FFB300', '#49C16C', '#0078D4', '#6C6CE5', '#FFFFFF', '#001D39', '#0A4174', '#49769F', '#4E8EA2', '#6EA2B3', '#7BBDE8', '#BDD8E9'];
     
-    const gradientWallpapers = useMemo(() => {
-        const themeGradients = resolvedMode === 'light' ? lightGradientWallpapers : darkGradientWallpapers;
-        const animatedGradient = specialAndVideoWallpapers.find(w => w.id === 'gradient');
-        const customWallpapers = specialAndVideoWallpapers.filter(w => w.type === 'custom');
-        return [animatedGradient, ...themeGradients, ...customWallpapers].filter(Boolean);
-    }, [resolvedMode]);
 
 
     const exportToTxt = () => {
@@ -605,13 +409,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                         <Icons.LayoutGridIcon size={16} />
                         <span>{language === 'vi' ? 'Giao diện' : 'Layout'}</span>
                     </button>
-                    <button 
-                        className={`btn px-5 py-2.5 rounded-full transition-all duration-300 font-semibold text-sm flex items-center gap-2 ${settingsTab === 'hinh-nen' ? 'btn-primary shadow-lg shadow-[var(--accent-color)]/25' : 'btn-secondary bg-white/5 hover:bg-white/10'}`}
-                        onClick={() => setSettingsTab('hinh-nen')}
-                    >
-                        <Icons.LayersIcon size={16} />
-                        <span>{language === 'vi' ? 'Hình nền' : 'Wallpaper'}</span>
-                    </button>
+
                     <button 
                         className={`btn px-5 py-2.5 rounded-full transition-all duration-300 font-semibold text-sm flex items-center gap-2 ${settingsTab === 'voice' ? 'btn-primary shadow-lg shadow-[var(--accent-color)]/25' : 'btn-secondary bg-white/5 hover:bg-white/10'}`}
                         onClick={() => setSettingsTab('voice')}
@@ -736,6 +534,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                     />
                                 </div>
 
+{/*
                                 <div className="setting-item flex flex-col gap-2">
                                     <label htmlFor="card-opacity-slider" className="w-full flex justify-between text-sm font-medium">
                                         <span className="flex items-center gap-2">
@@ -757,6 +556,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                                     />
                                 </div>
+*/}
 
                                 <div className="setting-item flex flex-col gap-2">
                                     <label htmlFor="sub-component-opacity-slider" className="w-full flex justify-between text-sm font-medium">
@@ -798,138 +598,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ id }) => {
                                 </div>
                             </div>
                     )}
-                    {settingsTab === 'hinh-nen' && (
-                        <div className="settings-card flex flex-col gap-6">
-                            <h4 className="settings-card-title text-lg font-bold border-b border-white/5 pb-2 mb-4">
-                                {language === 'vi' ? 'Thư viện hình nền' : 'Wallpaper Gallery'}
-                            </h4>
-                            
-                            <div className="setting-item flex flex-col gap-4">
-                                     <div className="wallpaper-tabs flex gap-2 bg-white/5 p-1 rounded-full w-fit">
-                                    <button 
-                                        className={`wallpaper-tab-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${activeTab === 'gradient' ? 'active bg-white text-black' : 'text-gray-300 hover:text-white'}`} 
-                                        onClick={() => setActiveTab('gradient')}
-                                    >
-                                        {settingsText.gradient}
-                                    </button>
-                                    <button 
-                                        className={`wallpaper-tab-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${activeTab === 'video' ? 'active bg-white text-black' : 'text-gray-300 hover:text-white'}`} 
-                                        onClick={() => setActiveTab('video')}
-                                    >
-                                        {settingsText.video}
-                                    </button>
-                                    <button 
-                                        className={`wallpaper-tab-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${activeTab === 'image' ? 'active bg-white text-black' : 'text-gray-300 hover:text-white'}`} 
-                                        onClick={() => setActiveTab('image')}
-                                    >
-                                        {settingsText.image}
-                                    </button>
-                                </div>
-
-                                {activeTab === 'gradient' && (
-                                    <div className="wallpaper-tab-content">
-                                        <div className="wallpaper-selector grid grid-cols-4 gap-2">
-                                            {gradientWallpapers.map((option, index) => (
-                                                <button
-                                                    key={option.id}
-                                                    className={`wallpaper-thumbnail aspect-[16/10] rounded-lg border-2 overflow-hidden transition-all relative ${localWallpaper === option.id ? 'border-[var(--accent-color)] scale-95 shadow-md shadow-[var(--accent-color)]/25' : 'border-transparent hover:scale-102'}`}
-                                                    onClick={() => setLocalWallpaper(option.id)}
-                                                    aria-label={`Wallpaper option ${index + 1}`}
-                                                    title={`Wallpaper option ${index + 1}`}
-                                                >
-                                                    <div 
-                                                        className="wallpaper-gradient-preview w-full h-full" 
-                                                        style={{ 
-                                                            background: (option as any).thumbnail, 
-                                                            backgroundColor: (option as any).thumbnailBgColor,
-                                                            backgroundSize: (option as any).thumbnailBgSize || '200% 200%' 
-                                                        }}>
-                                                    </div>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {activeTab === 'video' && (
-                                    <div className="wallpaper-tab-content">
-                                            <div className="wallpaper-selector grid grid-cols-4 gap-2">
-                                            {videoWallpapers.map((option, index) => (
-                                                <button
-                                                        key={option.id}
-                                                        className={`wallpaper-thumbnail aspect-[16/10] rounded-lg border-2 overflow-hidden transition-all relative ${localWallpaper === option.id ? 'border-[var(--accent-color)] scale-95 shadow-md shadow-[var(--accent-color)]/25' : 'border-transparent hover:scale-102'}`}
-                                                        onClick={() => setLocalWallpaper(option.id)}
-                                                        aria-label={`Wallpaper option ${index + 1}`}
-                                                        title={`Wallpaper option ${index + 1}`}
-                                                    >
-                                                        <video 
-                                                            src={option.id} 
-                                                            muted 
-                                                            loop 
-                                                            playsInline autoPlay preload="auto" poster={option.thumbnail || undefined}
-                                                            className="wallpaper-video-preview-img w-full h-full object-cover" 
-                                                        />
-                                                        <div style={{
-                                                            position: 'absolute',
-                                                            bottom: '3px',
-                                                            right: '3px',
-                                                            backgroundColor: 'rgba(0,0,0,0.6)',
-                                                            color: '#fff',
-                                                            fontSize: '6.5pt',
-                                                            padding: '1.5px 3.5px',
-                                                            borderRadius: '3px',
-                                                            pointerEvents: 'none',
-                                                            lineHeight: '1',
-                                                            fontWeight: '700'
-                                                        }}>
-                                                            VIDEO
-                                                        </div>
-                                                    </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {activeTab === 'image' && (
-                                    <div className="wallpaper-tab-content">
-                                        <div className="wallpaper-selector grid grid-cols-4 gap-2">
-                                            {imageWallpapers.map((option, index) => (
-                                                <button
-                                                    key={option.id}
-                                                    className={`wallpaper-thumbnail aspect-[16/10] rounded-lg border-2 overflow-hidden transition-all relative ${localWallpaper === option.id ? 'border-[var(--accent-color)] scale-95 shadow-md shadow-[var(--accent-color)]/25' : 'border-transparent hover:scale-102'}`}
-                                                    onClick={() => setLocalWallpaper(option.id)}
-                                                    aria-label={`Wallpaper option ${index + 1}`}
-                                                    title={`Wallpaper option ${index + 1}`}
-                                                >
-                                                    <img 
-                                                            src={option.thumbnail} 
-                                                            alt={`Wallpaper ${index + 1}`}
-                                                            className="wallpaper-image-preview-img w-full h-full object-cover" 
-                                                        />
-                                                        <div style={{
-                                                            position: 'absolute',
-                                                            bottom: '3px',
-                                                            right: '3px',
-                                                            backgroundColor: 'rgba(0,0,0,0.6)',
-                                                            color: '#fff',
-                                                            fontSize: '6.5pt',
-                                                            padding: '1.5px 3.5px',
-                                                            borderRadius: '3px',
-                                                            pointerEvents: 'none',
-                                                            lineHeight: '1',
-                                                            fontWeight: '700'
-                                                        }}>
-                                                            IMAGE
-                                                        </div>
-                                                    </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
                     {settingsTab === 'voice' && (
                         <div className="settings-tab-content-grid max-w-xl mx-auto flex flex-col gap-6">
                             <div className="settings-card flex flex-col gap-6">

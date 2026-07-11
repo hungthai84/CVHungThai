@@ -6151,13 +6151,19 @@
       to { opacity: 0; }
     }
     
-    /* --- Sticky / Floating Settings Tab on Middle Right --- */
-    .floating-settings-btn {
+    /* --- Sticky / Floating Action Buttons on Middle Right --- */
+    .floating-btn-group {
       position: fixed;
       top: 50%;
       right: 0;
       transform: translateY(-50%);
       z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .floating-action-btn {
       width: 48px;
       height: 48px;
       border-top-left-radius: 9999px;
@@ -6176,17 +6182,24 @@
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       padding-right: 2px;
     }
-    .floating-settings-btn:hover {
-      transform: translateY(-50%) translateX(-4px);
+
+    .floating-action-btn:hover {
+      transform: translateX(-4px);
       box-shadow: -6px 0 20px rgba(0,0,0,0.4);
       background-color: var(--accent-color);
       filter: brightness(1.1);
     }
-    .floating-settings-btn svg {
+
+    .floating-action-btn svg {
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .floating-settings-btn:hover svg {
+
+    .floating-action-btn.settings-btn:hover svg {
       transform: rotate(60deg);
+    }
+    
+    .floating-action-btn.wallpaper-btn:hover svg {
+      transform: scale(1.1) rotate(15deg);
     }
     
 

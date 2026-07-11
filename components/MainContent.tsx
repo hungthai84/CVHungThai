@@ -4,6 +4,7 @@ import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import * as Icons from './Icons';
 import CardTitle from './CardTitle';
+import VideoHomeCard from './VideoHomeCard';
 
 declare var Typed: any; // Let TypeScript know Typed exists on the global scope
 
@@ -132,24 +133,17 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
 
     return (
         <PageLayout id={id} innerStyle={{ borderRadius: '16px', marginBottom: '21px' }}>
-            <div className="info-card home-hero-card overflow-hidden">
-                 <video 
-                    key={videoUrl}
-                    autoPlay 
-                    muted={isMuted} 
-                    loop={!isIntroPlaying} 
-                    playsInline 
-                    className="home-hero-card-bg-video"
-                    src={videoUrl}
-                    
-                    style={{ opacity: 1, objectFit: 'cover', width: '100%', height: '100%', borderRadius: '16px' }}
-                    onEnded={() => {
-                        if (isIntroPlaying) {
-                            setVideoUrl(currentVideoSet.idle);
-                            setIsMuted(true);
-                        }
-                    }}
-                />
+            <VideoHomeCard
+                videoUrl={videoUrl}
+                isMuted={isMuted}
+                isIntroPlaying={isIntroPlaying}
+                onEnded={() => {
+                    if (isIntroPlaying) {
+                        setVideoUrl(currentVideoSet.idle);
+                        setIsMuted(true);
+                    }
+                }}
+            >
                 <div style={{
                     position: 'absolute',
                     top: '20px',
@@ -322,7 +316,7 @@ const MainContent: React.FC<MainContentProps> = ({ id, onIntroToggle }) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </VideoHomeCard>
         </PageLayout>
     );
 };

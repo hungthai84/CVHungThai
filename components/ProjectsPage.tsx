@@ -85,7 +85,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ id, onNavigate }) =>
     // --- Render ---
     return (
         <PageLayout id={id}>
-            <div className="info-card">
+            <div className="info-card" >
                 <CardTitle
                     icon={<Icons.CubeIcon />}
                     text={pageData.badge}

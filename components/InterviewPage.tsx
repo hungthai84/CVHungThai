@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
-import * as Icons from './Icons';
-import CardTitle from './CardTitle';
+import VideoInterviewCard from './VideoInterviewCard';
 
 const DEFAULT_VIDEO_URL = " https://cdn.scena.ai/project/9741/6add28d1439e654c67a3b293b98c88cc3b251be53cd4e58bac4cceb1798aca8d.mp4";
 const INTERVIEW_VIDEO_URL = "  https://cdn.scena.ai/project/9741/021c21b2f677c4341e06c62c9432d06d251e22c83716e55b927633e254a67730.mp4";
@@ -13,25 +12,15 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
     
     const [videoUrl, setVideoUrl] = useState(DEFAULT_VIDEO_URL);
     const [isPlayingInterview, setIsPlayingInterview] = useState(false);
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     const playInterview = () => {
         setVideoUrl(INTERVIEW_VIDEO_URL);
         setIsPlayingInterview(true);
-        if (videoRef.current) {
-            videoRef.current.currentTime = 0;
-            videoRef.current.muted = false;
-            videoRef.current.play().catch(err => console.log("Playback failed:", err));
-        }
     };
 
     const cancelInterview = () => {
         setVideoUrl(DEFAULT_VIDEO_URL);
         setIsPlayingInterview(false);
-        if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.currentTime = 0;
-        }
     };
 
     return (
@@ -88,61 +77,13 @@ const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
                     width: 100%;
                 }
             `}</style>
-            <div className="info-card" style={{ position: 'relative', height: '100%', width: '100%', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                
-                {/* Floating InfoBadge */}
-                <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', zIndex: 20 }}>
-                    <CardTitle
-                        icon={<Icons.PresentationIcon />}
-                        text={pageData.badge}
-                        tooltipTitle={pageData.tooltipTitle}
-                        tooltipText={pageData.tooltipText}
-                    />
-                </div>
-
-                {/* Full-bleed Video Container */}
-                <div style={{ flex: 1, minHeight: 0, position: 'relative', width: '100%', height: '100%' }}>
-                    <video
-                        key={videoUrl}
-                        ref={videoRef}
-                        src={videoUrl}
-                        playsInline
-                        autoPlay
-                        loop={!isPlayingInterview}
-                        muted={!isPlayingInterview}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
-                        onEnded={() => {
-                            if (isPlayingInterview) {
-                                cancelInterview();
-                            }
-                        }}
-                    />
-
-                    {isPlayingInterview && (
-                        <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 30 }}>
-                             <button onClick={cancelInterview} className="magic-btn-main magic-btn-cancel" style={{ height: '40px', minWidth: '100px', fontSize: '1rem', padding: '0 20px' }}>
-                                 <div className="magic-btn-glass" style={{ width: '60px', left: '-15px' }}></div>
-                                 <div className="magic-btn-content">
-                                     <span>Hủy</span>
-                                     <Icons.XMarkIcon size={20} />
-                                 </div>
-                             </button>
-                        </div>
-                    )}
-
-                    {!isPlayingInterview && (
-                        <div style={{ position: 'absolute', bottom: '150px', right: '20px', zIndex: 30 }}>
-                             <button onClick={playInterview} className="magic-btn-main" style={{ height: '50px', fontSize: '1rem' }}>
-                                 <div className="magic-btn-glass"></div>
-                                 <div className="magic-btn-content">
-                                     <span>Nghe trao đổi</span>
-                                     <Icons.MicrophoneIcon size={20} />
-                                 </div>
-                             </button>
-                        </div>
-                    )}
-                </div>
-            </div>
+            <VideoInterviewCard 
+                videoUrl={videoUrl}
+                isPlaying={isPlayingInterview}
+                onPlay={playInterview}
+                onCancel={cancelInterview}
+                pageData={pageData}
+            />
         </PageLayout>
     );
 };

@@ -97,7 +97,7 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card">
+            <div className="info-card" >
                 <CardTitle
                     icon={<Icons.WrenchScrewdriverIcon />}
                     text={pageData.title}

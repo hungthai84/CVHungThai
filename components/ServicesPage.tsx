@@ -82,7 +82,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card is-services">
+            <div className="info-card is-services" >
                 <div className="about-header">
                      <CardTitle
                         icon={<Icons.LayersIcon />}
@@ -92,7 +92,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ id }) => {
                     />
                 </div>
 
-                <div className="services-grid no-scrollbar">
+                <div className="services-grid no-scrollbar" style={{ background: "transparent" }}>
                      {services.length > 0 ? (
                         services.map((service, index) => (
                            <ServiceCard key={service.key} service={service} index={index} />

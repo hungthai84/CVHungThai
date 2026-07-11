@@ -28,7 +28,7 @@ export const AboutPage: React.FC<{ id?: string }> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card" style={{ height: '100%', padding: '1.5rem' }}>
+            <div className="info-card" style={{ height: '100%', padding: '1.5rem', background: "transparent", boxShadow: "none", border: "none" }}>
                 <CardTitle
                     icon={<Icons.UserIcon />}
                     text={pageData.badge}

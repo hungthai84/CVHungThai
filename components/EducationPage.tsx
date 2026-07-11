@@ -99,7 +99,7 @@ const EducationPage: React.FC<EducationPageProps> = ({ id }) => {
 
     return (
         <PageLayout id={id}>
-            <div className="info-card">
+            <div className="info-card" >
                 <CardTitle
                     icon={<Icons.AcademicCapIcon />}
                     text={pageData.title}

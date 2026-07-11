@@ -94,7 +94,16 @@ div#root:nth-of-type(3) > div:nth-of-type(2) > main:nth-of-type(1) > div:nth-of-
 }
 
 .info-card {
-    border-radius: 16px;
+    border-radius: 16px !important;
+    background: rgba(var(--card-bg-rgb), var(--grid-card-opacity, var(--card-opacity, 0.45))) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur-webkit);
+    border: var(--color-brand-glass-border);
+}
+
+html.dark .info-card {
+    background: rgba(var(--card-bg-rgb), var(--grid-card-opacity, var(--card-opacity, 0.45))) !important;
+    border: var(--color-brand-glass-border);
 }
 
 .timeline-navigation-wrapper {

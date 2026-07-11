@@ -20,6 +20,7 @@ const EducationPage = lazy(() => import('./components/EducationPage'));
 const ServicesPage = lazy(() => import('./components/ServicesPage'));
 const ProjectPostPopup = lazy(() => import('./components/ProjectPostPopup'));
 const SettingsPage = lazy(() => import('./components/SettingsPanel'));
+const WallpaperPage = lazy(() => import('./components/WallpaperPage'));
 const WorkExperiencePage = lazy(() => import('./components/WorkExperiencePage'));
 const SchedulerPage = lazy(() => import('./components/SchedulerPage'));
 const PrintableView = lazy(() => import('./components/PrintableView'));
@@ -68,6 +69,7 @@ const baseNavStructure: {
     { key: 'scheduler', tKey: 'scheduler', icon: 'CalendarDaysIcon', component: SchedulerPage, showInMenu: false },
     { key: 'aiChat', tKey: 'aiChat', icon: 'BotIcon', component: AiChatPage, showInMenu: false },
     { key: 'settings', tKey: 'settings', icon: 'SettingsIcon', component: SettingsPage, showInMenu: false },
+    { key: 'wallpaper', tKey: 'wallpaper', icon: 'SparklesIcon', component: WallpaperPage, showInMenu: false },
     { key: 'print', tKey: 'print', icon: 'PrinterIcon', component: () => null, showInMenu: false }, // Special item for mobile menu
 ];
 
@@ -730,16 +732,24 @@ const App: React.FC = () => {
                 document.getElementById('popup-root')!
             )}
 
-            {isDemoEnvironment && (
+            <div className="floating-btn-group">
+                <button
+                    onClick={() => handleSetPage('wallpaper')}
+                    className="floating-action-btn wallpaper-btn"
+                    title={language === 'vi' ? 'Hình nền' : 'Wallpaper'}
+                    aria-label="Wallpaper"
+                >
+                    <Icons.SparklesIcon size={24} />
+                </button>
                 <button
                     onClick={() => handleSetPage('settings')}
-                    className="floating-settings-btn"
+                    className="floating-action-btn settings-btn"
                     title={language === 'vi' ? 'Cài đặt' : 'Settings'}
                     aria-label="Settings"
                 >
                     <Icons.SettingsIcon size={24} />
                 </button>
-            )}
+            </div>
         </>
     );
 };
