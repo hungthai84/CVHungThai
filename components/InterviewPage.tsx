@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useI18n } from '../contexts/i18n';
 import PageLayout from './PageLayout';
 import VideoInterviewCard from './VideoInterviewCard';
 
-const DEFAULT_VIDEO_URL = " https://cdn.scena.ai/project/9741/6add28d1439e654c67a3b293b98c88cc3b251be53cd4e58bac4cceb1798aca8d.mp4";
-const INTERVIEW_VIDEO_URL = "  https://cdn.scena.ai/project/9741/021c21b2f677c4341e06c62c9432d06d251e22c83716e55b927633e254a67730.mp4";
+const DEFAULT_VIDEO_URL = " https://cdn.scena.ai/project/9741/f7053626ae15c847304143dc6cf41f1fd2cf1611b27c30ff75ac9da6e47d005b.mp4";
+const INTERVIEW_VIDEO_URL = "   https://cdn.scena.ai/project/9741/021c21b2f677c4341e06c62c9432d06d251e22c83716e55b927633e254a67730.mp4";
 
 const InterviewPage: React.FC<{ id?: string }> = ({ id }) => {
     const { t } = useI18n();

@@ -102,7 +102,7 @@ export const vi = {
             key: "mobifone",
             date: "2003 - 2007",
             company: "Tổng Công ty Viễn thông Mobifone",
-            logoUrl: "https://i.ibb.co/qYBWg57r/Mobifone.png",
+            logoUrl: "https://i.ibb.co/hxHm9TsZ/Mobifone.png",
             color: "#0078D4",
             title: "Tổng đài viên  (Trưởng nhóm từ 2007)",
             teamSize: "12 nhân viên",
@@ -132,7 +132,7 @@ export const vi = {
             key: "v247",
             date: "2007 - 2011",
             company: "Công ty Viễn Liên V247",
-            logoUrl: "https://i.ibb.co/2Y3tNsnd/Call-V247.png",
+            logoUrl: "https://i.ibb.co/QvtbdnfP/V247.png",
             color: "#1E90FF",
             title: "Trưởng nhóm CSKH",
             teamSize: "12 nhân viên",
@@ -167,7 +167,7 @@ export const vi = {
             key: "lbc",
             date: "2011 - 2013",
             company: "Công ty CPTT Băng Rộng Cuộc Sống (LBC)",
-            logoUrl: "https://i.ibb.co/DDYsQ20B/LBC.png",
+            logoUrl: "https://i.ibb.co/tpG5fMrt/LBC.png",
             color: "#F37021",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "12 nhân viên",
@@ -209,12 +209,13 @@ export const vi = {
             key: "ved",
             date: "2013 - 2016",
             company: "Công ty Cổ Phần Việt Nam eSport (VED, Shopee, Garena, ShopeePay)",
-            logoUrl: "https://i.ibb.co/qFL7qB3w/Logo-VED.gif",
+            logoUrl: "https://i.ibb.co/fYPJLfbw/VED.png",
             logos: [
-                "https://i.ibb.co/qFL7qB3w/Logo-VED.gif",
-                "https://i.ibb.co/9HqM804s/Shoppe.png",
-                "https://i.ibb.co/B5q5RQKk/Gcafe.png",
-                "https://i.ibb.co/6RF5rWGL/Airpay.png"
+                "https://i.ibb.co/fYPJLfbw/VED.png",
+                "https://i.ibb.co/BSVS4xf/Shopee.png",
+                "https://i.ibb.co/h1Md65yV/Garena.png",
+                "https://i.ibb.co/FkWk3s4W/GCafe.png",
+                "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png"
             ],
             color: "#ED1B2F",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
@@ -259,7 +260,7 @@ export const vi = {
             key: "prudential",
             date: "2016 - 2018",
             company: "Công ty Bảo hiểm nhân thọ Prudential Vietnam",
-            logoUrl: "https://i.ibb.co/LThmXHs/Prudentinal.png",
+            logoUrl: "https://i.ibb.co/XfpQphWF/Prudential.png",
             color: "#AE2070",
             title: "Trưởng Phòng CallCenter",
             teamSize: "12 nhân viên",
@@ -299,7 +300,7 @@ export const vi = {
             key: "mservice",
             date: "2018 - 2021",
             company: "Công ty Cổ Phần Mservice (Ví điện tử MoMo)",
-            logoUrl: "https://i.ibb.co/jXJXLvT/Momo.png",
+            logoUrl: "https://i.ibb.co/k2QtrgTw/Momo.png",
             color: "#D82D8B",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "60 nhân viên",
@@ -350,7 +351,7 @@ export const vi = {
             key: "finviet",
             date: "2023 - 2024",
             company: "Công ty Cổ Phần Công Nghệ Finviet",
-            logoUrl: "https://i.ibb.co/mVfX9RkG/Finviet.png",
+            logoUrl: "https://i.ibb.co/7NtSSz4d/Finviet.png",
             color: "#49C16C",
             title: "Trưởng Phòng Dịch vụ Khách hàng",
             teamSize: "17 nhân viên",
@@ -396,7 +397,7 @@ export const vi = {
             key: "jobsearch",
             date: "2026",
             company: "Tìm kiếm cơ hội mới",
-            logoUrl: "https://i.ibb.co/FbGn75X1/T-m-ki-m.png",
+            logoUrl: "https://i.ibb.co/G4QnNzWb/Power-Service.png",
             color: "#101733",
             title: "Tìm kiếm công việc mới",
             teamSize: "  ",
@@ -708,7 +709,7 @@ export const vi = {
             description: "Hơn 10 năm kinh nghiệm trong ngành viễn thông, từ mạng di động đến dịch vụ gọi quốc tế, tạo nền tảng vững chắc về vận hành và Chăm Sóc Khách Hàng quy mô lớn",
             icon: "PhoneIcon",
             color: "#0078D4",
-            logos: ["https://i.ibb.co/qYBWg57r/Mobifone.png", "https://i.ibb.co/2Y3tNsnd/Call-V247.png", "https://i.ibb.co/DDYsQ20B/LBC.png"]
+            logos: ["https://i.ibb.co/hxHm9TsZ/Mobifone.png", "https://i.ibb.co/QvtbdnfP/V247.png", "https://i.ibb.co/tpG5fMrt/LBC.png", "https://i.ibb.co/1fNw0hBq/HTVC.png"]
         },
         {
             key: "ecommerce",
@@ -716,7 +717,7 @@ export const vi = {
             description: "Tham gia giai đoạn bùng nổ của thương mại điện tử và ví điện tử, xây dựng nền tảng vận hành, xử lý khiếu nại, gian lận và chăm sóc khách hàng đa kênh.",
             icon: "CubeIcon",
             color: "#F37021",
-            logos: ["https://i.ibb.co/jXJXLvT/Momo.png", "https://i.ibb.co/mVfX9RkG/Finviet.png", "https://i.ibb.co/Y7hGPLJw/Airpay.png", "https://i.ibb.co/MkBNb2mh/Shopee.png"]
+            logos: ["https://i.ibb.co/k2QtrgTw/Momo.png", "https://i.ibb.co/7NtSSz4d/Finviet.png", "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png", "https://i.ibb.co/BSVS4xf/Shopee.png"]
         },
         {
             key: "insurance",
@@ -724,7 +725,7 @@ export const vi = {
             description: "Quản lý tổng đài và triển khai các dự án tích hợp hệ thống Call Center, tối ưu quy trình vận hành, nâng cao chất lượng tư vấn và trải nghiệm khách hàng.",
             icon: "ShieldCheckIcon",
             color: "#AE2070",
-            logos: ["https://i.ibb.co/LThmXHs/Prudentinal.png"]
+            logos: ["https://i.ibb.co/XfpQphWF/Prudential.png"]
         },
         {
             key: "esports",
@@ -732,7 +733,7 @@ export const vi = {
             description: "Xây dựng và quản lý bộ phận Chăm Sóc Khách Hàng cho nhà phát hành game, vận hành hệ thống hỗ trợ quy mô lớn và đồng hành cùng các sự kiện eSports.",
             icon: "CpuIcon",
             color: "#ED1B2F",
-            logos: ["https://i.ibb.co/B5q5RQKk/Gcafe.png", "https://i.ibb.co/qFL7qB3w/Logo-VED.gif"]
+            logos: ["https://i.ibb.co/FkWk3s4W/GCafe.png", "https://i.ibb.co/fYPJLfbw/VED.png", "https://i.ibb.co/h1Md65yV/Garena.png"]
         },
         {
             key: "fintech",
@@ -740,7 +741,7 @@ export const vi = {
             description: "Am hiểu vận hành Chăm Sóc Khách Hàng trong lĩnh vực FinTech, từ xác minh người dùng, xử lý giao dịch đến kiểm soát rủi ro và hỗ trợ đối tác tài chính.",
             icon: "GlobeAltIcon",
             color: "#D82D8B",
-            logos: ["https://i.ibb.co/jXJXLvT/Momo.png", "https://i.ibb.co/mVfX9RkG/Finviet.png", "https://i.ibb.co/6RF5rWGL/Airpay.png"]
+            logos: ["https://i.ibb.co/k2QtrgTw/Momo.png", "https://i.ibb.co/7NtSSz4d/Finviet.png", "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png"]
         },
         {
             key: "consulting",
@@ -748,7 +749,7 @@ export const vi = {
             description: "Tư vấn xây dựng và tối ưu hệ thống Chăm Sóc Khách Hàng toàn diện, từ quy trình, nhân sự đến CRM và tự động hóa, nâng cao hiệu quả vận hành doanh nghiệp.",
             icon: "WrenchScrewdriverIcon",
             color: "#101733",
-            logos: ["https://i.ibb.co/FbGn75X1/T-m-ki-m.png"]
+            logos: ["https://i.ibb.co/G4QnNzWb/Power-Service.png"]
         }
     ]
   },
@@ -1748,7 +1749,7 @@ export const en = {
             key: "mobifone",
             date: "2003 - 2007",
             company: "Mobifone Telecommunications Corporation",
-            logoUrl: "https://i.ibb.co/qYBWg57r/Mobifone.png",
+            logoUrl: "https://i.ibb.co/hxHm9TsZ/Mobifone.png",
             color: "#0078D4",
             title: "Agent (Team Leader from 2007)",
             teamSize: "12 staff",
@@ -1777,7 +1778,7 @@ export const en = {
             key: "v247",
             date: "2007 - 2011",
             company: "V247 Call",
-            logoUrl: "https://i.ibb.co/2Y3tNsnd/Call-V247.png",
+            logoUrl: "https://i.ibb.co/QvtbdnfP/V247.png",
             color: "#1E90FF",
             title: "CS Team Leader",
             teamSize: "12 staff",
@@ -1811,7 +1812,7 @@ export const en = {
             key: "lbc",
             date: "2011 - 2013",
             company: "Life Broadband Communication (LBC)",
-            logoUrl: "https://i.ibb.co/DDYsQ20B/LBC.png",
+            logoUrl: "https://i.ibb.co/tpG5fMrt/LBC.png",
             color: "#F37021",
             title: "Head of Customer Service",
             teamSize: "12 staff",
@@ -1845,12 +1846,13 @@ export const en = {
             key: "ved",
             date: "2013 - 2016",
             company: "Vietnam eSport (VED) - (Shopee, Garena, ShopeePay)",
-            logoUrl: "https://i.ibb.co/qFL7qB3w/Logo-VED.gif",
+            logoUrl: "https://i.ibb.co/fYPJLfbw/VED.png",
             logos: [
-                "https://i.ibb.co/qFL7qB3w/Logo-VED.gif",
-                "https://i.ibb.co/9HqM804s/Shoppe.png",
-                "https://i.ibb.co/B5q5RQKk/Gcafe.png",
-                "https://i.ibb.co/6RF5rWGL/Airpay.png"
+                "https://i.ibb.co/fYPJLfbw/VED.png",
+                "https://i.ibb.co/BSVS4xf/Shopee.png",
+                "https://i.ibb.co/h1Md65yV/Garena.png",
+                "https://i.ibb.co/FkWk3s4W/GCafe.png",
+                "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png"
             ],
             color: "#ED1B2F",
             title: "Head of Customer Service",
@@ -1886,7 +1888,7 @@ export const en = {
             key: "prudential",
             date: "2016 - 2018",
             company: "Prudential Vietnam Assurance",
-            logoUrl: "https://i.ibb.co/LThmXHs/Prudentinal.png",
+            logoUrl: "https://i.ibb.co/XfpQphWF/Prudential.png",
             color: "#AE2070",
             title: "Call Center Manager",
             teamSize: "12 staff",
@@ -1920,7 +1922,7 @@ export const en = {
             key: "mservice",
             date: "2018 - 2021",
             company: "Mservice (MoMo E-Wallet)",
-            logoUrl: "https://i.ibb.co/jXJXLvT/Momo.png",
+            logoUrl: "https://i.ibb.co/k2QtrgTw/Momo.png",
             color: "#D82D8B",
             title: "Head of Customer Service",
             teamSize: "60 staff",
@@ -1959,7 +1961,7 @@ export const en = {
             key: "finviet",
             date: "2023 - 2024",
             company: "Finviet Technology Group",
-            logoUrl: "https://i.ibb.co/mVfX9RkG/Finviet.png",
+            logoUrl: "https://i.ibb.co/7NtSSz4d/Finviet.png",
             color: "#49C16C",
             title: "Head of Customer Service",
             teamSize: "17 staff",
@@ -1992,7 +1994,7 @@ export const en = {
             key: "jobsearch",
             date: "2025",
             company: "Seeking New Opportunities",
-            logoUrl: "https://i.ibb.co/FbGn75X1/T-m-ki-m.png",
+            logoUrl: "https://i.ibb.co/G4QnNzWb/Power-Service.png",
             color: "#101733",
             title: "Seeking a Head of Customer Service role",
             teamSize: "> 100 staff",
@@ -2312,7 +2314,7 @@ export const en = {
             description: "Over 10 years in the telecommunications industry, from mobile networks to international calling services, building a solid foundation in large-scale operations and customer care.",
             icon: "PhoneIcon",
             color: "#0078D4",
-            logos: ["https://i.ibb.co/qYBWg57r/Mobifone.png", "https://i.ibb.co/2Y3tNsnd/Call-V247.png", "https://i.ibb.co/DDYsQ20B/LBC.png"]
+            logos: ["https://i.ibb.co/hxHm9TsZ/Mobifone.png", "https://i.ibb.co/QvtbdnfP/V247.png", "https://i.ibb.co/tpG5fMrt/LBC.png", "https://i.ibb.co/1fNw0hBq/HTVC.png"]
         },
         {
             key: "ecommerce",
@@ -2320,7 +2322,7 @@ export const en = {
             description: "Participated in the explosive growth phase of e-commerce and e-wallets in Vietnam, building processes for handling complaints, fraud, and user care on leading platforms.",
             icon: "CubeIcon",
             color: "#F37021",
-            logos: ["https://i.ibb.co/jXJXLvT/Momo.png", "https://i.ibb.co/mVfX9RkG/Finviet.png", "https://i.ibb.co/Y7hGPLJw/Airpay.png", "https://i.ibb.co/MkBNb2mh/Shopee.png"]
+            logos: ["https://i.ibb.co/k2QtrgTw/Momo.png", "https://i.ibb.co/7NtSSz4d/Finviet.png", "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png", "https://i.ibb.co/BSVS4xf/Shopee.png"]
         },
         {
             key: "insurance",
@@ -2328,7 +2330,7 @@ export const en = {
             description: "Managed call centers and implemented projects integrating e-commerce into the Call Center system, ensuring compliance with strict regulations and quality of consultation.",
             icon: "ShieldCheckIcon",
             color: "#AE2070",
-            logos: ["https://i.ibb.co/LThmXHs/Prudentinal.png"]
+            logos: ["https://i.ibb.co/XfpQphWF/Prudential.png"]
         },
         {
             key: "esports",
@@ -2336,7 +2338,7 @@ export const en = {
             description: "Built and managed the CS department for one of the largest game publishers, handling millions of interactions from the gaming community and supporting large-scale eSports events.",
             icon: "CpuIcon",
             color: "#ED1B2F",
-            logos: ["https://i.ibb.co/B5q5RQKk/Gcafe.png", "https://i.ibb.co/qFL7qB3w/Logo-VED.gif"]
+            logos: ["https://i.ibb.co/FkWk3s4W/GCafe.png", "https://i.ibb.co/fYPJLfbw/VED.png", "https://i.ibb.co/h1Md65yV/Garena.png"]
         },
         {
             key: "fintech",
@@ -2344,7 +2346,7 @@ export const en = {
             description: "Deep understanding of CS operations in the FinTech sector, from user verification, transaction processing to risk management and collaboration with financial partners.",
             icon: "GlobeAltIcon",
             color: "#D82D8B",
-            logos: ["https://i.ibb.co/jXJXLvT/Momo.png", "https://i.ibb.co/mVfX9RkG/Finviet.png", "https://i.ibb.co/6RF5rWGL/Airpay.png"]
+            logos: ["https://i.ibb.co/k2QtrgTw/Momo.png", "https://i.ibb.co/7NtSSz4d/Finviet.png", "https://i.ibb.co/LdYv3TJy/Shopee-Paye.png"]
         },
         {
             key: "consulting",
@@ -2352,7 +2354,7 @@ export const en = {
             description: "Provide strategic consulting, build and optimize comprehensive CS systems—from processes, personnel to CRM technology and automation—helping businesses enhance customer experience.",
             icon: "WrenchScrewdriverIcon",
             color: "#101733",
-            logos: ["https://i.ibb.co/FbGn75X1/T-m-ki-m.png"]
+            logos: ["https://i.ibb.co/G4QnNzWb/Power-Service.png"]
         }
     ]
   },

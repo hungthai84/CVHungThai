@@ -1587,6 +1587,7 @@ const WorkExperiencePage: React.FC<WorkExperiencePageProps> = ({
                       maxHeight: "100%",
                       objectFit: "contain",
                     }}
+                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div>

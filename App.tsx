@@ -478,16 +478,6 @@ const App: React.FC = () => {
     const isCustomDarkDotted = wallpaper === 'dark-dotted-pattern';
     const isGeminiAi = wallpaper === 'gemini-ai';
     const isGlassmorphismEffect = wallpaper === 'glassmorphism-effect';
-    const isDemoEnvironment = React.useMemo(() => {
-        if (typeof window === 'undefined') return false;
-        const hostname = window.location.hostname;
-        return (
-            hostname.includes('ais-dev') || 
-            hostname.includes('ais-pre') || 
-            hostname.includes('localhost') || 
-            hostname.includes('127.0.0.1')
-        );
-    }, []);
 
     return (
         <>
