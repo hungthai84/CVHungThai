@@ -1,0 +1,19 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: "Play", Arial, sans-serif;
+  background: #f5f7fd;
+}
+.portfolio-shell {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.portfolio-frame {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  border: 0;
+  background: transparent;
+}
